@@ -1,0 +1,7 @@
+{
+    "variants": {
+        "axis=x":   { "model": "hardcoredungeons:block/cottonmarsh_log", "x": 90, "y": 90 },
+        "axis=y":  { "model": "hardcoredungeons:block/cottonmarsh_log" },
+        "axis=z":   { "model": "hardcoredungeons:block/cottonmarsh_log", "x": 90 }
+    }
+}

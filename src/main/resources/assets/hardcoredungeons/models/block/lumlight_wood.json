@@ -1,0 +1,7 @@
+{
+    "parent": "block/cube_column",
+    "textures": {
+        "end": "hardcoredungeons:block/lumlight_log",
+        "side": "hardcoredungeons:block/lumlight_log"
+    }
+}

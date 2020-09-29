@@ -1,0 +1,6 @@
+{
+    "variants": {
+        "lit=false":  { "model": "hardcoredungeons:block/burnt_castleton_torch" },
+        "lit=true":  { "model": "hardcoredungeons:block/castleton_torch" }
+    }
+}

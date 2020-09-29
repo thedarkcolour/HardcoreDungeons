@@ -1,0 +1,8 @@
+{
+    "variants": {
+        "facing=north": { "model": "hardcoredungeons:block/lost_skull", "y": 270  },
+        "facing=south": { "model": "hardcoredungeons:block/lost_skull", "y": 90 },
+        "facing=west":  { "model": "hardcoredungeons:block/lost_skull", "y": 180 },
+        "facing=east":  { "model": "hardcoredungeons:block/lost_skull"}
+    }
+}

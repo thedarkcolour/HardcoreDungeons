@@ -1,0 +1,9 @@
+{
+    "type": "hardcoredungeons:extraction",
+    "ingredient": {
+        "tag": "hardcoredungeons:lumlight_logs"
+    },
+    "result": "minecraft:coal",
+    "experience": 0.1,
+    "cookingtime": 600
+}

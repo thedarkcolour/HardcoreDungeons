@@ -1,0 +1,7 @@
+{
+    "variants": {
+        "type=bottom": { "model": "hardcoredungeons:block/auri_slab" },
+        "type=top": { "model": "hardcoredungeons:block/auri_slab_top" },
+        "type=double": { "model": "hardcoredungeons:block/auri_planks" }
+    }
+}

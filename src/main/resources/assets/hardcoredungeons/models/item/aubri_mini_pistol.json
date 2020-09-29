@@ -1,0 +1,6 @@
+{
+    "parent": "item/handheld",
+    "textures": {
+        "layer0": "hardcoredungeons:item/aubri_mini_pistol"
+    }
+}

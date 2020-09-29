@@ -1,0 +1,6 @@
+{
+    "parent": "block/fence_inventory",
+    "textures": {
+        "texture": "#MODID:block/#REPLACE2"
+    }
+}

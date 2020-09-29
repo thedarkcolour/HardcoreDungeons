@@ -1,0 +1,16 @@
+{
+    "variants": {
+        "facing=north,eyes=0": { "model": "hardcoredungeons:block/frayed_skull_0", "y": 270  },
+        "facing=south,eyes=0": { "model": "hardcoredungeons:block/frayed_skull_0", "y": 90 },
+        "facing=west,eyes=0":  { "model": "hardcoredungeons:block/frayed_skull_0", "y": 180 },
+        "facing=east,eyes=0":  { "model": "hardcoredungeons:block/frayed_skull_0"},
+        "facing=north,eyes=1": { "model": "hardcoredungeons:block/frayed_skull_1", "y": 270  },
+        "facing=south,eyes=1": { "model": "hardcoredungeons:block/frayed_skull_1", "y": 90 },
+        "facing=west,eyes=1":  { "model": "hardcoredungeons:block/frayed_skull_1", "y": 180 },
+        "facing=east,eyes=1":  { "model": "hardcoredungeons:block/frayed_skull_1"},
+        "facing=north,eyes=2": { "model": "hardcoredungeons:block/frayed_skull_2", "y": 270  },
+        "facing=south,eyes=2": { "model": "hardcoredungeons:block/frayed_skull_2", "y": 90 },
+        "facing=west,eyes=2":  { "model": "hardcoredungeons:block/frayed_skull_2", "y": 180 },
+        "facing=east,eyes=2":  { "model": "hardcoredungeons:block/frayed_skull_2"}
+    }
+}

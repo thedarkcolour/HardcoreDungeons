@@ -1,0 +1,9 @@
+{
+    "replace": false,
+    "values": [
+        "hardcoredungeons:rainbow_factory_brick_fence",
+        "hardcoredungeons:charged_castleton_brick_fence",
+        "hardcoredungeons:castleton_brick_fence",
+        "hardcoredungeons:lumlight_fence"
+    ]
+}

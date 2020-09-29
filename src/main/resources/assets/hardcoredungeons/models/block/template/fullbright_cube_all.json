@@ -1,0 +1,7 @@
+{
+    "parent": "hardcoredungeons:block/fullbright_cube_all",
+    "textures": {
+        "all": "#MODID:block/#REPLACE1",
+        "fullbright": "#MODID:block/#REPLACE2"
+    }
+}

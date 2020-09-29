@@ -1,0 +1,7 @@
+{
+    "variants": {
+        "type=bottom": { "model": "#MODID:block/#REPLACE2_slab" },
+        "type=top": { "model": "#MODID:block/#REPLACE2_slab_top" },
+        "type=double": { "model": "#MODID:block/#REPLACE1" }
+    }
+}

@@ -1,0 +1,6 @@
+{
+    "parent": "block/template_fence_gate_open",
+    "textures": {
+        "texture": "hardcoredungeons:block/lumlight_planks"
+    }
+}

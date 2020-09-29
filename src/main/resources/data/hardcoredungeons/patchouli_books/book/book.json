@@ -1,0 +1,8 @@
+{
+    "name": "Hardcore Dungeons",
+    "landing_text": "Welcome to Hardcore Dungeons! Hardcore Dungeons adds new dimensions, mobs, and structures.",
+    "version": 1,
+    "book_texture": "patchouli:textures/gui/book_blue.png",
+    "book_model": "hardcoredungeons:patchouli_book",
+    "creative_tab": "hardcoredungeons"
+}

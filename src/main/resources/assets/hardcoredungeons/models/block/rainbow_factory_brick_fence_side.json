@@ -1,0 +1,6 @@
+{
+    "parent": "block/fence_side",
+    "textures": {
+        "texture": "hardcoredungeons:block/rainbow_factory_bricks"
+    }
+}

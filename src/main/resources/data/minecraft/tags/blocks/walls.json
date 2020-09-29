@@ -1,0 +1,8 @@
+{
+    "replace": false,
+    "values": [
+        "hardcoredungeons:rainbow_factory_brick_wall",
+        "hardcoredungeons:charged_castleton_brick_wall",
+        "hardcoredungeons:castleton_brick_wall"
+    ]
+}

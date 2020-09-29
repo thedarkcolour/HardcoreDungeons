@@ -1,0 +1,24 @@
+{
+	"credit": "Made with Blockbench",
+	
+	"texture_size": [32, 32],
+	"parent": "block/block",
+	"textures": {
+		"drum": "hardcoredungeons:block/drum",
+		"particle": "hardcoredungeons:block/drum"
+	},
+	"elements": [
+		{
+			"from": [3, 0, 3],
+			"to": [13, 16, 13],
+			"faces": {
+				"north": {"uv": [0, 0, 5, 8], "texture": "#drum"},
+				"east": {"uv": [0, 0, 5, 8], "texture": "#drum"},
+				"south": {"uv": [0, 0, 5, 8], "texture": "#drum"},
+				"west": {"uv": [0, 0, 5, 8], "texture": "#drum"},
+				"up": {"uv": [5, 0, 10, 5], "texture": "#drum"},
+				"down": {"uv": [10, 0, 15, 5], "texture": "#drum"}
+			}
+		}
+	]
+}

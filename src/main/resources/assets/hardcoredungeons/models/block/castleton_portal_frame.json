@@ -1,0 +1,6 @@
+{
+    "parent": "block/cube_all",
+    "textures": {
+        "all": "hardcoredungeons:block/castleton_portal_frame"
+    }
+}

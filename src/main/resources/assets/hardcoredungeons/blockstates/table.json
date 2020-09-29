@@ -1,0 +1,8 @@
+{
+    "variants": {
+        "facing=north": { "model": "hardcoredungeons:block/table", "y": 90  },
+        "facing=south": { "model": "hardcoredungeons:block/table", "y": 270 },
+        "facing=west":  { "model": "hardcoredungeons:block/table", "y": 0 },
+        "facing=east":  { "model": "hardcoredungeons:block/table", "y": 180}
+    }
+}

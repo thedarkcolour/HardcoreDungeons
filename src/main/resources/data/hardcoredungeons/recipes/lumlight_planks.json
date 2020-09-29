@@ -1,0 +1,13 @@
+{
+    "type": "minecraft:crafting_shapeless",
+    "group": "planks",
+    "ingredients": [
+        {
+            "tag": "hardcoredungeons:lumlight_logs"
+        }
+    ],
+    "result": {
+        "item": "hardcoredungeons:lumlight_planks",
+        "count": 4
+    }
+}

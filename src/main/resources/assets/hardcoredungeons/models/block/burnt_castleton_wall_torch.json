@@ -1,0 +1,6 @@
+{
+    "parent": "block/torch_wall",
+    "textures": {
+        "torch": "hardcoredungeons:block/burnt_castleton_torch"
+    }
+}

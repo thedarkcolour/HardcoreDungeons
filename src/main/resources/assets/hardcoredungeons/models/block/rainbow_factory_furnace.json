@@ -1,0 +1,19 @@
+{
+    "parent": "block/cube",
+    "display": {
+        "firstperson_righthand": {
+            "rotation": [ 0, 135, 0 ],
+            "translation": [ 0, 0, 0 ],
+            "scale": [ 0.40, 0.40, 0.40 ]
+        }
+    },
+    "textures": {
+        "particle": "hardcoredungeons:block/rainbow_factory_furnace_front",
+        "down": "hardcoredungeons:block/rainbow_factory_bricks",
+        "up": "hardcoredungeons:block/rainbow_factory_furnace_top",
+        "north": "hardcoredungeons:block/rainbow_factory_furnace_front",
+        "east": "hardcoredungeons:block/rainbow_factory_furnace_side",
+        "south": "hardcoredungeons:block/rainbow_factory_furnace_side",
+        "west": "hardcoredungeons:block/rainbow_factory_furnace_side"
+    }
+}

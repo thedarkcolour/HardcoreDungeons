@@ -1,0 +1,7 @@
+{
+    "parent": "block/door_top",
+    "textures": {
+        "bottom": "hardcoredungeons:block/lumlight_door_bottom",
+        "top": "hardcoredungeons:block/lumlight_door_top"
+    }
+}

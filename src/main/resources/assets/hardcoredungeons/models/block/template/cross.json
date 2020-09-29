@@ -1,0 +1,6 @@
+{
+    "parent": "block/cross",
+    "textures": {
+        "cross": "#MODID:block/#REPLACE"
+    }
+}

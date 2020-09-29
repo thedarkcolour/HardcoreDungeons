@@ -1,0 +1,7 @@
+{
+    "parent": "block/campfire_off",
+    "textures": {
+        "particle": "hardcoredungeons:block/lumlight_campfire_log",
+        "log": "hardcoredungeons:block/lumlight_campfire_log"
+    }
+}

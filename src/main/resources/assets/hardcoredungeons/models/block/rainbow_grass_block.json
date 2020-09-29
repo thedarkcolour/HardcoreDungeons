@@ -1,0 +1,10 @@
+{
+    "parent": "block/grass_block",
+    "textures": {
+        "particle": "hardcoredungeons:block/rainbow_soil",
+        "bottom": "hardcoredungeons:block/rainbow_soil",
+        "top": "hardcoredungeons:block/rainbow_grass_top",
+        "side": "hardcoredungeons:block/rainbow_grass_side",
+        "overlay": "hardcoredungeons:block/rainbow_grass_overlay"
+    }
+}

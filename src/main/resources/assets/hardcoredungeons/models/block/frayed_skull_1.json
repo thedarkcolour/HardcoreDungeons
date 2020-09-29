@@ -1,0 +1,7 @@
+{
+    "parent": "hardcoredungeons:block/lost_skull",
+    "textures": {
+        "0": "hardcoredungeons:block/frayed_skull_1",
+        "particle": "hardcoredungeons:block/frayed_skull_1"
+    }
+}

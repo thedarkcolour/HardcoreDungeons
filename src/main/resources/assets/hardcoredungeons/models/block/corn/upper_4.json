@@ -1,0 +1,6 @@
+{
+    "parent": "block/cross",
+    "textures": {
+        "cross": "hardcoredungeons:block/chili_pepper_upper_4"
+    }
+}

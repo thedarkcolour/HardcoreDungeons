@@ -1,0 +1,6 @@
+{
+    "parent": "block/crop",
+    "textures": {
+        "crop": "hardcoredungeons:block/golden_carrots_3"
+    }
+}

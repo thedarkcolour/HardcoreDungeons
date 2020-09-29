@@ -1,0 +1,20 @@
+{
+    "frayed_soul_idle": {
+        "subtitle": "hardcoredungeons.subtitles.frayed_soul_idle",
+        "sounds": [
+            "hardcoredungeons:frayed_soul/idle"
+        ]
+    },
+    "void_runner_hit": {
+        "subtitle": "hardcoredungeons.subtitles.void_runner_hit",
+        "sounds": [
+            "hardcoredungeons:void_runner/hit1"
+        ]
+    },
+    "scrap_metal_break": {
+        "subtitle": "hardcoredungeons.subtitles.scrap_metal_break",
+        "sounds": [
+            "hardcoredungeons:scrap_metal/break1"
+        ]
+    }
+}
