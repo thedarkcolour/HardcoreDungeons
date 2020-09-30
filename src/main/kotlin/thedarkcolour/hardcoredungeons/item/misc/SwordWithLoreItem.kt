@@ -24,6 +24,6 @@ open class SwordWithLoreItem(
         tooltip: MutableList<ITextComponent>,
         flagIn: ITooltipFlag
     ) {
-        tooltip.add(TranslationTextComponent("$translationKey.lore").applyTextStyle(style))
+        tooltip.add(TranslationTextComponent("$translationKey.lore")/*.applyTextStyle(style)*/)
     }
 }

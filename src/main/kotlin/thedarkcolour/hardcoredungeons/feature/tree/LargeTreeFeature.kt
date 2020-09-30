@@ -1,10 +1,9 @@
 package thedarkcolour.hardcoredungeons.feature.tree
 
-import com.mojang.datafixers.Dynamic
+import com.mojang.serialization.Dynamic
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.IWorld
 import net.minecraft.world.gen.ChunkGenerator
-import net.minecraft.world.gen.GenerationSettings
 import net.minecraft.world.gen.feature.BaseTreeFeatureConfig
 import net.minecraft.world.gen.feature.Feature
 import thedarkcolour.hardcoredungeons.util.PI

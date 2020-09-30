@@ -34,8 +34,8 @@ class FullbrightBakedModel(private val base: IBakedModel, private val fullbright
         return base.isGui3d
     }
 
-    override fun func_230044_c_(): Boolean {
-        return base.func_230044_c_()
+    override fun isSideLit(): Boolean {
+        return base.isSideLit
     }
 
     override fun getOverrides(): ItemOverrideList {
@@ -62,7 +62,7 @@ class FullbrightBakedModel(private val base: IBakedModel, private val fullbright
             for (i in newQuads.indices) {
                 val quad = newQuads[i]
 
-                if (textures.contains(quad.func_187508_a().name)) {
+                if (textures.contains(quad.sprite.name)) {
                     newQuads[i] = transformQuad(quad)
                 }
             }
@@ -78,7 +78,7 @@ class FullbrightBakedModel(private val base: IBakedModel, private val fullbright
             vertexData[6 + 8 + 8] = FULL_LIGHT
             vertexData[6 + 8 + 8 + 8] = FULL_LIGHT
 
-            return BakedQuad(vertexData, quad.tintIndex, quad.face, quad.func_187508_a(), quad.shouldApplyDiffuseLighting())
+            return BakedQuad(vertexData, quad.tintIndex, quad.face, quad.sprite, quad.applyDiffuseLighting())
         }
 
         /**

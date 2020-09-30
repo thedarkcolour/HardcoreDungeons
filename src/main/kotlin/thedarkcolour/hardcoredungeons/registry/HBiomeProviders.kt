@@ -1,11 +1,10 @@
 package thedarkcolour.hardcoredungeons.registry
 
-import net.minecraft.world.biome.provider.BiomeProviderType
+/*import net.minecraft.world.biome.provider.BiomeProviderType
 import net.minecraft.world.storage.WorldInfo
-import net.minecraftforge.registries.IForgeRegistry
 import thedarkcolour.hardcoredungeons.biomeprovider.NoiseBiomeProvider
-import thedarkcolour.hardcoredungeons.biomeprovider.NoiseBiomeProviderSettings
-
+import thedarkcolour.hardcoredungeons.biomeprovider.NoiseBiomeProviderSettings*/
+import net.minecraftforge.registries.IForgeRegistry
 /**
  * Biome providers for Hardcore Dungeons.
  *

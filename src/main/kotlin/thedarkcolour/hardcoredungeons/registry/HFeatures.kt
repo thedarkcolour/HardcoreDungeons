@@ -14,7 +14,6 @@ import net.minecraft.world.gen.foliageplacer.FancyFoliagePlacer
 import net.minecraft.world.gen.placement.*
 import net.minecraft.world.gen.trunkplacer.StraightTrunkPlacer
 import net.minecraftforge.registries.IForgeRegistry
-import thedarkcolour.hardcoredungeons.feature.tree.LumlightTreeFeature
 
 @Suppress("MemberVisibilityCanBePrivate", "HasPlatformType")
 object HFeatures {

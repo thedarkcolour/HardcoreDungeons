@@ -6,6 +6,7 @@ import net.minecraft.state.properties.BlockStateProperties
 import net.minecraft.util.IItemProvider
 import net.minecraft.util.ResourceLocation
 import net.minecraftforge.client.model.generators.*
+import net.minecraftforge.common.data.ExistingFileHelper
 import thedarkcolour.hardcoredungeons.HardcoreDungeons
 import thedarkcolour.hardcoredungeons.block.decoration.StairsBlock
 import thedarkcolour.hardcoredungeons.block.decoration.TrapDoorBlock

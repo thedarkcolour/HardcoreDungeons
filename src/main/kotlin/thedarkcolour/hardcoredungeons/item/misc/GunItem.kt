@@ -106,6 +106,10 @@ open class GunItem(
         return ItemStack(HItems.BULLET)
     }
 
+    override fun func_230305_d_(): Int {
+        return 10 // doesn't really matter because we aren't going to shoot
+    }
+
     class GunProperties : Properties() {
         private var bulletDamage = 0.0f
         private var velocity = 0.5f

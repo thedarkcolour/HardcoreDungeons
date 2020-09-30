@@ -24,7 +24,7 @@ class CastletonTorchItem(blockIn: Block, private val wallBlock: Block, private v
             }
         }
 
-        return if (state1 != null && worldIn.func_226663_a_(state1, pos, ISelectionContext.dummy())) state1 else null
+        return if (state1 != null && worldIn.placedBlockCollides(state1, pos, ISelectionContext.dummy())) state1 else null
     }
 
     override fun addToBlockToItemMap(blockToItemMap: MutableMap<Block, Item>, itemIn: Item) {

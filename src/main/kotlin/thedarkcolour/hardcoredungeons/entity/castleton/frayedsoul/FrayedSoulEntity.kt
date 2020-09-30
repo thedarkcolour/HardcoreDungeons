@@ -2,7 +2,6 @@ package thedarkcolour.hardcoredungeons.entity.castleton.frayedsoul
 
 import net.minecraft.entity.CreatureEntity
 import net.minecraft.entity.EntityType
-import net.minecraft.entity.SharedMonsterAttributes
 import net.minecraft.entity.ai.goal.Goal
 import net.minecraft.entity.ai.goal.LookAtGoal
 import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal

@@ -5,11 +5,11 @@ import net.minecraft.client.Minecraft
 import net.minecraft.item.ItemStack
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.FoliageColors
-import net.minecraft.world.ILightReader
+import net.minecraft.world.IBlockDisplayReader
 import java.awt.Color
 
 object RainbowColor : HColor {
-    override fun getColor(state: BlockState?, worldIn: ILightReader?, pos: BlockPos?, tintIndex: Int): Int {
+    override fun getColor(state: BlockState?, worldIn: IBlockDisplayReader?, pos: BlockPos?, tintIndex: Int): Int {
         return if (pos == null) {
             FoliageColors.getDefault()
         } else {

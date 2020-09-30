@@ -1,16 +1,12 @@
 package thedarkcolour.hardcoredungeons.feature.tree
 
 import com.google.common.collect.Lists
-import com.mojang.datafixers.Dynamic
-import net.minecraft.block.LogBlock
+import com.mojang.serialization.Dynamic
 import net.minecraft.util.Direction
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.MathHelper
 import net.minecraft.util.math.MutableBoundingBox
 import net.minecraft.world.gen.IWorldGenerationReader
-import net.minecraft.world.gen.feature.AbstractTreeFeature
-import net.minecraft.world.gen.feature.FancyTreeFeature
-import net.minecraft.world.gen.feature.TreeFeatureConfig
 import java.util.*
 import kotlin.math.*
 

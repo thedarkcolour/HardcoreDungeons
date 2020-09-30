@@ -5,8 +5,8 @@ import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.CompoundNBT
 import net.minecraftforge.common.capabilities.ICapabilityProvider
-import top.theillusivec4.curios.api.capability.ICurio
-import top.theillusivec4.curios.common.capability.CapCurioItem
+import top.theillusivec4.curios.api.type.capability.ICurio
+//import top.theillusivec4.curios.common.capability.CapCurioItem
 
 class CrownItem(properties: Properties) : Item(properties) {
     override fun initCapabilities(stack: ItemStack?, nbt: CompoundNBT?): ICapabilityProvider? {

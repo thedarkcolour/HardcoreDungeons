@@ -3,17 +3,16 @@ package thedarkcolour.hardcoredungeons
 import net.minecraft.util.ResourceLocation
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.event.RegisterCommandsEvent
+import net.minecraftforge.event.world.BiomeLoadingEvent
+import net.minecraftforge.eventbus.api.EventPriority
 import net.minecraftforge.fml.InterModComms
 import net.minecraftforge.fml.common.Mod
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent
 import org.apache.logging.log4j.LogManager
 import org.apache.logging.log4j.Logger
 import thedarkcolour.hardcoredungeons.block.misc.BonusFarmlandBlock
 import thedarkcolour.hardcoredungeons.block.plant.misc.GoldenCarrotsBlock
 import thedarkcolour.hardcoredungeons.client.ClientHandler
-import thedarkcolour.hardcoredungeons.command.GenerateStructureCommand
-import thedarkcolour.hardcoredungeons.command.LocateBiomeCommand
 import thedarkcolour.hardcoredungeons.command.ReloadModelsCommand
 import thedarkcolour.hardcoredungeons.registry.HBiomes
 import thedarkcolour.hardcoredungeons.registry.RegistryEventHandler
@@ -38,12 +37,12 @@ object HardcoreDungeons {
     init {
         RegistryEventHandler.registerEvents()
         FORGE_BUS.addListener(::registerCommands)
-        // maybe split into separate events class?
         FORGE_BUS.addListener(BonusFarmlandBlock::overrideCropGrowthBehaviour)
         FORGE_BUS.addListener(GoldenCarrotsBlock::onBlockActivated)
 
+        FORGE_BUS.addListener(consumer = ::modifyBiomes, priority = EventPriority.HIGH)
+
         MOD_BUS.addListener(::interModComms)
-        MOD_BUS.addListener(::commonSetup)
 
         runWhenOn(Dist.CLIENT, ClientHandler::registerEvents)
     }
@@ -75,18 +74,11 @@ object HardcoreDungeons {
     private fun registerCommands(event: RegisterCommandsEvent) {
         val dispatcher = event.dispatcher
 
-        LocateBiomeCommand.register(dispatcher)
         ReloadModelsCommand.register(dispatcher)
-        GenerateStructureCommand.register(dispatcher)
     }
 
-    /**
-     * Moving the code that normally operated on registry entries during the registry events.
-     *
-     * This will allow us to use object holders safely.
-     */
-    private fun commonSetup(event: FMLCommonSetupEvent) {
-        HBiomes.postBiomeRegistry()
+    private fun modifyBiomes(event: BiomeLoadingEvent) {
+        HBiomes.postBiomeRegistry(event)
     }
 
     fun loc(path: String): ResourceLocation {

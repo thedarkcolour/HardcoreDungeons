@@ -2,6 +2,7 @@ package thedarkcolour.hardcoredungeons.data
 
 import net.minecraft.data.DataGenerator
 import net.minecraft.data.ItemTagsProvider
+import net.minecraft.loot.TagLootEntry.getBuilder
 import net.minecraft.tags.ItemTags
 import net.minecraft.util.ResourceLocation
 import net.minecraftforge.common.Tags

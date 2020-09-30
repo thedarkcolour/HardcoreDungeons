@@ -2,8 +2,8 @@ package thedarkcolour.hardcoredungeons.block.structure
 
 import net.minecraft.block.*
 import net.minecraft.entity.player.PlayerEntity
+import net.minecraft.fluid.FluidState
 import net.minecraft.fluid.Fluids
-import net.minecraft.fluid.IFluidState
 import net.minecraft.item.BlockItemUseContext
 import net.minecraft.pathfinding.PathType
 import net.minecraft.state.StateContainer
@@ -62,7 +62,7 @@ class SpawnerChestBlock(properties: HProperties) : HBlock(properties), IWaterLog
         ctx: ISelectionContext?
     ): VoxelShape {
         return if (state!!.get(ChestBlock.TYPE) == ChestType.SINGLE) {
-            ChestBlock.field_196315_B
+            ChestBlock.SHAPE_SINGLE
         } else {
             when (ChestBlock.getDirectionToAttached(state)) {
                 Direction.NORTH -> ChestBlock.SHAPE_NORTH
@@ -78,7 +78,7 @@ class SpawnerChestBlock(properties: HProperties) : HBlock(properties), IWaterLog
         var chestType = ChestType.SINGLE
         var direction = context.placementHorizontalFacing.opposite
         val state = context.world.getFluidState(context.pos)
-        val flag = context.func_225518_g_()
+        val flag = context.hasSecondaryUseForPlayer()
         val direction1 = context.face
         if (direction1.axis.isHorizontal && flag) {
             val direction2 = getDirectionToAttach(context, direction1.opposite)
@@ -107,7 +107,7 @@ class SpawnerChestBlock(properties: HProperties) : HBlock(properties), IWaterLog
         } else null
     }
 
-    override fun getFluidState(state: BlockState): IFluidState {
+    override fun getFluidState(state: BlockState): FluidState {
         return if (state.get(WATERLOGGED)) Fluids.WATER.getStillFluidState(false) else Fluids.EMPTY.defaultState
     }
 
