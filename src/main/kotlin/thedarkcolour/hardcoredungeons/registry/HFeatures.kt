@@ -23,7 +23,7 @@ object HFeatures {
     //val LUMLIGHT_TREE_FEATURE = LumlightTreeFeature { TreeFeatureConfig.deserializeFoliage(it) }.setRegistryKey("lumlight_tree")
     //val TALL_LUMLIGHT_TREE_FEATURE = TallTreeFeature { TreeFeatureConfig.deserializeFoliage(it) }.setRegistryKey("tall_lumlight_tree")
 
-    val SHROOMY_BOULDER = register("shroomy_boulder", Feature.FOREST_ROCK.withConfiguration(BlockStateFeatureConfig(HBlocks.SHROOMY_COBBLESTONE.defaultState)).withPlacement(Features.Placements.HEIGHTMAP_PLACEMENT.func_242732_c(5)))
+    val SHROOMY_BOULDER = register("shroomy_boulder_feature", Feature.FOREST_ROCK.withConfiguration(BlockStateFeatureConfig(HBlocks.SHROOMY_COBBLESTONE.defaultState)).withPlacement(Features.Placements.HEIGHTMAP_PLACEMENT.func_242732_c(5)))
     val PATCH_PURPLE_LUMSHROOM = register("patch_purple_lumshroom", Feature.RANDOM_PATCH.withConfiguration(flowerPatchConfig(HBlocks.PURPLE_LUMSHROOM)))
 
     val LUMLIGHT_TREE_CONFIG = BaseTreeFeatureConfig.Builder(
