@@ -14,7 +14,6 @@ import net.minecraft.world.ISeedReader
 import net.minecraft.world.IServerWorld
 import net.minecraft.world.biome.Biome
 import net.minecraft.world.gen.ChunkGenerator
-import net.minecraft.world.gen.GenerationStage
 import net.minecraft.world.gen.Heightmap
 import net.minecraft.world.gen.feature.NoFeatureConfig
 import net.minecraft.world.gen.feature.structure.Structure
