@@ -2,47 +2,44 @@ package thedarkcolour.hardcoredungeons.registry
 
 import net.minecraft.block.Block
 import net.minecraft.block.Blocks
+import net.minecraft.util.ResourceLocation
+import net.minecraft.util.registry.Registry
+import net.minecraft.util.registry.WorldGenRegistries
 import net.minecraft.world.biome.BiomeGenerationSettings
 import net.minecraft.world.gen.GenerationStage.Decoration
 import net.minecraft.world.gen.Heightmap
 import net.minecraft.world.gen.blockplacer.SimpleBlockPlacer
 import net.minecraft.world.gen.blockstateprovider.SimpleBlockStateProvider
 import net.minecraft.world.gen.feature.*
-import net.minecraft.world.gen.feature.template.BlockMatchRuleTest
 import net.minecraft.world.gen.foliageplacer.BushFoliagePlacer
 import net.minecraft.world.gen.foliageplacer.FancyFoliagePlacer
-import net.minecraft.world.gen.placement.*
+import net.minecraft.world.gen.placement.AtSurfaceWithExtraConfig
+import net.minecraft.world.gen.placement.Placement
 import net.minecraft.world.gen.trunkplacer.StraightTrunkPlacer
-import net.minecraftforge.registries.IForgeRegistry
-import thedarkcolour.hardcoredungeons.feature.tree.LumlightTreeFeature
+import thedarkcolour.hardcoredungeons.HardcoreDungeons
 
 @Suppress("MemberVisibilityCanBePrivate", "HasPlatformType")
 object HFeatures {
     //val LUMLIGHT_TREE_FEATURE = LumlightTreeFeature { TreeFeatureConfig.deserializeFoliage(it) }.setRegistryKey("lumlight_tree")
     //val TALL_LUMLIGHT_TREE_FEATURE = TallTreeFeature { TreeFeatureConfig.deserializeFoliage(it) }.setRegistryKey("tall_lumlight_tree")
 
-    val SHROOMY_BOULDER_CONFIG = BlockStateFeatureConfig(HBlocks.SHROOMY_COBBLESTONE.defaultState)
+    val SHROOMY_BOULDER = register("shroomy_boulder", Feature.FOREST_ROCK.withConfiguration(BlockStateFeatureConfig(HBlocks.SHROOMY_COBBLESTONE.defaultState)).withPlacement(Features.Placements.HEIGHTMAP_PLACEMENT.func_242732_c(5)))
+    val PATCH_PURPLE_LUMSHROOM = register("patch_purple_lumshroom", Feature.RANDOM_PATCH.withConfiguration(flowerPatchConfig(HBlocks.PURPLE_LUMSHROOM)))
 
-    val GOLDEN_TULIP_CONFIG = flowerPatchConfig(HBlocks.GOLDEN_TULIP)
-    val PURPLE_LUMSHROOM_CONFIG = flowerPatchConfig(HBlocks.PURPLE_LUMSHROOM)
-    val RUNED_CASTLETON_STONE_CONFIG = BlockClusterFeatureConfig.Builder(SimpleBlockStateProvider(HBlocks.RUNED_CASTLETON_STONE.defaultState), SimpleBlockPlacer()).tries(64).build()
     val LUMLIGHT_TREE_CONFIG = BaseTreeFeatureConfig.Builder(
         SimpleBlockStateProvider(HBlocks.LUMLIGHT_LOG.defaultState),
         SimpleBlockStateProvider(HBlocks.LUMLIGHT_LEAVES.defaultState),
-        FancyFoliagePlacer(2, 4)
-    ).baseHeight(4).setSapling(HBlocks.LUMLIGHT_SAPLING).build()//.treeDecorators(listOf(LumlightPodTreeDecorator(0.1f))).build()
-    //val TALL_LUMLIGHT_LOG_LEAVES_CONFIG = BaseTreeFeatureConfig.Builder(HBlocks.LUMLIGHT_LOG, HBlocks.LUMLIGHT_LEAVES, BlobFoliagePlacer(4, 6)).build()//.treeDecorators(listOf(LumlightPodTreeDecorator(0.1f))).build()
+        FancyFoliagePlacer(FeatureSpread.func_242252_a(2), FeatureSpread.func_242252_a(4), 4),
+        StraightTrunkPlacer(4, 4, 7),
+        TwoLayerFeature(0, 0, 0)
+    ).build()
 
-    // feature registry
-    fun registerFeatures(features: IForgeRegistry<Feature<*>>) {
-        //features.register(LUMLIGHT_TREE_FEATURE)
-        //features.register(TALL_LUMLIGHT_TREE_FEATURE)
-
-        HStructures.registerStructures(features)
+    fun <FC : IFeatureConfig, F : Feature<FC>> register(name: String, feature: ConfiguredFeature<FC, F>): ConfiguredFeature<FC, F> {
+        return Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, ResourceLocation(HardcoreDungeons.ID, name), feature)
     }
 
     fun withShroomyBoulders(biome: BiomeGenerationSettings.Builder) {
-        biome.withFeature(Decoration.LOCAL_MODIFICATIONS, Feature.FOREST_ROCK.withConfiguration(SHROOMY_BOULDER_CONFIG).withPlacement(Features.Placements.HEIGHTMAP_PLACEMENT.func_242732_c(5)))
+        biome.withFeature(Decoration.LOCAL_MODIFICATIONS, SHROOMY_BOULDER)
     }
 /*
     fun withAubrumFlowers(biome: BiomeGenerationSettings.Builder) {
@@ -50,7 +47,7 @@ object HFeatures {
     }
 */
     fun addPurpleLumshrooms(biome: BiomeGenerationSettings.Builder) {
-        biome.withFeature(Decoration.VEGETAL_DECORATION, Feature.RANDOM_PATCH.withConfiguration(PURPLE_LUMSHROOM_CONFIG))
+        biome.withFeature(Decoration.VEGETAL_DECORATION, PATCH_PURPLE_LUMSHROOM)
     }
 /*
     fun addLumlightTrees(biome: Biome) {
@@ -91,7 +88,8 @@ object HFeatures {
         return BlockClusterFeatureConfig.Builder(SimpleBlockStateProvider(flower.defaultState), SimpleBlockPlacer()).tries(64).build()
     }
 
+    // todo
     fun addRainbowlandOres(biome: BiomeGenerationSettings.Builder) {
-        biome.addFeature(Decoration.UNDERGROUND_DECORATION, Feature.ORE.withConfiguration(OreFeatureConfig(BlockMatchRuleTest(HBlocks.RAINBOW_ROCK), HBlocks.RAINBOWSTONE_ORE.defaultState, 3)).withPlacement(Placement.field_242910_o.configure(DepthAverageConfig(16, 12))))
+        //biome.addFeature(Decoration.UNDERGROUND_DECORATION, Feature.ORE.withConfiguration(OreFeatureConfig(BlockMatchRuleTest(HBlocks.RAINBOW_ROCK), HBlocks.RAINBOWSTONE_ORE.defaultState, 3)).withPlacement(Placement.field_242910_o.configure(DepthAverageConfig(16, 12))))
     }
 }

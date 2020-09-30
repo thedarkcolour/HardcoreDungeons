@@ -1,17 +1,15 @@
 package thedarkcolour.hardcoredungeons.feature.tree
 
-import com.mojang.datafixers.Dynamic
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.IWorld
 import net.minecraft.world.gen.ChunkGenerator
-import net.minecraft.world.gen.GenerationSettings
 import net.minecraft.world.gen.feature.BaseTreeFeatureConfig
 import net.minecraft.world.gen.feature.Feature
 import thedarkcolour.hardcoredungeons.util.PI
 import java.util.*
 
-
-class LargeTreeFeature<T : BaseTreeFeatureConfig>(deserializer: (Dynamic<*>) -> T) : Feature<T>(deserializer) {
+/*
+class LargeTreeFeature<T : BaseTreeFeatureConfig>() : Feature<T>(deserializer) {
     override fun place(
         worldIn: IWorld,
         generator: ChunkGenerator<out GenerationSettings>,
@@ -135,4 +133,4 @@ class NatureRNG private constructor(
         DIRAC,
         ;
     }
-}
+}*/

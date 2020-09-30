@@ -2,7 +2,6 @@ package thedarkcolour.hardcoredungeons.entity.castleton.frayedsoul
 
 import net.minecraft.entity.CreatureEntity
 import net.minecraft.entity.EntityType
-import net.minecraft.entity.SharedMonsterAttributes
 import net.minecraft.entity.ai.goal.Goal
 import net.minecraft.entity.ai.goal.LookAtGoal
 import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal
@@ -20,9 +19,14 @@ class FrayedSoulEntity(type: EntityType<FrayedSoulEntity>, worldIn: World) : Cre
         goalSelector.addGoal(2, WanderGoal(this))
     }
 
-    override fun registerAttributes() {
+    // todo GlobalEntityTypeAttributes.put
+    /*override fun registerAttributes() {
         super.registerAttributes()
         getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).baseValue = 0.24
+    }*/
+
+    override fun registerData() {
+        super.registerData()
     }
 
     override fun getAmbientSound(): SoundEvent {

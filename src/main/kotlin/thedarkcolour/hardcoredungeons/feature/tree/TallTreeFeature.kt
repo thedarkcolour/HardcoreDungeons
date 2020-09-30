@@ -1,19 +1,15 @@
 package thedarkcolour.hardcoredungeons.feature.tree
 
 import com.google.common.collect.Lists
-import com.mojang.datafixers.Dynamic
-import net.minecraft.block.LogBlock
+import com.mojang.serialization.Dynamic
 import net.minecraft.util.Direction
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.MathHelper
 import net.minecraft.util.math.MutableBoundingBox
 import net.minecraft.world.gen.IWorldGenerationReader
-import net.minecraft.world.gen.feature.AbstractTreeFeature
-import net.minecraft.world.gen.feature.FancyTreeFeature
-import net.minecraft.world.gen.feature.TreeFeatureConfig
 import java.util.*
 import kotlin.math.*
-
+/*
 class TallTreeFeature(deserializer: (Dynamic<*>) -> TreeFeatureConfig) : FancyTreeFeature(deserializer) {
     private val rng = NatureRNG.gaussian(2.0f, 6.0f)
 
@@ -316,4 +312,4 @@ class TallTreeFeature(deserializer: (Dynamic<*>) -> TreeFeatureConfig) : FancyTr
     }
 
     internal class ExtendedPos(pos: BlockPos, val endY: Int) : BlockPos(pos)
-}
+}*/

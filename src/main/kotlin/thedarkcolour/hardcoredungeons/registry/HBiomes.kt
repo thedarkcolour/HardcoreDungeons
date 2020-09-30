@@ -1,25 +1,11 @@
 package thedarkcolour.hardcoredungeons.registry
 
+//import net.minecraftforge.common.BiomeDictionary
 import net.minecraft.world.biome.Biome
 import net.minecraft.world.biome.Biomes
-import net.minecraftforge.common.BiomeDictionary
-import net.minecraftforge.common.BiomeManager
 import net.minecraftforge.event.world.BiomeLoadingEvent
-import net.minecraftforge.eventbus.api.EventPriority
 import net.minecraftforge.registries.IForgeRegistry
 import thedarkcolour.hardcoredungeons.biome.HBiomeMaker
-import thedarkcolour.hardcoredungeons.biome.aubrum.AubrumMountainsBiome
-import thedarkcolour.hardcoredungeons.biome.aubrum.AubrumWastelandBiome
-import thedarkcolour.hardcoredungeons.biome.aubrum.AuriPlainsBiome
-import thedarkcolour.hardcoredungeons.biome.aubrum.GoldenForestBiome
-import thedarkcolour.hardcoredungeons.biome.castleton.CastletonHillsBiome
-import thedarkcolour.hardcoredungeons.biome.castleton.KnightlyShrublandBiome
-import thedarkcolour.hardcoredungeons.biome.castleton.RunedFlatsBiome
-import thedarkcolour.hardcoredungeons.biome.overworld.MushroomCliffsBiome
-import thedarkcolour.hardcoredungeons.biome.overworld.ThickForestBiome
-import thedarkcolour.hardcoredungeons.biome.rainbowland.RainbowPlainsBiome
-import thedarkcolour.kotlinforforge.forge.FORGE_BUS
-import thedarkcolour.kotlinforforge.forge.MOD_BUS
 
 /**
  * Biomes for Hardcore Dungeons.
@@ -46,10 +32,6 @@ object HBiomes {
     // Rainbowland biomes
     val RAINBOW_PLAINS = HBiomeMaker.makeRainbowPlainsBiome().setRegistryKey("rainbowland_plains")
 
-    init {
-        FORGE_BUS.addListener(consumer = ::modifyBiomeGen, priority = EventPriority.HIGH)
-    }
-
     fun registerBiomes(biomes: IForgeRegistry<Biome>) {
         biomes.register(RAINBOW_PLAINS)
         biomes.register(CASTLETON_HILLS)
@@ -59,19 +41,17 @@ object HBiomes {
         //biomes.register(GOLDEN_FOREST)
         //biomes.register(AURI_PLAINS)
 
-        biomes.register(RUNED_FLATS)
+        //biomes.register(RUNED_FLATS)
         biomes.register(THICK_FOREST)
         biomes.register(MUSHROOM_CLIFFS)
 
-        HStructures.MUSHROOM_HUT.addToBiome(Biomes.MUSHROOM_FIELDS)
+        //HStructures.MUSHROOM_HUT.addToBiome(Biomes.MUSHROOM_FIELDS)
     }
 
-    fun modifyBiomeGen(event: BiomeLoadingEvent) {
-        if (event.name ==)
-    }
-
-    fun postBiomeRegistry() {
-        BiomeManager.addBiome(BiomeManager.BiomeType.WARM, BiomeManager.BiomeEntry(THICK_FOREST, 6))
-        BiomeDictionary.addTypes(MUSHROOM_CLIFFS, BiomeDictionary.Type.MUSHROOM, BiomeDictionary.Type.HILLS, BiomeDictionary.Type.RARE, BiomeDictionary.Type.OVERWORLD)
+    fun biomeLoading(event: BiomeLoadingEvent) {
+        if (event.name == Biomes.MUSHROOM_FIELDS.registryName) {
+            event.generation.withStructure(HStructures.MUSHROOM_HUT_FEATURE)
+        }
+        //BiomeDictionary.addTypes(MUSHROOM_CLIFFS, BiomeDictionary.Type.MUSHROOM, BiomeDictionary.Type.HILLS, BiomeDictionary.Type.RARE, BiomeDictionary.Type.OVERWORLD)
     }
 }

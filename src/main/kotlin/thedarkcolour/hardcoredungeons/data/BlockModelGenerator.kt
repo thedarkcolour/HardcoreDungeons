@@ -7,8 +7,8 @@ import net.minecraft.util.ResourceLocation
 import net.minecraftforge.client.model.generators.BlockModelBuilder
 import net.minecraftforge.client.model.generators.BlockStateProvider
 import net.minecraftforge.client.model.generators.ConfiguredModel
-import net.minecraftforge.client.model.generators.ExistingFileHelper
 import net.minecraftforge.client.model.generators.ModelFile.ExistingModelFile
+import net.minecraftforge.common.data.ExistingFileHelper
 import thedarkcolour.hardcoredungeons.HardcoreDungeons
 import thedarkcolour.hardcoredungeons.registry.HBlocks
 

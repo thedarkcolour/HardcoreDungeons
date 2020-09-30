@@ -10,6 +10,7 @@ import net.minecraft.tileentity.TileEntityType
 import net.minecraft.util.SoundEvent
 import net.minecraft.world.biome.Biome
 import net.minecraft.world.gen.feature.Feature
+import net.minecraft.world.gen.feature.structure.Structure
 import net.minecraft.world.gen.surfacebuilders.SurfaceBuilder
 import net.minecraftforge.event.RegistryEvent.Register
 import net.minecraftforge.registries.DataSerializerEntry
@@ -39,7 +40,7 @@ object RegistryEventHandler {
         MOD_BUS.addGenericListener(::registerContainerTypes)
         MOD_BUS.addGenericListener(::registerDataSerializers)
         MOD_BUS.addGenericListener(::registerEntities)
-        MOD_BUS.addGenericListener(::registerFeatures)
+        MOD_BUS.addGenericListener(::registerStructures)
         MOD_BUS.addGenericListener(::registerItems)
         MOD_BUS.addGenericListener(::registerParticles)
         MOD_BUS.addGenericListener(::registerRecipes)
@@ -50,8 +51,7 @@ object RegistryEventHandler {
     
     private fun registerBiomes(event: Register<Biome>) = HBiomes.registerBiomes(event.registry)
 
-    private fun registerBlocks(event: Register<Block>) =
-        registerAndCount(event.registry, HBlocks::registerBlocks)
+    private fun registerBlocks(event: Register<Block>) = HBlocks.registerBlocks(event.registry)
 
     private fun registerContainerTypes(event: Register<ContainerType<*>>) = HContainers.registerContainerTypes(event.registry)
 
@@ -59,10 +59,9 @@ object RegistryEventHandler {
 
     private fun registerEntities(event: Register<EntityType<*>>) = HEntities.registerEntities(event.registry)
 
-    private fun registerFeatures(event: Register<Feature<*>>) = HFeatures.registerFeatures(event.registry)
+    private fun registerStructures(event: Register<Structure<*>>) = HStructures.registerStructures(event.registry)
 
-    private fun registerItems(event: Register<Item>) =
-        registerAndCount(event.registry, HItems::registerItems)
+    private fun registerItems(event: Register<Item>) = HItems.registerItems(event.registry)
 
     private fun registerParticles(event: Register<ParticleType<*>>) = HParticles.registerParticles(event.registry)
 

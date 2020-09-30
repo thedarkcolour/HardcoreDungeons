@@ -9,8 +9,9 @@ import net.minecraft.nbt.CompoundNBT
 import net.minecraft.network.datasync.EntityDataManager
 import net.minecraft.network.datasync.IDataSerializer
 import net.minecraft.world.DifficultyInstance
-import net.minecraft.world.IWorld
+import net.minecraft.world.IServerWorld
 import net.minecraft.world.World
+import net.minecraft.world.server.ServerWorld
 import thedarkcolour.hardcoredungeons.dimension.castleton.ai.AlertHerd
 import thedarkcolour.hardcoredungeons.dimension.castleton.ai.FightGoal
 import thedarkcolour.hardcoredungeons.registry.HDataSerializers
@@ -64,14 +65,14 @@ class CastletonDeerEntity(type: EntityType<CastletonDeerEntity>, worldIn: World)
         }
     }
 
-    override fun createChild(ageable: AgeableEntity): AgeableEntity {
-        val a = HEntities.CASTLETON_DEER.create(world)!!
+    override fun func_241840_a(worldIn: ServerWorld, parent: AgeableEntity): AgeableEntity? {
+        val a = HEntities.CASTLETON_DEER.create(worldIn)!!
         a.pattern = pickRandomPattern()
         return a
     }
 
     override fun onInitialSpawn(
-        worldIn: IWorld,
+        worldIn: IServerWorld,
         difficultyIn: DifficultyInstance,
         reason: SpawnReason,
         spawnDataIn: ILivingEntityData?,

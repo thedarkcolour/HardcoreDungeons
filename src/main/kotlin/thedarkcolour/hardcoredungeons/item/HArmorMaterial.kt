@@ -11,11 +11,16 @@ import java.util.*
 
 // todo merge with HItemTier
 enum class HArmorMaterial(
-    durability: Int, private val reduction: IntArray, private val enchantability: Int,
-    private val soundEvent: SoundEvent, private val toughness: Float, repairMaterial: () -> Ingredient
+    durability: Int,
+    private val reduction: IntArray,
+    private val enchantability: Int,
+    private val soundEvent: SoundEvent,
+    private val toughness: Float,
+    private val knockbackReduction: Float,
+    repairMaterial: () -> Ingredient
 ) : IArmorMaterial {
-    TOWER(22, intArrayOf(2, 6, 7, 3), 9, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 0.0f, Ingredient::EMPTY),
-    SHROOMY(18, intArrayOf(3, 7, 7, 2), 16, SoundEvents.ITEM_ARMOR_EQUIP_LEATHER, 0.1f, { Ingredient.fromTag(net.minecraftforge.common.Tags.Items.MUSHROOMS) })
+    TOWER(22, intArrayOf(2, 6, 7, 3), 9, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 0.0f, 0.5f, Ingredient::EMPTY),
+    SHROOMY(18, intArrayOf(3, 7, 7, 2), 16, SoundEvents.ITEM_ARMOR_EQUIP_LEATHER, 0.1f, 0.0f, { Ingredient.fromTag(net.minecraftforge.common.Tags.Items.MUSHROOMS) })
     ;
 
     private val materialName = HardcoreDungeons.ID + ":" + name.toLowerCase(Locale.ROOT)
@@ -29,4 +34,5 @@ enum class HArmorMaterial(
     override fun getRepairMaterial(): Ingredient = repairMaterial.value
     override fun getName() = materialName
     override fun getToughness() = toughness
+    override fun getKnockbackResistance() = knockbackReduction
 }

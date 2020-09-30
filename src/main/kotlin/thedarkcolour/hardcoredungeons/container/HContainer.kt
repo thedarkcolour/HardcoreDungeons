@@ -5,7 +5,7 @@ import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.player.PlayerInventory
 import net.minecraft.inventory.container.Container
 import net.minecraft.inventory.container.Slot
-import net.minecraft.tags.Tag
+import net.minecraft.tags.ITag
 import net.minecraft.util.math.BlockPos
 
 /**
@@ -22,7 +22,7 @@ abstract class HContainer(type: HContainerType<*>, id: Int, val playerIn: Player
      * @param playerIn the player whose usable distance is checked
      * @param tag the block tag to check
      */
-    fun isTagInRange(worldPos: WorldPos, playerIn: PlayerEntity, tag: Tag<Block>): Boolean {
+    fun isTagInRange(worldPos: WorldPos, playerIn: PlayerEntity, tag: ITag.INamedTag<Block>): Boolean {
         return worldPos.invokeDefaulted(true) { worldIn, pos ->
             if (!worldIn.getBlockState(pos).isIn(tag)) {
                 false

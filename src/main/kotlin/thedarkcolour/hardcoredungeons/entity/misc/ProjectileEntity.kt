@@ -17,6 +17,10 @@ abstract class ProjectileEntity(
     worldIn: World,
 ) : DamagingProjectileEntity(type, worldIn), IRendersAsItem {
 
+    var shootingEntity: LivingEntity
+        get() = func_234616_v_() as LivingEntity
+        set(shooter) = setShooter(shooter)
+
     open fun shoot(shooter: LivingEntity, x: Double, y: Double, z: Double, mX: Double, mY: Double, mZ: Double) {
         setLocationAndAngles(x, y, z, rotationYaw, rotationPitch)
         setPosition(x, y, z)

@@ -22,13 +22,7 @@ import net.minecraftforge.registries.ForgeRegistries
 import java.util.*
 import kotlin.math.sqrt
 
-/**
- * The /locatebiome command.
- *
- * Searches for a biome and gives the nearest position.
- *
- * /locatebiome <biome>
- */
+/*
 object LocateBiomeCommand {
     val ALL_BIOMES = SuggestionProviders.register<CommandSource>(ResourceLocation("all_biomes")) { _, builder ->
         ISuggestionProvider.suggestIterable(ForgeRegistries.BIOMES.keys, builder)
@@ -75,4 +69,4 @@ object LocateBiomeCommand {
         val location = ctx.getArgument("biome", ResourceLocation::class.java)
         return ForgeRegistries.BIOMES.getValue(location) ?: throw INVALID_EXCEPTION.create(location)
     }
-}
+}*/

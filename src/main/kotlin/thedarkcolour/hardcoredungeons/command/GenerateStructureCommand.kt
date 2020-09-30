@@ -1,5 +1,5 @@
 package thedarkcolour.hardcoredungeons.command
-
+/*
 import com.mojang.brigadier.CommandDispatcher
 import com.mojang.brigadier.context.CommandContext
 import net.minecraft.command.CommandSource
@@ -21,7 +21,7 @@ object GenerateStructureCommand {
     private val ALL_STRUCTURES = SuggestionProviders.register<CommandSource>(ResourceLocation("all_structures")) { _, builder ->
         ISuggestionProvider.suggestIterable(ForgeRegistries.FEATURES.entries.filter {
                 (_, obj) -> obj is Structure<*>
-        }.map(Map.Entry<ResourceLocation, Feature<*>>::key), builder)
+        }.map { (a, _) -> a.registryName }, builder)
     }
 
     fun register(dispatcher: CommandDispatcher<CommandSource>) {
@@ -59,4 +59,4 @@ object GenerateStructureCommand {
         start.generateStructure(world, generator, world.rand, MutableBoundingBox.getNewBoundingBox(), ChunkPos(chunkX, chunkZ))
         return 0
     }
-}
+}*/

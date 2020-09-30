@@ -21,7 +21,7 @@ class DeerRenderer(manager: EntityRendererManager) : ReloadableRenderer<Castleto
         entity: CastletonDeerEntity, entityYaw: Float, partialTicks: Float,
         stack: MatrixStack, buffer: IRenderTypeBuffer, light: Int
     ) {
-        val name = entity.customName?.formattedText
+        val name = entity.customName?.unformattedComponentText
 
         entityModel = if (name == "TheDarkColour" || name == "bruh") {
             stag
@@ -44,7 +44,7 @@ class DeerRenderer(manager: EntityRendererManager) : ReloadableRenderer<Castleto
     }
 
     override fun getEntityTexture(entity: CastletonDeerEntity): ResourceLocation {
-        val name = entity.customName?.formattedText
+        val name = entity.customName?.unformattedComponentText
 
         if (name == "TheDarkColour" || name == "bruh") {
             return THEDARKCOLOUR
@@ -60,7 +60,7 @@ class DeerRenderer(manager: EntityRendererManager) : ReloadableRenderer<Castleto
     }
 
     fun getOverlayTexture(entity: CastletonDeerEntity): RenderType {
-        val name = entity.customName?.formattedText
+        val name = entity.customName?.unformattedComponentText
         if (name == "TheDarkColour" || name == "bruh") {
             return THEDARKCOLOUR_OVERLAY
         }

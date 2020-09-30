@@ -1,10 +1,10 @@
 package thedarkcolour.hardcoredungeons.dimension.rainbowland
-
+/*
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.ChunkPos
+import net.minecraft.world.Dimension
+import net.minecraft.world.DimensionType
 import net.minecraft.world.World
-import net.minecraft.world.dimension.Dimension
-import net.minecraft.world.dimension.DimensionType
 import thedarkcolour.hardcoredungeons.registry.HBiomes
 import thedarkcolour.hardcoredungeons.registry.HBlocks
 import thedarkcolour.hardcoredungeons.registry.HChunkGenerators
@@ -25,4 +25,4 @@ class RainbowlandDimension(world: World, type: DimensionType) : Dimension(world,
     companion object {
         private val FOG_COLOR = HDimensions.color(color = 0xcfb3ff)
     }
-}
+}*/

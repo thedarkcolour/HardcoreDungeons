@@ -1,16 +1,15 @@
 package thedarkcolour.hardcoredungeons.registry
-
+/*
 import net.minecraft.block.BlockState
 import net.minecraft.world.World
 import net.minecraft.world.biome.Biome
-import net.minecraft.world.biome.provider.BiomeProviderType
+import net.minecraft.world.biome.BiomeGenerationSettings
+/*import net.minecraft.world.biome.provider.BiomeProviderType
 import net.minecraft.world.gen.ChunkGeneratorType
 import net.minecraft.world.gen.GenerationSettings
 import net.minecraft.world.gen.OverworldChunkGenerator
-import net.minecraft.world.gen.OverworldGenSettings
+import net.minecraft.world.gen.OverworldGenSettings*/
 import net.minecraftforge.registries.IForgeRegistry
-import thedarkcolour.hardcoredungeons.dimension.aubrum.AubrumChunkGenerator
-import thedarkcolour.hardcoredungeons.dimension.castleton.CastletonChunkGenerator
 
 object HChunkGenerators {
     val CASTLETON = ChunkGeneratorType(::CastletonChunkGenerator, false, ::OverworldGenSettings).setRegistryKey("castleton")
@@ -41,4 +40,4 @@ object HChunkGenerators {
         settings(t)
         return t
     }
-}
+}*/

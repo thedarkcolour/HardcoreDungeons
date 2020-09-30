@@ -2,8 +2,7 @@ package thedarkcolour.hardcoredungeons.tags
 
 import net.minecraft.block.Block
 import net.minecraft.tags.BlockTags
-import net.minecraft.tags.Tag
-import net.minecraft.util.ResourceLocation
+import net.minecraft.tags.ITag
 import thedarkcolour.hardcoredungeons.HardcoreDungeons
 
 /**
@@ -20,7 +19,7 @@ object HBlockTags {
     val FENCES_BRICK = tag("fences/rainbow")
     val CASTLETON_GRASS_PLANTABLE = tag("castleton_grass_plantable")
 
-    private fun tag(name: String): Tag<Block> {
-        return BlockTags.Wrapper(ResourceLocation(HardcoreDungeons.ID, name))
+    private fun tag(name: String): ITag.INamedTag<Block> {
+        return BlockTags.makeWrapperTag(HardcoreDungeons.ID + ":" + name)
     }
 }

@@ -58,9 +58,9 @@ abstract class AbstractFillingWand(properties: Properties) : Item(properties) {
         }
         playerIn?.sendStatusMessage(
             TranslationTextComponent(fillMessage)
-                .appendSibling(StringTextComponent(" (${startPos.x} ${startPos.y} ${startPos.z}) "))
-                .appendSibling(TranslationTextComponent("lang.hardcoredungeons.to"))
-                .appendSibling(StringTextComponent(" (${pos.x} ${pos.y} ${pos.z})")),
+                .appendString(" (${startPos.x} ${startPos.y} ${startPos.z}) ")
+                .append(TranslationTextComponent("lang.hardcoredungeons.to"))
+                .appendString(" (${pos.x} ${pos.y} ${pos.z})"),
             true
         )
         stack.removeChildTag("StartPos")

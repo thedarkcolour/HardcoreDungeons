@@ -98,7 +98,7 @@ object HItems {
 
     // Rainbowland items
     val RAINBOWSTONE_AXE = AxeItem(ItemTier.GOLD, 11.0f, -3.2f, Properties().group(Group).defaultMaxDamage(1326)).setRegistryKey("rainbowstone_axe")
-    val RAINBOWSTONE_HOE = HoeItem(ItemTier.GOLD, /*-1.0f*/-1, Properties().group(Group).defaultMaxDamage(1326)).setRegistryKey("rainbowstone_hoe")
+    //val RAINBOWSTONE_HOE = HoeItem(ItemTier.GOLD, /*-1.0f*/-1, Properties().group(Group).defaultMaxDamage(1326)).setRegistryKey("rainbowstone_hoe")
     val RAINBOWSTONE_PICKAXE = PickaxeItem(ItemTier.GOLD, 1, -2.5f, Properties().group(Group).defaultMaxDamage(1326)).setRegistryKey("rainbowstone_pickaxe")
     val RAINBOWSTONE_SHOVEL = ShovelItem(ItemTier.GOLD, 2.0f, -3.0f, Properties().group(Group).defaultMaxDamage(1326)).setRegistryKey("rainbowstone_shovel")
     val RAINBOWSTONE_SWORD = SwordItem(ItemTier.GOLD, 9, -2.0f, Properties().group(Group).defaultMaxDamage(1326)).setRegistryKey("rainbowstone_sword")
@@ -184,7 +184,7 @@ object HItems {
 
         // Rainbowland items
         items.registerHandheldItem(RAINBOWSTONE_AXE)
-        items.registerHandheldItem(RAINBOWSTONE_HOE)
+        //items.registerHandheldItem(RAINBOWSTONE_HOE)
         items.registerHandheldItem(RAINBOWSTONE_PICKAXE)
         items.registerHandheldItem(RAINBOWSTONE_SHOVEL)
         items.registerHandheldItem(RAINBOWSTONE_SWORD)

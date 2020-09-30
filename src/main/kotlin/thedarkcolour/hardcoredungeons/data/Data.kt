@@ -26,9 +26,11 @@ object Data {
             gen.addProvider(ModelGenerator(gen, helper))
         }
         if (event.includeServer()) {
+            val blockTags = BlockTagGenerator(gen, helper)
             gen.addProvider(RecipeGenerator(gen))
             gen.addProvider(LootGenerator(gen))
-            gen.addProvider(BlockTagGenerator(gen))
+            gen.addProvider(blockTags)
+            gen.addProvider(ItemTagGenerator(gen, blockTags, helper))
         }
     }
 }

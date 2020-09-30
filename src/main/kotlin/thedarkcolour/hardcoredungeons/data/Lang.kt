@@ -24,17 +24,17 @@ abstract class Lang(gen: DataGenerator, locale: String) : LanguageProvider(gen, 
     class English(gen: DataGenerator) : Lang(gen, "en_us") {
         override fun addTranslations() {
             add("itemGroup.hardcoredungeons", "Hardcore Dungeons")
-
+/*
             // Overworld biomes
             add(HBiomes.THICK_FOREST, "Thick Forest")
             add(HBiomes.MUSHROOM_CLIFFS, "Mushroom Cliffs")
 
-            /* //Aubrum biomes
+             //Aubrum biomes
             add(HBiomes.AUBRUM_WASTELAND, "Aubrum Wasteland")
             add(HBiomes.GOLDEN_FOREST, "Golden Forest")
             add(HBiomes.AUBRUM_MOUNTAINS, "Aubrum Mountains")
             add(HBiomes.AURI_PLAINS, "Auri Plains")
-            */
+
 
             // Castleton biomes
             add(HBiomes.CASTLETON_HILLS, "Castleton Hills")
@@ -43,7 +43,7 @@ abstract class Lang(gen: DataGenerator, locale: String) : LanguageProvider(gen, 
 
             // Rainbowland biomes
             add(HBiomes.RAINBOW_PLAINS, "Rainbow Plains")
-
+*/
             add(HBlocks.VASE, "Vase")
             add(HBlocks.SHROOMY_COBBLESTONE, "Shroomy Cobblestone")
             add(HBlocks.SHROOMY_COBBLESTONE_SLAB, "Shroomy Cobblestone Slab")
@@ -75,7 +75,7 @@ abstract class Lang(gen: DataGenerator, locale: String) : LanguageProvider(gen, 
             add(HBlocks.LUMLIGHT_SAPLING, "Lumlight Sapling")
             add(HBlocks.LUMLIGHT_LOG, "Lumlight Log")
             add(HBlocks.LUMLIGHT_WOOD, "Lumlight Wood")
-            add(HBlocks.STRIPPED_LUMLIGHT_LOG, "Stripped Lumlight Log")
+            //add(HBlocks.STRIPPED_LUMLIGHT_LOG, "Stripped Lumlight Log")
             add(HBlocks.STRIPPED_LUMLIGHT_WOOD, "Stripped Lumlight Wood")
             add(HBlocks.LUMLIGHT_LEAVES, "Lumlight Leaves")
             add(HBlocks.LUMLIGHT_PLANKS, "Lumlight Planks")

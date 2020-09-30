@@ -1,5 +1,5 @@
 package thedarkcolour.hardcoredungeons.dimension.castleton
-
+/*
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.ChunkPos
 import net.minecraft.world.World
@@ -36,4 +36,4 @@ class CastletonDimension(world: World, dimensionType: DimensionType) : HDimensio
         private val FOG_COLOR = HDimensions.color(17, 61, 81)
         // 0x113d51
     }
-}
+}*/

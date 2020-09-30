@@ -1,5 +1,6 @@
 package thedarkcolour.hardcoredungeons.dimension.rainbowland
 
+/*
 import net.minecraft.world.IWorld
 import net.minecraft.world.biome.provider.BiomeProvider
 import net.minecraft.world.gen.ChunkGenerator
@@ -25,4 +26,4 @@ class RainbowlandChunkGenerator(
     override fun func_222545_a(p_222545_1_: Double, p_222545_3_: Double, p_222545_5_: Int): Double {
         TODO("not implemented")
     }
-}
+}*/

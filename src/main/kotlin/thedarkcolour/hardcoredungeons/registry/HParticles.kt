@@ -17,17 +17,17 @@ object HParticles {
     val CASTLETON_CAMPFIRE_POP = BasicParticleType(false).setRegistryKey("castleton_campfire_pop")
 
     fun registerParticles(particles: IForgeRegistry<ParticleType<*>>) {
-        particles.register(SOUL_FRAY)
-        particles.register(CASTLETON_TORCH_FLAME)
-        particles.register(CASTLETON_CAMPFIRE_POP)
+        //particles.register(SOUL_FRAY)
+        //particles.register(CASTLETON_TORCH_FLAME)
+        //particles.register(CASTLETON_CAMPFIRE_POP)
     }
 
     fun registerParticleFactories() {
         val manager = Minecraft.getInstance().particles
 
-        manager.registerFactory(SOUL_FRAY, SoulFrayParticle::Factory)
-        manager.registerFactory(CASTLETON_TORCH_FLAME, FlameParticle::Factory)
-        manager.registerFactory(CASTLETON_CAMPFIRE_POP, LavaParticle::Factory)
+        //manager.registerFactory(SOUL_FRAY, SoulFrayParticle::Factory)
+        //manager.registerFactory(CASTLETON_TORCH_FLAME, FlameParticle::Factory)
+        //manager.registerFactory(CASTLETON_CAMPFIRE_POP, LavaParticle::Factory)
     }
 }
 

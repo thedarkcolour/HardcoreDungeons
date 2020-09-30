@@ -5,14 +5,13 @@ import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.CompoundNBT
 import net.minecraftforge.common.capabilities.ICapabilityProvider
-import top.theillusivec4.curios.api.capability.ICurio
-import top.theillusivec4.curios.common.capability.CapCurioItem
+import top.theillusivec4.curios.api.type.capability.ICurio
+import top.theillusivec4.curios.common.capability.CurioItemCapability
 
 class CrownItem(properties: Properties) : Item(properties) {
     override fun initCapabilities(stack: ItemStack?, nbt: CompoundNBT?): ICapabilityProvider? {
-        return CapCurioItem.createProvider(object : ICurio {
-            //private var model: Any = null
-            override fun hasRender(identifier: String?, livingEntity: LivingEntity?) = true
+        return CurioItemCapability.createProvider(object : ICurio {
+            override fun canRender(identifier: String?, index: Int, livingEntity: LivingEntity?) = true
         })
     }
 }
