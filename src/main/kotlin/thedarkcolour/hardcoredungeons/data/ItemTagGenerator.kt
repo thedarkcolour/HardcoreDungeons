@@ -14,15 +14,10 @@ import thedarkcolour.hardcoredungeons.tags.HItemTags
 import java.nio.file.Path
 
 class ItemTagGenerator(gen: DataGenerator, blockTags: BlockTagsProvider, helper: ExistingFileHelper) : ItemTagsProvider(gen, blockTags, HardcoreDungeons.ID, helper) {
-    var filter: Set<ResourceLocation>? = null
-
     /**
      * Register tags for each block.
      */
     override fun registerTags() {
-        super.registerTags()
-        filter = tagToBuilder.entries.map(Map.Entry<ResourceLocation, ITag.Builder>::key).toHashSet()
-
         // hcd tags
         getOrCreateBuilder(HItemTags.LUMLIGHT_LOGS).add(HItems.LUMLIGHT_LOG, HItems.LUMLIGHT_WOOD, HItems.STRIPPED_LUMLIGHT_LOG, HItems.STRIPPED_LUMLIGHT_WOOD)
         //getBuilder(HBlockTags.GLASS_RAINBOW).add(HBlocks.RAINBOW_GLASS)
@@ -50,14 +45,10 @@ class ItemTagGenerator(gen: DataGenerator, blockTags: BlockTagsProvider, helper:
     /**
      * Resolves a Path for the location to save the given tag.
      */
-    override fun makePath(id: ResourceLocation): Path? {
-        return if (filter?.contains(id) == true) null else super.makePath(id)
-    }
+    override fun makePath(id: ResourceLocation): Path? = super.makePath(id)
 
     /**
      * Gets a name for this provider, to use in logging.
      */
-    override fun getName(): String {
-        return "Hardcore Dungeons Block Tags"
-    }
+    override fun getName() = "Hardcore Dungeons Block Tags"
 }
