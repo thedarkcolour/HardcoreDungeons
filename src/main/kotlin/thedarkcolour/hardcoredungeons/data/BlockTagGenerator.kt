@@ -19,12 +19,6 @@ import java.nio.file.Path
  */
 class BlockTagGenerator(gen: DataGenerator, helper: ExistingFileHelper) : BlockTagsProvider(gen, HardcoreDungeons.ID, helper) {
     /**
-     * A set of all non Hardcore Dungeons blocks and tags
-     * that is used to avoid generating unused tags.
-     */
-    private var filter: Set<ResourceLocation>? = null
-
-    /**
      * Register tags for each block.
      *
      * todo split into separate method after filter is created
@@ -103,14 +97,11 @@ class BlockTagGenerator(gen: DataGenerator, helper: ExistingFileHelper) : BlockT
     /**
      * Resolves a Path for the location to save the given tag.
      */
-    override fun makePath(id: ResourceLocation): Path? {
-        return if (filter?.contains(id) == true) null else super.makePath(id)
-    }
+    override fun makePath(id: ResourceLocation): Path? = super.makePath(id)
+    
 
     /**
      * Gets a name for this provider, to use in logging.
      */
-    override fun getName(): String {
-        return "Hardcore Dungeons Block Tags"
-    }
+    override fun getName() = "Hardcore Dungeons Block Tags"
 }
