@@ -1,7 +1,7 @@
 {
     "pack": {
         "description": "hardcoredungeons resources",
-        "pack_format": 5,
-        "_comment": "stop looking at my code you pervert"
+        "pack_format": 6,
+        "_comment": "Data and assets for Hardcore Dungeons"
     }
 }

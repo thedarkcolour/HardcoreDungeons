@@ -3,14 +3,13 @@ package thedarkcolour.hardcoredungeons.entity.castleton.frayedsoul
 import com.mojang.blaze3d.matrix.MatrixStack
 import net.minecraft.client.renderer.entity.EntityRendererManager
 import net.minecraft.client.renderer.entity.MobRenderer
-import net.minecraft.util.ResourceLocation
-import thedarkcolour.hardcoredungeons.HardcoreDungeons
 import thedarkcolour.hardcoredungeons.entity.castleton.FullbrightLayer
+import thedarkcolour.hardcoredungeons.util.modLoc
 import kotlin.math.sin
 
 class FrayedSoulRenderer(manager: EntityRendererManager) : MobRenderer<FrayedSoulEntity, FrayedSoulModel>(manager, FrayedSoulModel(), 0.4f) {
     init {
-        addLayer(FullbrightLayer(this, ResourceLocation(HardcoreDungeons.ID, "textures/entity/frayed_soul/frayed_soul_eyes.png")))
+        addLayer(FullbrightLayer(this, modLoc("textures/entity/frayed_soul/frayed_soul_eyes.png")))
     }
 
     override fun getEntityTexture(entity: FrayedSoulEntity) = TEXTURE
@@ -21,6 +20,6 @@ class FrayedSoulRenderer(manager: EntityRendererManager) : MobRenderer<FrayedSou
     }
 
     companion object {
-        private val TEXTURE = ResourceLocation(HardcoreDungeons.ID, "textures/entity/frayed_soul/frayed_soul.png")
+        private val TEXTURE = modLoc("textures/entity/frayed_soul/frayed_soul.png")
     }
 }

@@ -1,16 +1,20 @@
 package thedarkcolour.hardcoredungeons.entity.misc.magic
 
 import net.minecraft.entity.EntityType
+import net.minecraft.entity.IRendersAsItem
 import net.minecraft.item.ItemStack
 import net.minecraft.item.Items
 import net.minecraft.util.DamageSource
 import net.minecraft.util.math.EntityRayTraceResult
 import net.minecraft.util.math.RayTraceResult
 import net.minecraft.world.World
+import net.minecraftforge.api.distmarker.Dist
+import net.minecraftforge.api.distmarker.OnlyIn
 import thedarkcolour.hardcoredungeons.entity.misc.ProjectileEntity
 import thedarkcolour.hardcoredungeons.registry.HParticles
 
-class MagicBoltEntity(type: EntityType<out ProjectileEntity>, worldIn: World) : ProjectileEntity(type, worldIn) {
+@OnlyIn(value = Dist.CLIENT, _interface = IRendersAsItem::class)
+class MagicBoltEntity(type: EntityType<out ProjectileEntity>, worldIn: World) : ProjectileEntity(type, worldIn), IRendersAsItem {
 
     /**
      * Called to update the entity's position/logic.
@@ -38,12 +42,14 @@ class MagicBoltEntity(type: EntityType<out ProjectileEntity>, worldIn: World) : 
     override fun onImpact(result: RayTraceResult) {
         super.onImpact(result)
         if (!world.isRemote) {
-            if (result is EntityRayTraceResult && result.entity != shootingEntity) {
+            val shooter = shootingEntity
+
+            if (result is EntityRayTraceResult && result.entity != shooter) {
                 val entity = result.entity
                 val flag = entity.attackEntityFrom(DamageSource.MAGIC, 7.0f)
 
-                if (flag) {
-                    applyEnchantments(shootingEntity, entity)
+                if (flag && shooter != null) {
+                    applyEnchantments(shooter, entity)
                 }
             } else if (result.type == RayTraceResult.Type.BLOCK) {
                 remove()
@@ -61,7 +67,9 @@ class MagicBoltEntity(type: EntityType<out ProjectileEntity>, worldIn: World) : 
         }
     }
 
-    override fun getItem() = ICON
+    override fun getItem(): ItemStack {
+        return ICON
+    }
 
     companion object {
         private val ICON = ItemStack(Items.MAGMA_CREAM)

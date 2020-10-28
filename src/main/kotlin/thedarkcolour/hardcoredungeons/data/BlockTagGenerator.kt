@@ -52,16 +52,16 @@ class BlockTagGenerator(gen: DataGenerator, helper: ExistingFileHelper) : BlockT
         getOrCreateBuilder(BlockTags.WOODEN_FENCES).add(HBlocks.LUMLIGHT_FENCE)
         getOrCreateBuilder(BlockTags.WOODEN_PRESSURE_PLATES).add(HBlocks.LUMLIGHT_PRESSURE_PLATE)
         getOrCreateBuilder(BlockTags.PORTALS).add(HBlocks.AUBRUM_PORTAL, HBlocks.CASTLETON_PORTAL, HBlocks.RAINBOWLAND_PORTAL)
+        getOrCreateBuilder(BlockTags.WALL_POST_OVERRIDE).add(HBlocks.LUMLIGHT_PRESSURE_PLATE, HBlocks.CASTLETON_TORCH, HBlocks.CROWN, HBlocks.CHALICE)
         getOrCreateBuilder(BlockTags.SAPLINGS).add(HBlocks.LUMLIGHT_SAPLING)
-        getOrCreateBuilder(BlockTags.LOGS).addTag(HBlockTags.LUMLIGHT_LOGS)
         getOrCreateBuilder(BlockTags.CROPS).add(HBlocks.CHILI_PEPPER)
         getOrCreateBuilder(BlockTags.BEE_GROWABLES).add(HBlocks.CHILI_PEPPER)
         getOrCreateBuilder(BlockTags.LEAVES).add(HBlocks.COTTONMARSH_LEAVES, HBlocks.LUMLIGHT_LEAVES)
-        getOrCreateBuilder(BlockTags.LOGS).addTag(HBlockTags.COTTONMARSH_LOGS)
+        getOrCreateBuilder(BlockTags.LOGS).addTag(HBlockTags.LUMLIGHT_LOGS)//.addTag(HBlockTags.COTTONMARSH_LOGS)
         getOrCreateBuilder(BlockTags.IMPERMEABLE).addTag(HBlockTags.GLASS_RAINBOW)
 
-        // getOrCreateBuilder tags
-        getOrCreateBuilder(Blocks.DIRT).add(HBlocks.CASTLETON_SOIL, HBlocks.RAINBOW_SOIL)
+        // forge tags
+        getOrCreateBuilder(Blocks.DIRT).add(HBlocks.CASTLETON_SOIL, HBlocks.CASTLETON_GRASS_BLOCK, HBlocks.RAINBOW_SOIL, HBlocks.RAINBOW_GRASS_BLOCK, HBlocks.AURIGRASS_BLOCK, HBlocks.AURISOIL)
         getOrCreateBuilder(Blocks.FENCES).add(HBlocks.LUMLIGHT_FENCE, HBlocks.CHARGED_CASTLETON_BRICK_FENCE)
         getOrCreateBuilder(Blocks.FENCE_GATES_WOODEN).add(HBlocks.LUMLIGHT_FENCE_GATE)
         getOrCreateBuilder(Blocks.GLASS).addTag(HBlockTags.GLASS_RAINBOW)

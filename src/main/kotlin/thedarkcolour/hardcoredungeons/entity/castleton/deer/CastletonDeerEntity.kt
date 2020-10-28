@@ -12,8 +12,6 @@ import net.minecraft.world.DifficultyInstance
 import net.minecraft.world.IServerWorld
 import net.minecraft.world.World
 import net.minecraft.world.server.ServerWorld
-import thedarkcolour.hardcoredungeons.dimension.castleton.ai.AlertHerd
-import thedarkcolour.hardcoredungeons.dimension.castleton.ai.FightGoal
 import thedarkcolour.hardcoredungeons.registry.HDataSerializers
 import thedarkcolour.hardcoredungeons.registry.HEntities
 import thedarkcolour.hardcoredungeons.registry.HItems
@@ -82,9 +80,9 @@ class CastletonDeerEntity(type: EntityType<CastletonDeerEntity>, worldIn: World)
         // goals must be registered later because dataManager is null when goals are normally registered.
         if (pattern.isFemale()) {
             goalSelector.addGoal(1, PanicGoal(this, 0.7))
-            goalSelector.addGoal(1, AlertHerd(this))
+            //goalSelector.addGoal(1, AlertHerd(this))
         } else if (pattern.isStag()) {
-            goalSelector.addGoal(1, FightGoal(this))
+            //goalSelector.addGoal(1, FightGoal(this))
             targetSelector.addGoal(1, HurtByTargetGoal(this))
             targetSelector.addGoal(2, MeleeAttackGoal(this, 0.3, false))
         }

@@ -1,7 +1,6 @@
 package thedarkcolour.hardcoredungeons.data.modelgen
 
 import net.minecraft.item.Item
-import net.minecraftforge.client.model.generators.ModelFile
 import thedarkcolour.hardcoredungeons.data.ModelGenerator
 
 class SpawnEggModelType : ItemModelType() {
@@ -17,5 +16,5 @@ class SpawnEggModelType : ItemModelType() {
 
     private fun spawnEggItem(path: String, gen: ModelGenerator) =
         gen.itemModels().getBuilder(path)
-            .parent(ModelFile.UncheckedModelFile(gen.mcLoc("item/template_spawn_egg")))
+            .parent(gen.mcFile("item/template_spawn_egg"))
 }

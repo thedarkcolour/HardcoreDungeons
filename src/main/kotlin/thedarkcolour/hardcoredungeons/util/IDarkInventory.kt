@@ -8,8 +8,7 @@ import net.minecraft.tileentity.TileEntity
 import net.minecraftforge.common.util.INBTSerializable
 import net.minecraftforge.items.IItemHandlerModifiable
 
-// todo redo
-//      this system is shit
+// todo redo this system its so shit
 interface IDarkInventory : IItemHandlerModifiable, INBTSerializable<CompoundNBT>, Iterable<ItemStack> {
     /**
      * Only use for tile entities

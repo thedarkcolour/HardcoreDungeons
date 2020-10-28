@@ -18,7 +18,13 @@ abstract class ModelType<T> {
         val SIMPLE_BLOCK = SimpleBlockModelType()
         val SLAB_BLOCK = SlabModelType()
         val STAIRS_BLOCK = StairsModelType()
+        val WALL_BLOCK = WallModelType()
+        val FENCE_BLOCK = FenceModelType()
+        val BUTTON_BLOCK = ButtonModelType()
+        val COLUMN_BLOCK = ColumnModelType()
         val PILLAR_BLOCK = PillarModelType()
+        val DOOR_BLOCK = DoorModelType()
+        val TRAPDOOR_BLOCK = TrapDoorModelType()
         val FARMLAND_BLOCK = FarmlandModelType()
         val VASE_BLOCK = VaseModelType()
 

@@ -1,10 +1,7 @@
 package thedarkcolour.hardcoredungeons
 
-import net.minecraft.util.ResourceLocation
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.event.RegisterCommandsEvent
-import net.minecraftforge.event.world.BiomeLoadingEvent
-import net.minecraftforge.eventbus.api.EventPriority
 import net.minecraftforge.fml.InterModComms
 import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent
@@ -14,7 +11,6 @@ import thedarkcolour.hardcoredungeons.block.misc.BonusFarmlandBlock
 import thedarkcolour.hardcoredungeons.block.plant.misc.GoldenCarrotsBlock
 import thedarkcolour.hardcoredungeons.client.ClientHandler
 import thedarkcolour.hardcoredungeons.command.ReloadModelsCommand
-import thedarkcolour.hardcoredungeons.registry.HBiomes
 import thedarkcolour.hardcoredungeons.registry.RegistryEventHandler
 import thedarkcolour.kotlinforforge.forge.FORGE_BUS
 import thedarkcolour.kotlinforforge.forge.MOD_BUS
@@ -40,8 +36,6 @@ object HardcoreDungeons {
         FORGE_BUS.addListener(BonusFarmlandBlock::overrideCropGrowthBehaviour)
         FORGE_BUS.addListener(GoldenCarrotsBlock::onBlockActivated)
 
-        FORGE_BUS.addListener(consumer = ::modifyBiomes, priority = EventPriority.HIGH)
-
         MOD_BUS.addListener(::interModComms)
 
         runWhenOn(Dist.CLIENT, ClientHandler::registerEvents)
@@ -57,14 +51,16 @@ object HardcoreDungeons {
      * @see top.theillusivec4.curios.api.CurioTags.NECKLACE
      */
     private fun interModComms(event: InterModEnqueueEvent) {
-        InterModComms.sendTo(CuriosApi.MODID, SlotTypeMessage.REGISTER_TYPE) {
-            SlotTypeMessage.Builder("head").build()
-        }
-        InterModComms.sendTo(CuriosApi.MODID, SlotTypeMessage.REGISTER_TYPE) {
-            SlotTypeMessage.Builder("body").build()
-        }
-        InterModComms.sendTo(CuriosApi.MODID, SlotTypeMessage.REGISTER_TYPE) {
-            SlotTypeMessage.Builder("necklace").build()
+        event.enqueueWork {
+            InterModComms.sendTo(CuriosApi.MODID, SlotTypeMessage.REGISTER_TYPE) {
+                SlotTypeMessage.Builder("head").build()
+            }
+            InterModComms.sendTo(CuriosApi.MODID, SlotTypeMessage.REGISTER_TYPE) {
+                SlotTypeMessage.Builder("body").build()
+            }
+            InterModComms.sendTo(CuriosApi.MODID, SlotTypeMessage.REGISTER_TYPE) {
+                SlotTypeMessage.Builder("necklace").build()
+            }
         }
     }
 
@@ -75,13 +71,5 @@ object HardcoreDungeons {
         val dispatcher = event.dispatcher
 
         ReloadModelsCommand.register(dispatcher)
-    }
-
-    private fun modifyBiomes(event: BiomeLoadingEvent) {
-        HBiomes.biomeLoading(event)
-    }
-
-    fun loc(path: String): ResourceLocation {
-        return ResourceLocation(ID, path)
     }
 }

@@ -14,5 +14,34 @@ class ThickForestSurfaceBuilder : SurfaceBuilder<SurfaceBuilderConfig>(SurfaceBu
         } else {
             DEFAULT.buildSurface(rand, chunk, biomeIn, x, z, startHeight, noise, defaultBlock, defaultFluid, seaLevel, seed, PODZOL_DIRT_GRAVEL_CONFIG)
         }
+        /*
+
+    "noise": {
+        "random_density_offset": true,
+        "density_factor": 0.001,
+        "density_offset": -0.46875,
+        "simplex_surface_noise": true,
+        "amplified": true,
+        "bottom_slide": {
+            "target": -30,
+            "size": 0,
+            "offset": 0
+        },
+        "size_horizontal": 4,
+        "size_vertical": 1,
+        "height": 256,
+        "sampling": {
+            "xz_scale": 1,
+            "y_scale": 1,
+            "xz_factor": 80.0,
+            "y_factor": 160.0
+        },
+        "top_slide": {
+            "target": -10,
+            "size": 3,
+            "offset": 0
+        }
+    },
+         */
     }
 }

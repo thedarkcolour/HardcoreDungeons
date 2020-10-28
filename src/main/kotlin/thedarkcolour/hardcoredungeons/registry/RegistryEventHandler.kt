@@ -9,15 +9,12 @@ import net.minecraft.particles.ParticleType
 import net.minecraft.tileentity.TileEntityType
 import net.minecraft.util.SoundEvent
 import net.minecraft.world.biome.Biome
-import net.minecraft.world.gen.feature.Feature
 import net.minecraft.world.gen.feature.structure.Structure
 import net.minecraft.world.gen.surfacebuilders.SurfaceBuilder
 import net.minecraftforge.event.RegistryEvent.Register
+import net.minecraftforge.eventbus.api.EventPriority
 import net.minecraftforge.registries.DataSerializerEntry
-import net.minecraftforge.registries.IForgeRegistry
-import net.minecraftforge.registries.IForgeRegistryEntry
-import org.apache.logging.log4j.Level
-import thedarkcolour.hardcoredungeons.HardcoreDungeons
+import thedarkcolour.kotlinforforge.forge.FORGE_BUS
 import thedarkcolour.kotlinforforge.forge.MOD_BUS
 
 /**
@@ -28,13 +25,12 @@ import thedarkcolour.kotlinforforge.forge.MOD_BUS
  */
 object RegistryEventHandler {
     /**
-     * Adds each function to the event bus.
-     *
-     * This function works because Kotlin for Forge
-     * supports KCallable event listeners.
+     * Sets up our registries.
      */
     @Suppress("DuplicatedCode")
     fun registerEvents() {
+        RegistryFixer.init()
+
         MOD_BUS.addGenericListener(::registerBiomes)
         MOD_BUS.addGenericListener(::registerBlocks)
         MOD_BUS.addGenericListener(::registerContainerTypes)
@@ -47,6 +43,9 @@ object RegistryEventHandler {
         MOD_BUS.addGenericListener(::registerSounds)
         MOD_BUS.addGenericListener(::registerSurfaceBuilders)
         MOD_BUS.addGenericListener(::registerTileEntities)
+
+        FORGE_BUS.addListener(HStructures::addDimensionalSpacing)
+        FORGE_BUS.addListener(consumer = HBiomes::biomeLoading, priority = EventPriority.HIGH)
     }
     
     private fun registerBiomes(event: Register<Biome>) = HBiomes.registerBiomes(event.registry)
@@ -72,12 +71,4 @@ object RegistryEventHandler {
     private fun registerSurfaceBuilders(event: Register<SurfaceBuilder<*>>) = HSurfaceBuilders.registerSurfaceBuilders(event.registry)
 
     private fun registerTileEntities(event: Register<TileEntityType<*>>) = HTileEntities.registerTileEntities(event.registry)
-
-    private fun <T : IForgeRegistryEntry<T>> registerAndCount(registry: IForgeRegistry<T>, registerEntries: (IForgeRegistry<T>) -> Unit) {
-        val oldSize = registry.entries.size
-        registerEntries(registry)
-        val numNewBlocks = registry.entries.size - oldSize
-
-        HardcoreDungeons.LOGGER.log(Level.DEBUG, "Added $numNewBlocks entries to registry ${registry.registryName}")
-    }
 }

@@ -2,11 +2,13 @@ buildscript {
     repositories {
         maven { url = 'https://files.minecraftforge.net/maven' }
         maven { url = "https://maven.tterrag.com/" }
+        maven { url = 'https://dist.creeper.host/Sponge/maven' }
         jcenter()
         mavenCentral()
     }
     dependencies {
         classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.0.+', changing: true
+        classpath 'org.spongepowered:mixingradle:0.7-SNAPSHOT'
     }
 }
 apply plugin: 'net.minecraftforge.gradle'
@@ -27,6 +29,7 @@ minecraft {
             workingDirectory project.file('run')
 
             property 'forge.logging.console.level', 'debug'
+            arg '-mixin.config=hardcoredungeons.mixins.json'
 
             mods {
                 hardcoredungeons {
@@ -39,6 +42,7 @@ minecraft {
             workingDirectory project.file('run')
 
             property 'forge.logging.console.level', 'debug'
+            arg '-mixin.config=hardcoredungeons.mixins.json'
 
             mods {
                 hardcoredungeons {
@@ -51,6 +55,7 @@ minecraft {
             workingDirectory project.file('run')
 
             property 'forge.logging.console.level', 'debug'
+            arg '-mixin.config=hardcoredungeons.mixins.json'
 
             args '--mod', 'hardcoredungeons', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources')
 
@@ -89,7 +94,7 @@ repositories {
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.16.3-34.1.0'
+    minecraft 'net.minecraftforge:forge:1.16.3-34.1.11'
 
     // curios
     implementation fg.deobf("top.theillusivec4.curios:curios-forge:1.16.3-4.0.2.0")
@@ -98,8 +103,8 @@ dependencies {
     //implementation fg.deobf("team.chisel.ctm:CTM:MC1.15.2-0.4.0.6")
 
     // jei
-    //compileOnly ('mezz.jei:jei-1.16.3:7.3.2.34:api')//fg.deobf
-    //runtimeOnly ('mezz.jei:jei-1.16.3:7.3.2.34')//fg.deobf
+    compileOnly fg.deobf("mezz.jei:jei-1.16.3:7.5.0.43:api")
+    runtimeOnly fg.deobf("mezz.jei:jei-1.16.3:7.5.0.43")
 }
 
 jar {
@@ -133,10 +138,6 @@ apply plugin: 'org.jetbrains.dokka'
 
 repositories {
     maven {
-        name = "Kotlin Early Access"
-        url = "https://dl.bintray.com/kotlin/kotlin-eap"
-    }
-    maven {
         name = 'kotlinforforge'
         url = 'https://thedarkcolour.github.io/KotlinForForge/'
     }
@@ -148,7 +149,8 @@ repositories {
 
 dependencies {
     // Use the latest version of KotlinForForge
-    implementation 'thedarkcolour:kotlinforforge:1.6.0'
+    implementation 'thedarkcolour:kotlinforforge:1.6.2'
+    compile group: 'org.jetbrains.kotlin', name: 'kotlin-reflect', version: '1.4.10'
 }
 
 compileKotlin {
@@ -156,12 +158,17 @@ compileKotlin {
     // and Kotlin 1.4 language features
     kotlinOptions {
         jvmTarget = '1.8'
-        languageVersion = '1.4'
-        apiVersion = '1.4'
     }
 }
 
 dokka {
     outputFormat = 'kotlin-website-html'
     outputDirectory = "$buildDir/dokka"
+}
+
+
+apply plugin: 'org.spongepowered.mixin'
+
+mixin {
+    add sourceSets.main, 'hardcoredungeons.refmap.json'
 }

@@ -3,9 +3,8 @@ package thedarkcolour.hardcoredungeons.entity.misc.cheeky
 import com.mojang.blaze3d.matrix.MatrixStack
 import net.minecraft.client.renderer.IRenderTypeBuffer
 import net.minecraft.client.renderer.entity.EntityRendererManager
-import net.minecraft.util.ResourceLocation
-import thedarkcolour.hardcoredungeons.HardcoreDungeons
 import thedarkcolour.hardcoredungeons.entity.ReloadableRenderer
+import thedarkcolour.hardcoredungeons.util.modLoc
 
 class CheekyRenderer(renderManagerIn: EntityRendererManager) : ReloadableRenderer<CheekyEntity, CheekyModel>(renderManagerIn, ::CheekyModel, 1.4f) {
     override fun getEntityTexture(entity: CheekyEntity) = TEXTURE
@@ -54,6 +53,6 @@ class CheekyRenderer(renderManagerIn: EntityRendererManager) : ReloadableRendere
     }
 
     companion object {
-        private val TEXTURE = ResourceLocation(HardcoreDungeons.ID, "textures/entity/cheeky.png")
+        private val TEXTURE = modLoc("textures/entity/cheeky.png")
     }
 }

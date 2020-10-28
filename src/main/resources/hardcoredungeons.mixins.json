@@ -1,0 +1,12 @@
+{
+    "package": "thedarkcolour.hardcoredungeons.mixin",
+    "required": true,
+    "compatibilityLevel": "JAVA_8",
+    "injectors": {
+        "defaultRequire": 1
+    },
+    "minVersion": "0.8.0",
+    "refmap": "hardcoredungeons.refmap.json",
+    "mixins": [
+    ]
+}

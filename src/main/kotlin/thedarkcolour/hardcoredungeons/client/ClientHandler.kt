@@ -31,7 +31,6 @@ object ClientHandler {
         HEntities.registerEntityRenderers()
         HEntities.registerEntityShaders()
         HContainers.registerScreens()
-        //HTileEntities.registerTileEntityRenderers()
     }
 
     private fun registerBakedModels(event: ModelBakeEvent) {

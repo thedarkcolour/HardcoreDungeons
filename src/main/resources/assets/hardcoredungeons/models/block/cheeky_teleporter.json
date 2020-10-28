@@ -1,0 +1,54 @@
+{
+	"credit": "Made with Blockbench",
+	"parent": "block/block",
+	"textures": {
+		"0": "hardcoredungeons:block/stone_texture",
+		"1": "hardcoredungeons:block/cheeky_portal",
+		"particle": "hardcoredungeons:block/stone_texture"
+	},
+	"elements": [
+		{
+			"from": [0, 0, 0],
+			"to": [2, 16, 16],
+			"faces": {
+				"north": {"uv": [0, 0, 2, 16], "texture": "#0", "cullface": "north"},
+				"east": {"uv": [0, 0, 16, 16], "texture": "#0"},
+				"south": {"uv": [0, 0, 2, 16], "texture": "#0", "cullface": "south"},
+				"west": {"uv": [0, 0, 16, 16], "texture": "#0", "cullface": "west"},
+				"up": {"uv": [0, 0, 2, 16], "texture": "#0", "cullface": "up"},
+				"down": {"uv": [0, 0, 2, 16], "texture": "#0", "cullface": "down"}
+			}
+		},
+		{
+			"from": [14, 0, 0],
+			"to": [16, 16, 16],
+			"rotation": {"angle": 0, "axis": "y", "origin": [22, 8, 8]},
+			"faces": {
+				"north": {"uv": [0, 0, 2, 16], "texture": "#0", "cullface": "north"},
+				"east": {"uv": [0, 0, 16, 16], "texture": "#0", "cullface": "east"},
+				"south": {"uv": [0, 0, 2, 16], "texture": "#0", "cullface": "south"},
+				"west": {"uv": [0, 0, 16, 16], "texture": "#0"},
+				"up": {"uv": [0, 0, 2, 16], "texture": "#0", "cullface": "up"},
+				"down": {"uv": [0, 0, 2, 16], "texture": "#0", "cullface": "down"}
+			}
+		},
+		{
+			"from": [2, 0, 1.5],
+			"to": [14, 16, 14.5],
+			"rotation": {"angle": 0, "axis": "y", "origin": [10, 8, 9.5]},
+			"faces": {
+				"north": {"uv": [0, 0, 12, 16], "texture": "#1"},
+				"south": {"uv": [0, 0, 12, 16], "texture": "#1"},
+				"up": {"uv": [0, 0, 12, 13], "texture": "#1", "cullface": "up"},
+				"down": {"uv": [0, 0, 12, 13], "texture": "#1", "cullface": "down"}
+			}
+		}
+	],
+	"groups": [
+		{
+			"name": "middle",
+			"origin": [10, 8, 9.5],
+			"children": [0, 1, 2]
+		}
+	]
+}

@@ -14,6 +14,7 @@ import net.minecraft.world.ISeedReader
 import net.minecraft.world.IServerWorld
 import net.minecraft.world.biome.Biome
 import net.minecraft.world.gen.ChunkGenerator
+import net.minecraft.world.gen.GenerationStage
 import net.minecraft.world.gen.Heightmap
 import net.minecraft.world.gen.feature.NoFeatureConfig
 import net.minecraft.world.gen.feature.structure.Structure
@@ -24,9 +25,9 @@ import net.minecraft.world.gen.feature.structure.TemplateStructurePiece
 import net.minecraft.world.gen.feature.template.PlacementSettings
 import net.minecraft.world.gen.feature.template.Template
 import net.minecraft.world.gen.feature.template.TemplateManager
-import thedarkcolour.hardcoredungeons.HardcoreDungeons
 import thedarkcolour.hardcoredungeons.registry.HStructures
 import thedarkcolour.hardcoredungeons.registry.setRegistryKey
+import thedarkcolour.hardcoredungeons.util.modLoc
 import java.util.*
 
 /**
@@ -37,12 +38,12 @@ import java.util.*
  * @author TheDarkColour
  */
 class SimpleStructure(structureID: String, addPieces: (MutableMap<Vector3i, ResourceLocation>) -> Unit) : Structure<NoFeatureConfig>(NoFeatureConfig.field_236558_a_) {
-    private val structureName = HardcoreDungeons.ID + structureID
     private val pieces: Map<Vector3i, ResourceLocation>
 
     init {
         pieces = hashMapOf()
         addPieces(pieces)
+
         setRegistryKey(structureID)
     }
 
@@ -56,18 +57,11 @@ class SimpleStructure(structureID: String, addPieces: (MutableMap<Vector3i, Reso
         return GenerationStage.Decoration.SURFACE_STRUCTURES
     }
 
-    /**
-     * Namespaced registry name for use in the /locate command.
-     */
-    override fun getStructureName(): String {
-        return structureName
-    }
-
     companion object {
         // structure name should match piece name
         fun single(structureID: String): SimpleStructure {
             return SimpleStructure(structureID) { pieces ->
-                pieces[BlockPos.ZERO] = ResourceLocation(HardcoreDungeons.ID, structureID)
+                pieces[BlockPos.ZERO] = modLoc(structureID)
             }
         }
     }

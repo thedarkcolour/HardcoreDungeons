@@ -1,0 +1,29 @@
+{
+    "type": "hardcoredungeons:rainbowland",
+    "generator": {
+        "type": "minecraft:noise",
+        "settings": "hardcoredungeons:rainbowland",
+        "seed": -22343483,
+        "biome_source": {
+            "humidity_noise": {
+                "firstOctave": -7,
+                "amplitudes": [ 1.0, 1.0 ]
+            },
+            "altitude_noise": {
+                "firstOctave": -7,
+                "amplitudes": [ 1.0, 1.0 ]
+            },
+            "weirdness_noise": {
+                "firstOctave": -7,
+                "amplitudes": [ 1.0, 1.0 ]
+            },
+            "temperature_noise": {
+                "firstOctave": -7,
+                "amplitudes": [ 1.0, 1.0 ]
+            },
+
+            "type": "minecraft:fixed",
+            "biome": "hardcoredungeons:rainbow_plains"
+        }
+    }
+}

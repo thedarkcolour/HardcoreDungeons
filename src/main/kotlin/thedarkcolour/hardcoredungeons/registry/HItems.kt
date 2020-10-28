@@ -44,11 +44,11 @@ object HItems {
     //val RING_OF_LAST_WORDS = Item(Properties().group(Group).maxStackSize(1).rarity(Rarity.UNCOMMON)).setRegistryKey("ring_of_last_words")
 
     // Castleton blocks
-    val CASTLETON_SOIL by objectHolder<Item>("castleton_soil")
-    val CASTLETON_STONE by objectHolder<Item>("castleton_stone")
+    //val CASTLETON_SOIL by objectHolder<Item>("castleton_soil")
+    //val CASTLETON_STONE by objectHolder<Item>("castleton_stone")
     val CASTLETON_BRICK_STAIRS by objectHolder<Item>("castleton_brick_stairs")
-    val CRACKED_CASTLETON_BRICKS by objectHolder<Item>("cracked_castleton_bricks")
-    val CHARGED_CASTLETON_BRICKS by objectHolder<Item>("charged_castleton_bricks")
+    //val CRACKED_CASTLETON_BRICKS by objectHolder<Item>("cracked_castleton_bricks")
+    //val CHARGED_CASTLETON_BRICKS by objectHolder<Item>("charged_castleton_bricks")
     val CHARGED_CASTLETON_BRICK_FENCE by objectHolder<Item>("charged_castleton_brick_fence")
     val LUMLIGHT_SAPLING by objectHolder<Item>("lumlight_sapling")
     val LUMLIGHT_LOG by objectHolder<Item>("lumlight_log")
@@ -64,7 +64,7 @@ object HItems {
     val LUMLIGHT_DOOR by objectHolder<Item>("lumlight_door")
     val PURPLE_LUMSHROOM by objectHolder<Item>("purple_lumshroom")
     val BLUE_LUMSHROOM by objectHolder<Item>("blue_lumshroom")
-    val CROWN by objectHolder<Item>("crown")
+    //val CROWN by objectHolder<Item>("crown")
     val CHALICE by objectHolder<Item>("chalice")
     val CASTLETON_DUNGEON_CHEST by objectHolder<Item>("castleton_dungeon_chest")
 
@@ -98,7 +98,7 @@ object HItems {
 
     // Rainbowland items
     val RAINBOWSTONE_AXE = AxeItem(ItemTier.GOLD, 11.0f, -3.2f, Properties().group(Group).defaultMaxDamage(1326)).setRegistryKey("rainbowstone_axe")
-    //val RAINBOWSTONE_HOE = HoeItem(ItemTier.GOLD, /*-1.0f*/-1, Properties().group(Group).defaultMaxDamage(1326)).setRegistryKey("rainbowstone_hoe")
+    val RAINBOWSTONE_HOE = HoeItem(ItemTier.GOLD, -1, -1.0f, Properties().group(Group).defaultMaxDamage(1326)).setRegistryKey("rainbowstone_hoe")
     val RAINBOWSTONE_PICKAXE = PickaxeItem(ItemTier.GOLD, 1, -2.5f, Properties().group(Group).defaultMaxDamage(1326)).setRegistryKey("rainbowstone_pickaxe")
     val RAINBOWSTONE_SHOVEL = ShovelItem(ItemTier.GOLD, 2.0f, -3.0f, Properties().group(Group).defaultMaxDamage(1326)).setRegistryKey("rainbowstone_shovel")
     val RAINBOWSTONE_SWORD = SwordItem(ItemTier.GOLD, 9, -2.0f, Properties().group(Group).defaultMaxDamage(1326)).setRegistryKey("rainbowstone_sword")
@@ -106,7 +106,6 @@ object HItems {
 
     // Aubrum blocks
     val FLAME_ROSE by objectHolder<Item>("flame_rose")
-    val STRIPPED_AURI_LOG by objectHolder<Item>("stripped_auri_log")
     val AURI_STAIRS by objectHolder<Item>("auri_stairs")
     val AURI_SLAB by objectHolder<Item>("auri_slab")
     val SCRAP_METAL by objectHolder<Item>("scrap_metal")
@@ -130,8 +129,8 @@ object HItems {
 
     // Misc items
     val CHILI_PEPPER = BlockNamedItem(HBlocks.CHILI_PEPPER, Properties().group(Group).food(Food.Builder().hunger(2).saturation(0.2F).setAlwaysEdible().fastToEat().build())).setRegistryKey("chili_pepper")
-    val CORN = BlockNamedItem(HBlocks.CORN, Properties().group(Group).food(Food.Builder().hunger(2).saturation(0.2F).setAlwaysEdible().build())).setRegistryKey("corn")
-    val ROASTED_CORN = Item(Properties().group(Group).food(Food.Builder().hunger(6).saturation(0.8F).setAlwaysEdible().build())).setRegistryKey("roasted_corn")
+    //val CORN = BlockNamedItem(HBlocks.CORN, Properties().group(Group).food(Food.Builder().hunger(2).saturation(0.2F).setAlwaysEdible().build())).setRegistryKey("corn")
+    //val ROASTED_CORN = Item(Properties().group(Group).food(Food.Builder().hunger(6).saturation(0.8F).setAlwaysEdible().build())).setRegistryKey("roasted_corn")
     val BULLET = Item(Properties().group(Group)).setRegistryKey("bullet")
     val SHELL = Item(Properties().group(Group)).setRegistryKey("shell")
 
@@ -140,13 +139,6 @@ object HItems {
     val CLEAR_WAND = ClearWandItem(Properties().group(Group).maxStackSize(1).rarity(Rarity.EPIC)).setRegistryKey("clear_wand")
     val CLONE_WAND = CloneWandItem(Properties().group(Group).maxStackSize(1).rarity(Rarity.UNCOMMON)).setRegistryKey("clone_wand")
     val DISTANCE_WAND = DistanceWandItem(Properties().group(Group).maxStackSize(1).rarity(HRarities.LEGENDARY)).setRegistryKey("distance_wand")
-
-    /**
-     * Shortcut function for making [BlockItem] instances
-     */
-    fun getItemBlock(block: Block): Item {
-        return BlockItem(block, Properties().group(Group)).setRegistryName(block.registryName)
-    }
 
     fun registerItems(items: IForgeRegistry<Item>) {
         for (block in HBlocks.BLOCKS_W_ITEMS) {
@@ -184,7 +176,7 @@ object HItems {
 
         // Rainbowland items
         items.registerHandheldItem(RAINBOWSTONE_AXE)
-        //items.registerHandheldItem(RAINBOWSTONE_HOE)
+        items.registerHandheldItem(RAINBOWSTONE_HOE)
         items.registerHandheldItem(RAINBOWSTONE_PICKAXE)
         items.registerHandheldItem(RAINBOWSTONE_SHOVEL)
         items.registerHandheldItem(RAINBOWSTONE_SWORD)
@@ -199,8 +191,8 @@ object HItems {
 
         // Misc
         items.registerSimpleItem(CHILI_PEPPER)
-        items.register(CORN)
-        items.register(ROASTED_CORN)
+        //items.register(CORN)
+        //items.register(ROASTED_CORN)
         items.registerSimpleItem(BULLET)
         items.registerSimpleItem(SHELL)
 

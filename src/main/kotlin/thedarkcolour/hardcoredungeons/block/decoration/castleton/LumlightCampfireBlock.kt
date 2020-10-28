@@ -6,11 +6,12 @@ import net.minecraft.util.SoundCategory
 import net.minecraft.util.SoundEvents
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
+import thedarkcolour.hardcoredungeons.block.properties.HProperties
 import thedarkcolour.hardcoredungeons.registry.HBlocks
 import thedarkcolour.hardcoredungeons.registry.HParticles
 import java.util.*
 
-class LumlightCampfireBlock(properties: Properties) : CampfireBlock(true, 2, properties) {
+class LumlightCampfireBlock(properties: HProperties) : CampfireBlock(true, 2, properties.build()) {
     override fun animateTick(stateIn: BlockState, worldIn: World, pos: BlockPos, rand: Random) {
         if (stateIn[LIT]) {
             if (rand.nextInt(10) == 0) {

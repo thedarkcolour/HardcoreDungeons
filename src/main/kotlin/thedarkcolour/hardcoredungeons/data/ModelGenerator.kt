@@ -12,7 +12,6 @@ import net.minecraftforge.client.model.generators.ModelFile
 import net.minecraftforge.common.data.ExistingFileHelper
 import thedarkcolour.hardcoredungeons.HardcoreDungeons
 import thedarkcolour.hardcoredungeons.block.decoration.StairsBlock
-import thedarkcolour.hardcoredungeons.block.decoration.TrapDoorBlock
 import thedarkcolour.hardcoredungeons.data.modelgen.ModelType
 
 class ModelGenerator(gen: DataGenerator, private val helper: ExistingFileHelper) : BlockStateProvider(gen, HardcoreDungeons.ID, helper) {
@@ -20,14 +19,6 @@ class ModelGenerator(gen: DataGenerator, private val helper: ExistingFileHelper)
 
         for (modelType in MODEL_TYPES) {
             modelType.generateModels(this)
-        }
-
-        for (b in TRAPDOOR_BLOCKS) {
-            trapdoorBlock(
-                b as TrapDoorBlock,
-                modLoc("block/" + b.registryName!!.path),
-                true
-            )
         }
 
         // todo add
@@ -101,10 +92,10 @@ class ModelGenerator(gen: DataGenerator, private val helper: ExistingFileHelper)
         getVariantBuilder(lantern)
             .partialState()
             .with(BlockStateProperties.HANGING, true)
-            .addModels(ConfiguredModel(hanging.file))
+            .addModels(ConfiguredModel(getModelFile(hanging)))
             .partialState()
             .with(BlockStateProperties.HANGING, false)
-            .addModels(ConfiguredModel(normal.file))
+            .addModels(ConfiguredModel(getModelFile(normal)))
     }
 
     private fun column(side: Block, end: Block) {
@@ -119,7 +110,7 @@ class ModelGenerator(gen: DataGenerator, private val helper: ExistingFileHelper)
 
         getVariantBuilder(side)
             .partialState()
-            .setModels(ConfiguredModel(m.file))
+            .setModels(ConfiguredModel(getModelFile(m)))
     }
 
     fun simpleItem(item: IItemProvider) {
@@ -162,7 +153,7 @@ class ModelGenerator(gen: DataGenerator, private val helper: ExistingFileHelper)
      * @param name the name of the .json file to be exported in modid/assets/models/block/
      */
     fun blockModel(name: String): BlockModelBuilder {
-        val outputLoc = extendWithFolder(if (name.contains(":")) mcLoc(name) else modLoc(name))
+        val outputLoc = extendWithFolder(if (name.contains(":")) ResourceLocation(name) else modLoc(name))
         val model = models().generatedModels.computeIfAbsent(outputLoc) { k -> BlockModelBuilder(k, helper) }
         BLOCK_MODEL_LOOKUP[model] = outputLoc
         return model
@@ -176,26 +167,22 @@ class ModelGenerator(gen: DataGenerator, private val helper: ExistingFileHelper)
         } else ResourceLocation(rl.namespace, "block/$path")
     }
 
-    private val BlockModelBuilder.file: ModelFile
-        get() {
-            return ModelFile.UncheckedModelFile(BLOCK_MODEL_LOOKUP.computeIfAbsent(this) {
-                models().generatedModels.entries.first { (_, builder) ->
-                    builder == this
-                }.key
-            })
-        }
+    fun configure(b: BlockModelBuilder): ConfiguredModel {
+        return ConfiguredModel(getModelFile(b))
+    }
+
+    fun getModelFile(builder: BlockModelBuilder): ModelFile {
+        return ModelFile.UncheckedModelFile(BLOCK_MODEL_LOOKUP.computeIfAbsent(builder) {
+            models().generatedModels.entries.first { (_, builder) ->
+                builder == builder
+            }.key
+        })
+    }
 
     // todo maybe some sort of ModelType system
     companion object {
         private val BLOCK_MODEL_LOOKUP = HashMap<BlockModelBuilder, ResourceLocation>()
 
         val MODEL_TYPES = ArrayList<ModelType<*>>()
-
-        val STAIRS_BLOCKS = ArrayList<Pair<Block, Block>>()
-        val DOOR_BLOCKS = ArrayList<Block>()
-        val TRAPDOOR_BLOCKS = ArrayList<Block>()
-        val PILLAR_BLOCKS = ArrayList<Block>()
-        val SIMPLE_ITEMS = ArrayList<IItemProvider>()
-        val CUBE_COLUMNS = ArrayList<Pair<Block, Block>>()
     }
 }

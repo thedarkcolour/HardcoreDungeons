@@ -42,7 +42,7 @@ function initializeCoreMod() {
                 }
                 return method;
             }
-        },
+        },/*
         'ShoreLayerCoremod': {
             'target': {
                 'type': 'METHOD',
@@ -74,13 +74,13 @@ function initializeCoreMod() {
                 }
                 return method;
             }
-        },
+        },*/
         'LayerUtilCoremod': {
             'target': {
                 'type': 'METHOD',
                 'class': 'net.minecraft.world.gen.layer.LayerUtil',
-                'methodName': 'func_227475_a_',
-                'methodDesc': '(Lnet/minecraft/world/WorldType;Lnet/minecraft/world/gen/OverworldGenSettings;Ljava/util/function/LongFunction;)Lnet/minecraft/world/gen/area/IAreaFactory;'
+                'methodName': 'func_237216_a_',
+                'methodDesc': '(ZIILjava/util/function/LongFunction;)Lnet/minecraft/world/gen/area/IAreaFactory;'
             },
             'transformer': function (method) {
 
@@ -94,10 +94,10 @@ function initializeCoreMod() {
                         var nextNext = insn.getNext().getNext();
 
                         var toAdd = ASMAPI.listOf(
-                            new VarInsnNode(Opcodes.ALOAD, 2),
                             new VarInsnNode(Opcodes.ALOAD, 3),
+                            new VarInsnNode(Opcodes.ALOAD, 4),
                             new MethodInsnNode(Opcodes.INVOKESTATIC, "thedarkcolour/hardcoredungeons/asm/ASMHooks", "applyToWorld", "(Ljava/util/function/LongFunction;Lnet/minecraft/world/gen/area/IAreaFactory;)Lnet/minecraft/world/gen/area/IAreaFactory;", false),
-                            new VarInsnNode(Opcodes.ASTORE, 3)
+                            new VarInsnNode(Opcodes.ASTORE, 4)
                         );
 
                         insnList.insertBefore(nextNext, toAdd);

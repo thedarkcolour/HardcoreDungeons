@@ -117,9 +117,9 @@ object ASMHooks {
      */
     @JvmStatic
     fun isMushroomBiome(biomeId: Int): Boolean {
-        val b = DynamicRegistries.func_239770_b_().getRegistry(Registry.BIOME_KEY).getValueForKey(BiomeRegistry.getKeyFromID(biomeId))!!
+        val b = DynamicRegistries.func_239770_b_().getRegistry(Registry.BIOME_KEY).getValueForKey(BiomeRegistry.getKeyFromID(biomeId))
 
-        return b.category == Biome.Category.MUSHROOM
+        return b?.category == Biome.Category.MUSHROOM
     }
 
     /**

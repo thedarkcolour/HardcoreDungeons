@@ -4,9 +4,8 @@ import net.minecraft.advancements.Advancement
 import net.minecraft.advancements.FrameType
 import net.minecraft.advancements.criterion.InventoryChangeTrigger
 import net.minecraft.item.Items
-import net.minecraft.util.ResourceLocation
 import net.minecraft.util.text.TranslationTextComponent
-import thedarkcolour.hardcoredungeons.HardcoreDungeons
+import thedarkcolour.hardcoredungeons.util.modLoc
 
 class OverworldAdvancements : AdvancementGroup {
     override fun invoke(p1: (Advancement) -> Unit) {
@@ -15,7 +14,7 @@ class OverworldAdvancements : AdvancementGroup {
                 Items.IRON_SWORD,
                 TranslationTextComponent("advancements.hardcoredungeons.overworld.forge_gear.title"),
                 TranslationTextComponent("advancements.hardcoredungeons.overworld.forge_gear.description"),
-                ResourceLocation(HardcoreDungeons.ID, "textures/gui/advancements/backgrounds/overworld"),
+                modLoc("textures/gui/advancements/backgrounds/overworld"),
                 FrameType.TASK,
                 false,
                 true,

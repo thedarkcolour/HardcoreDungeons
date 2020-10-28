@@ -14,11 +14,12 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.RayTraceResult
 import net.minecraft.world.IBlockReader
 import net.minecraft.world.World
+import thedarkcolour.hardcoredungeons.block.properties.HProperties
 import thedarkcolour.hardcoredungeons.registry.HItems
 import thedarkcolour.hardcoredungeons.registry.HParticles
 import java.util.*
 
-class CastletonTorchBlock(properties: Properties) : TorchBlock(properties, HParticles.CASTLETON_TORCH_FLAME) {
+class CastletonTorchBlock(properties: HProperties) : TorchBlock(properties.build(), HParticles.CASTLETON_TORCH_FLAME) {
     init {
         defaultState = defaultState.with(LIT, false)
     }
@@ -51,7 +52,7 @@ class CastletonTorchBlock(properties: Properties) : TorchBlock(properties, HPart
         return if (state[LIT]) ItemStack(HItems.CASTLETON_TORCH) else ItemStack(HItems.BURNT_CASTLETON_TORCH)
     }
 
-    class Wall(properties: Properties) : WallTorchBlock(properties, HParticles.CASTLETON_TORCH_FLAME) {
+    class Wall(properties: HProperties) : WallTorchBlock(properties.build(), HParticles.CASTLETON_TORCH_FLAME) {
         init {
             defaultState = defaultState.with(LIT, true)
         }

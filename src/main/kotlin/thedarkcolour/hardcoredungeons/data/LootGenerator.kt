@@ -20,7 +20,9 @@ import net.minecraft.loot.conditions.SurvivesExplosion
 import net.minecraft.loot.functions.SetCount
 import net.minecraft.state.properties.SlabType
 import net.minecraft.util.ResourceLocation
+import net.minecraftforge.registries.ForgeRegistries
 import org.apache.logging.log4j.LogManager
+import thedarkcolour.hardcoredungeons.HardcoreDungeons
 import thedarkcolour.hardcoredungeons.registry.HBlocks
 import thedarkcolour.hardcoredungeons.registry.HItems
 
@@ -28,54 +30,20 @@ class LootGenerator(private val generator: DataGenerator) : LootTableProvider(ge
     private val tables = hashMapOf<Block, LootTable.Builder>()
 
     private fun addLootTables(loot: LootGenerator) {
-        loot.dropSelf(HBlocks.CASTLETON_SOIL)
-        // loot.dropSelf(HBlocks.CASTLETON_GRASS_BLOCK)
-        loot.dropSelf(HBlocks.CASTLETON_STONE)
-        loot.dropSelf(HBlocks.CASTLETON_LOAM)
-        loot.dropSelf(HBlocks.CASTLETON_BRICKS)
-        loot.dropSelf(HBlocks.CASTLETON_BRICK_STAIRS)
-        loot.dropSlabs(HBlocks.CASTLETON_BRICK_SLAB)
-        loot.dropSelf(HBlocks.CASTLETON_BRICK_FENCE)
-        loot.dropSelf(HBlocks.CASTLETON_BRICK_WALL)
-        loot.dropSelf(HBlocks.CRACKED_CASTLETON_BRICKS)
-        loot.dropSelf(HBlocks.CHARGED_CASTLETON_BRICKS)
-        loot.dropSelf(HBlocks.CHARGED_CASTLETON_BRICK_STAIRS)
-        loot.dropSlabs(HBlocks.CHARGED_CASTLETON_BRICK_SLAB)
-        loot.dropSelf(HBlocks.CHARGED_CASTLETON_BRICK_FENCE)
-        loot.dropSelf(HBlocks.CHARGED_CASTLETON_BRICK_WALL)
-        loot.dropSelf(HBlocks.CASTLETON_PORTAL_FRAME)
-        loot.dropSelf(HBlocks.PURPLE_CASTLETON_LAMP)
-        loot.dropSelf(HBlocks.LUMLIGHT_SAPLING)
-        loot.dropSelf(HBlocks.LUMLIGHT_LOG)
-        loot.dropSelf(HBlocks.LUMLIGHT_WOOD)
-        loot.dropSelf(HBlocks.STRIPPED_LUMLIGHT_LOG)
-        loot.dropSelf(HBlocks.STRIPPED_LUMLIGHT_WOOD)
-        // loot.dropSelf(HBlocks.LUMLIGHT_LEAVES)
-        loot.dropSelf(HBlocks.LUMLIGHT_POD)
-        loot.dropSelf(HBlocks.LUMLIGHT_PLANKS)
-        loot.dropSelf(HBlocks.LUMLIGHT_STAIRS)
-        loot.dropSlabs(HBlocks.LUMLIGHT_SLAB)
-        loot.dropSelf(HBlocks.LUMLIGHT_FENCE)
-        loot.dropSelf(HBlocks.LUMLIGHT_FENCE_GATE)
-        // loot.dropSelf(HBlocks.LUMLIGHT_DOOR)
-        loot.dropSelf(HBlocks.LUMLIGHT_TRAPDOOR)
-        loot.dropSelf(HBlocks.LUMLIGHT_SIGN)
-        loot.dropSelf(HBlocks.LUMLIGHT_WALL_SIGN)
-        loot.dropSelf(HBlocks.PURPLE_LUMSHROOM)
-        loot.dropSelf(HBlocks.BLUE_LUMSHROOM)
-        loot.dropSelf(HBlocks.LOST_SKULL)
-        // loot.dropSelf(HBlocks.CASTLETON_TORCH)
-        // loot.dropSelf(HBlocks.CASTLETON_WALL_TORCH)
-        loot.dropSelf(HBlocks.CROWN)
-        loot.dropSelf(HBlocks.CHALICE)
-        loot.dropSelf(HBlocks.PLATE)
-        loot.dropSelf(HBlocks.FRAYED_SKULL)
-        loot.dropSelf(HBlocks.RED_WINE_BOTTLE)
-        loot.dropSelf(HBlocks.WHITE_WINE_BOTTLE)
-        loot.dropSelf(HBlocks.WINE_BOTTLE)
-        loot.dropSelf(HBlocks.CASTLETON_LANTERN)
-        // loot.dropSelf(HBlocks.DUNGEON_MOB_SPAWNER)
-        // loot.dropSelf(HBlocks.LUMLIGHT_CAMPFIRE)
+        val blocks = ForgeRegistries.BLOCKS
+
+        // By default everything has a normal loot table
+        for (block in blocks) {
+            if (block.registryName!!.namespace == HardcoreDungeons.ID) {
+                if (block is SlabBlock) {
+                    loot.dropSlabs(block)
+                } else {
+                    loot.dropSelf(block)
+                }
+            }
+        }
+
+        // Add custom loot tables here!
         loot.addLoot(
             HBlocks.CASTLETON_VASE, LootTable.builder()
                 .addLootPool(
@@ -116,7 +84,6 @@ class LootGenerator(private val generator: DataGenerator) : LootTableProvider(ge
                         )
                 )
         )
-        loot.dropSelf(HBlocks.RAINBOW_SOIL)
         loot.addLoot(
             HBlocks.RAINBOW_GRASS_BLOCK, LootTable.builder()
                 .addLootPool(
@@ -128,24 +95,6 @@ class LootGenerator(private val generator: DataGenerator) : LootTableProvider(ge
                         )
                 )
         )
-        loot.dropSelf(HBlocks.RAINBOW_ROCK)
-        loot.dropSelf(HBlocks.RAINBOW_BRICKS)
-        loot.dropSelf(HBlocks.RAINBOW_BRICK_STAIRS)
-        loot.dropSlabs(HBlocks.RAINBOW_BRICK_SLAB)
-        loot.dropSelf(HBlocks.RAINBOW_BRICK_WALL)
-        loot.dropSelf(HBlocks.RAINBOW_BRICK_FENCE)
-        loot.dropSelf(HBlocks.RAINBOWLAND_PORTAL_FRAME)
-        loot.dropSelf(HBlocks.COTTONMARSH_SAPLING)
-        loot.dropSelf(HBlocks.COTTONMARSH_LEAVES)
-        loot.dropSelf(HBlocks.COTTONMARSH_LOG)
-        loot.dropSelf(HBlocks.COTTONMARSH_WOOD)
-        loot.dropSelf(HBlocks.STRIPPED_COTTONMARSH_LOG)
-        loot.dropSelf(HBlocks.STRIPPED_COTTONMARSH_WOOD)
-        loot.dropSelf(HBlocks.RAINBOW_FACTORY_BRICKS)
-        loot.dropSelf(HBlocks.RAINBOW_FACTORY_BRICK_STAIRS)
-        loot.dropSlabs(HBlocks.RAINBOW_FACTORY_BRICK_SLAB)
-        loot.dropSelf(HBlocks.RAINBOW_FACTORY_BRICK_WALL)
-        loot.dropSelf(HBlocks.RAINBOW_FACTORY_BRICK_FENCE)
         loot.addLoot(
             HBlocks.RAINBOW_GLASS, LootTable.builder()
                 .addLootPool(
@@ -166,24 +115,6 @@ class LootGenerator(private val generator: DataGenerator) : LootTableProvider(ge
                         )
                 )
         )
-        loot.dropSelf(HBlocks.RAINBOWSTONE_ORE)
-        loot.dropSelf(HBlocks.RAINBOWSTONE_BLOCK)
-        loot.dropSelf(HBlocks.FLAME_ROSE)
-        loot.dropSelf(HBlocks.GOLDEN_TULIP)
-        loot.dropSelf(HBlocks.AURISOIL)
-        // loot.dropSelf(HBlocks.AURIGRASS_BLOCK)
-        loot.dropSelf(HBlocks.AURILOAM)
-        loot.dropSelf(HBlocks.GOLDEN_AURISOIL)
-        // loot.dropSelf(HBlocks.GOLDEN_AURIGRASS_BLOCK)
-        loot.dropSelf(HBlocks.AUBRUM_ROCK)
-        // loot.dropSelf(HBlocks.DRUM)
-        loot.dropSelf(HBlocks.AURI_LOG)
-        loot.dropSelf(HBlocks.AURI_WOOD)
-        loot.dropSelf(HBlocks.STRIPPED_AURI_LOG)
-        loot.dropSelf(HBlocks.STRIPPED_AURI_WOOD)
-        loot.dropSelf(HBlocks.AURI_PLANKS)
-        loot.dropSelf(HBlocks.AURI_STAIRS)
-        loot.dropSlabs(HBlocks.AURI_SLAB)
         loot.addLoot(
             HBlocks.SCRAP_METAL, LootTable.builder()
                 .addLootPool(
@@ -198,8 +129,6 @@ class LootGenerator(private val generator: DataGenerator) : LootTableProvider(ge
                         )
                 )
         )
-        loot.dropSelf(HBlocks.EXTRACTOR)
-        loot.dropSelf(HBlocks.TABLE)
     }
 
     private fun dropSelf(block: Block) {

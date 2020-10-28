@@ -39,7 +39,7 @@ open class GunItem(
     val fireType: FireType = FireType.SMALL_BULLET,
     private val automatic: Boolean = false,
     val ammoItem: () -> Item = HItems::BULLET,
-    val chargeTime: Int = 25,
+    val chargeTime: Int = 1,
 ) : ShootableItem(properties) {
     /**
      * Gets the maximum number of items that this stack should be able to hold. This

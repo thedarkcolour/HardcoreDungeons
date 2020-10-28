@@ -4,7 +4,9 @@ import net.minecraft.entity.Entity
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NBTUtil
 import net.minecraft.network.datasync.DataParameter
+import net.minecraft.util.ResourceLocation
 import net.minecraft.util.math.BlockPos
+import thedarkcolour.hardcoredungeons.HardcoreDungeons
 import java.lang.reflect.Field
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
@@ -89,4 +91,8 @@ class BlockPosNBTDelegate(private val tagName: String) : ReadWriteProperty<ItemS
             thisRef.removeChildTag(tagName)
         }
     }
+}
+
+fun modLoc(path: String): ResourceLocation {
+    return ResourceLocation(HardcoreDungeons.ID, path)
 }

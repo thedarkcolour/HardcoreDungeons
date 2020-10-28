@@ -6,14 +6,13 @@ import net.minecraft.tileentity.ITickableTileEntity
 import net.minecraft.tileentity.TileEntity
 import thedarkcolour.hardcoredungeons.container.Extractor
 import thedarkcolour.hardcoredungeons.registry.HRecipes
-import thedarkcolour.hardcoredungeons.registry.HTileEntities
 import thedarkcolour.hardcoredungeons.util.DarkInventory
 import thedarkcolour.hardcoredungeons.util.IDarkInventory
 
 /**
  * @author TheDarkColour, genericrandom64
  */
-class ExtractorTileEntity : TileEntity(HTileEntities.EXTRACTOR), ITickableTileEntity, Extractor, IDarkInventory.Tile {
+class ExtractorTileEntity : TileEntity(TODO("Add the tile entity type here")), ITickableTileEntity, Extractor, IDarkInventory.Tile {
     private var burnTime = 0
     private var progress = 0
 

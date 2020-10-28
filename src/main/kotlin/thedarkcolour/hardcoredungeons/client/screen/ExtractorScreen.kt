@@ -4,10 +4,9 @@ import com.mojang.blaze3d.matrix.MatrixStack
 import com.mojang.blaze3d.systems.RenderSystem
 import net.minecraft.client.gui.screen.inventory.ContainerScreen
 import net.minecraft.entity.player.PlayerInventory
-import net.minecraft.util.ResourceLocation
 import net.minecraft.util.text.ITextComponent
-import thedarkcolour.hardcoredungeons.HardcoreDungeons
 import thedarkcolour.hardcoredungeons.container.ExtractorContainer
+import thedarkcolour.hardcoredungeons.util.modLoc
 
 class ExtractorScreen(
     screenContainer: ExtractorContainer, inv: PlayerInventory, titleIn: ITextComponent
@@ -38,6 +37,6 @@ class ExtractorScreen(
 
     companion object {
         // gui texture location
-        val BACKGROUND = ResourceLocation(HardcoreDungeons.ID, "textures/gui/container/extractor.png")
+        val BACKGROUND = modLoc("textures/gui/container/extractor.png")
     }
 }

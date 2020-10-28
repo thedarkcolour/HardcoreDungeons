@@ -52,7 +52,7 @@ class RecipeGenerator(generatorIn: DataGenerator) : RecipeProvider(generatorIn) 
         val builder = ShapelessRecipeBuilder(result, resultCount)
         addIngredients(builder)
 
-        return builder.build(this, id)
+        builder.build(this, id)
     }
 
     private fun Consumer<IFinishedRecipe>.shaped(
@@ -64,7 +64,7 @@ class RecipeGenerator(generatorIn: DataGenerator) : RecipeProvider(generatorIn) 
         val builder = ShapedRecipeBuilder(result, resultCount)
         addIngredients(builder)
 
-        return builder.build(this, id)
+        builder.build(this, id)
     }
 
     private fun Consumer<IFinishedRecipe>.slab(

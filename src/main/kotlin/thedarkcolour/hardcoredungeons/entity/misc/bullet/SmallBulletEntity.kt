@@ -1,20 +1,21 @@
 package thedarkcolour.hardcoredungeons.entity.misc.bullet
 
 import net.minecraft.entity.EntityType
+import net.minecraft.entity.IRendersAsItem
 import net.minecraft.entity.LivingEntity
 import net.minecraft.item.ItemStack
 import net.minecraft.util.IndirectEntityDamageSource
 import net.minecraft.util.math.EntityRayTraceResult
 import net.minecraft.util.math.RayTraceResult
 import net.minecraft.world.World
+import net.minecraftforge.api.distmarker.Dist
+import net.minecraftforge.api.distmarker.OnlyIn
 import thedarkcolour.hardcoredungeons.entity.misc.ProjectileEntity
 import thedarkcolour.hardcoredungeons.item.misc.GunItem
 import thedarkcolour.hardcoredungeons.registry.HItems
 
-class SmallBulletEntity(
-    type: EntityType<out ProjectileEntity>,
-    worldIn: World,
-) : ProjectileEntity(type, worldIn) {
+@OnlyIn(value = Dist.CLIENT, _interface = IRendersAsItem::class)
+class SmallBulletEntity(type: EntityType<out ProjectileEntity>, worldIn: World) : ProjectileEntity(type, worldIn), IRendersAsItem {
     private var drop = 0.0f
     private var damage = 0.0f
 
@@ -56,11 +57,12 @@ class SmallBulletEntity(
 
         if (!world.isRemote) {
             if (result.type == RayTraceResult.Type.ENTITY) {
+                val shooter = shootingEntity
                 val entity = (result as EntityRayTraceResult).entity
-                val flag = entity.attackEntityFrom(IndirectEntityDamageSource("arrow", shootingEntity, this), damage)
+                val flag = entity.attackEntityFrom(IndirectEntityDamageSource("arrow", shooter, this), damage)
 
-                if (flag) {
-                    applyEnchantments(shootingEntity, entity)
+                if (flag && shooter != null) {
+                    applyEnchantments(shooter, entity)
                 }
                 remove()
             } else if (result.type == RayTraceResult.Type.BLOCK) {

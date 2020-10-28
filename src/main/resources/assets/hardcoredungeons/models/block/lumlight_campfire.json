@@ -1,9 +1,9 @@
 {
-    "parent": "block/campfire",
+    "parent": "block/template_campfire",
     "textures": {
-        "particle": "hardcoredungeons:block/lumlight_campfire_log",
+        "lit_log": "hardcoredungeons:block/lumlight_campfire_log_lit",
         "log": "hardcoredungeons:block/lumlight_campfire_log",
-        "litlog": "hardcoredungeons:block/lumlight_campfire_log_lit",
+        "particle": "hardcoredungeons:block/lumlight_campfire_log",
         "fire": "hardcoredungeons:block/lumlight_campfire_fire"
     }
 }

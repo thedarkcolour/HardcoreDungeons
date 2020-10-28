@@ -5,8 +5,8 @@ import net.minecraft.client.renderer.IRenderTypeBuffer
 import net.minecraft.client.renderer.RenderType
 import net.minecraft.client.renderer.entity.EntityRendererManager
 import net.minecraft.util.ResourceLocation
-import thedarkcolour.hardcoredungeons.HardcoreDungeons
 import thedarkcolour.hardcoredungeons.entity.ReloadableRenderer
+import thedarkcolour.hardcoredungeons.util.modLoc
 
 class DeerRenderer(manager: EntityRendererManager) : ReloadableRenderer<CastletonDeerEntity, DoeModel>(manager, null, 0.4f) {
     private var female = DoeModel()
@@ -81,15 +81,15 @@ class DeerRenderer(manager: EntityRendererManager) : ReloadableRenderer<Castleto
     }
 
     companion object {
-        private val BLUE_EYED_FEMALE = ResourceLocation(HardcoreDungeons.ID, "textures/entity/deer/castleton/blue_eyed_female.png")
-        private val BLUE_EYED_FEMALE_OVERLAY = RenderType.getEyes(ResourceLocation(HardcoreDungeons.ID, "textures/entity/deer/castleton/blue_eyed_female_overlay.png"))
-        private val BLUE_EYED_STAG = ResourceLocation(HardcoreDungeons.ID, "textures/entity/deer/castleton/blue_eyed_stag.png")
-        private val BLUE_EYED_STAG_OVERLAY = RenderType.getEyes(ResourceLocation(HardcoreDungeons.ID, "textures/entity/deer/castleton/blue_eyed_stag_overlay.png"))
-        private val BLUE_SPOTTED_STAG = ResourceLocation(HardcoreDungeons.ID, "textures/entity/deer/castleton/spotted_stag.png")
-        private val BLUE_SPOTTED_STAG_OVERLAY = RenderType.getEyes(ResourceLocation(HardcoreDungeons.ID, "textures/entity/deer/castleton/blue_spotted_stag_overlay.png"))
-        private val PURPLE_SPOTTED_STAG = ResourceLocation(HardcoreDungeons.ID, "textures/entity/deer/castleton/spotted_stag.png")
-        private val PURPLE_SPOTTED_STAG_OVERLAY = RenderType.getEyes(ResourceLocation(HardcoreDungeons.ID, "textures/entity/deer/castleton/purple_spotted_stag_overlay.png"))
-        private val THEDARKCOLOUR = ResourceLocation(HardcoreDungeons.ID, "textures/entity/deer/thedarkcolour.png")
-        private val THEDARKCOLOUR_OVERLAY = RenderType.getEyes(ResourceLocation(HardcoreDungeons.ID, "textures/entity/deer/thedarkcolour_overlay.png"))
+        private val BLUE_EYED_FEMALE = modLoc("textures/entity/deer/castleton/blue_eyed_female.png")
+        private val BLUE_EYED_FEMALE_OVERLAY = RenderType.getEyes(modLoc("textures/entity/deer/castleton/blue_eyed_female_overlay.png"))
+        private val BLUE_EYED_STAG = modLoc("textures/entity/deer/castleton/blue_eyed_stag.png")
+        private val BLUE_EYED_STAG_OVERLAY = RenderType.getEyes(modLoc("textures/entity/deer/castleton/blue_eyed_stag_overlay.png"))
+        private val BLUE_SPOTTED_STAG = modLoc("textures/entity/deer/castleton/spotted_stag.png")
+        private val BLUE_SPOTTED_STAG_OVERLAY = RenderType.getEyes(modLoc("textures/entity/deer/castleton/blue_spotted_stag_overlay.png"))
+        private val PURPLE_SPOTTED_STAG = modLoc("textures/entity/deer/castleton/spotted_stag.png")
+        private val PURPLE_SPOTTED_STAG_OVERLAY = RenderType.getEyes(modLoc("textures/entity/deer/castleton/purple_spotted_stag_overlay.png"))
+        private val THEDARKCOLOUR = modLoc("textures/entity/deer/thedarkcolour.png")
+        private val THEDARKCOLOUR_OVERLAY = RenderType.getEyes(modLoc("textures/entity/deer/thedarkcolour_overlay.png"))
     }
 }

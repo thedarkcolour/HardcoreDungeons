@@ -1,0 +1,51 @@
+{
+    "type": "hardcoredungeons:castleton",
+    "generator": {
+        "type": "minecraft:noise",
+        "settings": "hardcoredungeons:castleton",
+        "seed": -1523424583,
+        "biome_source": {
+            "humidity_noise": {
+                "firstOctave": -7,
+                "amplitudes": [ 1.0, 1.0 ]
+            },
+            "altitude_noise": {
+                "firstOctave": -7,
+                "amplitudes": [ 1.0, 1.0 ]
+            },
+            "weirdness_noise": {
+                "firstOctave": -7,
+                "amplitudes": [ 1.0, 1.0 ]
+            },
+            "temperature_noise": {
+                "firstOctave": -7,
+                "amplitudes": [ 1.0, 1.0 ]
+            },
+
+            "type": "minecraft:multi_noise",
+            "seed": -1523641583,
+            "biomes": [
+                {
+                    "biome": "hardcoredungeons:knightly_shrubland",
+                    "parameters": {
+                        "altitude": 0.3,
+                        "weirdness": 0.5,
+                        "offset": 0.1,
+                        "temperature": 0.0,
+                        "humidity": 1.0
+                    }
+                },
+                {
+                    "biome": "hardcoredungeons:castleton_hills",
+                    "parameters": {
+                        "altitude": 0.3,
+                        "weirdness": 0.5,
+                        "offset": 0.4,
+                        "temperature": 0.0,
+                        "humidity": 1.0
+                    }
+                }
+            ]
+        }
+    }
+}

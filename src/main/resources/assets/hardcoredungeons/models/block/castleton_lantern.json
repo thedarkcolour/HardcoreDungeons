@@ -1,7 +1,6 @@
 {
-    "parent": "block/lantern",
+    "parent": "block/template_lantern",
     "textures": {
-        "particle": "hardcoredungeons:block/castleton_lantern",
-        "all": "hardcoredungeons:block/castleton_lantern"
+        "lantern": "hardcoredungeons:block/castleton_lantern"
     }
 }

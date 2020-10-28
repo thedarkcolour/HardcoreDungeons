@@ -16,8 +16,9 @@ import net.minecraft.util.math.shapes.VoxelShapes
 import net.minecraft.world.IBlockReader
 import net.minecraft.world.IWorld
 import net.minecraft.world.World
+import thedarkcolour.hardcoredungeons.block.properties.HProperties
 
-class PortalBlock(private val dimensionKey: () -> RegistryKey<World>, private val frameBlock: Block, properties: Properties) : Block(properties) {
+class PortalBlock(private val dimensionKey: () -> RegistryKey<World>, private val frameBlock: Block, properties: HProperties) : Block(properties.build()) {
     init {
         defaultState = defaultState.with(AXIS, Axis.X)
     }

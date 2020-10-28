@@ -1,5 +1,5 @@
 modLoader="kotlinforforge"
-loaderVersion="[1.5,)"
+loaderVersion="[1.6.2,)"
 license="All rights reserved"
 
 [[mods]] #mandatory
