@@ -1,7 +1,6 @@
 buildscript {
     repositories {
         maven { url = 'https://files.minecraftforge.net/maven' }
-        maven { url = "https://maven.tterrag.com/" }
         maven { url = 'https://dist.creeper.host/Sponge/maven' }
         jcenter()
         mavenCentral()
@@ -13,7 +12,7 @@ buildscript {
 }
 apply plugin: 'net.minecraftforge.gradle'
 
-version = '5'
+version = '6'
 group = 'thedarkcolour' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'hardcoredungeons'
 
@@ -83,7 +82,7 @@ repositories {
         url = 'https://maven.blamejared.com'
     }
     maven {
-        name = 'ctm & yarn mappings'
+        name = 'ctm'
         url = 'http://maven.tterrag.com/'
     }
     maven {
@@ -100,7 +99,7 @@ dependencies {
     implementation fg.deobf("top.theillusivec4.curios:curios-forge:1.16.3-4.0.2.0")
 
     // ctm
-    //implementation fg.deobf("team.chisel.ctm:CTM:MC1.15.2-0.4.0.6")
+    implementation fg.deobf("team.chisel.ctm:CTM:MC1.16.1-1.1.1.5")
 
     // jei
     compileOnly fg.deobf("mezz.jei:jei-1.16.3:7.5.0.43:api")

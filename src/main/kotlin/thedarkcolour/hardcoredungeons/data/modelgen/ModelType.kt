@@ -15,7 +15,8 @@ abstract class ModelType<T> {
 
     companion object {
         // block models
-        val SIMPLE_BLOCK = SimpleBlockModelType()
+        val CUBE_ALL = CubeAllModelType()
+        val BLOCK_ITEM = BlockItemModelType()
         val SLAB_BLOCK = SlabModelType()
         val STAIRS_BLOCK = StairsModelType()
         val WALL_BLOCK = WallModelType()

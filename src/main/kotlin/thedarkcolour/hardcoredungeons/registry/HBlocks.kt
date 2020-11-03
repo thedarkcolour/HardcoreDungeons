@@ -19,6 +19,7 @@ import net.minecraft.util.Direction
 import net.minecraft.util.math.shapes.VoxelShapes
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.common.ToolType
+import net.minecraftforge.fml.ModList
 import net.minecraftforge.registries.IForgeRegistry
 import thedarkcolour.hardcoredungeons.block.HBlock
 import thedarkcolour.hardcoredungeons.block.decoration.DoorBlock
@@ -107,7 +108,7 @@ object HBlocks {
     val CHARGED_CASTLETON_BRICK_FENCE = FenceBlock(Properties.from(CASTLETON_BRICKS)).setRegistryKey("charged_castleton_brick_fence")
     val CHARGED_CASTLETON_BRICK_WALL = WallBlock(Properties.from(CASTLETON_BRICKS)).setRegistryKey("charged_castleton_brick_wall")
     val CASTLETON_PORTAL_FRAME = Block(Properties.from(Blocks.OBSIDIAN)).setRegistryKey("castleton_portal_frame")
-    val CASTLETON_PORTAL = PortalBlock(HDimensions::CASTLETON, CASTLETON_PORTAL_FRAME, HProperties.create(Material.PORTAL).doesNotBlockMovement().hardnessAndResistance(-1.0f).sound(SoundType.GLASS)/*.lightValue(12)*/.noDrops()).setRegistryKey("castleton_portal")
+    val CASTLETON_PORTAL = PortalBlock(HDimensions::CASTLETON_KEY, CASTLETON_PORTAL_FRAME, HProperties.create(Material.PORTAL).doesNotBlockMovement().hardnessAndResistance(-1.0f).sound(SoundType.GLASS)/*.lightValue(12)*/.noDrops()).setRegistryKey("castleton_portal")
     val PURPLE_CASTLETON_LAMP = LampBlock(Properties.from(Blocks.REDSTONE_LAMP).hardnessAndResistance(0.7f, 400.0f)).setRegistryKey("purple_castleton_lamp")
     val LUMLIGHT_SAPLING = SaplingBlock(LumlightTree, Properties.create(Material.PLANTS).sound(SoundType.PLANT).doesNotBlockMovement()).setRegistryKey("lumlight_sapling")
     val LUMLIGHT_LOG = createLogBlock(MaterialColor.WHITE_TERRACOTTA, MaterialColor.BLACK_TERRACOTTA ){ properties -> properties.hardnessAndResistance(2.4f, 100.0f).sound(SoundType.WOOD)}.setRegistryKey("lumlight_log")
@@ -160,7 +161,7 @@ object HBlocks {
     val RAINBOW_BRICK_WALL = WallBlock(Properties.from(RAINBOW_BRICKS)).setRegistryKey("rainbow_brick_wall")
     val RAINBOW_BRICK_FENCE = FenceBlock(Properties.from(RAINBOW_BRICKS)).setRegistryKey("rainbow_brick_fence")
     val RAINBOWLAND_PORTAL_FRAME = Block(Properties.from(Blocks.OBSIDIAN)).setRegistryKey("rainbowland_portal_frame")
-    val RAINBOWLAND_PORTAL = PortalBlock(HDimensions::RAINBOWLAND, RAINBOWLAND_PORTAL_FRAME, HProperties.create(Material.PORTAL).doesNotBlockMovement().hardnessAndResistance(-1.0f).sound(SoundType.GLASS).noDrops()).setRegistryKey("rainbowland_portal")
+    val RAINBOWLAND_PORTAL = PortalBlock(HDimensions::RAINBOWLAND_KEY, RAINBOWLAND_PORTAL_FRAME, HProperties.create(Material.PORTAL).doesNotBlockMovement().hardnessAndResistance(-1.0f).sound(SoundType.GLASS).noDrops()).setRegistryKey("rainbowland_portal")
     val COTTONMARSH_SAPLING = SaplingBlock(CottonmarshTree, Properties.from(LUMLIGHT_SAPLING)).setRegistryKey("cottonmarsh_sapling")
     val COTTONMARSH_LEAVES = LeavesBlock(Properties.from(Blocks.OAK_LEAVES).hardnessAndResistance(0.2f).sound(SoundType.CLOTH).notSolid()).setRegistryKey("cottonmarsh_leaves")
     val COTTONMARSH_LOG = createLogBlock(MaterialColor.BROWN_TERRACOTTA, MaterialColor.BROWN_TERRACOTTA){Properties.create(Material.WOOD).sound(SoundType.WOOD).hardnessAndResistance(2.5f)}.setRegistryKey("cottonmarsh_log")
@@ -189,7 +190,7 @@ object HBlocks {
     //val GOLDEN_AURISOIL = Block(Properties.create(Material.EARTH, MaterialColor.GOLD).hardnessAndResistance(0.4f).sound(SoundType.SAND)).setRegistryKey("golden_aurisoil")
     //val GOLDEN_AURIGRASS_BLOCK = GrassBlock(GOLDEN_AURISOIL, true, Properties.create(Material.ORGANIC, MaterialColor.GOLD).tickRandomly().hardnessAndResistance(0.5f).sound(SoundType.SAND)).setRegistryKey("golden_aurigrass_block")
     val AUBRUM_ROCK = Block(Properties.create(Material.ROCK, MaterialColor.BLACK).hardnessAndResistance(1.5f).sound(SoundType.STONE)).setRegistryKey("aubrum_rock")
-    val AUBRUM_PORTAL = PortalBlock(HDimensions::AUBRUM, CASTLETON_PORTAL_FRAME, HProperties.create(Material.PORTAL).doesNotBlockMovement().hardnessAndResistance(-1.0f).sound(SoundType.GLASS).light(12).noDrops()).setRegistryKey("aubrum_portal")
+    val AUBRUM_PORTAL = PortalBlock(HDimensions::AUBRUM_KEY, CASTLETON_PORTAL_FRAME, HProperties.create(Material.PORTAL).doesNotBlockMovement().hardnessAndResistance(-1.0f).sound(SoundType.GLASS).light(12).noDrops()).setRegistryKey("aubrum_portal")
     val DRUM = HBlock(HProperties.create(Material.IRON).hardnessAndResistance(2.5f).sound(SoundType.METAL).shape(Block.makeCuboidShape(3.0, 0.0, 3.0, 13.0, 16.0, 13.0))).setRegistryKey("drum")
     val AURI_LOG = createLogBlock(MaterialColor.WHITE_TERRACOTTA, MaterialColor.WHITE_TERRACOTTA){Properties.create(Material.WOOD, MaterialColor.BLACK_TERRACOTTA).hardnessAndResistance(2.4f, 100.0f).sound(SoundType.WOOD)}.setRegistryKey("auri_log")
     val AURI_WOOD = RotatedPillarBlock(Properties.from(AURI_LOG)).setRegistryKey("auri_wood")
@@ -284,18 +285,18 @@ object HBlocks {
         blocks.registerBlockAndSimpleItem(WHITE_WINE_BOTTLE)
         blocks.registerBlockAndSimpleItem(WINE_BOTTLE)
         blocks.registerBlockAndSimpleItem(CASTLETON_LANTERN)
-        blocks.registerBlock(DUNGEON_MOB_SPAWNER)
+        blocks.registerBlock3dItem(DUNGEON_MOB_SPAWNER)
         blocks.registerBlockAndSimpleItem(LUMLIGHT_CAMPFIRE)
         blocks.registerVase(CASTLETON_VASE)
         blocks.registerVase(CASTLETON_TREASURE_VASE)
         blocks.registerColumn(LUMLIGHT_BOOKSHELF, LUMLIGHT_PLANKS)
         //blocks.register(CASTLETON_DUNGEON_CHEST)
-        blocks.registerBlock(CANDLE)
+        blocks.registerBlock3dItem(CANDLE)
         blocks.registerBlockAndSimpleItem(RUNED_CASTLETON_STONE)
         blocks.register(WILD_BERROOK)
 
         blocks.registerSimpleBlock(RAINBOW_SOIL)
-        blocks.registerBlock(RAINBOW_GRASS_BLOCK)
+        blocks.registerBlock3dItem(RAINBOW_GRASS_BLOCK)
         blocks.registerSimpleBlock(RAINBOW_ROCK)
         blocks.registerSimpleBlock(RAINBOW_BRICKS)
         blocks.registerStairsBlock(RAINBOW_BRICK_STAIRS, RAINBOW_BRICKS)
@@ -306,16 +307,16 @@ object HBlocks {
         blocks.registerBlockAndSimpleItem(RAINBOWLAND_PORTAL)
         blocks.registerBlockAndSimpleItem(COTTONMARSH_SAPLING)
         blocks.registerSimpleBlock(COTTONMARSH_LEAVES)
-        blocks.registerBlock(COTTONMARSH_LOG)
-        blocks.registerBlock(COTTONMARSH_WOOD)
-        blocks.registerBlock(STRIPPED_COTTONMARSH_LOG)
-        blocks.registerBlock(STRIPPED_COTTONMARSH_WOOD)
+        blocks.registerBlock(COTTONMARSH_LOG) // convert to pillar todo
+        blocks.registerBlock(COTTONMARSH_WOOD) // convert to pillar todo
+        blocks.registerBlock(STRIPPED_COTTONMARSH_LOG) // convert to pillar todo
+        blocks.registerBlock(STRIPPED_COTTONMARSH_WOOD) // convert to pillar todo
         blocks.registerSimpleBlock(RAINBOW_FACTORY_BRICKS)
         blocks.registerStairsBlock(RAINBOW_FACTORY_BRICK_STAIRS, RAINBOW_FACTORY_BRICKS)
         blocks.registerSlabBlock(RAINBOW_FACTORY_BRICK_SLAB, RAINBOW_FACTORY_BRICKS)
         blocks.registerWallBlock(RAINBOW_FACTORY_BRICK_WALL)
-        blocks.registerBlock(RAINBOW_FACTORY_BRICK_FENCE)
-        blocks.registerBlock(RAINBOW_FACTORY_FURNACE)
+        blocks.registerFenceBlock(RAINBOW_FACTORY_BRICK_FENCE)
+        blocks.registerBlock3dItem(RAINBOW_FACTORY_FURNACE)
         //blocks.registerBlock(RAINBOW_FACTORY_TABLE)
         blocks.registerSimpleBlock(RAINBOW_GLASS)
         blocks.registerBlockAndSimpleItem(RAINBOW_GLASS_PANE) // todo
@@ -327,14 +328,14 @@ object HBlocks {
         blocks.registerBlockAndSimpleItem(GOLDEN_TULIP)
         blocks.registerBlockAndSimpleItem(AUBRUM_PORTAL)
         blocks.registerSimpleBlock(AURISOIL)
-        blocks.registerBlock(AURIGRASS_BLOCK)
+        blocks.registerBlock3dItem(AURIGRASS_BLOCK)
         blocks.registerSimpleBlock(AURILOAM)
         blocks.registerSimpleBlock(AUBRUM_ROCK)
-        blocks.registerBlock(DRUM)
-        blocks.registerBlock(AURI_LOG)
-        blocks.registerBlock(AURI_WOOD)
-        blocks.registerBlock(STRIPPED_AURI_LOG)
-        blocks.registerBlock(STRIPPED_AURI_WOOD)
+        blocks.registerBlock3dItem(DRUM)
+        blocks.registerBlock(AURI_LOG) // convert to pillar todo
+        blocks.registerBlock(AURI_WOOD) // convert to pillar todo
+        blocks.registerBlock(STRIPPED_AURI_LOG) // convert to pillar todo
+        blocks.registerBlock(STRIPPED_AURI_WOOD) // convert to pillar todo
         blocks.registerSimpleBlock(AURI_PLANKS)
         blocks.registerStairsBlock(AURI_STAIRS, AURI_PLANKS)
         blocks.registerSlabBlock(AURI_SLAB, AURI_PLANKS)
@@ -347,11 +348,15 @@ object HBlocks {
         //blocks.registerBlock(TABLE)
 
         COMPRESSED_COBBLESTONE.registerBlocks(blocks)
-        blocks.registerBlock(CHEEKY_TELEPORTER_TOP)
-        blocks.registerBlock(CHEEKY_TELEPORTER)
-        blocks.registerSimpleBlock(STONE_TEXTURE)
-        blocks.registerStairsBlock(STONE_TEXTURE_STAIRS, STONE_TEXTURE)
-        blocks.registerSlabBlock(STONE_TEXTURE_SLAB, STONE_TEXTURE)
+
+        // Mugen compat
+        if (!ModList.get().isLoaded("mugen")) {
+            blocks.registerBlock3dItem(CHEEKY_TELEPORTER_TOP)
+            blocks.registerBlock3dItem(CHEEKY_TELEPORTER)
+            blocks.registerSimpleBlock(STONE_TEXTURE)
+            blocks.registerStairsBlock(STONE_TEXTURE_STAIRS, STONE_TEXTURE)
+            blocks.registerSlabBlock(STONE_TEXTURE_SLAB, STONE_TEXTURE)
+        }
 
         blockSetup()
     }
@@ -456,7 +461,7 @@ object HBlocks {
      * `cube_all` plus item block
      */
     fun IForgeRegistry<Block>.registerSimpleBlock(block: Block) {
-        ModelType.SIMPLE_BLOCK.add(block)
+        ModelType.CUBE_ALL.add(block)
         this.registerBlock(block)
     }
 
@@ -530,11 +535,18 @@ object HBlocks {
     }
 
     /**
-     * block (no block model) + 3d item model
+     * block (no block model) + item (no item model)
      */
     fun IForgeRegistry<Block>.registerBlock(block: Block) {
         this.register(block)
         BLOCKS_W_ITEMS.add(block)
+    }
+
+    fun IForgeRegistry<Block>.registerBlock3dItem(block: Block) {
+        this.register(block)
+        BLOCKS_W_ITEMS.add(block)
+
+        ModelType.BLOCK_ITEM.add(block)
     }
 
     fun props(material: Material, materialColor: MaterialColor = material.color): HProperties {

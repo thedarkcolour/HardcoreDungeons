@@ -7,6 +7,6 @@
     },
     "minVersion": "0.8.0",
     "refmap": "hardcoredungeons.refmap.json",
-    "mixins": [
-    ]
+    "mixins": [],
+    "client": []
 }
