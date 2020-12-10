@@ -2,28 +2,36 @@ package thedarkcolour.hardcoredungeons.entity.castleton.deer
 
 import thedarkcolour.kotlinforforge.kotlin.enumSetOf
 
-enum class DeerPattern {
-    BLUE_EYED_STAG,
-    BLUE_EYED_DOE,
-    BLUE_SPOTTED_STAG,
-    BLUE_SPOTTED_DOE,
-    BLUE_ALPHA,
-    PURPLE_EYED_STAG,
-    PURPLE_EYED_DOE,
-    PURPLE_SPOTTED_STAG,
-    PURPLE_SPOTTED_DOE,
-    PURPLE_ALPHA;
+enum class DeerPattern(val type: Type) {
+    // overworld patterns
+    FOREST_STAG(Type.STAG),
 
-    fun isFemale(): Boolean {
-        return this == BLUE_EYED_DOE || this == BLUE_SPOTTED_DOE || this == PURPLE_EYED_DOE || this == PURPLE_SPOTTED_DOE
+    // castleton patterns
+    BLUE_EYED_STAG(Type.STAG),
+    BLUE_EYED_DOE(Type.DOE),
+    BLUE_SPOTTED_STAG(Type.STAG),
+    BLUE_SPOTTED_DOE(Type.DOE),
+    BLUE_ALPHA(Type.ALPHA),
+    PURPLE_EYED_STAG(Type.STAG),
+    PURPLE_EYED_DOE(Type.DOE),
+    PURPLE_SPOTTED_STAG(Type.STAG),
+    PURPLE_SPOTTED_DOE(Type.DOE),
+    PURPLE_ALPHA(Type.ALPHA);
+
+    enum class Type {
+        STAG, DOE, ALPHA
+    }
+
+    fun isDoe(): Boolean {
+        return this.type == Type.DOE
     }
 
     fun isStag(): Boolean {
-        return this == BLUE_EYED_STAG || this == BLUE_SPOTTED_STAG || this == PURPLE_EYED_STAG || this == PURPLE_SPOTTED_STAG
+        return this.type == Type.STAG
     }
 
     fun isAlpha(): Boolean {
-        return this == BLUE_ALPHA || this == PURPLE_ALPHA
+        return this.type == Type.ALPHA
     }
 
     fun isBlue(): Boolean {

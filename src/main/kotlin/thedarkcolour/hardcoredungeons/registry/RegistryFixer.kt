@@ -4,6 +4,7 @@ import net.minecraft.block.Block
 import net.minecraft.item.Item
 import net.minecraft.tileentity.TileEntityType
 import net.minecraft.world.biome.Biome
+import net.minecraft.world.gen.surfacebuilders.SurfaceBuilder
 import net.minecraftforge.event.RegistryEvent.MissingMappings
 import net.minecraftforge.registries.IForgeRegistryEntry
 import thedarkcolour.kotlinforforge.forge.MOD_BUS
@@ -38,6 +39,9 @@ object RegistryFixer {
         }
         createFixes<TileEntityType<*>> { map ->
             map["extractor"] = null
+        }
+        createFixes<SurfaceBuilder<*>> { map ->
+            map["forest_of_lakes"] = HSurfaceBuilders.THICK_FOREST
         }
     }
 

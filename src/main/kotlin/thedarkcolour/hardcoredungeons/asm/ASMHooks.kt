@@ -13,7 +13,7 @@ import org.objectweb.asm.tree.*
 import java.util.function.LongFunction
 
 /**
- * **All methods should be [JvmStatic]**
+ * **NOT ACTUALLY USED BY THE COREMODS HAHA**
  *
  * ASM hooks used by coremods in HCD.
  *

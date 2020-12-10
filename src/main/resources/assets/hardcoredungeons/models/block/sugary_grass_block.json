@@ -1,0 +1,8 @@
+{
+    "parent": "block/cube_bottom_top",
+    "textures": {
+        "top": "hardcoredungeons:block/sugary_grass",
+        "bottom": "hardcoredungeons:block/sugary_soil",
+        "side": "hardcoredungeons:block/sugary_grass_side"
+    }
+}

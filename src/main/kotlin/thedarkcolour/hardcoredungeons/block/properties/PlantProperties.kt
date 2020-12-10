@@ -1,13 +1,16 @@
 package thedarkcolour.hardcoredungeons.block.properties
 
 import net.minecraft.block.Block
+import net.minecraft.block.BlockState
+import net.minecraft.block.Blocks
 import net.minecraft.potion.Effect
 import net.minecraft.potion.Effects
+import net.minecraft.tags.ITag
 
 @Suppress("HasPlatformType")
 class PlantProperties private constructor() : Properties<PlantProperties>() {
     /** Used to determine if a block is valid for placement. */
-    var blocks: MutableSet<Block> = hashSetOf()
+    var predicate: (BlockState) -> Boolean = DEFAULT_PREDICATE
     /** Used for mushrooms to determine if podzol and mycelium are valid for placement. */
     var strict = false
     /** Used for flowers in suspicious stew */
@@ -16,25 +19,10 @@ class PlantProperties private constructor() : Properties<PlantProperties>() {
     var duration = 0
 
     /**
-     * Restricts valid ground blocks to the ones chosen in [validGround]
-     */
-    fun strict(): PlantProperties {
-        strict = true
-        return this
-    }
-
-    /**
      * Set the potion effect of this flower for use in suspicious stew.
      */
-    fun effect(effect: Effect): PlantProperties {
+    fun stewEffect(effect: Effect, duration: Int): PlantProperties {
         this.effect = effect
-        return this
-    }
-
-    /**
-     * Set the potion effect duration of this flower for use in suspicious stew.
-     */
-    fun duration(duration: Int): PlantProperties {
         this.duration = duration
         return this
     }
@@ -42,8 +30,17 @@ class PlantProperties private constructor() : Properties<PlantProperties>() {
     /**
      * Add valid blocks for placement.
      */
-    fun validGround(vararg blocksIn: Block): PlantProperties {
-        blocks.addAll(blocksIn)
+    fun validGround(vararg blocksIn: Block, replace: Boolean = false): PlantProperties {
+        predicate = if (replace) {
+            { state -> blocksIn.contains(state.block) }
+        } else {
+            { state -> DEFAULT_PREDICATE(state) && blocksIn.contains(state.block) }
+        }
+        return this
+    }
+
+    fun validGround(tag: ITag<Block>): PlantProperties {
+        predicate = { state -> DEFAULT_PREDICATE(state) && state.isIn(tag) }
         return this
     }
 
@@ -56,6 +53,7 @@ class PlantProperties private constructor() : Properties<PlantProperties>() {
     }
 
     companion object : Factory<PlantProperties>() {
+        private val DEFAULT_PREDICATE: (BlockState) -> Boolean = { state -> state.isIn(Blocks.GRASS_BLOCK) || state.isIn(Blocks.DIRT) || state.isIn(Blocks.COARSE_DIRT) || state.isIn(Blocks.PODZOL) || state.isIn(Blocks.FARMLAND) }
         override fun createProperties(): PlantProperties {
             return PlantProperties()
         }

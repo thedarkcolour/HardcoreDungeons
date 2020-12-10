@@ -4,12 +4,17 @@ import com.mojang.blaze3d.matrix.MatrixStack
 import net.minecraft.client.renderer.IRenderTypeBuffer
 import net.minecraft.client.renderer.entity.layers.LayerRenderer
 import net.minecraft.client.renderer.texture.OverlayTexture
+import thedarkcolour.hardcoredungeons.entity.overworld.deer.DeerEntity
 
-class DeerFullbrightLayer(private val renderer: DeerRenderer) : LayerRenderer<CastletonDeerEntity, DoeModel>(renderer) {
+class DeerFullbrightLayer(private val renderer: DeerRenderer) : LayerRenderer<DeerEntity, DoeModel>(renderer) {
     override fun render(
-        stack: MatrixStack, buffer: IRenderTypeBuffer, light: Int, entity: CastletonDeerEntity, limbSwing: Float,
+        stack: MatrixStack, buffer: IRenderTypeBuffer, light: Int, entity: DeerEntity, limbSwing: Float,
         limbSwingAmount: Float, partialTicks: Float, ageInTicks: Float, netHeadYaw: Float, headPitch: Float
     ) {
-        entityModel.render(stack, buffer.getBuffer(renderer.getOverlayTexture(entity)), 15728640, OverlayTexture.NO_OVERLAY, 1.0f, 1.0f, 1.0f, 1.0f)
+        val texture = renderer.getOverlayTexture(entity)
+
+        if (texture != null) {
+            entityModel.render(stack, buffer.getBuffer(texture), 15728640, OverlayTexture.NO_OVERLAY, 1.0f, 1.0f, 1.0f, 1.0f)
+        }
     }
 }

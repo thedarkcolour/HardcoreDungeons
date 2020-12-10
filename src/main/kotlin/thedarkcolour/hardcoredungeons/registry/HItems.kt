@@ -5,9 +5,13 @@ import net.minecraft.client.renderer.color.ItemColors
 import net.minecraft.inventory.EquipmentSlotType
 import net.minecraft.item.*
 import net.minecraft.item.Item.Properties
+import net.minecraft.item.crafting.Ingredient
+import net.minecraft.potion.PotionBrewing
 import net.minecraft.util.IItemProvider
 import net.minecraftforge.api.distmarker.Dist
+import net.minecraftforge.common.brewing.BrewingRecipeRegistry
 import net.minecraftforge.registries.IForgeRegistry
+import thedarkcolour.hardcoredungeons.client.color.PotionColor
 import thedarkcolour.hardcoredungeons.client.color.RainbowColor
 import thedarkcolour.hardcoredungeons.data.modelgen.ModelType
 import thedarkcolour.hardcoredungeons.item.Group
@@ -19,9 +23,12 @@ import thedarkcolour.hardcoredungeons.item.debug.ClearWandItem
 import thedarkcolour.hardcoredungeons.item.debug.CloneWandItem
 import thedarkcolour.hardcoredungeons.item.debug.DistanceWandItem
 import thedarkcolour.hardcoredungeons.item.debug.FillWandItem
+import thedarkcolour.hardcoredungeons.item.misc.EmptySyringeItem
 import thedarkcolour.hardcoredungeons.item.misc.GunItem
 import thedarkcolour.hardcoredungeons.item.misc.StaffItem
+import thedarkcolour.hardcoredungeons.item.misc.SyringeItem
 import thedarkcolour.hardcoredungeons.item.overworld.ShroomySwordItem
+import thedarkcolour.hardcoredungeons.recipe.SyringeRecipe
 import thedarkcolour.kotlinforforge.forge.objectHolder
 import thedarkcolour.kotlinforforge.forge.runWhenOn
 
@@ -34,6 +41,8 @@ import thedarkcolour.kotlinforforge.forge.runWhenOn
  */
 @Suppress("MemberVisibilityCanBePrivate", "HasPlatformType", "DuplicatedCode")
 object HItems {
+    // @formatter:off
+
     // Overworld blocks
     val VASE by objectHolder<Item>("vase")
 
@@ -42,6 +51,8 @@ object HItems {
     val MUSHROOM_CAP = ArmorItem(HArmorMaterial.SHROOMY, EquipmentSlotType.HEAD, Properties().group(Group).maxStackSize(1).maxDamage(567)).setRegistryKey("mushroom_cap")
     val MINI_PISTOL = GunItem(Properties().group(Group), bulletDamage = 3.0f, drop = 0.0004f).setRegistryKey("mini_pistol")
     //val RING_OF_LAST_WORDS = Item(Properties().group(Group).maxStackSize(1).rarity(Rarity.UNCOMMON)).setRegistryKey("ring_of_last_words")
+    val SYRINGE = EmptySyringeItem(Properties().group(Group).maxStackSize(16)).setRegistryKey("syringe")
+    val POTION_SYRINGE = SyringeItem(Properties().group(Group).maxStackSize(2)).setRegistryKey("potion_syringe")
 
     // Castleton blocks
     //val CASTLETON_SOIL by objectHolder<Item>("castleton_soil")
@@ -111,18 +122,8 @@ object HItems {
     val SCRAP_METAL by objectHolder<Item>("scrap_metal")
 
     // Aubrum items
-    val AUBRI_MINI_PISTOL = GunItem(
-        Properties().group(Group),
-        chargeTime = 22,
-        drop = 0.0004f,
-    ).setRegistryKey("aubri_mini_pistol")
-    val AUBRI_RIFLE = GunItem(
-        Properties().group(Group),
-        chargeTime = 16,
-        velocity = 2.4f,
-        bulletDamage = 4.6f,
-        drop = 0.0001f,
-    ).setRegistryKey("aubri_rifle")
+    val AUBRI_MINI_PISTOL = GunItem(Properties().group(Group), chargeTime = 22, drop = 0.0004f,).setRegistryKey("aubri_mini_pistol")
+    val AUBRI_RIFLE = GunItem(Properties().group(Group), chargeTime = 16, velocity = 2.4f, bulletDamage = 4.6f, drop = 0.0001f,).setRegistryKey("aubri_rifle")
     val AURIGOLD = Item(Properties().group(Group)).setRegistryKey("aurigold")
     val AURIGOLD_PENDANT = Item(Properties().group(Group)).setRegistryKey("aurigold_pendant")
     val AURILO_STAFF = StaffItem(Properties().group(Group)).setRegistryKey("aurilo_staff")
@@ -140,18 +141,22 @@ object HItems {
     val CLONE_WAND = CloneWandItem(Properties().group(Group).maxStackSize(1).rarity(Rarity.UNCOMMON)).setRegistryKey("clone_wand")
     val DISTANCE_WAND = DistanceWandItem(Properties().group(Group).maxStackSize(1).rarity(HRarities.LEGENDARY)).setRegistryKey("distance_wand")
 
+    // @formatter:on
+
     fun registerItems(items: IForgeRegistry<Item>) {
         for (block in HBlocks.BLOCKS_W_ITEMS) {
             items.registerItemBlock(block)
         }
 
         for (block in HBlocks.BLOCKS_W_SIMPLE_ITEMS) {
-            items.registerSimpleItem(block)
+            items.registerSimpleItem(BlockItem(block, props()).setRegistryName(block.registryName!!))
         }
 
         // Overworld items
         items.registerHandheldItem(SHROOMY_SWORD)
         items.registerHandheldItem(MINI_PISTOL)
+        items.registerSimpleItem(SYRINGE)
+        items.register(POTION_SYRINGE)
 
         // Castleton items
         items.registerHandheldItem(CASTLETON_SWORD)
@@ -201,6 +206,10 @@ object HItems {
         items.registerSimpleItem(CLEAR_WAND)
         items.registerSimpleItem(CLONE_WAND)
         items.registerSimpleItem(DISTANCE_WAND)
+
+        // Potion stuff
+        PotionBrewing.POTION_ITEMS.add(Ingredient.fromItems(POTION_SYRINGE))
+        BrewingRecipeRegistry.addRecipe(SyringeRecipe)
     }
 
     /**
@@ -212,11 +221,12 @@ object HItems {
      */
     fun setItemColors(colors: Any) {
         runWhenOn(Dist.CLIENT) {
-            colors as ItemColors
+            colors as ItemColors // cast to maintain side-safe method signature
 
             colors.register(RainbowColor, HItems::RAINBOW_GRASS_BLOCK::get)
             colors.register(RainbowColor, HItems::RAINBOW_GLASS::get)
             colors.register(RainbowColor, HItems::RAINBOW_GLASS_PANE::get)
+            colors.register(PotionColor, HItems::POTION_SYRINGE::get)
         }
     }
 
@@ -236,7 +246,7 @@ object HItems {
     /**
      * item w layer0 model
      */
-    fun IForgeRegistry<Item>.registerSimpleItem(item: IItemProvider) {
+    fun IForgeRegistry<Item>.registerSimpleItem(item: Item) {
         ModelType.SIMPLE_ITEM.add(item)
         register(item.asItem())
     }

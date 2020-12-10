@@ -1,6 +1,5 @@
 {
     "variants": {
-        "": { "model": "hardcoredungeons:block/purple_castleton_lamp_on" },
         "lit=false": { "model": "hardcoredungeons:block/purple_castleton_lamp" },
         "lit=true": { "model": "hardcoredungeons:block/purple_castleton_lamp_on" }
     }

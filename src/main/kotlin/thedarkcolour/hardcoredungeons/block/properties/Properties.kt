@@ -46,7 +46,7 @@ abstract class Properties<T : Properties<T>> protected constructor() {
      * Set this block to be non-solid.
      */
     fun nonSolid(): T {
-        internal.doesNotBlockMovement()
+        internal.notSolid()
         return this as T
     }
 

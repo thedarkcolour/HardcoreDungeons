@@ -6,9 +6,10 @@ import net.minecraft.entity.Entity
 import net.minecraft.entity.player.ServerPlayerEntity
 import net.minecraft.state.StateContainer
 import net.minecraft.state.properties.BlockStateProperties
-import net.minecraft.util.Direction.*
+import net.minecraft.util.Direction.Axis
 import net.minecraft.util.RegistryKey
 import net.minecraft.util.math.BlockPos
+import net.minecraft.util.math.BlockPos.getAllInBoxMutable
 import net.minecraft.util.math.shapes.IBooleanFunction
 import net.minecraft.util.math.shapes.ISelectionContext
 import net.minecraft.util.math.shapes.VoxelShape
@@ -17,8 +18,9 @@ import net.minecraft.world.IBlockReader
 import net.minecraft.world.IWorld
 import net.minecraft.world.World
 import thedarkcolour.hardcoredungeons.block.properties.HProperties
+import thedarkcolour.hardcoredungeons.capability.PlayerHelper
 
-class PortalBlock(private val dimensionKey: () -> RegistryKey<World>, private val frameBlock: Block, properties: HProperties) : Block(properties.build()) {
+class PortalBlock(private val dimensionKey: () -> RegistryKey<World>, private val frameState: () -> BlockState, properties: HProperties) : Block(properties.build()) {
     init {
         defaultState = defaultState.with(AXIS, Axis.X)
     }
@@ -26,7 +28,12 @@ class PortalBlock(private val dimensionKey: () -> RegistryKey<World>, private va
     override fun onEntityCollision(state: BlockState, worldIn: World, blockPos: BlockPos, entityIn: Entity) {
         val pos = blockPos.toMutable()
 
+        @Suppress("ControlFlowWithEmptyBody")
         if (!worldIn.isRemote && canTeleport(state, worldIn, pos, entityIn)) {
+            // exit early before reading the world
+            if (entityIn !is ServerPlayerEntity || PlayerHelper.getPortalCooldown(entityIn) > 0) {
+                return
+            }
             // picks the destination dimension
             val key = dimensionKey()
 
@@ -39,100 +46,123 @@ class PortalBlock(private val dimensionKey: () -> RegistryKey<World>, private va
             // destination world
             val destination = worldIn.server!!.getWorld(type) ?: return
 
+            // height to spawn the portal
+            var portalOffset = 0.0
+            val x = entityIn.posX
+            val z = entityIn.posZ
+            val mutable = BlockPos.Mutable(x, portalOffset, z)
+
+            // first check for existing portal
+            while (++portalOffset < 255 && destination.getBlockState(mutable.setPos(x, portalOffset, z)).block != this);
+
+            // then check for vacant portal position if no portal exists
+            if (destination.getBlockState(mutable).block != this) {
+                portalOffset = 0.0
+                mutable.setPos(x, 0.0, z)
+                while (++portalOffset < 255 && !destination.isAirBlock(mutable.setPos(x, portalOffset, z)));
+            }
+
+            // offset by one for the portal to spawn
+            ++portalOffset
+
             // teleport player to the dimension
-            if (entityIn is ServerPlayerEntity) {
-                entityIn.teleport(destination, entityIn.position.x.toDouble(), entityIn.position.y.toDouble(), entityIn.position.z.toDouble(), entityIn.rotationYaw, entityIn.rotationPitch)
+            PlayerHelper.setPortalCooldown(entityIn, 30)
+            // cache effects because teleport clears them for some reason
+            val effects = ArrayList(entityIn.activePotionEffects)
+            entityIn.teleport(destination, entityIn.position.x.toDouble(), portalOffset, entityIn.position.z.toDouble(), entityIn.rotationYaw, entityIn.rotationPitch)
+            // add all the effects back
+            for (effect in effects) {
+                entityIn.addPotionEffect(effect)
             }
 
             // each state has one reference
             // state does not need equals()
-            if (destination.getBlockState(pos) != state) {
+            if (destination.getBlockState(BlockPos(entityIn.position.x.toDouble(), portalOffset, entityIn.position.z.toDouble())) != state) {
 
                 // create portal that matches the one in this dimension
-                //constructMatchingPortal(destination, worldIn, pos, state)
+                constructMatchingPortal(destination, worldIn, pos, entityIn.position, state)
             }
         }
     }
 
     // if a portal block is missing then we make a new portal here
-    private fun constructMatchingPortal(destination: IWorld, worldIn: IWorld, pos: BlockPos, state: BlockState) {
-        val startCorner = pos.toMutable()
-        val endCorner = pos.toMutable()
-        val startFacing = if (state.get(AXIS) == Axis.X) {
-            EAST
+    private fun constructMatchingPortal(destination: IWorld, origin: IWorld, pos: BlockPos, tpLocation: BlockPos, state: BlockState) {
+        val axis = state.get(AXIS)
+        // cursor for measuring portal
+        val testCursor = pos.toMutable()
+        var endY = pos.y
+        var startY = pos.y
+
+        // only get the state of the portal frame once
+        val frame = frameState()
+
+        // find the top and bottom of the portal
+        while (origin.getBlockState(testCursor.move(0, -1, 0)).block == this) --startY
+        testCursor.setPos(pos)
+        while (origin.getBlockState(testCursor.move(0, 1, 0)).block == this) ++endY
+        testCursor.setPos(pos)
+
+        // top and bottom coordinates of the destination portal
+        val minY = tpLocation.y - 1
+        val maxY = tpLocation.y + endY - pos.y + 1
+
+        // axis specific code
+        if (axis == Axis.X) {
+            var startX = pos.x
+            var endX = pos.x
+
+            // find sides of portal
+            while (origin.getBlockState(testCursor.move(-1, 0, 0)).block == this) --startX
+            testCursor.setPos(pos)
+            while (origin.getBlockState(testCursor.move(1, 0, 0)).block == this) ++endX
+
+            // don't make an impossible portal
+            if (endX - startX < 1 || endY - startY < 2) {
+                return
+            }
+
+            // edge coordinates of portal
+            val minX = startX - 1
+            val maxX = endX + 1
+
+            for (cursor in getAllInBoxMutable(minX, minY, pos.z, maxX, maxY, pos.z)) {
+                // if we're on the edge place a frame
+                if (cursor.x == minX || cursor.x == maxX || cursor.y == minY || cursor.y == maxY) {
+                    destination.setBlockState(cursor, frame, 18)
+                } else {
+                    // if not we fill in the portal todo debounce
+                    destination.setBlockState(cursor, state, 18)
+                }
+            }
         } else {
-            SOUTH
-        }
-        val endFacing = startFacing.opposite
+            var startZ = pos.z
+            var endZ = pos.z
 
-        // find the vertices of the portal frame
-        while (true) {
-            if (worldIn.getBlockState(startCorner.offset(DOWN)) != state) {
-                // get out of frame so we can get horizontal coordinate
-                startCorner.offset(UP)
-                break
+            // find one side of the portal
+            while (origin.getBlockState(testCursor.move(0, 0, -1)).block == this) --startZ
+            // reset cursor
+            testCursor.setPos(pos)
+            // find the other side
+            while (origin.getBlockState(testCursor.move(0, 0, 1)).block == this) ++endZ
+
+            // don't make an impossible portal
+            if (endZ - startZ < 1 || endY - startY < 2) {
+                return
             }
-        }
 
-        while (true) {
-            if (worldIn.getBlockState(endCorner.offset(UP)) != state) {
-                // get out of frame so we can get horizontal coordinate
-                endCorner.offset(DOWN)
-                break
+            // edge coordinates of portal
+            val minZ = startZ - 1
+            val maxZ = endZ + 1
+
+            for (cursor in getAllInBoxMutable(pos.x, minY, minZ, pos.x, maxY, maxZ)) {
+                // if we're on the edge place a frame
+                if (cursor.z == minZ || cursor.z == maxZ || cursor.y == minY || cursor.y == maxY) {
+                    destination.setBlockState(cursor, frame, 18)
+                } else {
+                    // if not we fill in the portal todo debounce
+                    destination.setBlockState(cursor, state, 18)
+                }
             }
-        }
-
-        while (true) {
-            if (worldIn.getBlockState(startCorner.offset(startFacing)) != state) {
-                // go back into frame
-                startCorner.offset(DOWN)
-                break
-            }
-        }
-
-        while (true) {
-            if (worldIn.getBlockState(endCorner.offset(endFacing)) != state) {
-                // go back into frame
-                endCorner.offset(UP)
-                break
-            }
-        }
-
-        // store the corner
-        var startingPos = startCorner.toImmutable()
-        var endingPos = endCorner.toImmutable()
-        val frame = frameBlock.defaultState
-
-        // build horizontally
-        if (startFacing == EAST) {
-            do {
-                destination.getChunk(pos)
-                destination.setBlockState(startCorner, frame, 18)
-                destination.setBlockState(endCorner, frame, 18)
-                endCorner.offset(startFacing)
-            } while (startCorner.offset(endFacing).x != endingPos.x)
-        } else {
-            do {
-                destination.getChunk(pos)
-                destination.setBlockState(startCorner, frame, 18)
-                destination.setBlockState(endCorner, frame, 18)
-                endCorner.offset(startFacing)
-            } while (startCorner.offset(endFacing).z != endingPos.z)
-        }
-
-        // build vertically
-        while (startCorner != endingPos) {
-            destination.setBlockState(startCorner.offset(UP), frame, 18)
-            destination.setBlockState(endCorner.offset(DOWN), frame, 18)
-        }
-
-        // get out of frame
-        startingPos = startingPos.offset(endFacing)
-        endingPos = endingPos.offset(startFacing)
-
-        // fill in the frame
-        for (blockPos in BlockPos.getAllInBoxMutable(startingPos.x, startingPos.y + 1, startingPos.z, endingPos.x, endingPos.y - 1, endingPos.z)) {
-            destination.setBlockState(blockPos, frame, 18)
         }
     }
 

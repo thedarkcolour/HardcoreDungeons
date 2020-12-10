@@ -18,6 +18,7 @@ abstract class ModelType<T> {
         val CUBE_ALL = CubeAllModelType()
         val BLOCK_ITEM = BlockItemModelType()
         val SLAB_BLOCK = SlabModelType()
+        val CROSS_BLOCK = CrossModelType()
         val STAIRS_BLOCK = StairsModelType()
         val WALL_BLOCK = WallModelType()
         val FENCE_BLOCK = FenceModelType()

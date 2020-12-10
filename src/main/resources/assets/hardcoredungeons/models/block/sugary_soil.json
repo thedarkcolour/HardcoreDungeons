@@ -1,0 +1,7 @@
+{
+    "parent": "block/cube_column",
+    "textures": {
+        "end": "hardcoredungeons:block/sugary_soil",
+        "side": "hardcoredungeons:block/sugary_soil_side"
+    }
+}

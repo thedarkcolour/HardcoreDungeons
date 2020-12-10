@@ -6,6 +6,7 @@ import net.minecraft.inventory.container.ContainerType
 import net.minecraft.item.Item
 import net.minecraft.item.crafting.IRecipeSerializer
 import net.minecraft.particles.ParticleType
+import net.minecraft.potion.Effect
 import net.minecraft.tileentity.TileEntityType
 import net.minecraft.util.SoundEvent
 import net.minecraft.world.biome.Biome
@@ -35,6 +36,7 @@ object RegistryEventHandler {
         MOD_BUS.addGenericListener(::registerBlocks)
         MOD_BUS.addGenericListener(::registerContainerTypes)
         MOD_BUS.addGenericListener(::registerDataSerializers)
+        MOD_BUS.addGenericListener(::registerEffects)
         MOD_BUS.addGenericListener(::registerEntities)
         MOD_BUS.addGenericListener(::registerStructures)
         MOD_BUS.addGenericListener(::registerItems)
@@ -55,6 +57,8 @@ object RegistryEventHandler {
     private fun registerContainerTypes(event: Register<ContainerType<*>>) = HContainers.registerContainerTypes(event.registry)
 
     private fun registerDataSerializers(event: Register<DataSerializerEntry>) = HDataSerializers.registerDataSerializers(event.registry)
+
+    private fun registerEffects(event: Register<Effect>) = HEffects.registerEffects(event.registry)
 
     private fun registerEntities(event: Register<EntityType<*>>) = HEntities.registerEntities(event.registry)
 

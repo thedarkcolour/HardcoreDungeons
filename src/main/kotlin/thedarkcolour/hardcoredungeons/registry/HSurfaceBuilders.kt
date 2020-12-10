@@ -31,16 +31,20 @@ object HSurfaceBuilders {
     //val GOLDEN_AURIGRASS_BLOCK = HBlocks.GOLDEN_AURIGRASS_BLOCK.defaultState
     //val GOLDEN_AURISOIL = HBlocks.GOLDEN_AURISOIL.defaultState
 
+    val SUGARY_GRASS_BLOCK = HBlocks.SUGARY_GRASS_BLOCK.defaultState
+    val SUGARY_SOIL = HBlocks.SUGARY_GRASS_BLOCK.defaultState
+
     val RAINBOWLAND_SURFACE = register("rainbowland_surface", defaultCfg(RAINBOW_GRASS_BLOCK, RAINBOW_SOIL, GRAVEL))
     val CASTLETON_SURFACE = register("castleton_surface", defaultCfg(CASTLETON_GRASS_BLOCK, CASTLETON_SOIL, CASTLETON_LOAM))
     val AUBRUM_WASTELAND_SURFACE = register("aubrum_wasteland", defaultCfg(AURIGRASS_BLOCK, AURISOIL, AURILOAM))
+    val SUGARY_SURFACE = register("sugary_surface", defaultCfg(SUGARY_GRASS_BLOCK, SUGARY_SOIL, SUGARY_SOIL))
     //val GOLDEN_FOREST_SURFACE = register("golden_forest_surface", defaultCfg(GOLDEN_AURIGRASS_BLOCK, GOLDEN_AURISOIL, AURILOAM))
     //val RUNED_FLATS_STONE_SURFACE = register("runed_flats_stone_surface", defaultCfg(CASTLETON_STONE, CASTLETON_STONE, CASTLETON_LOAM))
 
-    val THICK_FOREST_SURFACE = ThickForestSurfaceBuilder().setRegistryKey("forest_of_lakes")
+    val THICK_FOREST = ThickForestSurfaceBuilder().setRegistryKey("thick_forest")
 
     fun registerSurfaceBuilders(surfaces: IForgeRegistry<SurfaceBuilder<*>>) {
-        surfaces.register(THICK_FOREST_SURFACE)
+        surfaces.register(THICK_FOREST)
     }
 
     private fun defaultCfg(a: BlockState, b: BlockState, c: BlockState): ConfiguredSurfaceBuilder<SurfaceBuilderConfig> {

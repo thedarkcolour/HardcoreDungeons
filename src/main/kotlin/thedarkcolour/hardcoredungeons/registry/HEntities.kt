@@ -8,7 +8,6 @@ import net.minecraft.entity.EntityClassification
 import net.minecraft.entity.EntitySize
 import net.minecraft.entity.EntityType
 import net.minecraft.entity.EntityType.Builder
-import net.minecraft.entity.ai.attributes.AttributeModifierMap
 import net.minecraft.entity.ai.attributes.GlobalEntityTypeAttributes
 import net.minecraft.util.ResourceLocation
 import net.minecraftforge.fml.client.registry.ClientRegistry
@@ -29,6 +28,7 @@ import thedarkcolour.hardcoredungeons.entity.misc.bullet.SmallBulletEntity
 import thedarkcolour.hardcoredungeons.entity.misc.cheeky.CheekyEntity
 import thedarkcolour.hardcoredungeons.entity.misc.cheeky.CheekyRenderer
 import thedarkcolour.hardcoredungeons.entity.misc.magic.MagicBoltEntity
+import thedarkcolour.hardcoredungeons.entity.overworld.deer.DeerEntity
 import thedarkcolour.hardcoredungeons.entity.rainbowland.sheep.RainbowlandSheepEntity
 import thedarkcolour.hardcoredungeons.util.modLoc
 
@@ -54,6 +54,9 @@ object HEntities {
     val CASTLETON_DEER = Builder
         .create(::CastletonDeerEntity, EntityClassification.CREATURE)
         .build(modLoc("castleton_deer"))
+    val DEER = Builder
+        .create(::DeerEntity, EntityClassification.CREATURE)
+        .build(modLoc("deer"))
     val KNIGHTLY_JUGGERNAUT = Builder
         .create(::KnightlyJuggernautEntity, EntityClassification.CREATURE)
         .build(modLoc("knightly_juggernaut"))
@@ -94,6 +97,7 @@ object HEntities {
 
     fun registerEntities(entities: IForgeRegistry<EntityType<*>>) {
         entities.register(CHEEKY)
+        entities.register(DEER)
 
         entities.register(FRAYED_SOUL)
         entities.register(VOID_RUNNER)
@@ -105,18 +109,19 @@ object HEntities {
         entities.register(SMALL_BULLET)
         entities.register(MAGIC_BOLT)
 
-        // todo attributes
         GlobalEntityTypeAttributes.put(CHEEKY, CheekyEntity.ATTRIBUTES.create())
-        GlobalEntityTypeAttributes.put(FRAYED_SOUL, AttributeModifierMap(hashMapOf()))
-        GlobalEntityTypeAttributes.put(VOID_RUNNER, AttributeModifierMap(hashMapOf()))
-        GlobalEntityTypeAttributes.put(CASTLETON_DEER, AttributeModifierMap(hashMapOf()))
-        GlobalEntityTypeAttributes.put(KNIGHTLY_JUGGERNAUT, AttributeModifierMap(hashMapOf()))
-        GlobalEntityTypeAttributes.put(RAINBOWLAND_SHEEP, AttributeModifierMap(hashMapOf()))
-        GlobalEntityTypeAttributes.put(INFINITY, AttributeModifierMap(hashMapOf()))
+        GlobalEntityTypeAttributes.put(FRAYED_SOUL, FrayedSoulEntity.ATTRIBUTES.create())
+        GlobalEntityTypeAttributes.put(VOID_RUNNER, VoidRunnerEntity.ATTRIBUTES.create())
+        GlobalEntityTypeAttributes.put(CASTLETON_DEER, DeerEntity.DEFAULT_ATTRIBUTES.create())
+        GlobalEntityTypeAttributes.put(DEER, DeerEntity.DEFAULT_ATTRIBUTES.create())
+        GlobalEntityTypeAttributes.put(KNIGHTLY_JUGGERNAUT, KnightlyJuggernautEntity.ATTRIBUTES.create())
+        GlobalEntityTypeAttributes.put(RAINBOWLAND_SHEEP, RainbowlandSheepEntity.ATTRIBUTES.create())
+        GlobalEntityTypeAttributes.put(INFINITY, InfinityEntity.ATTRIBUTES.create())
     }
 
     fun registerEntityRenderers() {
         RenderingRegistry.registerEntityRenderingHandler(CHEEKY, ::CheekyRenderer)
+        RenderingRegistry.registerEntityRenderingHandler(DEER, ::DeerRenderer)
         RenderingRegistry.registerEntityRenderingHandler(FRAYED_SOUL, ::FrayedSoulRenderer)
         RenderingRegistry.registerEntityRenderingHandler(VOID_RUNNER, ::VoidRunnerRenderer)
         RenderingRegistry.registerEntityRenderingHandler(RAINBOWLAND_SHEEP, ::SheepRenderer)

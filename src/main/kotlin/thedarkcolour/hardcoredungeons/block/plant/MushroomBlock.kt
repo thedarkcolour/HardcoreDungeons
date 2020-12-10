@@ -8,20 +8,13 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.world.IBlockReader
 import net.minecraft.world.IWorldReader
 import thedarkcolour.hardcoredungeons.block.properties.PlantProperties
-import thedarkcolour.hardcoredungeons.util.copyOf
 
 class MushroomBlock(properties: PlantProperties) : MushroomBlock(properties.build()) {
-    private val blocks = properties.blocks.copyOf() // see Util.kt
-    private val strict = properties.strict
+    // if strict only use predicate else you can also use podzol and mycelium
+    private val predicate = if (properties.strict) { properties.predicate } else { state -> properties.predicate(state) || state.block == Blocks.MYCELIUM || state.block == Blocks.PODZOL }
 
     override fun isValidGround(state: BlockState, worldIn: IBlockReader?, pos: BlockPos?): Boolean {
-        val block = state.block
-
-        return if (strict) {
-            blocks.contains(block)
-        } else {
-            blocks.contains(block) || block == Blocks.MYCELIUM || block == Blocks.PODZOL
-        }
+        return predicate(state)
     }
 
     override fun isValidPosition(state: BlockState?, worldIn: IWorldReader, pos: BlockPos): Boolean {

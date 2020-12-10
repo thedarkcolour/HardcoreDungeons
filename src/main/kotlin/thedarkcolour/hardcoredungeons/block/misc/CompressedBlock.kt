@@ -20,12 +20,12 @@ import thedarkcolour.hardcoredungeons.registry.setRegistryKey
  *
  * @author TheDarkColour
  */
-class CompressedBlock(private val block: () -> Block, private val properties: HProperties?) {
+class CompressedBlock(val block: () -> Block, private val properties: HProperties?) {
     /**
      * Contains each compressed variant of [block].
      * The size of this array is always 8.
      */
-    private lateinit var blockVariants: Array<HBlock>
+    lateinit var blockVariants: Array<HBlock>
 
     ///** Contains a BlockItem for each compressed block variant. */
     //private lateinit var itemVariants: Array<Item>

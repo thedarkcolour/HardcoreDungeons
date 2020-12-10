@@ -11,6 +11,7 @@ import thedarkcolour.hardcoredungeons.block.misc.BonusFarmlandBlock
 import thedarkcolour.hardcoredungeons.block.plant.misc.GoldenCarrotsBlock
 import thedarkcolour.hardcoredungeons.client.ClientHandler
 import thedarkcolour.hardcoredungeons.command.ReloadModelsCommand
+import thedarkcolour.hardcoredungeons.event.EventHandler
 import thedarkcolour.hardcoredungeons.registry.RegistryEventHandler
 import thedarkcolour.kotlinforforge.forge.FORGE_BUS
 import thedarkcolour.kotlinforforge.forge.MOD_BUS
@@ -32,9 +33,9 @@ object HardcoreDungeons {
     // Early to rise, early to bed, makes a man healthy but socially dead.
     init {
         RegistryEventHandler.registerEvents()
+        EventHandler.registerEvents()
+
         FORGE_BUS.addListener(::registerCommands)
-        FORGE_BUS.addListener(BonusFarmlandBlock::overrideCropGrowthBehaviour)
-        FORGE_BUS.addListener(GoldenCarrotsBlock::onBlockActivated)
 
         MOD_BUS.addListener(::interModComms)
 

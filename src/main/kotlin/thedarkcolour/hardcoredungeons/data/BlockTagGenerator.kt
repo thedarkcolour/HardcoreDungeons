@@ -61,7 +61,7 @@ class BlockTagGenerator(gen: DataGenerator, helper: ExistingFileHelper) : BlockT
         getOrCreateBuilder(BlockTags.IMPERMEABLE).addTag(HBlockTags.GLASS_RAINBOW)
 
         // forge tags
-        getOrCreateBuilder(Blocks.DIRT).add(HBlocks.CASTLETON_SOIL, HBlocks.CASTLETON_GRASS_BLOCK, HBlocks.RAINBOW_SOIL, HBlocks.RAINBOW_GRASS_BLOCK, HBlocks.AURIGRASS_BLOCK, HBlocks.AURISOIL)
+        getOrCreateBuilder(Blocks.DIRT).add(HBlocks.CASTLETON_SOIL, HBlocks.CASTLETON_GRASS_BLOCK, HBlocks.RAINBOW_SOIL, HBlocks.RAINBOW_GRASS_BLOCK, HBlocks.AURIGRASS_BLOCK, HBlocks.AURISOIL, HBlocks.SUGARY_GRASS_BLOCK, HBlocks.SUGARY_SOIL)
         getOrCreateBuilder(Blocks.FENCES).add(HBlocks.LUMLIGHT_FENCE, HBlocks.CHARGED_CASTLETON_BRICK_FENCE)
         getOrCreateBuilder(Blocks.FENCE_GATES_WOODEN).add(HBlocks.LUMLIGHT_FENCE_GATE)
         getOrCreateBuilder(Blocks.GLASS).addTag(HBlockTags.GLASS_RAINBOW)

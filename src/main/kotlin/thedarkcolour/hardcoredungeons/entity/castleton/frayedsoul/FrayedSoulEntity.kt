@@ -2,6 +2,8 @@ package thedarkcolour.hardcoredungeons.entity.castleton.frayedsoul
 
 import net.minecraft.entity.CreatureEntity
 import net.minecraft.entity.EntityType
+import net.minecraft.entity.ai.attributes.AttributeModifierMap
+import net.minecraft.entity.ai.attributes.Attributes
 import net.minecraft.entity.ai.goal.Goal
 import net.minecraft.entity.ai.goal.LookAtGoal
 import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal
@@ -9,6 +11,7 @@ import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.util.SoundEvent
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
+import net.minecraftforge.common.ForgeMod
 import thedarkcolour.hardcoredungeons.registry.HBlocks
 import thedarkcolour.hardcoredungeons.registry.HSounds
 
@@ -31,6 +34,20 @@ class FrayedSoulEntity(type: EntityType<FrayedSoulEntity>, worldIn: World) : Cre
 
     override fun getAmbientSound(): SoundEvent {
         return HSounds.ENTITY_FRAYED_SOUL_IDLE
+    }
+
+    companion object {
+        val ATTRIBUTES: AttributeModifierMap.MutableAttribute = AttributeModifierMap.createMutableAttribute()
+            .createMutableAttribute(Attributes.MAX_HEALTH, 20.0)
+            .createMutableAttribute(Attributes.KNOCKBACK_RESISTANCE, 0.2)
+            .createMutableAttribute(Attributes.MOVEMENT_SPEED)
+            .createMutableAttribute(Attributes.ARMOR)
+            .createMutableAttribute(Attributes.ARMOR_TOUGHNESS)
+            .createMutableAttribute(ForgeMod.SWIM_SPEED.get())
+            .createMutableAttribute(ForgeMod.NAMETAG_DISTANCE.get())
+            .createMutableAttribute(ForgeMod.ENTITY_GRAVITY.get())
+            .createMutableAttribute(Attributes.FOLLOW_RANGE, 16.0)
+            .createMutableAttribute(Attributes.ATTACK_KNOCKBACK)
     }
 
     class FindBlueLumshroomGoal(private val entity: FrayedSoulEntity) : Goal() {

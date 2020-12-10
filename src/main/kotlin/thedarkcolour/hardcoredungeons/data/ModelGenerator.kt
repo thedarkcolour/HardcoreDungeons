@@ -27,6 +27,10 @@ class ModelGenerator(gen: DataGenerator, private val helper: ExistingFileHelper)
         //}
     }
 
+    fun name(block: Block): String {
+        return block.registryName!!.path
+    }
+
     /**
      * Generates an in-gui version of the block
      * that appears the same way it does in the world.

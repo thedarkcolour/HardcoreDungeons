@@ -33,7 +33,7 @@ class CheekyEntity(type: EntityType<out CreatureEntity>, worldIn: World) : Creat
     companion object {
         val ATTRIBUTES: AttributeModifierMap.MutableAttribute = AttributeModifierMap.createMutableAttribute()
             .createMutableAttribute(Attributes.MAX_HEALTH, 10.0)
-            .createMutableAttribute(Attributes.KNOCKBACK_RESISTANCE, 0.2)
+            .createMutableAttribute(Attributes.KNOCKBACK_RESISTANCE, 0.4)
             .createMutableAttribute(Attributes.MOVEMENT_SPEED)
             .createMutableAttribute(Attributes.ARMOR)
             .createMutableAttribute(Attributes.ARMOR_TOUGHNESS)

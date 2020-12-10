@@ -34,15 +34,21 @@ object HBiomes {
     // Rainbowland biomes
     val RAINBOW_PLAINS = HBiomeMaker.makeRainbowPlainsBiome().setRegistryKey("rainbow_plains")
 
+    // Candyland biomes
+    val GUMDROP_FIELDS = HBiomeMaker.makeGumdropFieldsBiome().setRegistryKey("gumdrop_fields")
+
     fun registerBiomes(biomes: IForgeRegistry<Biome>) {
-        biomes.register(RAINBOW_PLAINS)
         biomes.register(CASTLETON_HILLS)
         biomes.register(KNIGHTLY_SHRUBLAND)
+
+        biomes.register(RAINBOW_PLAINS)
 
         biomes.register(AUBRUM_WASTELAND)
         biomes.register(GOLDEN_FOREST)
         biomes.register(AUBRUM_MOUNTAINS)
         biomes.register(AURI_PLAINS)
+
+        biomes.register(GUMDROP_FIELDS)
 
         biomes.register(THICK_FOREST)
         biomes.register(MUSHROOM_CLIFFS)

@@ -75,7 +75,7 @@ object HBiomeMaker {
     }
 
     fun makeThickForestBiome(): Biome {
-        val genSettings = genSettings(HSurfaceBuilders.THICK_FOREST_SURFACE, SurfaceBuilder.PODZOL_DIRT_GRAVEL_CONFIG)
+        val genSettings = genSettings(HSurfaceBuilders.THICK_FOREST, SurfaceBuilder.PODZOL_DIRT_GRAVEL_CONFIG)
 
         DefaultBiomeFeatures.withCavesAndCanyons(genSettings)
         DefaultBiomeFeatures.withStrongholdAndMineshaft(genSettings)
@@ -88,7 +88,7 @@ object HBiomeMaker {
         DefaultBiomeFeatures.withForestGrass(genSettings)
         DefaultBiomeFeatures.withTaigaGrassVegetation(genSettings)
         DefaultBiomeFeatures.withTreesInWater(genSettings)
-        DefaultBiomeFeatures.withExtraGoldOre(genSettings)
+        //DefaultBiomeFeatures.withExtraGoldOre(genSettings)
         DefaultBiomeFeatures.withWarmFlowers(genSettings)
         DefaultBiomeFeatures.withSugarCaneAndPumpkins(genSettings)
         HFeatures.withOakShrubs(genSettings)
@@ -205,6 +205,20 @@ object HBiomeMaker {
             temperature = 1.5f,
             downfall = 0.0f,
             effects = effects(0x999966, 0x1f37f2, 0xab9560, 0xc4af7c),
+            genSettings = genSettings
+        )
+    }
+
+    fun makeGumdropFieldsBiome(): Biome {
+        val genSettings = genSettings(HSurfaceBuilders.SUGARY_SURFACE)
+        return biome(
+            precipitation = Biome.RainType.NONE,
+            category = Biome.Category.PLAINS,
+            depth = 0.04f,
+            scale = 0.2f,
+            temperature = 1.5f,
+            downfall = 0.4f,
+            effects = effects(0x3f76e4, 0x50533, getSkyForTemp(0.9f), 12638463),
             genSettings = genSettings
         )
     }

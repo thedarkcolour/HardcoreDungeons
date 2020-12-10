@@ -12,7 +12,7 @@ buildscript {
 }
 apply plugin: 'net.minecraftforge.gradle'
 
-version = '6'
+version = '8'
 group = 'thedarkcolour' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'hardcoredungeons'
 
@@ -93,17 +93,17 @@ repositories {
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.16.3-34.1.11'
+    minecraft 'net.minecraftforge:forge:1.16.4-35.1.2'
 
     // curios
-    implementation fg.deobf("top.theillusivec4.curios:curios-forge:1.16.3-4.0.2.0")
+    implementation fg.deobf("top.theillusivec4.curios:curios-forge:1.16.4-4.0.2.1")
 
     // ctm
     implementation fg.deobf("team.chisel.ctm:CTM:MC1.16.1-1.1.1.5")
 
     // jei
-    compileOnly fg.deobf("mezz.jei:jei-1.16.3:7.5.0.43:api")
-    runtimeOnly fg.deobf("mezz.jei:jei-1.16.3:7.5.0.43")
+    compileOnly fg.deobf("mezz.jei:jei-1.16.4:7.6.0.58:api")
+    runtimeOnly fg.deobf("mezz.jei:jei-1.16.4:7.6.0.58")
 }
 
 jar {

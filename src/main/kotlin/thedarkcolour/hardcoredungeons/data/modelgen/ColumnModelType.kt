@@ -4,6 +4,7 @@ import net.minecraft.block.Block
 import net.minecraftforge.client.model.generators.ModelFile
 import thedarkcolour.hardcoredungeons.data.ModelGenerator
 
+// todo fix bugs because broken
 class ColumnModelType : ModelType<Pair<Block, Block>>() {
     val pairs = arrayListOf<Pair<Block, Block>>()
 

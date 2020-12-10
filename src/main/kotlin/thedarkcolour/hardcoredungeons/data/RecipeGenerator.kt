@@ -3,6 +3,8 @@ package thedarkcolour.hardcoredungeons.data
 import net.minecraft.block.Block
 import net.minecraft.block.WallBlock
 import net.minecraft.data.*
+import net.minecraft.item.Items
+import net.minecraft.item.crafting.Ingredient
 import net.minecraft.tags.ItemTags
 import net.minecraft.util.IItemProvider
 import net.minecraft.util.ResourceLocation
@@ -11,7 +13,9 @@ import net.minecraftforge.registries.ForgeRegistries
 import thedarkcolour.hardcoredungeons.HardcoreDungeons
 import thedarkcolour.hardcoredungeons.block.decoration.SlabBlock
 import thedarkcolour.hardcoredungeons.block.decoration.StairsBlock
+import thedarkcolour.hardcoredungeons.block.misc.CompressedBlock
 import thedarkcolour.hardcoredungeons.registry.HBlocks
+import thedarkcolour.hardcoredungeons.registry.HItems
 import thedarkcolour.hardcoredungeons.tags.HItemTags
 import java.util.function.Consumer
 
@@ -41,6 +45,62 @@ class RecipeGenerator(generatorIn: DataGenerator) : RecipeProvider(generatorIn) 
         }
         consumer.slab(HBlocks.SHROOMY_STONE_BRICK_SLAB, HBlocks.SHROOMY_STONE_BRICKS)
         consumer.stairs(HBlocks.SHROOMY_STONE_BRICK_STAIRS, HBlocks.SHROOMY_STONE_BRICKS)
+        consumer.shaped(HItems.SYRINGE, 2) { builder ->
+            builder.key('I', Items.IRON_INGOT)
+            builder.key('B', Items.GLASS_BOTTLE)
+            builder.key('N', Items.IRON_NUGGET)
+            builder.patternLine("IBI")
+            builder.patternLine(" I ")
+            builder.patternLine(" N ")
+            builder.addCriterion("has_item", hasItem(Items.GLASS_BOTTLE))
+        }
+        consumer.compressionRecipes(HBlocks.COMPRESSED_COBBLESTONE)
+    }
+
+    // use item whenever possible but it doesn't really matter
+    // since we're only running data gen outside of minecraft game
+    private fun Consumer<IFinishedRecipe>.stonecutterRecipes(
+        base: IItemProvider,
+        slab: IItemProvider? = null,
+        vararg others: IItemProvider,
+    ) {
+        val basePath = base.asItem().registryName!!.path
+
+        if (slab != null) {
+            stonecutting(base, slab, 2)
+        }
+
+        for (other in others) {
+            stonecutting(base, other)
+        }
+    }
+
+    private fun Consumer<IFinishedRecipe>.stonecutting(
+        input: IItemProvider,
+        output: IItemProvider,
+        outputCount: Int = 1,
+    ) = SingleItemRecipeBuilder.stonecuttingRecipe(Ingredient.fromItems(input), output, outputCount)
+        .build(this, input.asItem().registryName!!.path + "_from_" + output.asItem().registryName!!.path)
+
+    private fun Consumer<IFinishedRecipe>.compressionRecipes(compressedBlock: CompressedBlock) {
+        val variants = compressedBlock.blockVariants
+
+        variants.forEachIndexed { i, block ->
+            val previous = if (i == 0) compressedBlock.block() else variants[i - 1]
+
+            shaped(block, 1) { builder ->
+                builder.key('#', previous)
+                builder.patternLine("###")
+                builder.patternLine("###")
+                builder.patternLine("###")
+                builder.addCriterion("has_previous", if (i == 0) hasItem(Tags.Items.COBBLESTONE) else hasItem(previous))
+            }
+
+            shapeless(previous, 9, modLoc(previous.registryName!!.path + "from_" + block.registryName!!.path)) { builder ->
+                builder.addIngredient(block)
+                builder.addCriterion("has_item", if (i == 0) hasItem(Tags.Items.COBBLESTONE) else hasItem(previous))
+            }
+        }
     }
 
     private fun Consumer<IFinishedRecipe>.shapeless(

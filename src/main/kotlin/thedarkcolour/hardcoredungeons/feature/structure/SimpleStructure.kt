@@ -92,7 +92,13 @@ class SimpleStructure(structureID: String, addPieces: (MutableMap<Vector3i, Reso
             var rotationOffset: BlockPos
 
             for (entry in pieces) {
-                val offset = entry.key
+                val original = entry.key
+                val offset = when (rotation) {
+                    Rotation.NONE -> original
+                    Rotation.CLOCKWISE_90 -> BlockPos(-original.z, original.y, original.x)
+                    Rotation.CLOCKWISE_180 -> BlockPos(-original.x, original.y, -original.z)
+                    Rotation.COUNTERCLOCKWISE_90 -> BlockPos(original.z, original.y, -original.x)
+                }
                 // x shl 5 = x * 32 because of piece sizes
                 // and add integral position values
                 rotationOffset = BlockPos(

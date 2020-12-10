@@ -2,7 +2,7 @@ package thedarkcolour.hardcoredungeons.data.modelgen
 
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap
 import net.minecraft.block.AbstractButtonBlock
-import net.minecraft.block.material.Material
+import net.minecraft.block.WoodButtonBlock
 import net.minecraft.state.properties.AttachFace
 import net.minecraft.state.properties.BlockStateProperties
 import net.minecraft.util.Direction
@@ -20,7 +20,7 @@ class ButtonModelType : BlockModelType<AbstractButtonBlock>() {
         val builder = gen.getVariantBuilder(block)
 
         // planks, stone, etc.
-        val originalTexture = if (block.material == Material.WOOD || block.material == Material.NETHER_WOOD)  {
+        val originalTexture = if (block is WoodButtonBlock)  {
             path.removeSuffix("_button") + "_planks"
         } else {
             path.removeSuffix("_button")
@@ -28,10 +28,10 @@ class ButtonModelType : BlockModelType<AbstractButtonBlock>() {
 
         val buttonModel = gen.blockModel(path)
             .parent(gen.mcFile("block/button"))
-            .texture("texture", originalTexture)
+            .texture("texture", "block/$originalTexture")
         val buttonPressedModel = gen.blockModel(path + "_pressed")
             .parent(gen.mcFile("block/button_pressed"))
-            .texture("texture", originalTexture)
+            .texture("texture", "block/$originalTexture")
 
         for (face in AttachFace.values()) {
             for (direction in HORIZONTALS) {
@@ -43,13 +43,13 @@ class ButtonModelType : BlockModelType<AbstractButtonBlock>() {
                 builder.partialState()
                     .with(BlockStateProperties.FACE, face)
                     .with(BlockStateProperties.HORIZONTAL_FACING, direction)
-                    .with(BlockStateProperties.POWERED, false)
+                    .with(BlockStateProperties.POWERED, true)
                     .addModels(modelWithRotation(gen, buttonPressedModel, rotateX = FACE_2_ROT.getInt(face), rotateY = DIR_2_ROT.getInt(direction)))
             }
         }
     }
 
-    fun modelWithRotation(gen: ModelGenerator, model: BlockModelBuilder, rotateX: Int = 0, rotateY: Int = 0, uvLock: Boolean = false): ConfiguredModel {
+    private fun modelWithRotation(gen: ModelGenerator, model: BlockModelBuilder, rotateX: Int = 0, rotateY: Int = 0, uvLock: Boolean = false): ConfiguredModel {
         return ConfiguredModel(gen.getModelFile(model), rotateX, rotateY, uvLock, ConfiguredModel.DEFAULT_WEIGHT)
     }
 
@@ -62,10 +62,10 @@ class ButtonModelType : BlockModelType<AbstractButtonBlock>() {
             FACE_2_ROT.put(AttachFace.WALL, 90)
             FACE_2_ROT.put(AttachFace.CEILING, 180)
 
-            DIR_2_ROT.put(Direction.SOUTH,   0)
-            DIR_2_ROT.put(Direction.WEST,   90)
-            DIR_2_ROT.put(Direction.NORTH, 180)
-            DIR_2_ROT.put(Direction.EAST,  270)
+            DIR_2_ROT.put(Direction.NORTH,   0)
+            DIR_2_ROT.put(Direction.EAST,   90)
+            DIR_2_ROT.put(Direction.SOUTH, 180)
+            DIR_2_ROT.put(Direction.WEST,  270)
         }
     }
 }

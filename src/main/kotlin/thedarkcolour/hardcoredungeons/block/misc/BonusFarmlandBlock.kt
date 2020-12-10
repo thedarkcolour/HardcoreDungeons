@@ -171,31 +171,21 @@ class BonusFarmlandBlock(
             // do not override vanilla farmland for now
             if (farmland !is BonusFarmlandBlock) return
 
-            val crop = event.state.block
-            var boostEntry: Object2FloatMap.Entry<Supplier<Block>>? = null
+            val state = event.state
+            val crop = state.block
 
             for (entry in farmland.boostMap.object2FloatEntrySet()) {
                 if (entry.key.get() == crop) {
-                    boostEntry = entry
-                    break
-                }
-            }
+                    // we only have a few crops supported
+                    if (crop is IGrowable && world is ServerWorld) {
 
-            // if we have a boosted plant
-            if (boostEntry != null) {
+                        if (world.random.nextFloat() < farmland.boostMap.getFloat(crop)) {
+                            // override default logic
+                            event.result = Event.Result.DENY
 
-                // we only have a few crops supported
-                if (crop is CropsBlock) {
-                    val ageProperty = crop.ageProperty
-                    val max = ageProperty.allowedValues.maxOrNull() ?: return
-                    val state = event.state
-
-                    if (world.random.nextFloat() < farmland.boostMap.getFloat(crop)) {
-                        // override default logic
-                        event.result = Event.Result.DENY
-
-                        world.setBlockState(pos, state.with(ageProperty, (state.get(ageProperty)).coerceAtMost(max)), 2)
+                        }
                     }
+                    return
                 }
             }
         }

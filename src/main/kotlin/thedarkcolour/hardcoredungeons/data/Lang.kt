@@ -2,9 +2,13 @@ package thedarkcolour.hardcoredungeons.data
 
 import net.minecraft.data.DataGenerator
 import net.minecraft.item.Item
+import net.minecraft.potion.Effect
+import net.minecraft.util.text.TranslationTextComponent
 import net.minecraftforge.common.data.LanguageProvider
 import thedarkcolour.hardcoredungeons.HardcoreDungeons
+import thedarkcolour.hardcoredungeons.block.misc.CompressedBlock
 import thedarkcolour.hardcoredungeons.registry.HBlocks
+import thedarkcolour.hardcoredungeons.registry.HEffects
 import thedarkcolour.hardcoredungeons.registry.HItems
 
 /**
@@ -23,6 +27,8 @@ abstract class Lang(gen: DataGenerator, locale: String) : LanguageProvider(gen, 
     class English(gen: DataGenerator) : Lang(gen, "en_us") {
         override fun addTranslations() {
             add("itemGroup.hardcoredungeons", "Hardcore Dungeons")
+
+            addEffect(HEffects::RAGE, "Rage")
 /*
             // Overworld biomes
             add(HBiomes.THICK_FOREST, "Thick Forest")
@@ -150,8 +156,52 @@ abstract class Lang(gen: DataGenerator, locale: String) : LanguageProvider(gen, 
             add(HBlocks.AURI_SLAB, "Auri Slab")
             add(HBlocks.SCRAP_METAL, "Scrap Metal")
             add(HBlocks.AURIGOLD_ORE, "Aurigold Ore")
+            add(HBlocks.SUGARY_SOIL, "Sugary Soil")
+            add(HBlocks.SUGARY_GRASS_BLOCK, "Sugary Grass Block")
 
+            addCompressedBlock(HBlocks.COMPRESSED_COBBLESTONE)
+
+            add(HBlocks.CHEEKY_TELEPORTER_TOP, "Cheeky Teleporter Top")
+            add(HBlocks.CHEEKY_TELEPORTER, "Cheeky Teleporter")
+            add(HBlocks.STONE_TEXTURE, "Stone Texture")
+            add(HBlocks.STONE_TEXTURE_STAIRS, "Stone Texture Stairs")
+            add(HBlocks.STONE_TEXTURE_SLAB, "Stone Texture Slab")
+            add(HBlocks.GREEN_GUMDROP, "Green Gumdrop")
+            add(HBlocks.MINI_GREEN_GUMDROP, "Mini Green Gumdrop")
+            add(HBlocks.PINK_GUMDROP, "Pink Gumdrop")
+            add(HBlocks.MINI_PINK_GUMDROP, "Mini Pink Gumdrop")
+            add(HBlocks.BLUE_GUMDROP, "Blue Gumdrop")
+            add(HBlocks.MINI_BLUE_GUMDROP, "Mini Blue Gumdrop")
+            add(HBlocks.PURPLE_GUMDROP, "Purple Gumdrop")
+            add(HBlocks.MINI_PURPLE_GUMDROP, "Mini Purple Gumdrop")
+            add(HBlocks.RED_GUMDROP, "Red Gumdrop")
+            add(HBlocks.MINI_RED_GUMDROP, "Mini Red Gumdrop")
+            add(HBlocks.YELLOW_GUMDROP, "Yellow Gumdrop")
+            add(HBlocks.MINI_YELLOW_GUMDROP, "Mini Yellow Gumdrop")
             add(HItems.SHROOMY_SWORD, "Shroomy Sword")
+            add(HItems.SYRINGE, "Syringe")
+            add("item.hardcoredungeons.potion_syringe.effect.empty", "Uncraftable Syringe")
+            add("item.hardcoredungeons.potion_syringe.effect.water", "Water Syringe")
+            add("item.hardcoredungeons.potion_syringe.effect.mundane", "Mundane Syringe")
+            add("item.hardcoredungeons.potion_syringe.effect.thick", "Thick Syringe")
+            add("item.hardcoredungeons.potion_syringe.effect.awkward", "Awkward Syringe")
+            add("item.hardcoredungeons.potion_syringe.effect.night_vision", "Syringe of Night Vision")
+            add("item.hardcoredungeons.potion_syringe.effect.invisibility", "Syringe of Invisibility")
+            add("item.hardcoredungeons.potion_syringe.effect.leaping", "Syringe of Leaping")
+            add("item.hardcoredungeons.potion_syringe.effect.fire_resistance", "Syringe of Fire Resistance")
+            add("item.hardcoredungeons.potion_syringe.effect.swiftness", "Syringe of Swiftness")
+            add("item.hardcoredungeons.potion_syringe.effect.slowness", "Syringe of Slowness")
+            add("item.hardcoredungeons.potion_syringe.effect.water_breathing", "Syringe of Water Breathing")
+            add("item.hardcoredungeons.potion_syringe.effect.healing", "Syringe of Healing")
+            add("item.hardcoredungeons.potion_syringe.effect.harming", "Syringe of Harming")
+            add("item.hardcoredungeons.potion_syringe.effect.poison", "Syringe of Poison")
+            add("item.hardcoredungeons.potion_syringe.effect.regeneration", "Syringe of Regeneration")
+            add("item.hardcoredungeons.potion_syringe.effect.strength", "Syringe of Strength")
+            add("item.hardcoredungeons.potion_syringe.effect.weakness", "Syringe of Weakness")
+            add("item.hardcoredungeons.potion_syringe.effect.levitation", "Syringe of Levitation")
+            add("item.hardcoredungeons.potion_syringe.effect.luck", "Syringe of Luck")
+            add("item.hardcoredungeons.potion_syringe.effect.turtle_master", "Syringe of Turtle Master")
+            add("item.hardcoredungeons.potion_syringe.effect.slow_falling", "Syringe of Slow Falling")
             add(HItems.FILL_WAND, "Fill Wand")
             add(HItems.CLEAR_WAND, "Clear Wand")
             add("item.hardcoredungeons.wand.clear", "Cleared blocks from")
@@ -159,6 +209,11 @@ abstract class Lang(gen: DataGenerator, locale: String) : LanguageProvider(gen, 
             add("lang.hardcoredungeons.to", "to")
             addLore(HItems.SHROOMY_SWORD, "Has a chance to inflict poison on the target.")
         }
+
+        private fun addPotion(syringe: Item, effect: Effect, translation: String) {
+            add(syringe.translationKey + ".effect." + effect.registryName.toString().removePrefix("minecraft:"), translation)
+        }
+
     }
 
     /**
@@ -207,5 +262,15 @@ abstract class Lang(gen: DataGenerator, locale: String) : LanguageProvider(gen, 
      */
     protected fun addLore(item: Item, translation: String) {
         add(item.translationKey + ".lore", translation)
+    }
+
+    protected fun addCompressedBlock(block: CompressedBlock) {
+        val compression = arrayOf("Compressed ", "Double Compressed ", "Triple Compressed ", "Quadruple Compressed ", "Quintuple Compressed ", "Sextuple Compressed ", "Septuple Compressed ", "Octuple Compressed ")
+        val variants = block.blockVariants
+        val blockName = TranslationTextComponent(block.block().translationKey).string
+
+        for (i in 0..7) {
+            add(variants[i], compression[i] + blockName)
+        }
     }
 }

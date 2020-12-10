@@ -1,0 +1,7 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "hardcoredungeons:item/syringe_overlay",
+        "layer1": "hardcoredungeons:item/syringe"
+    }
+}

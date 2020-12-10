@@ -93,6 +93,7 @@ class BlockPosNBTDelegate(private val tagName: String) : ReadWriteProperty<ItemS
     }
 }
 
-fun modLoc(path: String): ResourceLocation {
+// internal to not mess up other people's mods LOL
+internal fun modLoc(path: String): ResourceLocation {
     return ResourceLocation(HardcoreDungeons.ID, path)
 }
