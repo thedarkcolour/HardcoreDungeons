@@ -8,7 +8,7 @@ import net.minecraft.item.UseAction
 import net.minecraft.util.ActionResult
 import net.minecraft.util.Hand
 import net.minecraft.world.World
-import thedarkcolour.hardcoredungeons.entity.misc.magic.MagicBoltEntity
+import thedarkcolour.hardcoredungeons.entity.projectile.magic.MagicBoltEntity
 import thedarkcolour.hardcoredungeons.registry.HEntities
 
 class StaffItem(properties: Properties) : Item(properties) {

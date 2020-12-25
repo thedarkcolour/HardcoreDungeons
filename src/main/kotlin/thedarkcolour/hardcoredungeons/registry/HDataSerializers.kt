@@ -4,17 +4,17 @@ import net.minecraft.network.PacketBuffer
 import net.minecraft.network.datasync.IDataSerializer
 import net.minecraftforge.registries.DataSerializerEntry
 import net.minecraftforge.registries.IForgeRegistry
-import thedarkcolour.hardcoredungeons.entity.castleton.deer.DeerPattern
+import thedarkcolour.hardcoredungeons.entity.deer.DeerType
 
 /**
  * @author TheDarkColour
  */
 object HDataSerializers {
-    val DEER_PATTERN = DataSerializerEntry(enumSerializer<DeerPattern>())
-        .setRegistryKey("deer_pattern")
+    val DEER_TYPE = DataSerializerEntry(enumSerializer<DeerType>())
+        .setRegistryKey("deer_type")
 
     fun registerDataSerializers(serializers: IForgeRegistry<DataSerializerEntry>) {
-        serializers.register(DEER_PATTERN)
+        serializers.register(DEER_TYPE)
     }
 
     private inline fun <reified T : Enum<T>> enumSerializer() = object : IDataSerializer<T> {

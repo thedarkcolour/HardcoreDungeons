@@ -32,7 +32,7 @@ object HSurfaceBuilders {
     //val GOLDEN_AURISOIL = HBlocks.GOLDEN_AURISOIL.defaultState
 
     val SUGARY_GRASS_BLOCK = HBlocks.SUGARY_GRASS_BLOCK.defaultState
-    val SUGARY_SOIL = HBlocks.SUGARY_GRASS_BLOCK.defaultState
+    val SUGARY_SOIL = HBlocks.SUGARY_SOIL.defaultState
 
     val RAINBOWLAND_SURFACE = register("rainbowland_surface", defaultCfg(RAINBOW_GRASS_BLOCK, RAINBOW_SOIL, GRAVEL))
     val CASTLETON_SURFACE = register("castleton_surface", defaultCfg(CASTLETON_GRASS_BLOCK, CASTLETON_SOIL, CASTLETON_LOAM))
@@ -47,8 +47,8 @@ object HSurfaceBuilders {
         surfaces.register(THICK_FOREST)
     }
 
-    private fun defaultCfg(a: BlockState, b: BlockState, c: BlockState): ConfiguredSurfaceBuilder<SurfaceBuilderConfig> {
-        return SurfaceBuilder.DEFAULT.func_242929_a(SurfaceBuilderConfig(a, b, c))
+    private fun defaultCfg(top: BlockState, soil: BlockState, underwater: BlockState): ConfiguredSurfaceBuilder<SurfaceBuilderConfig> {
+        return SurfaceBuilder.DEFAULT.func_242929_a(SurfaceBuilderConfig(top, soil, underwater))
     }
 
     private fun <C : ISurfaceBuilderConfig> register(name: String, config: ConfiguredSurfaceBuilder<C>): ConfiguredSurfaceBuilder<C> {

@@ -1,16 +1,27 @@
 package thedarkcolour.hardcoredungeons.event
 
+import net.minecraft.block.IGrowable
 import net.minecraft.entity.Entity
 import net.minecraft.entity.player.PlayerEntity
+import net.minecraft.item.BlockItem
+import net.minecraft.item.Item
+import net.minecraft.item.ItemUseContext
+import net.minecraft.item.Items
+import net.minecraft.util.Direction
 import net.minecraft.util.math.BlockPos
+import net.minecraft.util.math.BlockRayTraceResult
+import net.minecraft.world.server.ServerWorld
 import net.minecraftforge.event.AttachCapabilitiesEvent
 import net.minecraftforge.event.TickEvent
+import net.minecraftforge.event.entity.player.PlayerInteractEvent
+import net.minecraftforge.event.world.BlockEvent
+import net.minecraftforge.eventbus.api.Event
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent
 import thedarkcolour.hardcoredungeons.block.misc.BonusFarmlandBlock
-import thedarkcolour.hardcoredungeons.block.plant.misc.GoldenCarrotsBlock
 import thedarkcolour.hardcoredungeons.block.portal.PortalBlock
 import thedarkcolour.hardcoredungeons.capability.HPlayer
 import thedarkcolour.hardcoredungeons.capability.PlayerHelper
+import thedarkcolour.hardcoredungeons.registry.HBlocks
 import thedarkcolour.kotlinforforge.forge.FORGE_BUS
 import thedarkcolour.kotlinforforge.forge.MOD_BUS
 
@@ -19,11 +30,90 @@ object EventHandler {
 
         MOD_BUS.addListener(::commonSetup)
 
-        // todo move methods to here
-        FORGE_BUS.addListener(BonusFarmlandBlock::overrideCropGrowthBehaviour)
-        FORGE_BUS.addListener(GoldenCarrotsBlock::onBlockActivated)
+        FORGE_BUS.addListener(::overrideCropGrowthBehaviour)
+        FORGE_BUS.addListener(::onBlockActivated)
         FORGE_BUS.addListener(::playerTick)
         FORGE_BUS.addGenericListener(::attachCapability)
+    }
+
+    // Hook
+    private fun overrideCropGrowthBehaviour(event: BlockEvent.CropGrowEvent.Pre) {
+        val world = event.world
+        val pos = event.pos
+
+        // get the BonusFarmlandBlock instance hopefully
+        val farmland = world.getBlockState(pos.down()).block
+
+        // do not override vanilla farmland for now
+        if (farmland !is BonusFarmlandBlock) return
+
+        val state = event.state
+        val crop = state.block
+
+        for (entry in farmland.boostMap.object2FloatEntrySet()) {
+            if (entry.key.get() == crop) {
+                // we only have a few crops supported
+                if (crop is IGrowable && world is ServerWorld) {
+
+                    if (world.random.nextFloat() < farmland.boostMap.getFloat(crop)) {
+                        // override default logic
+                        event.result = Event.Result.DENY
+
+                    }
+                }
+                return
+            }
+        }
+    }
+
+    private val GOLDEN_CARROTS_PLACER by lazy {
+        BlockItem(HBlocks.GOLDEN_CARROTS, Item.Properties()).also {
+            // don't put non-existent items in the block2item map
+            // and add the correct middle mouse thing
+            BlockItem.BLOCK_TO_ITEM[HBlocks.GOLDEN_CARROTS] = Items.GOLDEN_CARROT
+        }
+    }
+
+    // todo fix
+    private fun onBlockActivated(event: PlayerInteractEvent.RightClickBlock) {
+        if (event.face != Direction.UP) return
+
+        val heldItem = event.itemStack
+
+        if (heldItem.item != Items.GOLDEN_CARROT) return
+
+        val world = event.world
+        val pos = event.pos
+        val up = pos.up()
+        val cropState = HBlocks.GOLDEN_CARROTS.defaultState
+
+        val player = event.player
+
+        try {
+            if (player.isCreative) {
+                heldItem.grow(1)
+            }
+            GOLDEN_CARROTS_PLACER.onItemUse(ItemUseContext(player, event.hand, BlockRayTraceResult(null, event.face, pos, false)))
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+/*
+            if (world.isAirBlock(up) && cropState.isValidPosition(world, up)) {
+                // cancel eating animation
+                event.useItem = Event.Result.DENY
+
+                world.setBlockState(up, HBlocks.GOLDEN_CARROTS.defaultState)
+
+                val player = event.player
+
+                if (player is ServerPlayerEntity) {
+                    CriteriaTriggers.PLACED_BLOCK.trigger(player, up, heldItem)
+                }
+
+                heldItem.shrink(1)
+                player.swingArm(event.hand)
+            }
+ */
     }
 
     private fun commonSetup(event: FMLCommonSetupEvent) {

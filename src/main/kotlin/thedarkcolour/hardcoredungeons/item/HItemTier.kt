@@ -1,10 +1,11 @@
 package thedarkcolour.hardcoredungeons.item
 
 import net.minecraft.item.IItemTier
-import net.minecraft.item.Item
 import net.minecraft.item.crafting.Ingredient
 import net.minecraft.util.LazyValue
 import net.minecraftforge.common.Tags
+import thedarkcolour.hardcoredungeons.registry.HItems
+import java.util.function.Supplier
 
 /**
  * Item Tier enum class for Hardcore Dungeons items.
@@ -26,7 +27,8 @@ enum class HItemTier(
     private val enchantability: Int,
     private val repairMaterial: LazyValue<Ingredient>
 ) : IItemTier {
-    SHROOMY(4, 726, 7.0f, 3.0f, 17, Tags.Items.MUSHROOMS);
+    CANDY_CANE(4, 726, 7.0f, 3.0f, 17, { Ingredient.fromItems(HItems.CANDY_CANE) }), // todo make unique
+    SHROOMY(4, 726, 7.0f, 3.0f, 17, { Ingredient.fromTag(Tags.Items.MUSHROOMS) });
 
     constructor(
         harvestLevel: Int,
@@ -34,8 +36,8 @@ enum class HItemTier(
         efficiency: Float,
         damage: Float,
         enchantability: Int,
-        repairMaterialTag: Tags.IOptionalNamedTag<Item>
-    ) : this(harvestLevel, durability, efficiency, damage, enchantability, LazyValue { Ingredient.fromTag(repairMaterialTag) })
+        repairMaterial: Supplier<Ingredient>
+    ) : this(harvestLevel, durability, efficiency, damage, enchantability, LazyValue(repairMaterial))
 
     override fun getRepairMaterial(): Ingredient {
         return repairMaterial.value

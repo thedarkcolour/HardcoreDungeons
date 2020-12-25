@@ -9,7 +9,6 @@ import net.minecraft.block.StairsBlock
 import net.minecraft.block.TrapDoorBlock
 import net.minecraft.block.WoodButtonBlock
 
-// todo use HProperties
 // for all the classes with protected constructors
 class DoorBlock(properties: Properties) : DoorBlock(properties)
 class SlabBlock(properties: Properties) : SlabBlock(properties)

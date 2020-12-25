@@ -1,7 +1,0 @@
-{
-    "variants": {
-        "type=bottom": { "model": "hardcoredungeons:block/lumlight_slab" },
-        "type=top": { "model": "hardcoredungeons:block/lumlight_slab_top" },
-        "type=double": { "model": "hardcoredungeons:block/lumlight_planks" }
-    }
-}

@@ -1,5 +1,34 @@
 ## Hardcore Dungeons Changelog
 
+### Alpha 10
+* Added Candy Cane, Candy Cane blocks, Candy Cane sword
+* Added Deer Antlers, Venison, Deer Spawn Egg
+* Added Chocolate Block, Chocolate Stairs, Chocolate Slab
+* Added Shroomy Cobblestone Wall and Shroomy Stone Brick Wall
+* Added several stonecutter recipes
+* Added a few recipes
+* Added missing translations
+* Added Incendiary Bullets that light targets on fire
+* Added potted variants for flowers and gumdrops
+* Added recipes for converting stairs/slabs back into full blocks
+* Removed an unused "lumlight_campfire" tile entity type
+* Removed Mugen promotion because real Mugen is on a hiatus
+* Removed Lum and Volatile Lum because they have no planned use
+* Fixed Hardcore Dungeons particles being unregistered
+* Fixed unlit Purple Castleton Lamp missing a texture
+* Fixed incorrect textures for Shroomy Stone Brick Stairs and Slabs
+* Fixed bush placement in Thick Forest because only Knightly Shrubland got the fix
+* Fixed Sugary Soil model
+* Fixed Gumdrop Fields not generating with Sugary Soil
+* Fixed light level for the Castleton Torch
+* Fixed messed up item texture for the Purple Castleton Lamp
+* Fixed Lumlight Doors duplicating when being destroyed
+* Fixed weird transparency issues with Mini Pistol and Aubri Mini Pistol textures
+* Fixed the `FENCES_BRICK` block tag being named `rainbow` instead of `brick`
+* Fixed Gumdrops not placing on Sugary Grass or Sugary Soil
+* Changed the Tower Helmet texture
+* Cleaned up a bunch of unused code
+
 ### Alpha 9
 * Fixed missing Lumlight Cabin structure NBT
 * Fixed broken placement of Rainbow Factory when structure has non-default rotation

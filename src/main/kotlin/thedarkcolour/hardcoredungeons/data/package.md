@@ -1,3 +1,8 @@
 # thedarkcolour.hardcoredungeons.data
-This package contains data providers for
-block models, block tags, and block loot.
+This package contains data generation for the mod.
+* Block & Item Models
+* Recipes
+* Block & Entity Loot Tables
+* Block & Item Tags
+* Language Translations
+* Advancements (eventually)

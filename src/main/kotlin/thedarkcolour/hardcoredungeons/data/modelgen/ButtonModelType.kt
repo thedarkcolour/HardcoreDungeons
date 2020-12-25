@@ -8,8 +8,10 @@ import net.minecraft.state.properties.BlockStateProperties
 import net.minecraft.util.Direction
 import net.minecraftforge.client.model.generators.BlockModelBuilder
 import net.minecraftforge.client.model.generators.ConfiguredModel
+import net.minecraftforge.client.model.generators.ModelFile
 import thedarkcolour.hardcoredungeons.data.ModelGenerator
 import thedarkcolour.hardcoredungeons.data.modelgen.WallModelType.Companion.HORIZONTALS
+import thedarkcolour.hardcoredungeons.util.modLoc
 
 class ButtonModelType : BlockModelType<AbstractButtonBlock>() {
     /**
@@ -32,6 +34,9 @@ class ButtonModelType : BlockModelType<AbstractButtonBlock>() {
         val buttonPressedModel = gen.blockModel(path + "_pressed")
             .parent(gen.mcFile("block/button_pressed"))
             .texture("texture", "block/$originalTexture")
+        val inventoryModel = gen.blockModel(path + "_inventory")
+            .parent(gen.mcFile("block/button_inventory"))
+            .texture("texture", "block/$originalTexture")
 
         for (face in AttachFace.values()) {
             for (direction in HORIZONTALS) {
@@ -47,6 +52,10 @@ class ButtonModelType : BlockModelType<AbstractButtonBlock>() {
                     .addModels(modelWithRotation(gen, buttonPressedModel, rotateX = FACE_2_ROT.getInt(face), rotateY = DIR_2_ROT.getInt(direction)))
             }
         }
+
+        // add the item model
+        gen.itemModels().getBuilder(path)
+            .parent(ModelFile.UncheckedModelFile(modLoc("block/${path}_inventory")))
     }
 
     private fun modelWithRotation(gen: ModelGenerator, model: BlockModelBuilder, rotateX: Int = 0, rotateY: Int = 0, uvLock: Boolean = false): ConfiguredModel {

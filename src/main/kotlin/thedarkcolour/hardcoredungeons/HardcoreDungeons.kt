@@ -7,8 +7,6 @@ import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent
 import org.apache.logging.log4j.LogManager
 import org.apache.logging.log4j.Logger
-import thedarkcolour.hardcoredungeons.block.misc.BonusFarmlandBlock
-import thedarkcolour.hardcoredungeons.block.plant.misc.GoldenCarrotsBlock
 import thedarkcolour.hardcoredungeons.client.ClientHandler
 import thedarkcolour.hardcoredungeons.command.ReloadModelsCommand
 import thedarkcolour.hardcoredungeons.event.EventHandler
@@ -46,10 +44,6 @@ object HardcoreDungeons {
      * Inter-mod communications with Curios API.
      *
      * Registers 3 Curio types.
-     *
-     * @see top.theillusivec4.curios.api.CurioTags.HEAD
-     * @see top.theillusivec4.curios.api.CurioTags.BODY
-     * @see top.theillusivec4.curios.api.CurioTags.NECKLACE
      */
     private fun interModComms(event: InterModEnqueueEvent) {
         event.enqueueWork {

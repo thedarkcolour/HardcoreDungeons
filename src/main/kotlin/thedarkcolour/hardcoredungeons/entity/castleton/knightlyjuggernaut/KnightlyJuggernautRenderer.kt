@@ -2,7 +2,7 @@ package thedarkcolour.hardcoredungeons.entity.castleton.knightlyjuggernaut
 
 import net.minecraft.client.renderer.entity.EntityRendererManager
 import net.minecraft.client.renderer.entity.MobRenderer
-import thedarkcolour.hardcoredungeons.entity.castleton.FullbrightLayer
+import thedarkcolour.hardcoredungeons.client.renderer.entity.layers.FullbrightLayer
 import thedarkcolour.hardcoredungeons.util.modLoc
 
 class KnightlyJuggernautRenderer(

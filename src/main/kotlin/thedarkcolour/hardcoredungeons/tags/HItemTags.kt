@@ -11,6 +11,8 @@ import thedarkcolour.hardcoredungeons.HardcoreDungeons
  * @author TheDarkColour
  */
 object HItemTags {
+    val INCENDIARY_AMMUNITION = makeWrapper("incendiary_ammunition")
+    val SMALL_AMMUNITION = makeWrapper("small_ammunition")
     val WHITE_WINE = makeWrapper("white_wine")
     val RED_WINE = makeWrapper("red_wine")
     val LUMLIGHT_LOGS = makeWrapper("lumlight_logs")

@@ -34,7 +34,6 @@ object HBiomeMaker {
         )
     }
 
-    //todo
     fun makeKnightlyShrublandBiome(): Biome {
         val genSettings = genSettings(HSurfaceBuilders.CASTLETON_SURFACE)
 
@@ -95,7 +94,7 @@ object HBiomeMaker {
 
         val spawnSettings = spawnSettings()
         spawnSettings.addSpawn(EntityClassification.CREATURE, EntityType.SHEEP, 12, 4, 4)
-        spawnSettings.addSpawn(EntityClassification.CREATURE, EntityType.COW, 8, 4, 4)
+        spawnSettings.addSpawn(EntityClassification.CREATURE, HEntities.DEER, 7, 2, 3)
         spawnSettings.addSpawn(EntityClassification.AMBIENT, EntityType.BAT, 8, 8, 8)
         spawnSettings.addSpawn(EntityClassification.MONSTER, EntityType.SPIDER, 100, 4, 4)
         spawnSettings.addSpawn(EntityClassification.MONSTER, EntityType.ZOMBIE, 95, 4, 4)
@@ -218,7 +217,7 @@ object HBiomeMaker {
             scale = 0.2f,
             temperature = 1.5f,
             downfall = 0.4f,
-            effects = effects(0x3f76e4, 0x50533, getSkyForTemp(0.9f), 12638463),
+            effects = effects(0xd19bdc, 0x50533, getSkyForTemp(0.9f), 12638463),
             genSettings = genSettings
         )
     }

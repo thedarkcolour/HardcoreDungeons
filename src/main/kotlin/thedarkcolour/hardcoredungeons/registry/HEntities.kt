@@ -1,7 +1,6 @@
 package thedarkcolour.hardcoredungeons.registry
 
 import net.minecraft.client.Minecraft
-import net.minecraft.client.renderer.entity.SheepRenderer
 import net.minecraft.client.renderer.entity.SpriteRenderer
 import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityClassification
@@ -13,9 +12,8 @@ import net.minecraft.util.ResourceLocation
 import net.minecraftforge.fml.client.registry.ClientRegistry
 import net.minecraftforge.fml.client.registry.RenderingRegistry
 import net.minecraftforge.registries.IForgeRegistry
+import thedarkcolour.hardcoredungeons.client.renderer.entity.DeerRenderer
 import thedarkcolour.hardcoredungeons.entity.HEntityType
-import thedarkcolour.hardcoredungeons.entity.castleton.deer.CastletonDeerEntity
-import thedarkcolour.hardcoredungeons.entity.castleton.deer.DeerRenderer
 import thedarkcolour.hardcoredungeons.entity.castleton.frayedsoul.FrayedSoulEntity
 import thedarkcolour.hardcoredungeons.entity.castleton.frayedsoul.FrayedSoulRenderer
 import thedarkcolour.hardcoredungeons.entity.castleton.infinity.BlackStarEntity
@@ -24,21 +22,14 @@ import thedarkcolour.hardcoredungeons.entity.castleton.knightlyjuggernaut.Knight
 import thedarkcolour.hardcoredungeons.entity.castleton.knightlyjuggernaut.KnightlyJuggernautRenderer
 import thedarkcolour.hardcoredungeons.entity.castleton.voidrunner.VoidRunnerEntity
 import thedarkcolour.hardcoredungeons.entity.castleton.voidrunner.VoidRunnerRenderer
-import thedarkcolour.hardcoredungeons.entity.misc.bullet.SmallBulletEntity
-import thedarkcolour.hardcoredungeons.entity.misc.cheeky.CheekyEntity
-import thedarkcolour.hardcoredungeons.entity.misc.cheeky.CheekyRenderer
-import thedarkcolour.hardcoredungeons.entity.misc.magic.MagicBoltEntity
-import thedarkcolour.hardcoredungeons.entity.overworld.deer.DeerEntity
-import thedarkcolour.hardcoredungeons.entity.rainbowland.sheep.RainbowlandSheepEntity
+import thedarkcolour.hardcoredungeons.entity.deer.CastletonDeerEntity
+import thedarkcolour.hardcoredungeons.entity.deer.DeerEntity
+import thedarkcolour.hardcoredungeons.entity.projectile.bullet.SmallBulletEntity
+import thedarkcolour.hardcoredungeons.entity.projectile.magic.MagicBoltEntity
 import thedarkcolour.hardcoredungeons.util.modLoc
 
 @Suppress("MemberVisibilityCanBePrivate")
 object HEntities {
-    // put the potato
-    // in the sack
-    val CHEEKY = Builder
-        .create(::CheekyEntity, EntityClassification.AMBIENT)
-        .build(modLoc("cheeky"))
     val INFINITY = Builder
         .create(::InfinityEntity, EntityClassification.MISC)
         .immuneToFire()
@@ -61,9 +52,9 @@ object HEntities {
         .create(::KnightlyJuggernautEntity, EntityClassification.CREATURE)
         .build(modLoc("knightly_juggernaut"))
 
-    val RAINBOWLAND_SHEEP = Builder
-        .create(::RainbowlandSheepEntity, EntityClassification.CREATURE)
-        .build(modLoc("rainbowland_sheep"))
+    //val RAINBOWLAND_SHEEP = Builder
+    //    .create(::RainbowlandSheepEntity, EntityClassification.CREATURE)
+    //    .build(modLoc("rainbowland_sheep"))
 
     // projectile
     val SMALL_BULLET = HEntityType(
@@ -96,7 +87,6 @@ object HEntities {
     }
 
     fun registerEntities(entities: IForgeRegistry<EntityType<*>>) {
-        entities.register(CHEEKY)
         entities.register(DEER)
 
         entities.register(FRAYED_SOUL)
@@ -104,27 +94,25 @@ object HEntities {
         entities.register(CASTLETON_DEER)
         entities.register(KNIGHTLY_JUGGERNAUT)
 
-        entities.register(RAINBOWLAND_SHEEP)
+        //entities.register(RAINBOWLAND_SHEEP)
 
         entities.register(SMALL_BULLET)
         entities.register(MAGIC_BOLT)
 
-        GlobalEntityTypeAttributes.put(CHEEKY, CheekyEntity.ATTRIBUTES.create())
         GlobalEntityTypeAttributes.put(FRAYED_SOUL, FrayedSoulEntity.ATTRIBUTES.create())
         GlobalEntityTypeAttributes.put(VOID_RUNNER, VoidRunnerEntity.ATTRIBUTES.create())
         GlobalEntityTypeAttributes.put(CASTLETON_DEER, DeerEntity.DEFAULT_ATTRIBUTES.create())
         GlobalEntityTypeAttributes.put(DEER, DeerEntity.DEFAULT_ATTRIBUTES.create())
         GlobalEntityTypeAttributes.put(KNIGHTLY_JUGGERNAUT, KnightlyJuggernautEntity.ATTRIBUTES.create())
-        GlobalEntityTypeAttributes.put(RAINBOWLAND_SHEEP, RainbowlandSheepEntity.ATTRIBUTES.create())
+        //GlobalEntityTypeAttributes.put(RAINBOWLAND_SHEEP, RainbowlandSheepEntity.ATTRIBUTES.create())
         GlobalEntityTypeAttributes.put(INFINITY, InfinityEntity.ATTRIBUTES.create())
     }
 
     fun registerEntityRenderers() {
-        RenderingRegistry.registerEntityRenderingHandler(CHEEKY, ::CheekyRenderer)
         RenderingRegistry.registerEntityRenderingHandler(DEER, ::DeerRenderer)
         RenderingRegistry.registerEntityRenderingHandler(FRAYED_SOUL, ::FrayedSoulRenderer)
         RenderingRegistry.registerEntityRenderingHandler(VOID_RUNNER, ::VoidRunnerRenderer)
-        RenderingRegistry.registerEntityRenderingHandler(RAINBOWLAND_SHEEP, ::SheepRenderer)
+        //RenderingRegistry.registerEntityRenderingHandler(RAINBOWLAND_SHEEP, ::SheepRenderer)
         RenderingRegistry.registerEntityRenderingHandler(CASTLETON_DEER, ::DeerRenderer)
         RenderingRegistry.registerEntityRenderingHandler(KNIGHTLY_JUGGERNAUT, ::KnightlyJuggernautRenderer)
         RenderingRegistry.registerEntityRenderingHandler(SMALL_BULLET) { SpriteRenderer(it, Minecraft.getInstance().itemRenderer) }

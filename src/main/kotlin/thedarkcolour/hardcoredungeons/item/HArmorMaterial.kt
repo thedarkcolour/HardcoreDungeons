@@ -9,7 +9,6 @@ import net.minecraft.util.SoundEvents
 import thedarkcolour.hardcoredungeons.HardcoreDungeons
 import java.util.*
 
-// todo merge with HItemTier
 enum class HArmorMaterial(
     durability: Int,
     private val reduction: IntArray,

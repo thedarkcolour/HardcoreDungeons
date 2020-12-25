@@ -1,8 +1,8 @@
 {
-    "type": "hardcoredungeons:rainbowland",
+    "type": "hardcoredungeons:candyland",
     "generator": {
         "type": "minecraft:noise",
-        "settings": "hardcoredungeons:rainbowland",
+        "settings": "hardcoredungeons:candyland",
         "seed": -22343483,
         "biome_source": {
             "humidity_noise": {

@@ -130,7 +130,6 @@ class PortalBlock(private val dimensionKey: () -> RegistryKey<World>, private va
                 if (cursor.x == minX || cursor.x == maxX || cursor.y == minY || cursor.y == maxY) {
                     destination.setBlockState(cursor, frame, 18)
                 } else {
-                    // if not we fill in the portal todo debounce
                     destination.setBlockState(cursor, state, 18)
                 }
             }
@@ -159,7 +158,6 @@ class PortalBlock(private val dimensionKey: () -> RegistryKey<World>, private va
                 if (cursor.z == minZ || cursor.z == maxZ || cursor.y == minY || cursor.y == maxY) {
                     destination.setBlockState(cursor, frame, 18)
                 } else {
-                    // if not we fill in the portal todo debounce
                     destination.setBlockState(cursor, state, 18)
                 }
             }

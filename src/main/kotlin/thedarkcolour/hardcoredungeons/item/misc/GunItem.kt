@@ -9,9 +9,10 @@ import net.minecraft.item.UseAction
 import net.minecraft.util.ActionResult
 import net.minecraft.util.Hand
 import net.minecraft.world.World
-import thedarkcolour.hardcoredungeons.entity.misc.bullet.SmallBulletEntity
+import thedarkcolour.hardcoredungeons.entity.projectile.bullet.SmallBulletEntity
 import thedarkcolour.hardcoredungeons.registry.HEntities
 import thedarkcolour.hardcoredungeons.registry.HItems
+import thedarkcolour.hardcoredungeons.tags.HItemTags
 import java.util.function.Predicate
 
 /**
@@ -23,7 +24,7 @@ import java.util.function.Predicate
  *
  * @property drop The amount of drop (ex. 0.002f, 0.0f)
  *
- * @property fireType TODO
+ * @property fireType todo remember this idea wtf is fire type
  *
  * @property automatic Whether this weapon is automatic or semi-automatic
  *
@@ -76,23 +77,27 @@ open class GunItem(
     }
 
     override fun onItemUseFinish(stack: ItemStack, worldIn: World, entity: LivingEntity): ItemStack {
+        val ammo = entity.findAmmo(stack)
+
         if (!worldIn.isRemote) {
             val vec = entity.lookVec
 
-            // todo change to match fire type
+            // change to match fire type????
             val bullet = SmallBulletEntity(HEntities.SMALL_BULLET, worldIn)
+
+            if (ammo.item.isIn(HItemTags.INCENDIARY_AMMUNITION)) {
+                bullet.setFire(10)
+            }
 
             bullet.shoot(entity, entity.posX, entity.posYEye - 0.1, entity.posZ, vec.x, vec.y, vec.z)
         }
 
-        if (!automatic) {
-            entity.resetActiveHand()
-        }
-
-        val ammo = entity.findAmmo(stack)
-
         if (!(entity is PlayerEntity && entity.isCreative)) {
             ammo.shrink(1)
+        }
+
+        if (!automatic) {
+            entity.resetActiveHand()
         }
 
         return stack
@@ -108,37 +113,6 @@ open class GunItem(
 
     override fun func_230305_d_(): Int {
         return 10 // doesn't really matter because we aren't going to shoot
-    }
-
-    class GunProperties : Properties() {
-        private var bulletDamage = 0.0f
-        private var velocity = 0.5f
-        private var fireType = FireType.SMALL_BULLET
-        private var automatic = false
-        private var ammoItem = HItems.BULLET
-
-        fun bulletDamage(bulletDamage: Float): GunProperties {
-            this.bulletDamage = bulletDamage
-            return this
-        }
-
-        fun fireType(fireType: FireType): GunProperties {
-            this.fireType = fireType
-            return this
-        }
-
-        /**
-         * Whether this gun can fire multiple shots consecutively
-         */
-        fun auto(): GunProperties {
-            this.automatic = true
-            return this
-        }
-
-        fun velocity(velocity: Float): GunProperties {
-            this.velocity = velocity
-            return this
-        }
     }
 
     enum class FireType {

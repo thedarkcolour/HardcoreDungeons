@@ -10,12 +10,8 @@ import kotlin.math.max
 
 class SoulFrayParticle(
     worldIn: ClientWorld,
-    x: Double,
-    y: Double,
-    z: Double,
-    mX: Double,
-    mY: Double,
-    mZ: Double,
+    x: Double, y: Double, z: Double,
+    mX: Double, mY: Double, mZ: Double,
     private val cloudSprite: IAnimatedSprite
 ) :
     SpriteTexturedParticle(worldIn, x, y, z, mX, mY, mZ) {

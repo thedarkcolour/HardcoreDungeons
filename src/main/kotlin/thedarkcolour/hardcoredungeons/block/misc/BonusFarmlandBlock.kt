@@ -22,8 +22,6 @@ import net.minecraft.world.IWorldReader
 import net.minecraft.world.World
 import net.minecraft.world.server.ServerWorld
 import net.minecraftforge.common.*
-import net.minecraftforge.event.world.BlockEvent
-import net.minecraftforge.eventbus.api.Event
 import thedarkcolour.hardcoredungeons.block.HBlock
 import thedarkcolour.hardcoredungeons.block.properties.HProperties
 import java.util.*
@@ -158,36 +156,6 @@ class BonusFarmlandBlock(
             override val values = FloatLists.EMPTY_LIST
             override val size = 0
             override fun getOrDefault(key: Any?, defaultValue: Float) = defaultValue
-        }
-
-        // Hook
-        fun overrideCropGrowthBehaviour(event: BlockEvent.CropGrowEvent.Pre) {
-            val world = event.world
-            val pos = event.pos
-
-            // get the BonusFarmlandBlock instance hopefully
-            val farmland = world.getBlockState(pos.down()).block
-
-            // do not override vanilla farmland for now
-            if (farmland !is BonusFarmlandBlock) return
-
-            val state = event.state
-            val crop = state.block
-
-            for (entry in farmland.boostMap.object2FloatEntrySet()) {
-                if (entry.key.get() == crop) {
-                    // we only have a few crops supported
-                    if (crop is IGrowable && world is ServerWorld) {
-
-                        if (world.random.nextFloat() < farmland.boostMap.getFloat(crop)) {
-                            // override default logic
-                            event.result = Event.Result.DENY
-
-                        }
-                    }
-                    return
-                }
-            }
         }
     }
 }

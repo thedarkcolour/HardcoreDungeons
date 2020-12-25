@@ -7,28 +7,19 @@ import net.minecraft.world.World
 
 /**
  * Kotlin-ified version of [net.minecraft.util.IWorldPosCallable]
- *
- * Functions are arranged so a functional parameter is always
- * the last argument to make calling them more readable and simpler.
- *
- * Functions have their names changed to match
- * the naming scheme of functional types.
  */
 interface WorldPos {
     /**
      * Invokes the function and returns a nullable result.
      *
-     * The returned value should really be a non-null value,
-     * but Kotlin allows passing in a function with a nullable result.
+     * [DUMMY] will always return null.
      *
      * @see invokeDefaulted
      */
     fun <T> invoke(function: (World, BlockPos) -> T): T?
 
     /**
-     * Invokes the function and always returns a non-null result.
-     * If the function returns a null value, Elvis operator defaults
-     * to the non-null value [default]
+     * Invokes the function and returns `default` if the function returns null.
      *
      * @param default the value to default to if the [function] returns null.
      */
@@ -60,7 +51,7 @@ interface WorldPos {
         fun of(worldIn: World, pos: BlockPos): WorldPos {
             return object : WorldPos {
                 override fun <T> invoke(function: (World, BlockPos) -> T): T {
-                    return function(worldIn, pos)!!
+                    return function(worldIn, pos)
                 }
             }
         }

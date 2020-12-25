@@ -26,8 +26,6 @@ class BlockTagGenerator(gen: DataGenerator, helper: ExistingFileHelper) : BlockT
 
     /**
      * Register tags for each block.
-     *
-     * todo split into separate method after filter is created
      */
     override fun registerTags() {
         super.registerTags()
@@ -38,11 +36,15 @@ class BlockTagGenerator(gen: DataGenerator, helper: ExistingFileHelper) : BlockT
 
         // hcd tags
         getOrCreateBuilder(HBlockTags.LUMLIGHT_LOGS).add(HBlocks.LUMLIGHT_LOG, HBlocks.LUMLIGHT_WOOD, HBlocks.STRIPPED_LUMLIGHT_LOG, HBlocks.STRIPPED_LUMLIGHT_WOOD)
+        getOrCreateBuilder(HBlockTags.COTTONMARSH_LOGS).add(HBlocks.COTTONMARSH_LOG, HBlocks.COTTONMARSH_WOOD, HBlocks.STRIPPED_COTTONMARSH_LOG, HBlocks.STRIPPED_COTTONMARSH_WOOD)
+        getOrCreateBuilder(HBlockTags.AURI_LOGS).add(HBlocks.AURI_LOG, HBlocks.AURI_WOOD, HBlocks.STRIPPED_AURI_LOG, HBlocks.STRIPPED_AURI_WOOD)
         getOrCreateBuilder(HBlockTags.GLASS_RAINBOW).add(HBlocks.RAINBOW_GLASS)
         getOrCreateBuilder(HBlockTags.GLASS_PANES_RAINBOW).add(HBlocks.RAINBOW_GLASS_PANE)
         getOrCreateBuilder(HBlockTags.FENCES_BRICK).add(HBlocks.CASTLETON_BRICK_FENCE, HBlocks.CHARGED_CASTLETON_BRICK_FENCE, HBlocks.RAINBOW_BRICK_FENCE, HBlocks.RAINBOW_FACTORY_BRICK_FENCE)
-        getOrCreateBuilder(HBlockTags.COTTONMARSH_LOGS).add(HBlocks.COTTONMARSH_LOG, HBlocks.COTTONMARSH_WOOD, HBlocks.STRIPPED_COTTONMARSH_LOG, HBlocks.STRIPPED_COTTONMARSH_WOOD)
-        getOrCreateBuilder(HBlockTags.CASTLETON_GRASS_PLANTABLE).add(HBlocks.LUMLIGHT_SAPLING)
+        getOrCreateBuilder(HBlockTags.CASTLETON_GRASS_PLANTABLE).add(HBlocks.LUMLIGHT_SAPLING, HBlocks.BLUE_LUMSHROOM, HBlocks.PURPLE_LUMSHROOM)
+        getOrCreateBuilder(HBlockTags.RAINBOW_GRASS_PLANTABLE).add(HBlocks.COTTONMARSH_SAPLING)
+        getOrCreateBuilder(HBlockTags.AURIGRASS_PLANTABLE).add(HBlocks.FLAME_ROSE, HBlocks.GOLDEN_TULIP)
+        getOrCreateBuilder(HBlockTags.SUGARY_GRASS_PLANTABLE).add(HBlocks.GREEN_GUMDROP, HBlocks.MINI_GREEN_GUMDROP, HBlocks.PINK_GUMDROP, HBlocks.MINI_PINK_GUMDROP, HBlocks.BLUE_GUMDROP, HBlocks.MINI_BLUE_GUMDROP, HBlocks.PURPLE_GUMDROP, HBlocks.MINI_PURPLE_GUMDROP, HBlocks.RED_GUMDROP, HBlocks.MINI_RED_GUMDROP, HBlocks.YELLOW_GUMDROP, HBlocks.MINI_YELLOW_GUMDROP)
 
         // vanilla tags
         getOrCreateBuilder(BlockTags.PLANKS).add(HBlocks.LUMLIGHT_PLANKS)

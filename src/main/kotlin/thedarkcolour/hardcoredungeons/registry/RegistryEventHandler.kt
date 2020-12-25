@@ -2,12 +2,10 @@ package thedarkcolour.hardcoredungeons.registry
 
 import net.minecraft.block.Block
 import net.minecraft.entity.EntityType
-import net.minecraft.inventory.container.ContainerType
 import net.minecraft.item.Item
 import net.minecraft.item.crafting.IRecipeSerializer
 import net.minecraft.particles.ParticleType
 import net.minecraft.potion.Effect
-import net.minecraft.tileentity.TileEntityType
 import net.minecraft.util.SoundEvent
 import net.minecraft.world.biome.Biome
 import net.minecraft.world.gen.feature.structure.Structure
@@ -34,7 +32,7 @@ object RegistryEventHandler {
 
         MOD_BUS.addGenericListener(::registerBiomes)
         MOD_BUS.addGenericListener(::registerBlocks)
-        MOD_BUS.addGenericListener(::registerContainerTypes)
+        //MOD_BUS.addGenericListener(::registerContainerTypes)
         MOD_BUS.addGenericListener(::registerDataSerializers)
         MOD_BUS.addGenericListener(::registerEffects)
         MOD_BUS.addGenericListener(::registerEntities)
@@ -44,7 +42,7 @@ object RegistryEventHandler {
         MOD_BUS.addGenericListener(::registerRecipes)
         MOD_BUS.addGenericListener(::registerSounds)
         MOD_BUS.addGenericListener(::registerSurfaceBuilders)
-        MOD_BUS.addGenericListener(::registerTileEntities)
+        //MOD_BUS.addGenericListener(::registerTileEntities)
 
         FORGE_BUS.addListener(HStructures::addDimensionalSpacing)
         FORGE_BUS.addListener(consumer = HBiomes::biomeLoading, priority = EventPriority.HIGH)
@@ -54,7 +52,7 @@ object RegistryEventHandler {
 
     private fun registerBlocks(event: Register<Block>) = HBlocks.registerBlocks(event.registry)
 
-    private fun registerContainerTypes(event: Register<ContainerType<*>>) = HContainers.registerContainerTypes(event.registry)
+    //private fun registerContainerTypes(event: Register<ContainerType<*>>) = HContainers.registerContainerTypes(event.registry)
 
     private fun registerDataSerializers(event: Register<DataSerializerEntry>) = HDataSerializers.registerDataSerializers(event.registry)
 
@@ -74,5 +72,5 @@ object RegistryEventHandler {
 
     private fun registerSurfaceBuilders(event: Register<SurfaceBuilder<*>>) = HSurfaceBuilders.registerSurfaceBuilders(event.registry)
 
-    private fun registerTileEntities(event: Register<TileEntityType<*>>) = HTileEntities.registerTileEntities(event.registry)
+    //private fun registerTileEntities(event: Register<TileEntityType<*>>) = HTileEntities.registerTileEntities(event.registry)
 }

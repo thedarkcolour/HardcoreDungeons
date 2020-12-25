@@ -16,8 +16,8 @@ import thedarkcolour.hardcoredungeons.client.color.RainbowColor
 import thedarkcolour.hardcoredungeons.data.modelgen.ModelType
 import thedarkcolour.hardcoredungeons.item.Group
 import thedarkcolour.hardcoredungeons.item.HArmorMaterial
-import thedarkcolour.hardcoredungeons.item.HRarities
-import thedarkcolour.hardcoredungeons.item.castleton.BlockingSwordItem
+import thedarkcolour.hardcoredungeons.item.HItemTier
+import thedarkcolour.hardcoredungeons.item.ItemMisc
 import thedarkcolour.hardcoredungeons.item.castleton.CastletonTorchItem
 import thedarkcolour.hardcoredungeons.item.debug.ClearWandItem
 import thedarkcolour.hardcoredungeons.item.debug.CloneWandItem
@@ -44,7 +44,7 @@ object HItems {
     // @formatter:off
 
     // Overworld blocks
-    val VASE by objectHolder<Item>("vase")
+    //val VASE by objectHolder<Item>("vase")
 
     // Overworld items
     val SHROOMY_SWORD = ShroomySwordItem(Properties().group(Group).maxStackSize(1).maxDamage(726)).setRegistryKey("shroomy_sword")
@@ -53,11 +53,18 @@ object HItems {
     //val RING_OF_LAST_WORDS = Item(Properties().group(Group).maxStackSize(1).rarity(Rarity.UNCOMMON)).setRegistryKey("ring_of_last_words")
     val SYRINGE = EmptySyringeItem(Properties().group(Group).maxStackSize(16)).setRegistryKey("syringe")
     val POTION_SYRINGE = SyringeItem(Properties().group(Group).maxStackSize(2)).setRegistryKey("potion_syringe")
+    val DEER_ANTLER = Item(Properties().group(Group)).setRegistryKey("deer_antler")
+    val VENISON = Item(Properties().group(Group).food(Food.Builder().hunger(3).saturation(0.2f).meat().build())).setRegistryKey("venison")
+    val COOKED_VENISON = Item(Properties().group(Group).food(Food.Builder().hunger(7).saturation(0.9f).meat().build())).setRegistryKey("cooked_venison")
+    val DEER_SPAWN_EGG = SpawnEggItem(HEntities.DEER, 0x4c2922, 0x202020, Properties().group(Group)).setRegistryKey("deer_spawn_egg")
+    val BULLET = Item(Properties().group(Group)).setRegistryKey("bullet")
+    val INCENDIARY_BULLET = Item(Properties().group(Group)).setRegistryKey("incendiary_bullet")
+    val SHELL = Item(Properties().group(Group)).setRegistryKey("shell")
 
     // Castleton blocks
     //val CASTLETON_SOIL by objectHolder<Item>("castleton_soil")
     //val CASTLETON_STONE by objectHolder<Item>("castleton_stone")
-    val CASTLETON_BRICK_STAIRS by objectHolder<Item>("castleton_brick_stairs")
+    //val CASTLETON_BRICK_STAIRS by objectHolder<Item>("castleton_brick_stairs")
     //val CRACKED_CASTLETON_BRICKS by objectHolder<Item>("cracked_castleton_bricks")
     //val CHARGED_CASTLETON_BRICKS by objectHolder<Item>("charged_castleton_bricks")
     val CHARGED_CASTLETON_BRICK_FENCE by objectHolder<Item>("charged_castleton_brick_fence")
@@ -76,13 +83,13 @@ object HItems {
     val PURPLE_LUMSHROOM by objectHolder<Item>("purple_lumshroom")
     val BLUE_LUMSHROOM by objectHolder<Item>("blue_lumshroom")
     //val CROWN by objectHolder<Item>("crown")
-    val CHALICE by objectHolder<Item>("chalice")
-    val CASTLETON_DUNGEON_CHEST by objectHolder<Item>("castleton_dungeon_chest")
+    //val CHALICE by objectHolder<Item>("chalice")
+    //val CASTLETON_DUNGEON_CHEST by objectHolder<Item>("castleton_dungeon_chest")
 
     // Castleton items
-    val CASTLETON_SWORD = BlockingSwordItem(Properties().group(Group).maxStackSize(1).rarity(Rarity.RARE)).setRegistryKey("castleton_sword")
-    val VALABLADE = BlockingSwordItem(Properties().group(Group).maxStackSize(1).rarity(Rarity.EPIC)).setRegistryKey("valablade")
-    val GILDED_VALABLADE = BlockingSwordItem(Properties().group(Group).maxStackSize(1).rarity(Rarity.UNCOMMON)).setRegistryKey("gilded_valablade")
+    val CASTLETON_SWORD = SwordItem(ItemTier.GOLD, 9, -2.4f, Properties().group(Group).maxStackSize(1).rarity(Rarity.RARE)).setRegistryKey("castleton_sword")
+    val VALABLADE = SwordItem(ItemTier.GOLD, 7, -2.4f, Properties().group(Group).maxStackSize(1).rarity(Rarity.EPIC)).setRegistryKey("valablade")
+    val GILDED_VALABLADE = SwordItem(ItemTier.GOLD, 10, -2.4f, Properties().group(Group).maxStackSize(1).rarity(Rarity.UNCOMMON)).setRegistryKey("gilded_valablade")
     val CASTLE_GEM = Item(Properties().group(Group)).setRegistryKey("castle_gem")
     val FRAYED_SOUL_SPAWN_EGG = SpawnEggItem(HEntities.FRAYED_SOUL, 0x434142, 0x2984a3, Properties().group(Group)).setRegistryKey("frayed_soul_spawn_egg")
     val VOID_RUNNER_SPAWN_EGG = SpawnEggItem(HEntities.VOID_RUNNER, 0x000000, 0x00c8ff, Properties().group(Group)).setRegistryKey("void_runner_spawn_egg")
@@ -91,19 +98,18 @@ object HItems {
     val CASTLETON_TORCH = CastletonTorchItem(HBlocks.CASTLETON_TORCH, HBlocks.CASTLETON_WALL_TORCH, true, Properties().group(Group)).setRegistryKey("castleton_torch")
     val BURNT_CASTLETON_TORCH = CastletonTorchItem(HBlocks.CASTLETON_TORCH, HBlocks.CASTLETON_WALL_TORCH, false, Properties().group(Group)).setRegistryKey("burnt_castleton_torch")
     val LUMLIGHT_SIGN = SignItem(Properties().maxStackSize(16).group(Group), HBlocks.LUMLIGHT_SIGN, HBlocks.LUMLIGHT_WALL_SIGN).setRegistryKey("lumlight_sign")
-    val LUM = Item(Properties().group(Group)).setRegistryKey("lum")
-    val VOLATILE_LUM = Item(Properties().group(Group)).setRegistryKey("volatile_lum")
+    //val LUM = Item(Properties().group(Group)).setRegistryKey("lum")
+    //val VOLATILE_LUM = Item(Properties().group(Group)).setRegistryKey("volatile_lum")
     val TOWER_HELMET = ArmorItem(HArmorMaterial.TOWER, EquipmentSlotType.HEAD, Properties().group(Group).maxStackSize(1)).setRegistryKey("tower_helmet")
     val TOWER_CHESTPLATE = ArmorItem(HArmorMaterial.TOWER, EquipmentSlotType.CHEST, Properties().group(Group).maxStackSize(1)).setRegistryKey("tower_chestplate")
     val TOWER_LEGGINGS = ArmorItem(HArmorMaterial.TOWER, EquipmentSlotType.LEGS, Properties().group(Group).maxStackSize(1)).setRegistryKey("tower_leggings")
     val TOWER_BOOTS = ArmorItem(HArmorMaterial.TOWER, EquipmentSlotType.FEET, Properties().group(Group).maxStackSize(1)).setRegistryKey("tower_boots")
     val CASTLETON_STAFF = StaffItem(Properties().group(Group).maxStackSize(1).rarity(Rarity.UNCOMMON)).setRegistryKey("castleton_staff")
-    val WILD_BERROOK = BlockItem(HBlocks.WILD_BERROOK, Properties().group(Group).food(Food.Builder().hunger(2).saturation(0.4f).fastToEat().build())).setRegistryKey("wild_berrook")
+    val WILD_BERROOK = BlockItem(HBlocks.WILD_BERROOK, Properties().group(Group).food(ItemMisc.WILD_BERROOK)).setRegistryKey("wild_berrook")
 
     // Rainbowland blocks
     val RAINBOW_SOIL by objectHolder<Item>("rainbow_soil")
     val RAINBOW_GRASS_BLOCK by objectHolder<Item>("rainbow_grass_block")
-    val COTTONMARSH_LEAVES by objectHolder<Item>("cottonmarsh_leaves")
     val RAINBOW_GLASS by objectHolder<Item>("rainbow_glass")
     val RAINBOW_GLASS_PANE by objectHolder<Item>("rainbow_glass_pane")
 
@@ -128,18 +134,20 @@ object HItems {
     val AURIGOLD_PENDANT = Item(Properties().group(Group)).setRegistryKey("aurigold_pendant")
     val AURILO_STAFF = StaffItem(Properties().group(Group)).setRegistryKey("aurilo_staff")
 
+    // Candyland items
+    val CANDY_CANE_SWORD = SwordItem(HItemTier.CANDY_CANE, 4, 0.4f, Properties().maxStackSize(1).group(Group)).setRegistryKey("candy_cane_sword")
+    val CANDY_CANE = Item(Properties().group(Group).food(ItemMisc.CANDY_CANE)).setRegistryKey("candy_cane")
+
     // Misc items
     val CHILI_PEPPER = BlockNamedItem(HBlocks.CHILI_PEPPER, Properties().group(Group).food(Food.Builder().hunger(2).saturation(0.2F).setAlwaysEdible().fastToEat().build())).setRegistryKey("chili_pepper")
     //val CORN = BlockNamedItem(HBlocks.CORN, Properties().group(Group).food(Food.Builder().hunger(2).saturation(0.2F).setAlwaysEdible().build())).setRegistryKey("corn")
     //val ROASTED_CORN = Item(Properties().group(Group).food(Food.Builder().hunger(6).saturation(0.8F).setAlwaysEdible().build())).setRegistryKey("roasted_corn")
-    val BULLET = Item(Properties().group(Group)).setRegistryKey("bullet")
-    val SHELL = Item(Properties().group(Group)).setRegistryKey("shell")
 
     // Debug
     val FILL_WAND = FillWandItem(Properties().group(Group).maxStackSize(1).rarity(Rarity.RARE)).setRegistryKey("fill_wand")
     val CLEAR_WAND = ClearWandItem(Properties().group(Group).maxStackSize(1).rarity(Rarity.EPIC)).setRegistryKey("clear_wand")
     val CLONE_WAND = CloneWandItem(Properties().group(Group).maxStackSize(1).rarity(Rarity.UNCOMMON)).setRegistryKey("clone_wand")
-    val DISTANCE_WAND = DistanceWandItem(Properties().group(Group).maxStackSize(1).rarity(HRarities.LEGENDARY)).setRegistryKey("distance_wand")
+    val DISTANCE_WAND = DistanceWandItem(Properties().group(Group).maxStackSize(1).rarity(ItemMisc.LEGENDARY)).setRegistryKey("distance_wand")
 
     // @formatter:on
 
@@ -157,6 +165,10 @@ object HItems {
         items.registerHandheldItem(MINI_PISTOL)
         items.registerSimpleItem(SYRINGE)
         items.register(POTION_SYRINGE)
+        items.registerSimpleItem(DEER_ANTLER)
+        items.registerSimpleItem(VENISON)
+        items.registerSimpleItem(COOKED_VENISON)
+        items.registerSpawnEgg(DEER_SPAWN_EGG)
 
         // Castleton items
         items.registerHandheldItem(CASTLETON_SWORD)
@@ -170,8 +182,8 @@ object HItems {
         items.registerSimpleItem(CASTLETON_TORCH)
         items.registerSimpleItem(BURNT_CASTLETON_TORCH)
         items.registerSimpleItem(LUMLIGHT_SIGN)
-        items.registerSimpleItem(LUM)
-        items.registerSimpleItem(VOLATILE_LUM)
+        //items.registerSimpleItem(LUM)
+        //items.registerSimpleItem(VOLATILE_LUM)
         items.registerSimpleItem(TOWER_HELMET)
         items.registerSimpleItem(TOWER_CHESTPLATE)
         items.registerSimpleItem(TOWER_LEGGINGS)
@@ -194,11 +206,16 @@ object HItems {
         items.registerSimpleItem(AURIGOLD_PENDANT)
         items.registerHandheldItem(AURILO_STAFF)
 
+        // Candyland items
+        items.registerHandheldItem(CANDY_CANE_SWORD)
+        items.registerSimpleItem(CANDY_CANE)
+
         // Misc
         items.registerSimpleItem(CHILI_PEPPER)
         //items.register(CORN)
         //items.register(ROASTED_CORN)
         items.registerSimpleItem(BULLET)
+        items.registerSimpleItem(INCENDIARY_BULLET)
         items.registerSimpleItem(SHELL)
 
         // Debug

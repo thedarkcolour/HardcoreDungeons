@@ -8,7 +8,7 @@ import net.minecraft.potion.Effects
 import net.minecraft.tags.ITag
 
 @Suppress("HasPlatformType")
-class PlantProperties private constructor() : Properties<PlantProperties>() {
+class PlantProperties private constructor() : BlockProperties<PlantProperties>() {
     /** Used to determine if a block is valid for placement. */
     var predicate: (BlockState) -> Boolean = DEFAULT_PREDICATE
     /** Used for mushrooms to determine if podzol and mycelium are valid for placement. */
@@ -46,7 +46,7 @@ class PlantProperties private constructor() : Properties<PlantProperties>() {
 
     /**
      * The factory that should be a companion object of
-     * the implementing [Properties] class
+     * the implementing [BlockProperties] class
      */
     override fun getFactory(): Factory<PlantProperties> {
         return Companion

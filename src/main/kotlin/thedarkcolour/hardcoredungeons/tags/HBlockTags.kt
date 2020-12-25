@@ -11,13 +11,18 @@ import thedarkcolour.hardcoredungeons.HardcoreDungeons
  * @author TheDarkColour
  */
 object HBlockTags {
-    val DUNGEON_LOOT_CONTAINERS = tag("dungeon_loot_containers")
     val LUMLIGHT_LOGS = tag("lumlight_logs")
     val COTTONMARSH_LOGS = tag("cottonmarsh_logs")
+    val AURI_LOGS = tag("auri_logs")
+
     val GLASS_RAINBOW = tag("glass/rainbow")
     val GLASS_PANES_RAINBOW = tag("glass_panes/rainbow")
-    val FENCES_BRICK = tag("fences/rainbow")
+    val FENCES_BRICK = tag("fences/brick")
+
     val CASTLETON_GRASS_PLANTABLE = tag("castleton_grass_plantable")
+    val RAINBOW_GRASS_PLANTABLE = tag("rainbow_grass_plantable")
+    val AURIGRASS_PLANTABLE = tag("aurigrass_plantable")
+    val SUGARY_GRASS_PLANTABLE = tag("sugary_grass_plantable")
 
     private fun tag(name: String): ITag.INamedTag<Block> {
         return BlockTags.makeWrapperTag(HardcoreDungeons.ID + ":" + name)

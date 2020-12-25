@@ -8,7 +8,6 @@ import net.minecraftforge.client.model.generators.ModelFile
 import thedarkcolour.hardcoredungeons.HardcoreDungeons
 import thedarkcolour.hardcoredungeons.data.ModelGenerator
 
-// todo
 class PillarModelType : ModelType<Block>() {
     private val blocks = HashMap<Block, Pair<String?, String?>>()
 

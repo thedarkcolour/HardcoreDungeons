@@ -1,6 +1,6 @@
 package thedarkcolour.hardcoredungeons.block.properties
 
-class HProperties private constructor() : Properties<HProperties>() {
+class HProperties private constructor() : BlockProperties<HProperties>() {
     companion object : Factory<HProperties>() {
         override fun createProperties(): HProperties {
             return HProperties()

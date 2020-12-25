@@ -16,15 +16,9 @@ import thedarkcolour.hardcoredungeons.data.modelgen.ModelType
 
 class ModelGenerator(gen: DataGenerator, private val helper: ExistingFileHelper) : BlockStateProvider(gen, HardcoreDungeons.ID, helper) {
     override fun registerStatesAndModels() {
-
         for (modelType in MODEL_TYPES) {
             modelType.generateModels(this)
         }
-
-        // todo add
-        //for ((s, e) in CUBE_COLUMNS) {
-        //    column(s, e)
-        //}
     }
 
     fun name(block: Block): String {
@@ -183,7 +177,6 @@ class ModelGenerator(gen: DataGenerator, private val helper: ExistingFileHelper)
         })
     }
 
-    // todo maybe some sort of ModelType system
     companion object {
         private val BLOCK_MODEL_LOOKUP = HashMap<BlockModelBuilder, ResourceLocation>()
 

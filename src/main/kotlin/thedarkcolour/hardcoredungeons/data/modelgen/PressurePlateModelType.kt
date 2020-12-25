@@ -1,10 +1,8 @@
 package thedarkcolour.hardcoredungeons.data.modelgen
 
 import net.minecraft.block.PressurePlateBlock
-import net.minecraft.block.WoodButtonBlock
-import net.minecraft.state.properties.AttachFace
+import net.minecraft.block.material.Material
 import net.minecraft.state.properties.BlockStateProperties
-import net.minecraftforge.client.model.generators.BlockModelBuilder
 import net.minecraftforge.client.model.generators.ConfiguredModel
 import thedarkcolour.hardcoredungeons.data.ModelGenerator
 
@@ -17,36 +15,26 @@ class PressurePlateModelType : BlockModelType<PressurePlateBlock>() {
         val builder = gen.getVariantBuilder(block)
 
         // planks, stone, etc.
-        val originalTexture = if (block is WoodButtonBlock)  {
-            path.removeSuffix("_button") + "_planks"
+        val originalTexture = if (block.material == Material.WOOD)  {
+            path.removeSuffix("_pressure_plate") + "_planks"
         } else {
-            path.removeSuffix("_button")
+            path.removeSuffix("_pressure_plate")
         }
 
-        val buttonModel = gen.blockModel(path)
-            .parent(gen.mcFile("block/button"))
+        val normal = gen.blockModel(path)
+            .parent(gen.mcFile("block/pressure_plate_up"))
             .texture("texture", "block/$originalTexture")
-        val buttonPressedModel = gen.blockModel(path + "_pressed")
-            .parent(gen.mcFile("block/button_pressed"))
+        val pressed = gen.blockModel(path + "_pressed")
+            .parent(gen.mcFile("block/pressure_plate_down"))
             .texture("texture", "block/$originalTexture")
 
-        for (face in AttachFace.values()) {
-            for (direction in WallModelType.HORIZONTALS) {
-                builder.partialState()
-                    .with(BlockStateProperties.FACE, face)
-                    .with(BlockStateProperties.HORIZONTAL_FACING, direction)
-                    .with(BlockStateProperties.POWERED, false)
-                    .addModels(modelWithRotation(gen, buttonModel, rotateX = ButtonModelType.FACE_2_ROT.getInt(face), rotateY = ButtonModelType.DIR_2_ROT.getInt(direction)))
-                builder.partialState()
-                    .with(BlockStateProperties.FACE, face)
-                    .with(BlockStateProperties.HORIZONTAL_FACING, direction)
-                    .with(BlockStateProperties.POWERED, true)
-                    .addModels(modelWithRotation(gen, buttonPressedModel, rotateX = ButtonModelType.FACE_2_ROT.getInt(face), rotateY = ButtonModelType.DIR_2_ROT.getInt(direction)))
-            }
-        }
-    }
+        builder.partialState()
+            .with(BlockStateProperties.POWERED, false)
+            .addModels(ConfiguredModel(normal))
+        builder.partialState()
+            .with(BlockStateProperties.POWERED, true)
+            .addModels(ConfiguredModel(pressed))
 
-    private fun modelWithRotation(gen: ModelGenerator, model: BlockModelBuilder, rotateX: Int = 0, rotateY: Int = 0, uvLock: Boolean = false): ConfiguredModel {
-        return ConfiguredModel(gen.getModelFile(model), rotateX, rotateY, uvLock, ConfiguredModel.DEFAULT_WEIGHT)
+        gen.blockItemModel(block)
     }
 }

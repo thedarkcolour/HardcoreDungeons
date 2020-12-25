@@ -22,8 +22,8 @@ import net.minecraft.world.IWorld
 import net.minecraft.world.World
 import thedarkcolour.hardcoredungeons.block.HBlock
 import thedarkcolour.hardcoredungeons.block.properties.HProperties
-import thedarkcolour.hardcoredungeons.registry.HContainers
 
+// todo re evaluate cause this is just a copy paste
 class SpawnerChestBlock(properties: HProperties) : HBlock(properties), IWaterLoggable {
     init {
         defaultState = defaultState.with(HORIZONTAL_FACING, Direction.NORTH).with(CHEST_TYPE, ChestType.SINGLE).with(WATERLOGGED, false)
@@ -122,7 +122,7 @@ class SpawnerChestBlock(properties: HProperties) : HBlock(properties), IWaterLog
         return if (worldIn.isRemote()) {
             ActionResultType.SUCCESS
         } else {
-            HContainers.DUNGEON_LOOT.openContainer(playerIn)
+            //HContainers.DUNGEON_LOOT.openContainer(playerIn)
             ActionResultType.SUCCESS
         }
     }

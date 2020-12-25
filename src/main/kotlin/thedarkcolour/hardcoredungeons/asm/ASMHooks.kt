@@ -13,7 +13,7 @@ import org.objectweb.asm.tree.*
 import java.util.function.LongFunction
 
 /**
- * **NOT ACTUALLY USED BY THE COREMODS HAHA**
+ * **NOT ACTUALLY USED BY THE COREMODS**
  *
  * ASM hooks used by coremods in HCD.
  *

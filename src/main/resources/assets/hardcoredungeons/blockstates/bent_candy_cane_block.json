@@ -1,0 +1,30 @@
+{
+    "variants": {
+        "facing=down": {
+            "model": "hardcoredungeons:block/bent_candy_cane_block",
+            "x": 180
+        },
+        "facing=east": {
+            "model": "hardcoredungeons:block/bent_candy_cane_block",
+            "x": 90,
+            "y": 90
+        },
+        "facing=north": {
+            "model": "hardcoredungeons:block/bent_candy_cane_block",
+            "x": 90
+        },
+        "facing=south": {
+            "model": "hardcoredungeons:block/bent_candy_cane_block",
+            "x": 90,
+            "y": 180
+        },
+        "facing=up": {
+            "model": "hardcoredungeons:block/bent_candy_cane_block"
+        },
+        "facing=west": {
+            "model": "hardcoredungeons:block/bent_candy_cane_block",
+            "x": 90,
+            "y": 270
+        }
+    }
+}

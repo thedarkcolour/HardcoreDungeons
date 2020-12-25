@@ -5,7 +5,6 @@ import net.minecraft.block.BlockState
 import net.minecraft.item.BlockItemUseContext
 import net.minecraft.state.StateContainer
 import net.minecraft.state.properties.BlockStateProperties.HORIZONTAL_FACING
-import net.minecraft.util.Direction
 import net.minecraft.util.Mirror
 import net.minecraft.util.Rotation
 import thedarkcolour.hardcoredungeons.block.HBlock
@@ -15,10 +14,6 @@ import thedarkcolour.hardcoredungeons.block.properties.HProperties
  * Base block class that has support for horizontal rotations.
  */
 open class HorizontalBlock(properties: HProperties) : HBlock(properties) {
-    init {
-        defaultState = defaultState.with(HORIZONTAL_FACING, Direction.NORTH)
-    }
-
     override fun fillStateContainer(builder: StateContainer.Builder<Block, BlockState>) {
         builder.add(HORIZONTAL_FACING)
     }

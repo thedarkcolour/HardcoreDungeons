@@ -41,7 +41,7 @@ open class HBlock(properties: HProperties) : Block(properties.build()) {
     /**
      * Writes the properties of this block to the supplied [HProperties]/
      */
-    open fun writeProperties(properties: thedarkcolour.hardcoredungeons.block.properties.Properties<*>): thedarkcolour.hardcoredungeons.block.properties.Properties<*> {
+    open fun writeProperties(properties: thedarkcolour.hardcoredungeons.block.properties.BlockProperties<*>): thedarkcolour.hardcoredungeons.block.properties.BlockProperties<*> {
         properties.shape(shape)
         properties.enchantmentPower(enchantmentPower)
 

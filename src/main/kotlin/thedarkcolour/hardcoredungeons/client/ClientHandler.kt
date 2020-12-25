@@ -7,7 +7,7 @@ import net.minecraftforge.client.event.ModelBakeEvent
 import net.minecraftforge.client.event.ParticleFactoryRegisterEvent
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent
 import thedarkcolour.hardcoredungeons.client.dimension.CastletonEffects
-import thedarkcolour.hardcoredungeons.client.model.FullbrightBakedModel
+import thedarkcolour.hardcoredungeons.client.model.block.FullbrightBakedModel
 import thedarkcolour.hardcoredungeons.registry.*
 import thedarkcolour.kotlinforforge.forge.MOD_BUS
 
@@ -33,7 +33,7 @@ object ClientHandler {
         event.enqueueWork(HBlocks::setRenderTypes)
         HEntities.registerEntityRenderers()
         HEntities.registerEntityShaders()
-        HContainers.registerScreens()
+        //HContainers.registerScreens()
 
         DimensionRenderInfo.field_239208_a_[HDimensions.CASTLETON_ID] = CastletonEffects
     }

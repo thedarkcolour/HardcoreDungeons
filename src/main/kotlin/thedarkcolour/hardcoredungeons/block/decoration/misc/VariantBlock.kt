@@ -3,6 +3,7 @@ package thedarkcolour.hardcoredungeons.block.decoration.misc
 import net.minecraft.block.AbstractBlock
 
 /** todo
+ * Idea is from the Chisel mod
  * @param variants the type of block like "short_oak_planks", "braided_oak_planks"
  */
 class VariantBlock(properties: AbstractBlock.Properties, variants: Array<String>) {

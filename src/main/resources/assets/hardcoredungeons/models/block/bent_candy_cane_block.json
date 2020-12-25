@@ -1,0 +1,12 @@
+{
+    "parent": "minecraft:block/cube",
+    "textures": {
+        "particle": "block/oak_planks",
+        "down": "hardcoredungeons:block/bent_candy_cane_side",
+        "up": "hardcoredungeons:block/bent_candy_cane_side_opposite",
+        "north": "hardcoredungeons:block/candy_cane_end",
+        "east": "hardcoredungeons:block/candy_cane_end",
+        "south": "hardcoredungeons:block/bent_candy_cane_side_outer",
+        "west": "hardcoredungeons:block/bent_candy_cane_side_outer"
+    }
+}

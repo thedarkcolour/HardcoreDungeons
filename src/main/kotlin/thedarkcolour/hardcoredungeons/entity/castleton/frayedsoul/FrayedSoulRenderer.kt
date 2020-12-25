@@ -3,7 +3,8 @@ package thedarkcolour.hardcoredungeons.entity.castleton.frayedsoul
 import com.mojang.blaze3d.matrix.MatrixStack
 import net.minecraft.client.renderer.entity.EntityRendererManager
 import net.minecraft.client.renderer.entity.MobRenderer
-import thedarkcolour.hardcoredungeons.entity.castleton.FullbrightLayer
+import thedarkcolour.hardcoredungeons.client.model.entity.FrayedSoulModel
+import thedarkcolour.hardcoredungeons.client.renderer.entity.layers.FullbrightLayer
 import thedarkcolour.hardcoredungeons.util.modLoc
 import kotlin.math.sin
 
