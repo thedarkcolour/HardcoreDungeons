@@ -114,7 +114,7 @@ object HBiomeMaker {
             downfall = 0.8f,
             effects = effects(0x3f76e4, 0x50533, getSkyForTemp(0.7f), 12638463),
             genSettings = genSettings,
-            spawnSettings = spawnSettings.build()
+            spawnSettings = spawnSettings,
         )
     }
 
@@ -210,6 +210,11 @@ object HBiomeMaker {
 
     fun makeGumdropFieldsBiome(): Biome {
         val genSettings = genSettings(HSurfaceBuilders.SUGARY_SURFACE)
+        val spawnSettings = spawnSettings()
+
+        //HFeatures.withSparseCandyCanes(genSettings)
+        //HFeatures.withSparseChocolateBars(genSettings)
+
         return biome(
             precipitation = Biome.RainType.NONE,
             category = Biome.Category.PLAINS,
@@ -218,7 +223,28 @@ object HBiomeMaker {
             temperature = 1.5f,
             downfall = 0.4f,
             effects = effects(0xd19bdc, 0x50533, getSkyForTemp(0.9f), 12638463),
-            genSettings = genSettings
+            genSettings = genSettings,
+            spawnSettings = spawnSettings,
+        )
+    }
+
+    fun makeCandyPlainsBiome(): Biome {
+        val genSettings = genSettings(HSurfaceBuilders.SUGARY_SURFACE)
+        val spawnSettings = spawnSettings()
+
+        HFeatures.withSparseCandyCanes(genSettings)
+        HFeatures.withSparseChocolateBars(genSettings)
+
+        return biome(
+            precipitation = Biome.RainType.NONE,
+            category = Biome.Category.PLAINS,
+            depth = 0.04f,
+            scale = 0.2f,
+            temperature = 1.5f,
+            downfall = 0.4f,
+            effects = effects(0xd19bdc, 0x50533, getSkyForTemp(0.9f), 12638463),
+            genSettings = genSettings,
+            spawnSettings = spawnSettings,
         )
     }
 
@@ -235,7 +261,7 @@ object HBiomeMaker {
         downfall: Float,
         effects: BiomeAmbience.Builder,
         genSettings: BiomeGenerationSettings.Builder,
-        spawnSettings: MobSpawnInfo = MobSpawnInfo.EMPTY,
+        spawnSettings: MobSpawnInfo.Builder? = null,
     ): Biome {
         return Biome.Builder()
             .precipitation(precipitation)
@@ -246,7 +272,7 @@ object HBiomeMaker {
             .downfall(downfall)
             .setEffects(effects.build())
             .withGenerationSettings(genSettings.build())
-            .withMobSpawnSettings(spawnSettings)
+            .withMobSpawnSettings(spawnSettings?.build() ?: MobSpawnInfo.EMPTY)
             .build()
     }
 

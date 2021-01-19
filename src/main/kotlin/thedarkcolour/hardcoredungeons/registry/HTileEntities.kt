@@ -2,10 +2,13 @@ package thedarkcolour.hardcoredungeons.registry
 
 import net.minecraft.tileentity.TileEntityType
 import net.minecraftforge.registries.IForgeRegistry
+import thedarkcolour.hardcoredungeons.tileentity.DungeonSpawnerTileEntity
 import thedarkcolour.hardcoredungeons.tileentity.SpawnerChestTileEntity
 
 @Suppress("HasPlatformType", "NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 object HTileEntities {
+    val DUNGEON_SPAWNER = TileEntityType.Builder.create(::DungeonSpawnerTileEntity, HBlocks.DUNGEON_SPAWNER).build(null).setRegistryKey("dungeon_spawner")
+
     //val LUMLIGHT_CAMPFIRE = TileEntityType.Builder.create(::LumlightCampfireTileEntity, HBlocks.LUMLIGHT_CAMPFIRE).build(null).setRegistryKey("")
     //val EXTRACTOR = TileEntityType.Builder.create(::ExtractorTileEntity, HBlocks.EXTRACTOR).build(null).setRegistryKey("extractor")
     val SPAWNER_CHEST = TileEntityType.Builder.create(::SpawnerChestTileEntity, HBlocks.CASTLETON_DUNGEON_CHEST).build(null).setRegistryKey("spawner_chest")

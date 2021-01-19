@@ -21,7 +21,7 @@ import net.minecraft.world.World
  * Base class for wands that have a fill-style function.
  * Includes the undo function.
  *
- * @property properties the item properties
+ * @param properties the item properties
  * @property undoMap the map of undo actions per player
  * @property fillMessage the message this wand should display when filling
  *

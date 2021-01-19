@@ -9,6 +9,7 @@ import net.minecraftforge.event.world.BiomeLoadingEvent
 import net.minecraftforge.registries.IForgeRegistry
 import thedarkcolour.hardcoredungeons.HardcoreDungeons
 import thedarkcolour.hardcoredungeons.biome.HBiomeMaker
+import thedarkcolour.hardcoredungeons.config.HConfig
 
 /**
  * Biomes for Hardcore Dungeons.
@@ -36,6 +37,7 @@ object HBiomes {
 
     // Candyland biomes
     val GUMDROP_FIELDS = HBiomeMaker.makeGumdropFieldsBiome().setRegistryKey("gumdrop_fields")
+    val CANDY_PLAINS = HBiomeMaker.makeCandyPlainsBiome().setRegistryKey("candy_plains")
 
     fun registerBiomes(biomes: IForgeRegistry<Biome>) {
         biomes.register(CASTLETON_HILLS)
@@ -49,6 +51,7 @@ object HBiomes {
         biomes.register(AURI_PLAINS)
 
         biomes.register(GUMDROP_FIELDS)
+        biomes.register(CANDY_PLAINS)
 
         biomes.register(THICK_FOREST)
         biomes.register(MUSHROOM_CLIFFS)
@@ -57,7 +60,7 @@ object HBiomes {
     val THICK_FOREST_KEY = RegistryKey.getOrCreateKey(Registry.BIOME_KEY, ResourceLocation(HardcoreDungeons.ID, "thick_forest"))
 
     fun biomeLoading(event: BiomeLoadingEvent) {
-        if (event.name == THICK_FOREST.registryName) {
+        if (event.name == THICK_FOREST.registryName && HConfig.thickForestGenerates.value) {
             BiomeManager.addBiome(BiomeManager.BiomeType.WARM, BiomeManager.BiomeEntry(THICK_FOREST_KEY, 6))
         }
         if (event.name == ResourceLocation("minecraft:mushroom_islands")) {

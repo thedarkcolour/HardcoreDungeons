@@ -93,7 +93,7 @@ abstract class Lang(gen: DataGenerator, locale: String) : LanguageProvider(gen, 
             add(HBlocks.LUMLIGHT_PRESSURE_PLATE, "Lumlight Pressure Plate")
             add(HBlocks.LUMLIGHT_BUTTON, "Lumlight Button")
             add(HBlocks.LUMLIGHT_TRAPDOOR, "Lumlight Trapdoor")
-            add(HBlocks.DUNGEON_MOB_SPAWNER, "Dungeon Mob Spawner")
+            add(HBlocks.DUNGEON_SPAWNER, "Dungeon Mob Spawner")
             add(HBlocks.LUMLIGHT_CAMPFIRE, "Lumlight Campfire")
             add(HBlocks.CASTLETON_VASE, "Castleton Vase")
             add(HBlocks.CASTLETON_TREASURE_VASE, "Castleton Treasure Vase")

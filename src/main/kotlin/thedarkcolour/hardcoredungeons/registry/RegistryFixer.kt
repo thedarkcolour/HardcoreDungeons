@@ -38,6 +38,7 @@ object RegistryFixer {
             map["stone_texture"] = null
             map["stone_texture_stairs"] = null
             map["stone_texture_slab"] = null
+            map["dungeon_mob_spawner"] = HBlocks.DUNGEON_SPAWNER
         }
         createFixes<Item> { map ->
             map["rainbow_factory_table"] = null
@@ -52,6 +53,8 @@ object RegistryFixer {
             map["stone_texture_slab"] = null
             map["lum"] = null
             map["volatile_lum"] = null
+            // don't worry about wiping because this is a creative item
+            map["dungeon_mob_spawner"] = null
         }
         createFixes<TileEntityType<*>> { map ->
             map["extractor"] = null

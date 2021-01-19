@@ -22,6 +22,7 @@ import thedarkcolour.hardcoredungeons.block.portal.PortalBlock
 import thedarkcolour.hardcoredungeons.capability.HPlayer
 import thedarkcolour.hardcoredungeons.capability.PlayerHelper
 import thedarkcolour.hardcoredungeons.registry.HBlocks
+import thedarkcolour.hardcoredungeons.tileentity.DungeonSpawnerTileEntity
 import thedarkcolour.kotlinforforge.forge.FORGE_BUS
 import thedarkcolour.kotlinforforge.forge.MOD_BUS
 
@@ -34,6 +35,7 @@ object EventHandler {
         FORGE_BUS.addListener(::onBlockActivated)
         FORGE_BUS.addListener(::playerTick)
         FORGE_BUS.addGenericListener(::attachCapability)
+        FORGE_BUS.addListener(::canBlockBreak)
     }
 
     // Hook
@@ -157,6 +159,20 @@ object EventHandler {
 
         if (cooldown > 0) {
             PlayerHelper.setPortalCooldown(player, (cooldown - 1).coerceAtLeast(0))
+        }
+    }
+
+    fun canBlockBreak(event: BlockEvent.BreakEvent) {
+        val state = event.state
+        val worldIn = event.world
+        val pos = event.pos
+        val tile = worldIn.getTileEntity(pos)
+
+        if (tile is DungeonSpawnerTileEntity) {
+            if (tile.remainingKills > 0) {
+                // creative players bypass the kill counter
+                event.isCanceled = !event.player.isCreative
+            }
         }
     }
 }

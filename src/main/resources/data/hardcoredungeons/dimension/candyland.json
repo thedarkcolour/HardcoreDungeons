@@ -22,8 +22,30 @@
                 "amplitudes": [ 1.0, 1.0 ]
             },
 
-            "type": "minecraft:fixed",
-            "biome": "hardcoredungeons:gumdrop_fields"
+            "type": "minecraft:multi_noise",
+            "seed": -1523641583,
+            "biomes": [
+                {
+                    "biome": "hardcoredungeons:candy_plains",
+                    "parameters": {
+                        "altitude": 0.3,
+                        "weirdness": 0.5,
+                        "offset": 0.1,
+                        "temperature": 0.1,
+                        "humidity": 1.0
+                    }
+                },
+                {
+                    "biome": "hardcoredungeons:gumdrop_fields",
+                    "parameters": {
+                        "altitude": 0.2,
+                        "weirdness": 0.6,
+                        "offset": 0.3,
+                        "temperature": 0.0,
+                        "humidity": 0.9
+                    }
+                }
+            ]
         }
     }
 }

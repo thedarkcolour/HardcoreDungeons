@@ -39,29 +39,6 @@ object RainbowColor : HColor {
 
         hue = x * 2 + z * 2
 
-        return Color.HSBtoRGB(hue / 255.0f, saturation / 255.0f, brightness / 255.0f) // red << 16 | blue << 8 | green;
+        return Color.HSBtoRGB(hue / 255.0f, saturation / 255.0f, brightness / 255.0f)
     }
-/*
-    fun getItemColor(random: Random): IItemColor {
-        val randomPos = BlockPos(MathHelper.nextInt(random, -180, 180), 70, MathHelper.nextInt(random, -180, 180))
-        val randomColor = getColor(null, null, randomPos, 0)
-        return IItemColor { _, _ ->
-            randomColor
-        }
-    }
-
-    fun getItemColorFancy(random: Random): IItemColor {
-        val default = MathHelper.nextInt(random, -180, 180)
-
-        return IItemColor { _, _ ->
-            val pos = Minecraft.getInstance().player?.position
-
-            if (pos != null) {
-                 getColor(pos.x, pos.y, pos.z)
-            } else {
-                getColor(default, 70, default)
-            }
-        }
-    }
- */
 }

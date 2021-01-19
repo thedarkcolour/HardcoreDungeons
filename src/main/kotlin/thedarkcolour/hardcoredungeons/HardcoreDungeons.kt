@@ -9,6 +9,7 @@ import org.apache.logging.log4j.LogManager
 import org.apache.logging.log4j.Logger
 import thedarkcolour.hardcoredungeons.client.ClientHandler
 import thedarkcolour.hardcoredungeons.command.ReloadModelsCommand
+import thedarkcolour.hardcoredungeons.config.ConfigHolder
 import thedarkcolour.hardcoredungeons.event.EventHandler
 import thedarkcolour.hardcoredungeons.registry.RegistryEventHandler
 import thedarkcolour.kotlinforforge.forge.FORGE_BUS
@@ -36,6 +37,8 @@ object HardcoreDungeons {
         FORGE_BUS.addListener(::registerCommands)
 
         MOD_BUS.addListener(::interModComms)
+
+        ConfigHolder.register(MOD_BUS, ID)
 
         runWhenOn(Dist.CLIENT, ClientHandler::registerEvents)
     }

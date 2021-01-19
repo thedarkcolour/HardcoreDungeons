@@ -48,7 +48,7 @@ import thedarkcolour.hardcoredungeons.block.plant.trees.LumlightTree
 import thedarkcolour.hardcoredungeons.block.portal.PortalBlock
 import thedarkcolour.hardcoredungeons.block.properties.HProperties
 import thedarkcolour.hardcoredungeons.block.properties.PlantProperties
-import thedarkcolour.hardcoredungeons.block.structure.DungeonMobSpawnerBlock
+import thedarkcolour.hardcoredungeons.block.structure.DungeonSpawnerBlock
 import thedarkcolour.hardcoredungeons.block.structure.SpawnerChestBlock
 import thedarkcolour.hardcoredungeons.block.structure.castleton.FrayedSkullBlock
 import thedarkcolour.hardcoredungeons.block.structure.rainbowland.RainbowFactoryFurnaceBlock
@@ -145,7 +145,7 @@ object HBlocks {
     val WHITE_WINE_BOTTLE = HBlock(HProperties.create(Material.GLASS).nonSolid().sound(SoundType.GLASS).shapeFrom(RED_WINE_BOTTLE)).setRegistryKey("white_wine_bottle")
     val WINE_BOTTLE = HBlock(HProperties.create(Material.GLASS).nonSolid().sound(SoundType.GLASS).shapeFrom(RED_WINE_BOTTLE)).setRegistryKey("wine_bottle")
     val CASTLETON_LANTERN = LanternBlock(Properties.from(Blocks.LANTERN).hardnessAndResistance(3.5f, 100.0f)).setRegistryKey("castleton_lantern")
-    val DUNGEON_MOB_SPAWNER = DungeonMobSpawnerBlock(Properties.from(Blocks.BARRIER)).setRegistryKey("dungeon_mob_spawner")
+    val DUNGEON_SPAWNER = DungeonSpawnerBlock(Properties.from(Blocks.BARRIER)).setRegistryKey("dungeon_spawner")
     val LUMLIGHT_CAMPFIRE = LumlightCampfireBlock(HProperties.create(Material.WOOD, MaterialColor.OBSIDIAN).hardnessAndResistance(2.0F).sound(SoundType.WOOD).light(15).tickRandomly().nonSolid()).setRegistryKey("lumlight_campfire")
     val CASTLETON_VASE = HBlock(HProperties.from(VASE)).setRegistryKey("castleton_vase")
     val CASTLETON_TREASURE_VASE = HBlock(HProperties.from(VASE)).setRegistryKey("castleton_treasure_vase")
@@ -167,7 +167,7 @@ object HBlocks {
     val RAINBOWLAND_PORTAL_FRAME = Block(Properties.from(Blocks.OBSIDIAN)).setRegistryKey("rainbowland_portal_frame")
     val RAINBOWLAND_PORTAL = PortalBlock(HDimensions::RAINBOWLAND_KEY, RAINBOWLAND_PORTAL_FRAME::getDefaultState, HProperties.create(Material.PORTAL).doesNotBlockMovement().hardnessAndResistance(-1.0f).sound(SoundType.GLASS).noDrops()).setRegistryKey("rainbowland_portal")
     val COTTONMARSH_SAPLING = SaplingBlock(CottonmarshTree, Properties.from(LUMLIGHT_SAPLING)).setRegistryKey("cottonmarsh_sapling")
-    val POTTED_COTTONMARSH_SAPLING = createPottedBlock(HBlocks.COTTONMARSH_SAPLING)
+    val POTTED_COTTONMARSH_SAPLING = createPottedBlock(COTTONMARSH_SAPLING)
     val COTTONMARSH_LEAVES = LeavesBlock(Properties.from(Blocks.OAK_LEAVES).hardnessAndResistance(0.2f).sound(SoundType.CLOTH).notSolid()).setRegistryKey("cottonmarsh_leaves")
     val COTTONMARSH_LOG = createLogBlock(MaterialColor.BROWN_TERRACOTTA, MaterialColor.BROWN_TERRACOTTA) {Properties.create(Material.WOOD).sound(SoundType.WOOD).hardnessAndResistance(2.5f)}.setRegistryKey("cottonmarsh_log")
     val COTTONMARSH_WOOD = RotatedPillarBlock(Properties.from(COTTONMARSH_LOG)).setRegistryKey("cottonmarsh_wood")
@@ -291,7 +291,7 @@ object HBlocks {
         blocks.registerSimpleBlock(CHARGED_CASTLETON_BRICKS)
         blocks.registerStairsBlock(CHARGED_CASTLETON_BRICK_STAIRS, CHARGED_CASTLETON_BRICKS)
         blocks.registerSlabBlock(CHARGED_CASTLETON_BRICK_SLAB, CHARGED_CASTLETON_BRICKS)
-        blocks.registerBlock(CHARGED_CASTLETON_BRICK_FENCE) //
+        blocks.registerFenceBlock(CHARGED_CASTLETON_BRICK_FENCE)
         blocks.registerWallBlock(CHARGED_CASTLETON_BRICK_WALL)
         blocks.registerSimpleBlock(CASTLETON_PORTAL_FRAME)
         blocks.registerBlockAndSimpleItem(CASTLETON_PORTAL) // todo portal model gen
@@ -330,7 +330,7 @@ object HBlocks {
         blocks.registerBlockAndSimpleItem(WHITE_WINE_BOTTLE)
         blocks.registerBlockAndSimpleItem(WINE_BOTTLE)
         blocks.registerBlockAndSimpleItem(CASTLETON_LANTERN)
-        blocks.registerBlock3dItem(DUNGEON_MOB_SPAWNER)
+        blocks.registerBlock3dItem(DUNGEON_SPAWNER)
         blocks.registerBlockAndSimpleItem(LUMLIGHT_CAMPFIRE)
         blocks.registerVase(CASTLETON_VASE)
         blocks.registerVase(CASTLETON_TREASURE_VASE)
@@ -456,7 +456,7 @@ object HBlocks {
         RenderTypeLookup.setRenderLayer(WHITE_WINE_BOTTLE, RenderType.getTranslucent())
         RenderTypeLookup.setRenderLayer(WINE_BOTTLE, RenderType.getTranslucent())
         RenderTypeLookup.setRenderLayer(CASTLETON_LANTERN, RenderType.getCutout())
-        RenderTypeLookup.setRenderLayer(DUNGEON_MOB_SPAWNER, RenderType.getCutout())
+        RenderTypeLookup.setRenderLayer(DUNGEON_SPAWNER, RenderType.getCutout())
         RenderTypeLookup.setRenderLayer(LUMLIGHT_CAMPFIRE, RenderType.getCutout())
         RenderTypeLookup.setRenderLayer(COTTONMARSH_LEAVES, RenderType.getCutout())
         RenderTypeLookup.setRenderLayer(RUNED_CASTLETON_STONE, RenderType.getCutout())

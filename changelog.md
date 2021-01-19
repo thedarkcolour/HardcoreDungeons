@@ -1,5 +1,11 @@
 ## Hardcore Dungeons Changelog
 
+### Alpha 11
+* Added Candy Canes that spawn naturally in Candyland
+* Added a cooldown to the Mini Pistol
+* Fixed the Cooked Venison recipe being missing from the campfire
+* Removed a few recipes that prevented crafting "chiseled" variants of certain blocks
+
 ### Alpha 10
 * Added Candy Cane, Candy Cane blocks, Candy Cane sword
 * Added Deer Antlers, Venison, Deer Spawn Egg

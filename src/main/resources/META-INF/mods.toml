@@ -8,7 +8,7 @@ version="${file.jarVersion}" #mandatory
 displayName="Hardcore Dungeons" #mandatory
 logoFile="logo.png" #optional
 # A text field displayed in the mod UI
-credits="Herobrine knows all." #optional
+credits="Herobrine knows all. Thanks to DJRoundTable, AlexCipher" #optional
 # A text field displayed in the mod UI
 authors="TheDarkColour and genericrandom64" #optional
 # The description text for the mod (multi line!) (#mandatory)

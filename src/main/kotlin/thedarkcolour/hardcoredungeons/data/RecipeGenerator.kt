@@ -28,8 +28,6 @@ class RecipeGenerator(generatorIn: DataGenerator) : RecipeProvider(generatorIn) 
      * Uses several extension functions declared later on in the file.
      */
     override fun registerRecipes(consumer: Consumer<IFinishedRecipe>) {
-
-
         // lumlight blocks
         consumer.shapeless(HBlocks.LUMLIGHT_PLANKS, 4) { builder ->
             builder.addIngredient(HItemTags.LUMLIGHT_LOGS)
@@ -119,14 +117,9 @@ class RecipeGenerator(generatorIn: DataGenerator) : RecipeProvider(generatorIn) 
         consumer.slabs2Full(Blocks.WARPED_SLAB, Blocks.WARPED_PLANKS)
         consumer.slabs2Full(Blocks.STONE_SLAB, Blocks.STONE)
         consumer.slabs2Full(Blocks.SMOOTH_STONE_SLAB, Blocks.SMOOTH_STONE)
-        consumer.slabs2Full(Blocks.SANDSTONE_SLAB, Blocks.SANDSTONE)
         consumer.slabs2Full(Blocks.CUT_SANDSTONE_SLAB, Blocks.CUT_SANDSTONE)
         consumer.slabs2Full(Blocks.COBBLESTONE_SLAB, Blocks.COBBLESTONE)
         consumer.slabs2Full(Blocks.BRICK_SLAB, Blocks.BRICKS)
-        consumer.slabs2Full(Blocks.STONE_BRICK_SLAB, Blocks.STONE_BRICKS)
-        consumer.slabs2Full(Blocks.NETHER_BRICK_SLAB, Blocks.NETHER_BRICKS)
-        //consumer.slabs2Full(Blocks.QUARTZ_SLAB, Blocks.QUARTZ_BLOCK) // can't do because of chiseled quartz block
-        consumer.slabs2Full(Blocks.RED_SANDSTONE_SLAB, Blocks.RED_SANDSTONE)
         consumer.slabs2Full(Blocks.CUT_RED_SANDSTONE_SLAB, Blocks.CUT_RED_SANDSTONE)
         consumer.slabs2Full(Blocks.PURPUR_SLAB, Blocks.PURPUR_BLOCK)
         consumer.slabs2Full(Blocks.PRISMARINE_SLAB, Blocks.PRISMARINE)
@@ -147,7 +140,13 @@ class RecipeGenerator(generatorIn: DataGenerator) : RecipeProvider(generatorIn) 
         consumer.slabs2Full(Blocks.DIORITE_SLAB, Blocks.DIORITE)
         consumer.slabs2Full(Blocks.BLACKSTONE_SLAB, Blocks.BLACKSTONE)
         consumer.slabs2Full(Blocks.POLISHED_BLACKSTONE_BRICK_SLAB, Blocks.POLISHED_BLACKSTONE_BRICKS)
-        consumer.slabs2Full(Blocks.POLISHED_BLACKSTONE_SLAB, Blocks.POLISHED_BLACKSTONE)
+        // can't do these because of chiseled blocks
+        // consumer.slabs2Full(Blocks.NETHER_BRICK_SLAB, Blocks.NETHER_BRICKS)
+        // consumer.slabs2Full(Blocks.QUARTZ_SLAB, Blocks.QUARTZ_BLOCK)
+        // consumer.slabs2Full(Blocks.POLISHED_BLACKSTONE_SLAB, Blocks.POLISHED_BLACKSTONE)
+        // consumer.slabs2Full(Blocks.STONE_BRICK_SLAB, Blocks.STONE_BRICKS)
+        // consumer.slabs2Full(Blocks.SANDSTONE_SLAB, Blocks.SANDSTONE)
+        // consumer.slabs2Full(Blocks.RED_SANDSTONE_SLAB, Blocks.RED_SANDSTONE)
 
 
         // convert stairs to full block
@@ -205,7 +204,7 @@ class RecipeGenerator(generatorIn: DataGenerator) : RecipeProvider(generatorIn) 
         val inputItem = input.asItem()
         val outputItem = output.asItem()
 
-        CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(inputItem), outputItem, experience, duration).addCriterion("has_item", hasItem(inputItem)).build(this, outputItem.registryName!!.path + "_from_campfire")
+        CookingRecipeBuilder.cookingRecipe(Ingredient.fromItems(inputItem), outputItem, experience, duration, IRecipeSerializer.CAMPFIRE_COOKING).addCriterion("has_item", hasItem(inputItem)).build(this, outputItem.registryName!!.path + "_from_campfire")
     }
 
     private fun Consumer<IFinishedRecipe>.smeltingRecipe(

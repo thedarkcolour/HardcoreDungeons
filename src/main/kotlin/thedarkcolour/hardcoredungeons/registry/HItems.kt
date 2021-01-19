@@ -48,9 +48,9 @@ object HItems {
 
     // Overworld items
     val SHROOMY_SWORD = ShroomySwordItem(Properties().group(Group).maxStackSize(1).maxDamage(726)).setRegistryKey("shroomy_sword")
-    val MUSHROOM_CAP = ArmorItem(HArmorMaterial.SHROOMY, EquipmentSlotType.HEAD, Properties().group(Group).maxStackSize(1).maxDamage(567)).setRegistryKey("mushroom_cap")
-    val MINI_PISTOL = GunItem(Properties().group(Group), bulletDamage = 3.0f, drop = 0.0004f).setRegistryKey("mini_pistol")
-    //val RING_OF_LAST_WORDS = Item(Properties().group(Group).maxStackSize(1).rarity(Rarity.UNCOMMON)).setRegistryKey("ring_of_last_words")
+    //val MUSHROOM_CAP = ArmorItem(HArmorMaterial.SHROOMY, EquipmentSlotType.HEAD, Properties().group(Group).maxStackSize(1).maxDamage(567)).setRegistryKey("mushroom_cap")
+    val MINI_PISTOL = GunItem(Properties().group(Group), chargeTime = 22, bulletDamage = 3.0f, drop = 0.0004f).setRegistryKey("mini_pistol")
+    //val IRON_RING = Item(Properties().group(Group).maxStackSize(1).rarity(Rarity.UNCOMMON)).setRegistryKey("iron_ring")
     val SYRINGE = EmptySyringeItem(Properties().group(Group).maxStackSize(16)).setRegistryKey("syringe")
     val POTION_SYRINGE = SyringeItem(Properties().group(Group).maxStackSize(2)).setRegistryKey("potion_syringe")
     val DEER_ANTLER = Item(Properties().group(Group)).setRegistryKey("deer_antler")
