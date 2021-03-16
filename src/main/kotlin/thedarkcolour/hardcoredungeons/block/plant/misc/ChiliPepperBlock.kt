@@ -60,11 +60,7 @@ class ChiliPepperBlock(properties: Properties) : DoublePlantBlock(properties), I
      * @return if the plant is visually taller than 1 block.
      */
     private fun isTall(worldIn: IBlockReader, pos: BlockPos, state: BlockState): Boolean {
-        return if (state.get(HALF) == DoubleBlockHalf.LOWER) {
-            worldIn.getBlockState(pos.up()).get(AGE) < 4
-        } else {
-            state.get(AGE) < 4
-        }
+        return state.get(AGE) > 4
     }
 
     override fun canGrow(worldIn: IBlockReader, pos: BlockPos, state: BlockState, isClient: Boolean) = isNotMaxAge(state)

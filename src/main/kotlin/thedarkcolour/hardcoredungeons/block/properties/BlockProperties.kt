@@ -128,9 +128,10 @@ abstract class BlockProperties<T : BlockProperties<T>> protected constructor() {
     }
 
     /**
-     * Set the BlockState for this block to not cache itself.
+     * Set the BlockState for this block to not cache its BlockState properties.
+     * Only used by Shulker Boxes for determining whether they are solid.
      */
-    fun noStateCache(): T {
+    fun variableOpacity(): T {
         internal.variableOpacity()
         return this as T
     }

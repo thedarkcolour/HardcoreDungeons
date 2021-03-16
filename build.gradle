@@ -1,25 +1,28 @@
 buildscript {
     repositories {
-        maven { url = 'https://files.minecraftforge.net/maven' }
-        maven { url = 'https://dist.creeper.host/Sponge/maven' }
+        maven { url = 'https://files.minecraftforge.net/maven' } // forge
+        maven { url = 'https://repo.spongepowered.org/maven' } // mixin
+        maven { url = 'https://plugins.gradle.org/m2/' } // curse maven
         jcenter()
         mavenCentral()
     }
     dependencies {
         classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.0.+', changing: true
         classpath 'org.spongepowered:mixingradle:0.7-SNAPSHOT'
+        classpath group: 'com.wynprice.cursemaven',   name: 'CurseMaven',  version: '2.1.1'
     }
 }
 apply plugin: 'net.minecraftforge.gradle'
+apply plugin: 'com.wynprice.cursemaven'
 
-version = '11'
+version = '12'
 group = 'thedarkcolour' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'hardcoredungeons'
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
 
 minecraft {
-    mappings channel: 'snapshot', version: '20200916-1.16.2'
+    mappings channel: 'snapshot', version: '20201028-1.16.3'
 
     accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
 
@@ -90,16 +93,24 @@ repositories {
         name = "jei"
         url = "https://dvs1.progwml6.com/files/maven/"
     }
+    maven {
+        name = "curseforge"
+        url = "https://minecraft.curseforge.com/api/maven/"
+    }
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.16.4-35.1.2'
+    minecraft 'net.minecraftforge:forge:1.16.5-36.0.58'
+
+    // biomes o plenty
+    implementation fg.deobf('curse.maven:biomes-o-plenty:3181401')
+    implementation fg.deobf('curse.maven:biomes-o-plenty-source:3181402')
 
     // curios
-    implementation fg.deobf("top.theillusivec4.curios:curios-forge:1.16.4-4.0.2.1")
+    implementation fg.deobf("top.theillusivec4.curios:curios-forge:1.16.4-4.0.3.5")
 
     // ctm
-    implementation fg.deobf("team.chisel.ctm:CTM:MC1.16.1-1.1.1.5")
+    implementation fg.deobf("team.chisel.ctm:CTM:MC1.16.1-1.1.2.6")
 
     // jei
     compileOnly fg.deobf("mezz.jei:jei-1.16.4:7.6.0.58:api")
@@ -120,6 +131,18 @@ jar {
     }
 }
 
+updateMappings {
+    if (project.hasProperty('UPDATE_MAPPINGS')) {
+        extractRangeMap {
+            sources sourceSets.main.kotlin.srcDirs
+        }
+        applyRangeMap {
+            sources sourceSets.main.kotlin.srcDirs
+        }
+        sourceSets.main.kotlin.srcDirs.each { extractMappedNew.addTarget it }
+    }
+}
+
 buildscript {
     repositories {
         // For early access Kotlin versions
@@ -127,7 +150,7 @@ buildscript {
     }
     dependencies {
         // Make sure to use the correct version
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.4.10"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.4.31"
         classpath "org.jetbrains.dokka:dokka-gradle-plugin:0.10.1"
     }
 }
@@ -148,7 +171,7 @@ repositories {
 
 dependencies {
     // Use the latest version of KotlinForForge
-    implementation 'thedarkcolour:kotlinforforge:1.7.0'
+    implementation 'thedarkcolour:kotlinforforge:1.10.0'
 }
 
 compileKotlin {
@@ -156,6 +179,7 @@ compileKotlin {
     // and Kotlin 1.4 language features
     kotlinOptions {
         jvmTarget = '1.8'
+        useIR = true
     }
 }
 
@@ -165,8 +189,8 @@ dokka {
 }
 
 
-apply plugin: 'org.spongepowered.mixin'
 
+apply plugin: 'org.spongepowered.mixin'
 mixin {
     add sourceSets.main, 'hardcoredungeons.refmap.json'
 }

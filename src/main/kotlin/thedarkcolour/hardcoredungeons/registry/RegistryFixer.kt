@@ -4,6 +4,7 @@ import net.minecraft.block.Block
 import net.minecraft.entity.EntityType
 import net.minecraft.inventory.container.ContainerType
 import net.minecraft.item.Item
+import net.minecraft.potion.Effect
 import net.minecraft.tileentity.TileEntityType
 import net.minecraft.world.biome.Biome
 import net.minecraft.world.gen.surfacebuilders.SurfaceBuilder
@@ -39,6 +40,9 @@ object RegistryFixer {
             map["stone_texture_stairs"] = null
             map["stone_texture_slab"] = null
             map["dungeon_mob_spawner"] = HBlocks.DUNGEON_SPAWNER
+        }
+        createFixes<Effect> { map ->
+            map["rage"] = null
         }
         createFixes<Item> { map ->
             map["rainbow_factory_table"] = null

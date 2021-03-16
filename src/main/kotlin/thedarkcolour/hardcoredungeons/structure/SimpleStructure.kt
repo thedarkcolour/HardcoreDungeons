@@ -51,7 +51,7 @@ class SimpleStructure(structureID: String, addPieces: (MutableMap<Vector3i, Reso
      */
     override fun getStartFactory() = IStartFactory(::Start)
 
-    override fun func_236396_f_(): GenerationStage.Decoration {
+    override fun getDecorationStage(): GenerationStage.Decoration {
         return GenerationStage.Decoration.SURFACE_STRUCTURES
     }
 
@@ -66,9 +66,7 @@ class SimpleStructure(structureID: String, addPieces: (MutableMap<Vector3i, Reso
 
     // requires an instance reference to add component structure pieces
     // as they are stored in SimpleStructure and are not passed into the constructor
-    inner class Start(structure: Structure<NoFeatureConfig>, posX: Int, posZ: Int, bounds: MutableBoundingBox, references: Int, seed: Long) :
-        StructureStart<NoFeatureConfig>(structure, posX, posZ, bounds, references, seed) {
-
+    inner class Start(structure: Structure<NoFeatureConfig>, posX: Int, posZ: Int, bounds: MutableBoundingBox, references: Int, seed: Long) : StructureStart<NoFeatureConfig>(structure, posX, posZ, bounds, references, seed) {
         override fun func_230364_a_(
             dynamicRegistry: DynamicRegistries,
             generator: ChunkGenerator,
@@ -76,7 +74,7 @@ class SimpleStructure(structureID: String, addPieces: (MutableMap<Vector3i, Reso
             chunkX: Int,
             chunkZ: Int,
             biome: Biome,
-            config: NoFeatureConfig
+            config: NoFeatureConfig,
         ) {
             val rotation = Rotation.values()[rand.nextInt(Rotation.values().size)]
             // rand.nextInt(Rotation.values().size) // in case ive made some horrible mistake

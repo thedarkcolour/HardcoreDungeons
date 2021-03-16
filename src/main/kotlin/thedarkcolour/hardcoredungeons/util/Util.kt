@@ -25,9 +25,7 @@ fun <T> dataParameterDelegate(parameter: DataParameter<T>): ReadWriteProperty<En
     }
 }
 
-/**
- * `Float` value of PI
- */
+/** `Float` value of PI */
 const val PI = 3.14159265358979323846.toFloat()
 
 /**

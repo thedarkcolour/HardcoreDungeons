@@ -32,6 +32,7 @@ import thedarkcolour.hardcoredungeons.block.decoration.WoodButtonBlock
 import thedarkcolour.hardcoredungeons.block.decoration.castleton.CastletonTorchBlock
 import thedarkcolour.hardcoredungeons.block.decoration.castleton.LampBlock
 import thedarkcolour.hardcoredungeons.block.decoration.castleton.LumlightCampfireBlock
+import thedarkcolour.hardcoredungeons.block.decoration.misc.VariantBlock
 import thedarkcolour.hardcoredungeons.block.misc.BonusFarmlandBlock
 import thedarkcolour.hardcoredungeons.block.misc.CompressedBlock
 import thedarkcolour.hardcoredungeons.block.misc.GrassBlock
@@ -49,6 +50,7 @@ import thedarkcolour.hardcoredungeons.block.portal.PortalBlock
 import thedarkcolour.hardcoredungeons.block.properties.HProperties
 import thedarkcolour.hardcoredungeons.block.properties.PlantProperties
 import thedarkcolour.hardcoredungeons.block.structure.DungeonSpawnerBlock
+import thedarkcolour.hardcoredungeons.block.structure.LockBlock
 import thedarkcolour.hardcoredungeons.block.structure.SpawnerChestBlock
 import thedarkcolour.hardcoredungeons.block.structure.castleton.FrayedSkullBlock
 import thedarkcolour.hardcoredungeons.block.structure.rainbowland.RainbowFactoryFurnaceBlock
@@ -91,11 +93,18 @@ object HBlocks {
         properties = HProperties.create(Material.SAND, MaterialColor.SAND).sound(SoundType.SAND).hardnessAndResistance(0.6f),
     ).setRegistryKey("sandy_farmland")
     val GOLDEN_CARROTS = GoldenCarrotsBlock(Properties.from(Blocks.CARROTS)).setRegistryKey("golden_carrots")
+    val CHISELED_DIAMOND_BLOCK = Block(Properties.from(Blocks.DIAMOND_BLOCK)).setRegistryKey("chiseled_diamond_block")
+    val DIAMOND_CRYSTAL = createCrystal(MaterialColor.LIGHT_BLUE).setRegistryKey("diamond_crystal")
+    val MALACHITE_CRYSTAL = createCrystal(MaterialColor.GREEN).setRegistryKey("malachite_crystal")
+    val MALACHITE_BLOCK = HBlock(HProperties.create(Material.IRON, MaterialColor.GREEN)).setRegistryKey("malachite_block")
+    val SPRUCE_PLANKS = VariantBlock(HProperties.fromVanilla(Blocks.SPRUCE_PLANKS), "spruce_planks", "large", hasBaseVariant = false)
+    val BOOKSHELF_VARIANTS = VariantBlock(HProperties.fromVanilla(Blocks.BOOKSHELF), "bookshelf", "spruce", "birch", "jungle", "acacia", "dark_oak", hasBaseVariant = false, registerFunction = { registry, block -> registry.registerBlock3dItem(block)})
 
     // Castleton
     val CASTLETON_SOIL = Block(Properties.create(Material.EARTH, MaterialColor.GRAY).hardnessAndResistance(0.8f).sound(SoundType.GROUND)).setRegistryKey("castleton_soil")
     val CASTLETON_GRASS_BLOCK = GrassBlock(CASTLETON_SOIL::getDefaultState, true, HBlockTags.CASTLETON_GRASS_PLANTABLE, Properties.create(Material.ORGANIC, MaterialColor.LIGHT_BLUE).tickRandomly().hardnessAndResistance(0.8f).sound(SoundType.PLANT)).setRegistryKey("castleton_grass_block")
     val CASTLETON_STONE = Block(Properties.create(Material.ROCK, MaterialColor.GRAY).hardnessAndResistance(8.0f, 400.0f)).setRegistryKey("castleton_stone")
+    val POLISHED_CASTLETON_STONE = Block(Properties.from(CASTLETON_STONE)).setRegistryKey("polished_castleton_stone")
     val CASTLETON_LOAM = Block(Properties.create(Material.EARTH, MaterialColor.GRAY).hardnessAndResistance(0.6f).sound(SoundType.GROUND)).setRegistryKey("castleton_loam")
     val CASTLETON_BRICKS = Block(Properties.create(Material.ROCK, MaterialColor.GRAY).hardnessAndResistance(30.0f, 1200.0f)).setRegistryKey("castleton_bricks")
     val CASTLETON_BRICK_STAIRS = createStairs(CASTLETON_BRICKS)
@@ -128,8 +137,8 @@ object HBlocks {
     val LUMLIGHT_BUTTON = WoodButtonBlock(Properties.create(Material.MISCELLANEOUS).doesNotBlockMovement().hardnessAndResistance(0.5F).sound(SoundType.WOOD)).setRegistryKey("lumlight_button")
     val LUMLIGHT_DOOR = DoorBlock(Properties.create(Material.WOOD, MaterialColor.WHITE_TERRACOTTA).hardnessAndResistance(3.0F).sound(SoundType.WOOD)).setRegistryKey("lumlight_door")
     val LUMLIGHT_TRAPDOOR = TrapDoorBlock(Properties.create(Material.WOOD, MaterialColor.WHITE_TERRACOTTA).hardnessAndResistance(3.0F).sound(SoundType.WOOD)).setRegistryKey("lumlight_trapdoor")
-    val LUMLIGHT_SIGN = StandingSignBlock(Properties.create(Material.WOOD, MaterialColor.LIGHT_BLUE).doesNotBlockMovement().hardnessAndResistance(1.0F).sound(SoundType.WOOD), WoodTypes.LUMLIGHT).setRegistryKey("lumlight_sign")
-    val LUMLIGHT_WALL_SIGN = WallSignBlock(Properties.create(Material.WOOD, MaterialColor.LIGHT_BLUE).doesNotBlockMovement().hardnessAndResistance(1.0F).sound(SoundType.WOOD), WoodTypes.LUMLIGHT).setRegistryKey("lumlight_wall_sign")
+    val LUMLIGHT_SIGN = StandingSignBlock(Properties.create(Material.WOOD, MaterialColor.LIGHT_BLUE).doesNotBlockMovement().hardnessAndResistance(1.0F).sound(SoundType.WOOD), HWoodType.LUMLIGHT).setRegistryKey("lumlight_sign")
+    val LUMLIGHT_WALL_SIGN = WallSignBlock(Properties.create(Material.WOOD, MaterialColor.LIGHT_BLUE).doesNotBlockMovement().hardnessAndResistance(1.0F).sound(SoundType.WOOD), HWoodType.LUMLIGHT).setRegistryKey("lumlight_wall_sign")
     val PURPLE_LUMSHROOM = MushroomBlock(PlantProperties.create(Material.PLANTS).validGround(CASTLETON_SOIL, CASTLETON_GRASS_BLOCK).sound(SoundType.PLANT).light(10).doesNotBlockMovement()).setRegistryKey("purple_lumshroom")
     val POTTED_PURPLE_LUMSHROOM = createPottedBlock(PURPLE_LUMSHROOM)
     val BLUE_LUMSHROOM = MushroomBlock(PlantProperties.create(Material.PLANTS).validGround(CASTLETON_SOIL, CASTLETON_GRASS_BLOCK).sound(SoundType.PLANT).light(4).doesNotBlockMovement()).setRegistryKey("blue_lumshroom")
@@ -154,6 +163,7 @@ object HBlocks {
     val CANDLE = HBlock(HProperties.create(Material.MISCELLANEOUS).hardnessAndResistance(1.1f).light(15).shape(VoxelShapes.or(Block.makeCuboidShape(6.0, 0.0, 6.0, 10.0, 1.0, 10.0), Block.makeCuboidShape(7.0, 0.75, 7.0, 9.0, 2.75, 9.0), Block.makeCuboidShape(6.0, 2.5, 6.0, 10.0, 4.5, 10.0), Block.makeCuboidShape(7.0, 3.5, 7.0, 9.0, 15.5, 9.0), Block.makeCuboidShape(7.5, 14.75, 7.5, 8.5, 15.75, 8.5)))).setRegistryKey("candle")
     val RUNED_CASTLETON_STONE = HBlock(HProperties.create(Material.ROCK, MaterialColor.LIGHT_BLUE).hardnessAndResistance(8.0f, 400.0f)).setRegistryKey("runed_castleton_stone")
     val WILD_BERROOK = HCropsBlock(HProperties.create(Material.PLANTS, MaterialColor.LIGHT_BLUE).zeroHardnessAndResistance().doesNotBlockMovement().sound(SoundType.CROP)).setRegistryKey("wild_berrook")
+    val BLUE_CASTLETON_DUNGEON_LOCK = LockBlock({ HItems.BLUE_CASTLETON_DUNGEON_KEY }, { Blocks.OBSIDIAN }, HProperties.create(Material.ROCK, MaterialColor.BLACK)).setRegistryKey("blue_castleton_dungeon_lock")
 
     // Rainbowland
     val RAINBOW_SOIL = Block(Properties.create(Material.EARTH, MaterialColor.PURPLE).hardnessAndResistance(0.5f).sound(SoundType.GROUND)).setRegistryKey("rainbow_soil")
@@ -277,11 +287,17 @@ object HBlocks {
         blocks.registerFarmlandBlock(ASHY_FARMLAND)
         blocks.registerFarmlandBlock(SANDY_FARMLAND)
         blocks.register(GOLDEN_CARROTS)
+        blocks.registerSimpleBlock(CHISELED_DIAMOND_BLOCK)
+        blocks.registerCrossBlock(DIAMOND_CRYSTAL, hasItem = false)
+        blocks.registerCrossBlock(MALACHITE_CRYSTAL, hasItem = false)
+        blocks.registerSimpleBlock(MALACHITE_BLOCK)
+        SPRUCE_PLANKS.registerBlocks(blocks)
 
         blocks.registerSimpleBlock(CASTLETON_SOIL)
         blocks.registerBlock(CASTLETON_GRASS_BLOCK)
         blocks.registerSimpleBlock(CASTLETON_LOAM)
         blocks.registerSimpleBlock(CASTLETON_STONE)
+        blocks.registerSimpleBlock(POLISHED_CASTLETON_STONE)
         blocks.registerSimpleBlock(CASTLETON_BRICKS)
         blocks.registerStairsBlock(CASTLETON_BRICK_STAIRS, CASTLETON_BRICKS)
         blocks.registerSlabBlock(CASTLETON_BRICK_SLAB, CASTLETON_BRICKS)
@@ -339,6 +355,7 @@ object HBlocks {
         blocks.registerBlock3dItem(CANDLE)
         blocks.registerBlock3dItem(RUNED_CASTLETON_STONE)
         blocks.register(WILD_BERROOK)
+        blocks.registerBlock3dItem(BLUE_CASTLETON_DUNGEON_LOCK)
 
         blocks.registerSimpleBlock(RAINBOW_SOIL)
         blocks.registerBlock3dItem(RAINBOW_GRASS_BLOCK)
@@ -418,15 +435,12 @@ object HBlocks {
         blocks.registerBlock3dItem(BENT_CANDY_CANE_BLOCK)
         blocks.registerBlock3dItem(SUGARY_SOIL)
         blocks.registerBlock3dItem(SUGARY_GRASS_BLOCK)
-        blocks.registerBlock3dItem(SUGAR_BLOCK)
+        blocks.registerSimpleBlock(SUGAR_BLOCK)
         blocks.registerSimpleBlock(CHOCOLATE_BLOCK)
         blocks.registerStairsBlock(CHOCOLATE_STAIRS, CHOCOLATE_BLOCK)
         blocks.registerSlabBlock(CHOCOLATE_SLAB, CHOCOLATE_BLOCK)
 
         blocks.register(CHILI_PEPPER)
-        //blocks.registerBlock(EXTRACTOR)
-        //blocks.register(CORN)
-        //blocks.registerBlock(TABLE)
 
         COMPRESSED_COBBLESTONE.registerBlocks(blocks)
 
@@ -437,6 +451,8 @@ object HBlocks {
      * Sets the `RenderType` for each block that does not use the default.
      */
     fun setRenderTypes() {
+        RenderTypeLookup.setRenderLayer(GOLDEN_CARROTS, RenderType.getCutout())
+
         RenderTypeLookup.setRenderLayer(FLAME_ROSE, RenderType.getCutout())
         RenderTypeLookup.setRenderLayer(GOLDEN_TULIP, RenderType.getCutout())
         RenderTypeLookup.setRenderLayer(PURPLE_LUMSHROOM, RenderType.getCutout())
@@ -461,7 +477,8 @@ object HBlocks {
         RenderTypeLookup.setRenderLayer(COTTONMARSH_LEAVES, RenderType.getCutout())
         RenderTypeLookup.setRenderLayer(RUNED_CASTLETON_STONE, RenderType.getCutout())
         RenderTypeLookup.setRenderLayer(WILD_BERROOK, RenderType.getCutout())
-        RenderTypeLookup.setRenderLayer(GOLDEN_CARROTS, RenderType.getCutout())
+        RenderTypeLookup.setRenderLayer(DIAMOND_CRYSTAL, RenderType.getCutout())
+        RenderTypeLookup.setRenderLayer(MALACHITE_CRYSTAL, RenderType.getCutout())
 
         RenderTypeLookup.setRenderLayer(GREEN_GUMDROP, RenderType.getCutout())
         RenderTypeLookup.setRenderLayer(MINI_GREEN_GUMDROP, RenderType.getCutout())
@@ -515,7 +532,7 @@ object HBlocks {
      * wood blocks added by HCD.
      */
     private fun blockSetup() {
-        WoodType.register(WoodTypes.LUMLIGHT)
+        WoodType.register(HWoodType.LUMLIGHT)
 
         TileEntityType.SIGN.addValidBlocks(LUMLIGHT_SIGN, LUMLIGHT_WALL_SIGN)
         TileEntityType.CAMPFIRE.addValidBlocks(LUMLIGHT_CAMPFIRE)
@@ -558,6 +575,10 @@ object HBlocks {
         applyProperties(p.sound(SoundType.WOOD))
 
         return RotatedPillarBlock(p)
+    }
+
+    fun createCrystal(color: MaterialColor): HBlock {
+        return HBlock(HProperties.create(Material.ROCK, color).harvestLevel(2).hardnessAndResistance(2.3f, 40.0f).light(4).shape(Block.makeCuboidShape(6.0, 0.0, 6.0, 10.0, 4.0, 10.0)))
     }
 
     fun createGumdropBlock(mini: Boolean, color: String): FlowerBlock {
@@ -621,9 +642,14 @@ object HBlocks {
     }
 
     // cross block model + 2d item model
-    fun IForgeRegistry<Block>.registerCrossBlock(block: Block) {
+    fun IForgeRegistry<Block>.registerCrossBlock(block: Block, hasItem: Boolean = true) {
         ModelType.CROSS_BLOCK.add(block)
-        this.registerBlockAndSimpleItem(block)
+
+        if (hasItem) {
+            this.registerBlockAndSimpleItem(block)
+        } else {
+            register(block)
+        }
     }
 
     // potted plant block model without an item

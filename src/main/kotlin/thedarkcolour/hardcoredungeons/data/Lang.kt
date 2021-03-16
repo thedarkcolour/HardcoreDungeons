@@ -1,13 +1,14 @@
 package thedarkcolour.hardcoredungeons.data
 
 import net.minecraft.data.DataGenerator
+import net.minecraft.enchantment.Enchantment
 import net.minecraft.item.Item
 import net.minecraft.util.text.TranslationTextComponent
 import net.minecraftforge.common.data.LanguageProvider
 import thedarkcolour.hardcoredungeons.HardcoreDungeons
 import thedarkcolour.hardcoredungeons.block.misc.CompressedBlock
 import thedarkcolour.hardcoredungeons.registry.HBlocks
-import thedarkcolour.hardcoredungeons.registry.HEffects
+import thedarkcolour.hardcoredungeons.registry.HEnchantments
 import thedarkcolour.hardcoredungeons.registry.HItems
 
 /**
@@ -26,8 +27,6 @@ abstract class Lang(gen: DataGenerator, locale: String) : LanguageProvider(gen, 
     class English(gen: DataGenerator) : Lang(gen, "en_us") {
         override fun addTranslations() {
             add("itemGroup.hardcoredungeons", "Hardcore Dungeons")
-
-            addEffect(HEffects::RAGE, "Rage")
 /*
             // Overworld biomes
             add(HBiomes.THICK_FOREST, "Thick Forest")
@@ -100,6 +99,10 @@ abstract class Lang(gen: DataGenerator, locale: String) : LanguageProvider(gen, 
             add(HBlocks.LUMLIGHT_BOOKSHELF, "Lumlight Bookshelf")
             add(HBlocks.CANDLE, "Candle")
             add(HBlocks.RUNED_CASTLETON_STONE, "Runed Castleton Stone")
+            add(HBlocks.DIAMOND_CRYSTAL, "Diamond Crystal")
+            add(HBlocks.CHISELED_DIAMOND_BLOCK, "Chiseled Diamond Block")
+            add(HBlocks.MALACHITE_BLOCK, "Malachite Block")
+            add(HBlocks.MALACHITE_CRYSTAL, "Malachite Crystal")
 
             add(HBlocks.RAINBOW_SOIL, "Rainbow Soil")
             add(HBlocks.RAINBOW_GRASS_BLOCK, "Rainbow Grass Block")
@@ -232,6 +235,13 @@ abstract class Lang(gen: DataGenerator, locale: String) : LanguageProvider(gen, 
             add(HItems.TOWER_BOOTS, "Tower Boots")
             add(HItems.CASTLETON_STAFF, "Castleton Staff")
             add(HItems.WILD_BERROOK, "Wild Berrook")
+            add(HItems.MUSHROOM_CAP, "Mushroom Cap")
+            add(HItems.MUSHROOM_CHESTPLATE, "Mushroom Chestplate")
+            add(HItems.MALACHITE_SWORD, "Malachite Sword")
+            add(HItems.MALACHITE_SHOVEL, "Malachite Shovel")
+            add(HItems.MALACHITE_PICKAXE, "Malachite Pickaxe")
+            add(HItems.MALACHITE_AXE, "Malachite Axe")
+            add(HItems.MALACHITE_HOE, "Malachite Hoe")
 
             add(HItems.RAINBOWSTONE_AXE, "Rainbowstone Axe")
             add(HItems.RAINBOWSTONE_HOE, "Rainbowstone Hoe")
@@ -263,6 +273,9 @@ abstract class Lang(gen: DataGenerator, locale: String) : LanguageProvider(gen, 
             add("item.hardcoredungeons.wand.fill", "Filled blocks from")
             add("lang.hardcoredungeons.to", "to")
             addLore(HItems.SHROOMY_SWORD, "Has a chance to inflict poison on the target.")
+
+            addEnchantment(HEnchantments.PROSPECTING, "Prospecting", "Certain minerals have a chance to drop \"pristine\" variants instead.")
+            addEnchantment(HEnchantments.WITHERING, "Withering", "Causes additional wither damage when used to attack a mob.")
         }
 
     }
@@ -313,6 +326,11 @@ abstract class Lang(gen: DataGenerator, locale: String) : LanguageProvider(gen, 
      */
     protected fun addLore(item: Item, translation: String) {
         add(item.translationKey + ".lore", translation)
+    }
+
+    protected fun addEnchantment(enchantment: Enchantment, name: String, desc: String) {
+        add(enchantment, name)
+        add(enchantment.name + ".desc", desc)
     }
 
     protected fun addCompressedBlock(block: CompressedBlock) {

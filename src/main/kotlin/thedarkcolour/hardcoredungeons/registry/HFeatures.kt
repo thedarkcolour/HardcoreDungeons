@@ -21,6 +21,8 @@ import net.minecraftforge.common.world.BiomeGenerationSettingsBuilder
 import net.minecraftforge.registries.IForgeRegistry
 import thedarkcolour.hardcoredungeons.feature.CandyCaneFeature
 import thedarkcolour.hardcoredungeons.feature.ChocolateBarFeature
+import thedarkcolour.hardcoredungeons.feature.CrystalFeature
+import thedarkcolour.hardcoredungeons.feature.CrystalFeatureConfig
 import thedarkcolour.hardcoredungeons.util.modLoc
 
 // @formatter:off
@@ -30,6 +32,9 @@ object HFeatures {
     // FEATURES
     //
 
+    // Overworld
+    val CRYSTAL_FEATURE = CrystalFeature(CrystalFeatureConfig.CODEC).setRegistryKey("crystal_feature")
+
     // Candyland
     val CANDY_CANE_FEATURE = CandyCaneFeature(NoFeatureConfig.field_236558_a_).setRegistryKey("candy_cane_feature")
     val CHOCOLATE_BAR_FEATURE = ChocolateBarFeature(NoFeatureConfig.field_236558_a_).setRegistryKey("chocolate_bar_feature")
@@ -37,6 +42,7 @@ object HFeatures {
     fun registerFeatures(registry: IForgeRegistry<Feature<*>>) {
         registry.register(CANDY_CANE_FEATURE)
         registry.register(CHOCOLATE_BAR_FEATURE)
+        registry.register(CRYSTAL_FEATURE)
     }
 
     //
@@ -45,23 +51,24 @@ object HFeatures {
 
     // Overworld Biomes
     val SHROOMY_BOULDER = registerConfiguredFeature("shroomy_boulder_feature", Feature.FOREST_ROCK.withConfiguration(BlockStateFeatureConfig(HBlocks.SHROOMY_COBBLESTONE.defaultState)).withPlacement(Features.Placements.HEIGHTMAP_PLACEMENT.func_242732_c(5)))
-    val OAK_SHRUBS = registerConfiguredFeature("oak_shrubs", Feature.TREE.withConfiguration(BaseTreeFeatureConfig.Builder(SimpleBlockStateProvider(Blocks.OAK_LOG.defaultState),       SimpleBlockStateProvider(Blocks.OAK_LEAVES.defaultState), BushFoliagePlacer(FeatureSpread.func_242252_a(2), FeatureSpread.func_242252_a(1), 2), StraightTrunkPlacer(1, 0, 0), TwoLayerFeature(0, 0, 0)).func_236702_a_(Heightmap.Type.MOTION_BLOCKING_NO_LEAVES).build()).withPlacement(Features.Placements.HEIGHTMAP_PLACEMENT).withPlacement(Placement.field_242902_f.configure(AtSurfaceWithExtraConfig(6, 0.3f, 2))))
+    val OAK_SHRUBS = registerConfiguredFeature("oak_shrubs", Feature.TREE.withConfiguration(BaseTreeFeatureConfig.Builder(SimpleBlockStateProvider(Blocks.OAK_LOG.defaultState), SimpleBlockStateProvider(Blocks.OAK_LEAVES.defaultState), BushFoliagePlacer(FeatureSpread.func_242252_a(2), FeatureSpread.func_242252_a(1), 2), StraightTrunkPlacer(1, 0, 0), TwoLayerFeature(0, 0, 0)).func_236702_a_(Heightmap.Type.MOTION_BLOCKING_NO_LEAVES).build()).withPlacement(Features.Placements.HEIGHTMAP_PLACEMENT).withPlacement(Placement.COUNT_EXTRA.configure(AtSurfaceWithExtraConfig(6, 0.3f, 2))))
+    val MALACHITE_CRYSTAL = registerConfiguredFeature("malachite_crystal", CRYSTAL_FEATURE.withConfiguration(CrystalFeatureConfig(HBlocks.MALACHITE_CRYSTAL.defaultState, 0.1f)).square())
 
     // Castleton
     val LUMLIGHT_TREE = registerConfiguredFeature("lumlight_tree", Feature.TREE.withConfiguration(BaseTreeFeatureConfig.Builder(SimpleBlockStateProvider(HBlocks.LUMLIGHT_LOG.defaultState), SimpleBlockStateProvider(HBlocks.LUMLIGHT_LEAVES.defaultState), FancyFoliagePlacer(FeatureSpread.func_242252_a(2), FeatureSpread.func_242252_a(4), 4), StraightTrunkPlacer(4, 4, 7), TwoLayerFeature(0, 0, 0)).build()))
-    val LUMLIGHT_SHRUBS = registerConfiguredFeature("lumlight_shrubs", Feature.TREE.withConfiguration(BaseTreeFeatureConfig.Builder(SimpleBlockStateProvider(HBlocks.LUMLIGHT_LOG.defaultState), SimpleBlockStateProvider(HBlocks.LUMLIGHT_LEAVES.defaultState), BushFoliagePlacer(FeatureSpread.func_242252_a(2), FeatureSpread.func_242252_a(1), 2), StraightTrunkPlacer(1, 0, 0), TwoLayerFeature(0, 0, 0)).func_236702_a_(Heightmap.Type.MOTION_BLOCKING_NO_LEAVES).build()).withPlacement(Features.Placements.HEIGHTMAP_PLACEMENT).withPlacement(Placement.field_242902_f.configure(AtSurfaceWithExtraConfig(6, 0.3f, 2))))
-    val SPARSE_LUMLIGHT_TREES = registerConfiguredFeature("sparse_lumlight_trees", Feature.TREE.withConfiguration(BaseTreeFeatureConfig.Builder(SimpleBlockStateProvider(HBlocks.LUMLIGHT_LOG.defaultState), SimpleBlockStateProvider(HBlocks.LUMLIGHT_LEAVES.defaultState), FancyFoliagePlacer(FeatureSpread.func_242252_a(2), FeatureSpread.func_242252_a(4), 4), StraightTrunkPlacer(4, 4, 7), TwoLayerFeature(0, 0, 0)).build()).withPlacement(Placement.field_242902_f.configure(AtSurfaceWithExtraConfig(6, 0.3f, 2))))
-    val PATCH_PURPLE_LUMSHROOM = registerConfiguredFeature("patch_purple_lumshroom", Feature.RANDOM_PATCH.withConfiguration(flowerPatchConfig(HBlocks.PURPLE_LUMSHROOM)).withPlacement(Features.Placements.PATCH_PLACEMENT).func_242729_a(12))
+    val LUMLIGHT_SHRUBS = registerConfiguredFeature("lumlight_shrubs", Feature.TREE.withConfiguration(BaseTreeFeatureConfig.Builder(SimpleBlockStateProvider(HBlocks.LUMLIGHT_LOG.defaultState), SimpleBlockStateProvider(HBlocks.LUMLIGHT_LEAVES.defaultState), BushFoliagePlacer(FeatureSpread.func_242252_a(2), FeatureSpread.func_242252_a(1), 2), StraightTrunkPlacer(1, 0, 0), TwoLayerFeature(0, 0, 0)).func_236702_a_(Heightmap.Type.MOTION_BLOCKING_NO_LEAVES).build()).withPlacement(Features.Placements.HEIGHTMAP_PLACEMENT).withPlacement(Placement.COUNT_EXTRA.configure(AtSurfaceWithExtraConfig(6, 0.3f, 2))))
+    val SPARSE_LUMLIGHT_TREES = registerConfiguredFeature("sparse_lumlight_trees", Feature.TREE.withConfiguration(BaseTreeFeatureConfig.Builder(SimpleBlockStateProvider(HBlocks.LUMLIGHT_LOG.defaultState), SimpleBlockStateProvider(HBlocks.LUMLIGHT_LEAVES.defaultState), FancyFoliagePlacer(FeatureSpread.func_242252_a(2), FeatureSpread.func_242252_a(4), 4), StraightTrunkPlacer(4, 4, 7), TwoLayerFeature(0, 0, 0)).build()).withPlacement(Placement.COUNT_EXTRA.configure(AtSurfaceWithExtraConfig(6, 0.3f, 2))))
+    val PATCH_PURPLE_LUMSHROOM = registerConfiguredFeature("patch_purple_lumshroom", Feature.RANDOM_PATCH.withConfiguration(flowerPatchConfig(HBlocks.PURPLE_LUMSHROOM)).withPlacement(Features.Placements.PATCH_PLACEMENT).chance(12))
 
     // Rainbowland
-    val RAINBOWSTONE_ORE = registerConfiguredFeature("rainbowstone_ore", Feature.ORE.withConfiguration(OreFeatureConfig(BlockMatchRuleTest(HBlocks.RAINBOW_ROCK), HBlocks.RAINBOWSTONE_ORE.defaultState, 3)).withPlacement(Placement.field_242910_o.configure(DepthAverageConfig(16, 12))))
+    val RAINBOWSTONE_ORE = registerConfiguredFeature("rainbowstone_ore", Feature.ORE.withConfiguration(OreFeatureConfig(BlockMatchRuleTest(HBlocks.RAINBOW_ROCK), HBlocks.RAINBOWSTONE_ORE.defaultState, 3)).withPlacement(Placement.DEPTH_AVERAGE.configure(DepthAverageConfig(16, 12))))
 
     // Aubrum
     val PATCH_GOLDEN_TULIP = registerConfiguredFeature("patch_golden_tulip", Feature.FLOWER.withConfiguration(BlockClusterFeatureConfig.Builder(SimpleBlockStateProvider(HBlocks.GOLDEN_TULIP.defaultState), SimpleBlockPlacer()).tries(64).build()).withPlacement(Features.Placements.HEIGHTMAP_PLACEMENT))
 
     // Candyland
-    val SPARSE_CANDY_CANES = registerConfiguredFeature("sparse_candy_canes", CANDY_CANE_FEATURE.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).withPlacement(Features.Placements.HEIGHTMAP_PLACEMENT).withPlacement(Placement.field_242902_f.configure(AtSurfaceWithExtraConfig(0, 0.15f, 1))))
-    val SPARSE_CHOCOLATE_BARS = registerConfiguredFeature("sparse_chocolate_bars", CHOCOLATE_BAR_FEATURE.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).withPlacement(Features.Placements.HEIGHTMAP_PLACEMENT).withPlacement(Placement.field_242902_f.configure(AtSurfaceWithExtraConfig(0, 0.05f, 1))))
+    val SPARSE_CANDY_CANES = registerConfiguredFeature("sparse_candy_canes", CANDY_CANE_FEATURE.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).withPlacement(Features.Placements.HEIGHTMAP_PLACEMENT).withPlacement(Placement.COUNT_EXTRA.configure(AtSurfaceWithExtraConfig(0, 0.15f, 1))))
+    val SPARSE_CHOCOLATE_BARS = registerConfiguredFeature("sparse_chocolate_bars", CHOCOLATE_BAR_FEATURE.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).withPlacement(Features.Placements.HEIGHTMAP_PLACEMENT).withPlacement(Placement.COUNT_EXTRA.configure(AtSurfaceWithExtraConfig(0, 0.05f, 1))))
 
     fun withShroomyBoulders(biome: BiomeGenerationSettings.Builder) {
         biome.withFeature(Decoration.LOCAL_MODIFICATIONS, SHROOMY_BOULDER)
@@ -93,6 +100,10 @@ object HFeatures {
 
     fun withOakShrubs(genSettings: BiomeGenerationSettings.Builder) {
         genSettings.withFeature(Decoration.VEGETAL_DECORATION, OAK_SHRUBS)
+    }
+
+    fun withMalachiteCrystals(generation: BiomeGenerationSettingsBuilder) {
+        generation.withFeature(Decoration.UNDERGROUND_DECORATION, MALACHITE_CRYSTAL)
     }
 
     fun withRainbowlandOres(genSettings: BiomeGenerationSettings.Builder) {

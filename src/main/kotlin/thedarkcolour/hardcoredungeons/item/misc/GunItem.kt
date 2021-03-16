@@ -6,6 +6,7 @@ import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 import net.minecraft.item.ShootableItem
 import net.minecraft.item.UseAction
+import net.minecraft.tags.ITag
 import net.minecraft.util.ActionResult
 import net.minecraft.util.Hand
 import net.minecraft.world.World
@@ -43,17 +44,6 @@ open class GunItem(
     val chargeTime: Int = 1,
 ) : ShootableItem(properties) {
     /**
-     * Gets the maximum number of items that this stack should be able to hold. This
-     * is a ItemStack (and thus NBT) sensitive version of Item.getItemStackLimit()
-     *
-     * @param stack The ItemStack
-     * @return The maximum number this item can be stacked to
-     */
-    override fun getItemStackLimit(stack: ItemStack?): Int {
-        return 1
-    }
-
-    /**
      * returns the action that specifies what animation to play when the items is being used
      */
     override fun getUseAction(stack: ItemStack): UseAction {
@@ -85,7 +75,7 @@ open class GunItem(
             // change to match fire type????
             val bullet = SmallBulletEntity(HEntities.SMALL_BULLET, worldIn)
 
-            if (ammo.item.isIn(HItemTags.INCENDIARY_AMMUNITION)) {
+            if (ammo.item.isIn(HItemTags.AMMUNITION_INCENDIARY)) {
                 bullet.setFire(10)
             }
 
@@ -104,11 +94,11 @@ open class GunItem(
     }
 
     override fun getInventoryAmmoPredicate(): Predicate<ItemStack> {
-        return Predicate(getAmmoItem()::isItemEqual)
+        return Predicate { stack -> stack.item.isIn(getAmmoTag()) }
     }
 
-    open fun getAmmoItem(): ItemStack {
-        return ItemStack(HItems.BULLET)
+    open fun getAmmoTag(): ITag<Item> {
+        return HItemTags.AMMUNITION_GENERIC
     }
 
     override fun func_230305_d_(): Int {

@@ -100,7 +100,6 @@ open class DoeModel : AgeableModel<DeerEntity>(false, 24.0f, 4.0f) {
     ) {
         head.rotateAngleX = toRadians(headPitch)
         head.rotateAngleY = toRadians(netHeadYaw)
-        //body.rotateAngleZ = PI / 2f
         legBackRight.rotateAngleX =  cos(limbSwing * 0.6662f) * 1.4f * limbSwingAmount
         legBackLeft.rotateAngleX =   cos(limbSwing * 0.6662f + PI) * 1.4f * limbSwingAmount
         legFrontRight.rotateAngleX = cos(limbSwing * 0.6662f + PI) * 1.4f * limbSwingAmount
@@ -108,12 +107,12 @@ open class DoeModel : AgeableModel<DeerEntity>(false, 24.0f, 4.0f) {
     }
 
     private val headParts = listOf(head)
+    private val bodyParts = listOf(legFrontRight, legFrontLeft, legBackRight, legBackLeft, body)
 
     override fun getHeadParts(): Iterable<ModelRenderer> {
-        return listOf(head)
+        return headParts
     }
 
-    private val bodyParts = listOf(legFrontRight, legFrontLeft, legBackRight, legBackLeft, body)
 
     override fun getBodyParts(): Iterable<ModelRenderer> {
         return bodyParts

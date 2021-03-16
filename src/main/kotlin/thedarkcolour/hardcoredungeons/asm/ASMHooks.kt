@@ -19,7 +19,6 @@ import java.util.function.LongFunction
  *
  * @author TheDarkColour
  */
-@Suppress("unused")
 object ASMHooks {
 
     @JvmStatic // unused
@@ -136,23 +135,4 @@ object ASMHooks {
         var area = MushroomCliffsBiomeLayer.apply(context.apply(4L), area)
         return area
     }
-/*
-    @JvmStatic
-    fun organizeRegistries(keys: MutableList<ResourceLocation>) {
-        // Register before Biomes
-        keys.remove(GameData.SURFACE_BUILDERS)
-        keys.remove(GameData.FEATURES)
-        keys.remove(GameData.BLOCK_PLACER_TYPES)
-        keys.remove(GameData.ENTITIES)
-
-        val i = keys.indexOf(GameData.BIOMES)
-
-        // later
-        keys.add(i, GameData.SURFACE_BUILDERS)
-        keys.add(i, GameData.FEATURES)
-        keys.add(i, GameData.BLOCK_PLACER_TYPES)
-        keys.add(i, GameData.ENTITIES)
-        // earlier
-    }
- */
 }

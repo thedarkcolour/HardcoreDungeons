@@ -17,6 +17,15 @@ object HConfig {
         .description("Whether the Thick Forest biome generates naturally. Changing this will affect world generation.")
         .build(true)
 
+    val goldenCarrotsCrop = OptionType.BOOL
+        .configure("golden_carrots_crop")
+        .description("Whether Golden Carrots can be planted as a crop.")
+        .build(true)
+
+    val malachiteCrystalGeneration = OptionType.BOOL
+        .configure("malachite_crystal_generation")
+        .description("Whether Malachite Crystals generate naturally.")
+        .build(true)
     // Setup the options here and create the config option hierarchy
     private fun configure() {
         overworld.add(thickForestGenerates)

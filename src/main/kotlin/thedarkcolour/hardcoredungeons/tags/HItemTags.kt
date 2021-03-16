@@ -11,13 +11,14 @@ import thedarkcolour.hardcoredungeons.HardcoreDungeons
  * @author TheDarkColour
  */
 object HItemTags {
-    val INCENDIARY_AMMUNITION = makeWrapper("incendiary_ammunition")
-    val SMALL_AMMUNITION = makeWrapper("small_ammunition")
-    val WHITE_WINE = makeWrapper("white_wine")
-    val RED_WINE = makeWrapper("red_wine")
-    val LUMLIGHT_LOGS = makeWrapper("lumlight_logs")
+    val AMMUNITION_GENERIC = tag("ammunition/generic")
+    val AMMUNITION_SMALL = tag("ammunition/small")
+    val AMMUNITION_INCENDIARY = tag("ammunition/incendiary")
+    val LUMLIGHT_LOGS = tag("lumlight_logs")
+    val GEMS_MALACHITE = tag("gems/malachite")
+    val GEMS_RAINBOWSTONE = tag("gems/rainbowstone")
 
-    private fun makeWrapper(tag: String): ITag.INamedTag<Item> {
+    private fun tag(tag: String): ITag.INamedTag<Item> {
         return ItemTags.makeWrapperTag(HardcoreDungeons.ID + ":" + tag)
     }
 }

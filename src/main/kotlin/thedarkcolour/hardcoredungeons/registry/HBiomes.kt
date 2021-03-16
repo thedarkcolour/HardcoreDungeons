@@ -66,5 +66,9 @@ object HBiomes {
         if (event.name == ResourceLocation("minecraft:mushroom_islands")) {
             HFeatures.withMushroomHut(event.generation)
         }
+
+        if (HConfig.malachiteCrystalGeneration.value) {
+            HFeatures.withMalachiteCrystals(event.generation)
+        }
     }
 }

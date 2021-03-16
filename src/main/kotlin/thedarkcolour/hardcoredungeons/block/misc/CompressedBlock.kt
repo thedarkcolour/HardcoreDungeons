@@ -1,11 +1,20 @@
 package thedarkcolour.hardcoredungeons.block.misc
 
 import net.minecraft.block.Block
+import net.minecraft.client.util.ITooltipFlag
+import net.minecraft.item.ItemStack
+import net.minecraft.util.text.ITextComponent
+import net.minecraft.util.text.StringTextComponent
+import net.minecraft.util.text.Style
+import net.minecraft.util.text.TextFormatting
+import net.minecraft.world.IBlockReader
 import net.minecraftforge.registries.IForgeRegistry
 import thedarkcolour.hardcoredungeons.block.HBlock
 import thedarkcolour.hardcoredungeons.block.properties.HProperties
 import thedarkcolour.hardcoredungeons.registry.HBlocks.registerSimpleBlock
 import thedarkcolour.hardcoredungeons.registry.setRegistryKey
+import java.text.DecimalFormat
+import kotlin.math.pow
 
 /**
  * Represents a compressed block.
@@ -27,9 +36,6 @@ class CompressedBlock(val block: () -> Block, private val properties: HPropertie
      */
     lateinit var blockVariants: Array<HBlock>
 
-    ///** Contains a BlockItem for each compressed block variant. */
-    //private lateinit var itemVariants: Array<Item>
-
     /**
      * Registers all compressed variants to the given block registry,
      * then stores the compressed variants to the [blockVariants] array.
@@ -45,7 +51,7 @@ class CompressedBlock(val block: () -> Block, private val properties: HPropertie
 
         // create the variants array
         blockVariants = Array(8) { i ->
-            HBlock(properties).setRegistryKey(getCompressedName(i))
+            Variant(i + 1, properties).setRegistryKey(getCompressedName(i))
         }
 
         // register each variant
@@ -85,6 +91,26 @@ class CompressedBlock(val block: () -> Block, private val properties: HPropertie
     //fun getItem(compressionLevel: Int): Item {
     //    return itemVariants[compressionLevel]
     //}
+
+    private class Variant(compressionLevel: Int, properties: HProperties) : HBlock(properties) {
+        val tooltip: ITextComponent
+
+        init {
+            val amount = 9.0.pow(compressionLevel.toDouble())
+            val format = DecimalFormat("#,###")
+
+            tooltip = StringTextComponent(format.format(amount) + " Blocks").setStyle(Style.EMPTY.setFormatting(TextFormatting.GRAY))
+        }
+
+        override fun addInformation(
+            stack: ItemStack,
+            worldIn: IBlockReader?,
+            tooltip: MutableList<ITextComponent>,
+            flagIn: ITooltipFlag,
+        ) {
+            tooltip.add(this.tooltip)
+        }
+    }
 
     companion object {
         /** Prefixes for each level of compression. */

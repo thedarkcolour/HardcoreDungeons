@@ -1,5 +1,22 @@
 ## Hardcore Dungeons Changelog
 
+### Alpha 12
+* Updated to Minecraft 1.16.5
+* Added more people to the mod credits
+* All Potion Syringes now show in JEI
+* Added Withering Enchantment
+* Added Prospecting Enchantment that allows obtaining "pristine" minerals (only with Diamond for now)
+* Added Enchantment Descriptions compatibility
+* Added Malachite Crystal and Malachite Block
+* Added Malachite tools
+* Added WIP Mushroom armor with custom models
+* Added Chiseled Diamond Block for some reason
+* Added texture for Sugar Block
+* Added a few Config options
+* Added a tooltip to compressed blocks
+* Added WIP Dungeon Key & Lock
+* Buffed the Shroomy Sword
+
 ### Alpha 11
 * Added Candy Canes that spawn naturally in Candyland
 * Added a cooldown to the Mini Pistol

@@ -45,16 +45,16 @@ object HStructures {
         map[Vector3i(0, 0, 1)] = RAINBOW_FACTORY_PIECE_1
     }, StructureSeparationSettings(32, 8, 523332), true)
 
-    val MUSHROOM_HUT_FEATURE: StructureFeature<*, *> = register("mushroom_hut_feature", MUSHROOM_HUT.func_236391_a_(IFeatureConfig.NO_FEATURE_CONFIG))
-    val LUMLIGHT_CABIN_FEATURE: StructureFeature<*, *> = register("lumlight_cabin_feature", LUMLIGHT_CABIN.func_236391_a_(IFeatureConfig.NO_FEATURE_CONFIG))
-    val RAINBOW_FACTORY_FEATURE: StructureFeature<*, *> = register("rainbow_factory_feature", RAINBOW_FACTORY.func_236391_a_(IFeatureConfig.NO_FEATURE_CONFIG))
+    val MUSHROOM_HUT_FEATURE: StructureFeature<*, *> = register("mushroom_hut_feature", MUSHROOM_HUT.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG))
+    val LUMLIGHT_CABIN_FEATURE: StructureFeature<*, *> = register("lumlight_cabin_feature", LUMLIGHT_CABIN.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG))
+    val RAINBOW_FACTORY_FEATURE: StructureFeature<*, *> = register("rainbow_factory_feature", RAINBOW_FACTORY.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG))
 
     fun <C : IFeatureConfig> structure(
         structure: Structure<C>,
         separationSettings: StructureSeparationSettings,
         addLand: Boolean
     ): Structure<C> {
-        Structure.field_236365_a_[structure.registryName.toString().toLowerCase(Locale.ROOT)] = structure
+        Structure.NAME_STRUCTURE_BIMAP[structure.registryName.toString().toLowerCase(Locale.ROOT)] = structure
 
         if (addLand) {
             Structure.field_236384_t_ =

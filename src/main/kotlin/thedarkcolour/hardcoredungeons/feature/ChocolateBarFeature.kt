@@ -10,7 +10,7 @@ import thedarkcolour.hardcoredungeons.registry.HBlocks
 import java.util.*
 
 class ChocolateBarFeature(codec: Codec<NoFeatureConfig>) : Feature<NoFeatureConfig>(codec) {
-    override fun func_241855_a(
+    override fun generate(
         worldIn: ISeedReader,
         generator: ChunkGenerator,
         rand: Random,

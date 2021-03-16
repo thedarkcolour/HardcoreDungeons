@@ -108,6 +108,46 @@ function initializeCoreMod() {
 
                 return method;
             }
+        },/*
+        'WhiteLight': {
+            'target': {
+                'type': 'METHOD',
+                'class': 'net.minecraft.client.renderer.LightTexture',
+                'methodName': 'func_205106_a',
+                'methodDesc': '(F)V'
+            },
+            'transformer': function (method) {
+                var insnList = method.instructions;
+
+                for (var i = 0; i < insnList.size(); ++i) {
+                    var setInsn = insnList.get(i + 2);
+
+                    if (setInsn instanceof MethodInsnNode) {
+                        if (setInsn.name.equals(ASMAPI.mapMethod('func_195905_a'))) {
+                            var insn = insnList.get(i);
+                            var insn1 = insnList.get(i + 1);
+
+                            insnList.set(insn, new VarInsnNode(Opcodes.FLOAD, 13));
+                            insnList.set(insn1, new VarInsnNode(Opcodes.FLOAD, 13));
+
+                            return method;
+                        }
+                    }
+                }
+
+                return method;
+            }
+        }*/
+        'FragileCurse': {
+            'target': {
+                'type': 'METHOD',
+                'class': 'net.minecraft.item.ItemStack',
+                'methodName': 'func_96631_a',
+                'methodDesc': '(ILjava/util/Random;Lnet/minecraft/entity/player/ServerPlayerEntity;)Z'
+            },
+            'transformer': function (method) {
+                return method;
+            }
         }
     }
 }

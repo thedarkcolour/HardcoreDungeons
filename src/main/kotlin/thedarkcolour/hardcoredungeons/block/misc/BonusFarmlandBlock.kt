@@ -34,7 +34,7 @@ class BonusFarmlandBlock(
     val getSoilState: () -> BlockState = Blocks.DIRT::getDefaultState,
     val boostMap: Object2FloatMap<Supplier<Block>> = EMPTY, // default to empty map
     properties: HProperties,
-) : HBlock(properties) {
+) : HBlock(properties.tickRandomly()) {
 
     init {
         defaultState = defaultState.with(MOISTURE, 0)

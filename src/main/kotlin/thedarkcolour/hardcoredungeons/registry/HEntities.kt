@@ -7,8 +7,8 @@ import net.minecraft.entity.EntityClassification
 import net.minecraft.entity.EntitySize
 import net.minecraft.entity.EntityType
 import net.minecraft.entity.EntityType.Builder
-import net.minecraft.entity.ai.attributes.GlobalEntityTypeAttributes
 import net.minecraft.util.ResourceLocation
+import net.minecraftforge.event.entity.EntityAttributeCreationEvent
 import net.minecraftforge.fml.client.registry.ClientRegistry
 import net.minecraftforge.fml.client.registry.RenderingRegistry
 import net.minecraftforge.registries.IForgeRegistry
@@ -98,14 +98,16 @@ object HEntities {
 
         entities.register(SMALL_BULLET)
         entities.register(MAGIC_BOLT)
+    }
 
-        GlobalEntityTypeAttributes.put(FRAYED_SOUL, FrayedSoulEntity.ATTRIBUTES.create())
-        GlobalEntityTypeAttributes.put(VOID_RUNNER, VoidRunnerEntity.ATTRIBUTES.create())
-        GlobalEntityTypeAttributes.put(CASTLETON_DEER, DeerEntity.DEFAULT_ATTRIBUTES.create())
-        GlobalEntityTypeAttributes.put(DEER, DeerEntity.DEFAULT_ATTRIBUTES.create())
-        GlobalEntityTypeAttributes.put(KNIGHTLY_JUGGERNAUT, KnightlyJuggernautEntity.ATTRIBUTES.create())
-        //GlobalEntityTypeAttributes.put(RAINBOWLAND_SHEEP, RainbowlandSheepEntity.ATTRIBUTES.create())
-        GlobalEntityTypeAttributes.put(INFINITY, InfinityEntity.ATTRIBUTES.create())
+    fun registerEntityAttributes(event: EntityAttributeCreationEvent) {
+        event.put(FRAYED_SOUL, FrayedSoulEntity.ATTRIBUTES.create())
+        event.put(VOID_RUNNER, VoidRunnerEntity.ATTRIBUTES.create())
+        event.put(CASTLETON_DEER, DeerEntity.DEFAULT_ATTRIBUTES.create())
+        event.put(DEER, DeerEntity.DEFAULT_ATTRIBUTES.create())
+        event.put(KNIGHTLY_JUGGERNAUT, KnightlyJuggernautEntity.ATTRIBUTES.create())
+        //event.put(RAINBOWLAND_SHEEP, RainbowlandSheepEntity.ATTRIBUTES.create())
+        event.put(INFINITY, InfinityEntity.ATTRIBUTES.create())
     }
 
     fun registerEntityRenderers() {

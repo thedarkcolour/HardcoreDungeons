@@ -21,6 +21,7 @@ import thedarkcolour.hardcoredungeons.block.misc.BonusFarmlandBlock
 import thedarkcolour.hardcoredungeons.block.portal.PortalBlock
 import thedarkcolour.hardcoredungeons.capability.HPlayer
 import thedarkcolour.hardcoredungeons.capability.PlayerHelper
+import thedarkcolour.hardcoredungeons.config.HConfig
 import thedarkcolour.hardcoredungeons.registry.HBlocks
 import thedarkcolour.hardcoredungeons.tileentity.DungeonSpawnerTileEntity
 import thedarkcolour.kotlinforforge.forge.FORGE_BUS
@@ -78,7 +79,7 @@ object EventHandler {
 
     // todo fix
     private fun onBlockActivated(event: PlayerInteractEvent.RightClickBlock) {
-        if (event.face != Direction.UP) return
+        if (!HConfig.goldenCarrotsCrop.value || event.face != Direction.UP) return
 
         val heldItem = event.itemStack
 

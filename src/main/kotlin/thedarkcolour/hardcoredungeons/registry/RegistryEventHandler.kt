@@ -1,11 +1,13 @@
 package thedarkcolour.hardcoredungeons.registry
 
 import net.minecraft.block.Block
+import net.minecraft.enchantment.Enchantment
 import net.minecraft.entity.EntityType
 import net.minecraft.item.Item
 import net.minecraft.item.crafting.IRecipeSerializer
 import net.minecraft.particles.ParticleType
 import net.minecraft.potion.Effect
+import net.minecraft.tileentity.TileEntityType
 import net.minecraft.util.SoundEvent
 import net.minecraft.world.biome.Biome
 import net.minecraft.world.gen.feature.Feature
@@ -35,7 +37,8 @@ object RegistryEventHandler {
         MOD_BUS.addGenericListener(::registerBlocks)
         //MOD_BUS.addGenericListener(::registerContainerTypes)
         MOD_BUS.addGenericListener(::registerDataSerializers)
-        MOD_BUS.addGenericListener(::registerEffects)
+        //MOD_BUS.addGenericListener(::registerEffects)
+        MOD_BUS.addGenericListener(::registerEnchantments)
         MOD_BUS.addGenericListener(::registerEntities)
         MOD_BUS.addGenericListener(::registerFeatures)
         MOD_BUS.addGenericListener(::registerStructures)
@@ -44,8 +47,9 @@ object RegistryEventHandler {
         MOD_BUS.addGenericListener(::registerRecipes)
         MOD_BUS.addGenericListener(::registerSounds)
         MOD_BUS.addGenericListener(::registerSurfaceBuilders)
-        //MOD_BUS.addGenericListener(::registerTileEntities)
+        MOD_BUS.addGenericListener(::registerTileEntities)
 
+        MOD_BUS.addListener(HEntities::registerEntityAttributes)
         FORGE_BUS.addListener(HStructures::addDimensionalSpacing)
         FORGE_BUS.addListener(consumer = HBiomes::biomeLoading, priority = EventPriority.HIGH)
     }
@@ -59,6 +63,8 @@ object RegistryEventHandler {
     private fun registerDataSerializers(event: Register<DataSerializerEntry>) = HDataSerializers.registerDataSerializers(event.registry)
 
     private fun registerEffects(event: Register<Effect>) = HEffects.registerEffects(event.registry)
+
+    private fun registerEnchantments(event: Register<Enchantment>) = HEnchantments.registerEnchantments(event.registry)
 
     private fun registerEntities(event: Register<EntityType<*>>) = HEntities.registerEntities(event.registry)
 
@@ -76,5 +82,5 @@ object RegistryEventHandler {
 
     private fun registerSurfaceBuilders(event: Register<SurfaceBuilder<*>>) = HSurfaceBuilders.registerSurfaceBuilders(event.registry)
 
-    //private fun registerTileEntities(event: Register<TileEntityType<*>>) = HTileEntities.registerTileEntities(event.registry)
+    private fun registerTileEntities(event: Register<TileEntityType<*>>) = HTileEntities.registerTileEntities(event.registry)
 }

@@ -5,6 +5,7 @@ import net.minecraft.item.IItemTier
 import net.minecraft.item.ItemStack
 import net.minecraft.item.SwordItem
 import net.minecraft.util.text.ITextComponent
+import net.minecraft.util.text.Style
 import net.minecraft.util.text.TranslationTextComponent
 import net.minecraft.world.World
 
@@ -13,7 +14,7 @@ open class SwordWithLoreItem(
     damage: Int,
     speed: Float,
     properties: Properties,
-    //style: Consumer<Style>,
+    private val style: (Style) -> Style,
 ) : SwordItem(tier, damage, speed, properties) {
     override fun addInformation(
         stack: ItemStack,
@@ -21,6 +22,6 @@ open class SwordWithLoreItem(
         tooltip: MutableList<ITextComponent>,
         flagIn: ITooltipFlag
     ) {
-        tooltip.add(TranslationTextComponent("$translationKey.lore")/*.applyTextStyle(style)*/)
+        tooltip.add(TranslationTextComponent("$translationKey.lore").setStyle(style(Style.EMPTY)))
     }
 }

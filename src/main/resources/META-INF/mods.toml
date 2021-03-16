@@ -1,5 +1,5 @@
 modLoader="kotlinforforge"
-loaderVersion="[1.7.0,)"
+loaderVersion="[1.9,)"
 license="All rights reserved"
 
 [[mods]] #mandatory
@@ -8,9 +8,9 @@ version="${file.jarVersion}" #mandatory
 displayName="Hardcore Dungeons" #mandatory
 logoFile="logo.png" #optional
 # A text field displayed in the mod UI
-credits="Herobrine knows all. Thanks to DJRoundTable, AlexCipher" #optional
+credits="Herobrine knows all. Thanks to DJRoundTable, Sara, and AlexCipher" #optional
 # A text field displayed in the mod UI
-authors="TheDarkColour and genericrandom64" #optional
+authors="TheDarkColour, genericrandom64" #optional
 # The description text for the mod (multi line!) (#mandatory)
 description='''
 Adds lots of exploration related content to the game.
@@ -22,7 +22,7 @@ Adds lots of exploration related content to the game.
     # Does this dependency have to exist - if not, ordering below must be specified
     mandatory=true #mandatory
     # The version range of the dependency
-    versionRange="[34.1,)" #mandatory
+    versionRange="[36.0.42,)" #mandatory
     # An ordering relationship for the dependency - BEFORE or AFTER required if the relationship is not mandatory
     ordering="NONE"
     # Side this dependency is applied on - BOTH, CLIENT or SERVER
@@ -31,7 +31,7 @@ Adds lots of exploration related content to the game.
 [[dependencies.hardcoredungeons]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.16.3]"
+    versionRange="[1.16.5]"
     ordering="NONE"
     side="BOTH"
 [[dependencies.hardcoredungeons]]

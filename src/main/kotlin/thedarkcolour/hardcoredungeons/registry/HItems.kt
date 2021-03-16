@@ -7,8 +7,8 @@ import net.minecraft.item.*
 import net.minecraft.item.Item.Properties
 import net.minecraft.item.crafting.Ingredient
 import net.minecraft.potion.PotionBrewing
-import net.minecraft.util.IItemProvider
 import net.minecraftforge.api.distmarker.Dist
+import net.minecraftforge.api.distmarker.OnlyIn
 import net.minecraftforge.common.brewing.BrewingRecipeRegistry
 import net.minecraftforge.registries.IForgeRegistry
 import thedarkcolour.hardcoredungeons.client.color.PotionColor
@@ -19,18 +19,17 @@ import thedarkcolour.hardcoredungeons.item.HArmorMaterial
 import thedarkcolour.hardcoredungeons.item.HItemTier
 import thedarkcolour.hardcoredungeons.item.ItemMisc
 import thedarkcolour.hardcoredungeons.item.castleton.CastletonTorchItem
+import thedarkcolour.hardcoredungeons.item.castleton.CumChaliceItem
 import thedarkcolour.hardcoredungeons.item.debug.ClearWandItem
 import thedarkcolour.hardcoredungeons.item.debug.CloneWandItem
 import thedarkcolour.hardcoredungeons.item.debug.DistanceWandItem
 import thedarkcolour.hardcoredungeons.item.debug.FillWandItem
-import thedarkcolour.hardcoredungeons.item.misc.EmptySyringeItem
-import thedarkcolour.hardcoredungeons.item.misc.GunItem
-import thedarkcolour.hardcoredungeons.item.misc.StaffItem
-import thedarkcolour.hardcoredungeons.item.misc.SyringeItem
+import thedarkcolour.hardcoredungeons.item.misc.*
+import thedarkcolour.hardcoredungeons.item.overworld.MushroomArmorItem
 import thedarkcolour.hardcoredungeons.item.overworld.ShroomySwordItem
 import thedarkcolour.hardcoredungeons.recipe.SyringeRecipe
+import thedarkcolour.hardcoredungeons.util.modLoc
 import thedarkcolour.kotlinforforge.forge.objectHolder
-import thedarkcolour.kotlinforforge.forge.runWhenOn
 
 /**
  * Handles item registry and contains references to every `Item` and `BlockItem` in HCD.
@@ -43,30 +42,30 @@ import thedarkcolour.kotlinforforge.forge.runWhenOn
 object HItems {
     // @formatter:off
 
-    // Overworld blocks
-    //val VASE by objectHolder<Item>("vase")
-
     // Overworld items
     val SHROOMY_SWORD = ShroomySwordItem(Properties().group(Group).maxStackSize(1).maxDamage(726)).setRegistryKey("shroomy_sword")
-    //val MUSHROOM_CAP = ArmorItem(HArmorMaterial.SHROOMY, EquipmentSlotType.HEAD, Properties().group(Group).maxStackSize(1).maxDamage(567)).setRegistryKey("mushroom_cap")
+    val MUSHROOM_CAP = MushroomArmorItem(EquipmentSlotType.HEAD, Properties().group(Group).maxStackSize(1).maxDamage(567)).setRegistryKey("mushroom_cap")
+    val MUSHROOM_CHESTPLATE = MushroomArmorItem(EquipmentSlotType.CHEST, Properties().group(Group).maxStackSize(1).maxDamage(642)).setRegistryKey("mushroom_chestplate")
     val MINI_PISTOL = GunItem(Properties().group(Group), chargeTime = 22, bulletDamage = 3.0f, drop = 0.0004f).setRegistryKey("mini_pistol")
-    //val IRON_RING = Item(Properties().group(Group).maxStackSize(1).rarity(Rarity.UNCOMMON)).setRegistryKey("iron_ring")
     val SYRINGE = EmptySyringeItem(Properties().group(Group).maxStackSize(16)).setRegistryKey("syringe")
     val POTION_SYRINGE = SyringeItem(Properties().group(Group).maxStackSize(2)).setRegistryKey("potion_syringe")
-    val DEER_ANTLER = Item(Properties().group(Group)).setRegistryKey("deer_antler")
+    val DEER_ANTLER = genericItem("deer_antler")
+    val MALACHITE_CRYSTAL = genericItem("malachite_crystal")
+    val DIAMOND_CRYSTAL = genericItem("diamond_crystal")
+    val PRISTINE_DIAMOND = genericItem("pristine_diamond")
+    val BULLET = genericItem("bullet")
+    val INCENDIARY_BULLET = genericItem("incendiary_bullet")
+    val SHELL = genericItem("shell")
     val VENISON = Item(Properties().group(Group).food(Food.Builder().hunger(3).saturation(0.2f).meat().build())).setRegistryKey("venison")
     val COOKED_VENISON = Item(Properties().group(Group).food(Food.Builder().hunger(7).saturation(0.9f).meat().build())).setRegistryKey("cooked_venison")
     val DEER_SPAWN_EGG = SpawnEggItem(HEntities.DEER, 0x4c2922, 0x202020, Properties().group(Group)).setRegistryKey("deer_spawn_egg")
-    val BULLET = Item(Properties().group(Group)).setRegistryKey("bullet")
-    val INCENDIARY_BULLET = Item(Properties().group(Group)).setRegistryKey("incendiary_bullet")
-    val SHELL = Item(Properties().group(Group)).setRegistryKey("shell")
+    val MALACHITE_SWORD = SwordItem(HItemTier.MALACHITE, 3, -2.4f, Properties().group(Group)).setRegistryKey("malachite_sword")
+    val MALACHITE_SHOVEL = ShovelItem(HItemTier.MALACHITE, 1.5f, -3.0f, Properties().group(Group)).setRegistryKey("malachite_shovel")
+    val MALACHITE_PICKAXE = MalachitePickaxeItem(HItemTier.MALACHITE, 1, -2.8f, Properties().group(Group)).setRegistryKey("malachite_pickaxe")
+    val MALACHITE_AXE = AxeItem(HItemTier.MALACHITE, 5.0f, -3.0f, Properties().group(Group)).setRegistryKey("malachite_axe")
+    val MALACHITE_HOE = HoeItem(HItemTier.MALACHITE, -3, 0.0f, Properties().group(Group)).setRegistryKey("malachite_hoe")
 
     // Castleton blocks
-    //val CASTLETON_SOIL by objectHolder<Item>("castleton_soil")
-    //val CASTLETON_STONE by objectHolder<Item>("castleton_stone")
-    //val CASTLETON_BRICK_STAIRS by objectHolder<Item>("castleton_brick_stairs")
-    //val CRACKED_CASTLETON_BRICKS by objectHolder<Item>("cracked_castleton_bricks")
-    //val CHARGED_CASTLETON_BRICKS by objectHolder<Item>("charged_castleton_bricks")
     val CHARGED_CASTLETON_BRICK_FENCE by objectHolder<Item>("charged_castleton_brick_fence")
     val LUMLIGHT_SAPLING by objectHolder<Item>("lumlight_sapling")
     val LUMLIGHT_LOG by objectHolder<Item>("lumlight_log")
@@ -82,9 +81,6 @@ object HItems {
     val LUMLIGHT_DOOR by objectHolder<Item>("lumlight_door")
     val PURPLE_LUMSHROOM by objectHolder<Item>("purple_lumshroom")
     val BLUE_LUMSHROOM by objectHolder<Item>("blue_lumshroom")
-    //val CROWN by objectHolder<Item>("crown")
-    //val CHALICE by objectHolder<Item>("chalice")
-    //val CASTLETON_DUNGEON_CHEST by objectHolder<Item>("castleton_dungeon_chest")
 
     // Castleton items
     val CASTLETON_SWORD = SwordItem(ItemTier.GOLD, 9, -2.4f, Properties().group(Group).maxStackSize(1).rarity(Rarity.RARE)).setRegistryKey("castleton_sword")
@@ -98,14 +94,14 @@ object HItems {
     val CASTLETON_TORCH = CastletonTorchItem(HBlocks.CASTLETON_TORCH, HBlocks.CASTLETON_WALL_TORCH, true, Properties().group(Group)).setRegistryKey("castleton_torch")
     val BURNT_CASTLETON_TORCH = CastletonTorchItem(HBlocks.CASTLETON_TORCH, HBlocks.CASTLETON_WALL_TORCH, false, Properties().group(Group)).setRegistryKey("burnt_castleton_torch")
     val LUMLIGHT_SIGN = SignItem(Properties().maxStackSize(16).group(Group), HBlocks.LUMLIGHT_SIGN, HBlocks.LUMLIGHT_WALL_SIGN).setRegistryKey("lumlight_sign")
-    //val LUM = Item(Properties().group(Group)).setRegistryKey("lum")
-    //val VOLATILE_LUM = Item(Properties().group(Group)).setRegistryKey("volatile_lum")
     val TOWER_HELMET = ArmorItem(HArmorMaterial.TOWER, EquipmentSlotType.HEAD, Properties().group(Group).maxStackSize(1)).setRegistryKey("tower_helmet")
     val TOWER_CHESTPLATE = ArmorItem(HArmorMaterial.TOWER, EquipmentSlotType.CHEST, Properties().group(Group).maxStackSize(1)).setRegistryKey("tower_chestplate")
     val TOWER_LEGGINGS = ArmorItem(HArmorMaterial.TOWER, EquipmentSlotType.LEGS, Properties().group(Group).maxStackSize(1)).setRegistryKey("tower_leggings")
     val TOWER_BOOTS = ArmorItem(HArmorMaterial.TOWER, EquipmentSlotType.FEET, Properties().group(Group).maxStackSize(1)).setRegistryKey("tower_boots")
     val CASTLETON_STAFF = StaffItem(Properties().group(Group).maxStackSize(1).rarity(Rarity.UNCOMMON)).setRegistryKey("castleton_staff")
     val WILD_BERROOK = BlockItem(HBlocks.WILD_BERROOK, Properties().group(Group).food(ItemMisc.WILD_BERROOK)).setRegistryKey("wild_berrook")
+    val BLUE_CASTLETON_DUNGEON_KEY = Item(Properties().group(Group).maxStackSize(1).rarity(Rarity.RARE)).setRegistryKey("blue_castleton_dungeon_key")
+    val CUM_CHALICE = CumChaliceItem(Properties().maxStackSize(1).food(ItemMisc.CUM_CHALICE)).setRegistryKey("cum_chalice")
 
     // Rainbowland blocks
     val RAINBOW_SOIL by objectHolder<Item>("rainbow_soil")
@@ -128,18 +124,18 @@ object HItems {
     val SCRAP_METAL by objectHolder<Item>("scrap_metal")
 
     // Aubrum items
-    val AUBRI_MINI_PISTOL = GunItem(Properties().group(Group), chargeTime = 22, drop = 0.0004f,).setRegistryKey("aubri_mini_pistol")
-    val AUBRI_RIFLE = GunItem(Properties().group(Group), chargeTime = 16, velocity = 2.4f, bulletDamage = 4.6f, drop = 0.0001f,).setRegistryKey("aubri_rifle")
+    val AUBRI_MINI_PISTOL = GunItem(Properties().group(Group).maxStackSize(1), chargeTime = 22, drop = 0.0004f).setRegistryKey("aubri_mini_pistol")
+    val AUBRI_RIFLE = GunItem(Properties().group(Group).maxStackSize(1), chargeTime = 16, velocity = 2.4f, bulletDamage = 4.6f, drop = 0.0001f).setRegistryKey("aubri_rifle")
     val AURIGOLD = Item(Properties().group(Group)).setRegistryKey("aurigold")
-    val AURIGOLD_PENDANT = Item(Properties().group(Group)).setRegistryKey("aurigold_pendant")
-    val AURILO_STAFF = StaffItem(Properties().group(Group)).setRegistryKey("aurilo_staff")
+    val AURIGOLD_PENDANT = Item(Properties().group(Group).maxStackSize(1)).setRegistryKey("aurigold_pendant")
+    val AURILO_STAFF = StaffItem(Properties().group(Group).maxStackSize(1)).setRegistryKey("aurilo_staff")
 
     // Candyland items
     val CANDY_CANE_SWORD = SwordItem(HItemTier.CANDY_CANE, 4, 0.4f, Properties().maxStackSize(1).group(Group)).setRegistryKey("candy_cane_sword")
     val CANDY_CANE = Item(Properties().group(Group).food(ItemMisc.CANDY_CANE)).setRegistryKey("candy_cane")
 
     // Misc items
-    val CHILI_PEPPER = BlockNamedItem(HBlocks.CHILI_PEPPER, Properties().group(Group).food(Food.Builder().hunger(2).saturation(0.2F).setAlwaysEdible().fastToEat().build())).setRegistryKey("chili_pepper")
+    val CHILI_PEPPER = BlockNamedItem(checkNotNull(HBlocks.CHILI_PEPPER), Properties().group(Group).food(Food.Builder().hunger(2).saturation(0.2F).setAlwaysEdible().fastToEat().build())).setRegistryKey("chili_pepper")
     //val CORN = BlockNamedItem(HBlocks.CORN, Properties().group(Group).food(Food.Builder().hunger(2).saturation(0.2F).setAlwaysEdible().build())).setRegistryKey("corn")
     //val ROASTED_CORN = Item(Properties().group(Group).food(Food.Builder().hunger(6).saturation(0.8F).setAlwaysEdible().build())).setRegistryKey("roasted_corn")
 
@@ -150,6 +146,11 @@ object HItems {
     val DISTANCE_WAND = DistanceWandItem(Properties().group(Group).maxStackSize(1).rarity(ItemMisc.LEGENDARY)).setRegistryKey("distance_wand")
 
     // @formatter:on
+
+    // a generic item :D
+    fun genericItem(name: String): Item {
+        return Item(Properties().group(Group)).setRegistryKey(name)
+    }
 
     fun registerItems(items: IForgeRegistry<Item>) {
         for (block in HBlocks.BLOCKS_W_ITEMS) {
@@ -162,13 +163,23 @@ object HItems {
 
         // Overworld items
         items.registerHandheldItem(SHROOMY_SWORD)
+        items.registerSimpleItem(MUSHROOM_CAP)
+        items.registerSimpleItem(MUSHROOM_CHESTPLATE)
         items.registerHandheldItem(MINI_PISTOL)
         items.registerSimpleItem(SYRINGE)
         items.register(POTION_SYRINGE)
         items.registerSimpleItem(DEER_ANTLER)
+        items.registerSimpleItem(MALACHITE_CRYSTAL)
+        items.registerSimpleItem(DIAMOND_CRYSTAL)
+        items.registerSimpleItem(PRISTINE_DIAMOND)
         items.registerSimpleItem(VENISON)
         items.registerSimpleItem(COOKED_VENISON)
         items.registerSpawnEgg(DEER_SPAWN_EGG)
+        items.registerHandheldItem(MALACHITE_SWORD)
+        items.registerHandheldItem(MALACHITE_SHOVEL)
+        items.register(MALACHITE_PICKAXE) //items.registerHandheldItem(MALACHITE_PICKAXE)
+        items.registerHandheldItem(MALACHITE_AXE)
+        items.registerHandheldItem(MALACHITE_HOE)
 
         // Castleton items
         items.registerHandheldItem(CASTLETON_SWORD)
@@ -182,14 +193,13 @@ object HItems {
         items.registerSimpleItem(CASTLETON_TORCH)
         items.registerSimpleItem(BURNT_CASTLETON_TORCH)
         items.registerSimpleItem(LUMLIGHT_SIGN)
-        //items.registerSimpleItem(LUM)
-        //items.registerSimpleItem(VOLATILE_LUM)
         items.registerSimpleItem(TOWER_HELMET)
         items.registerSimpleItem(TOWER_CHESTPLATE)
         items.registerSimpleItem(TOWER_LEGGINGS)
         items.registerSimpleItem(TOWER_BOOTS)
         items.registerHandheldItem(CASTLETON_STAFF)
         items.registerSimpleItem(WILD_BERROOK)
+        items.registerSimpleItem(BLUE_CASTLETON_DUNGEON_KEY)
 
         // Rainbowland items
         items.registerHandheldItem(RAINBOWSTONE_AXE)
@@ -212,8 +222,6 @@ object HItems {
 
         // Misc
         items.registerSimpleItem(CHILI_PEPPER)
-        //items.register(CORN)
-        //items.register(ROASTED_CORN)
         items.registerSimpleItem(BULLET)
         items.registerSimpleItem(INCENDIARY_BULLET)
         items.registerSimpleItem(SHELL)
@@ -236,14 +244,18 @@ object HItems {
      *
      * @see RainbowColor
      */
-    fun setItemColors(colors: Any) {
-        runWhenOn(Dist.CLIENT) {
-            colors as ItemColors // cast to maintain side-safe method signature
+    @OnlyIn(Dist.CLIENT)
+    fun setItemColors(colors: ItemColors) {
+        colors.register(RainbowColor, HItems::RAINBOW_GRASS_BLOCK::get)
+        colors.register(RainbowColor, HItems::RAINBOW_GLASS::get)
+        colors.register(RainbowColor, HItems::RAINBOW_GLASS_PANE::get)
+        colors.register(PotionColor, HItems::POTION_SYRINGE::get)
+    }
 
-            colors.register(RainbowColor, HItems::RAINBOW_GRASS_BLOCK::get)
-            colors.register(RainbowColor, HItems::RAINBOW_GLASS::get)
-            colors.register(RainbowColor, HItems::RAINBOW_GLASS_PANE::get)
-            colors.register(PotionColor, HItems::POTION_SYRINGE::get)
+    // Item Model Overrides
+    fun registerItemProperties() {
+        ItemModelsProperties.registerProperty(MALACHITE_PICKAXE, modLoc("charged")) { stack, _, _ ->
+            MalachitePickaxeItem.getBoost(stack).toFloat()
         }
     }
 
@@ -265,19 +277,19 @@ object HItems {
      */
     fun IForgeRegistry<Item>.registerSimpleItem(item: Item) {
         ModelType.SIMPLE_ITEM.add(item)
-        register(item.asItem())
+        register(item)
     }
 
     /**
      * item w handheld model
      */
-    fun IForgeRegistry<Item>.registerHandheldItem(item: IItemProvider) {
+    fun IForgeRegistry<Item>.registerHandheldItem(item: Item) {
         ModelType.HANDHELD_ITEM.add(item)
-        register(item.asItem())
+        register(item)
     }
 
-    fun IForgeRegistry<Item>.registerSpawnEgg(item: IItemProvider) {
+    fun IForgeRegistry<Item>.registerSpawnEgg(item: Item) {
         ModelType.SPAWN_EGG.add(item)
-        register(item.asItem())
+        register(item)
     }
 }

@@ -4,21 +4,24 @@ import net.minecraft.block.Block
 import net.minecraft.block.Blocks
 import net.minecraft.block.WallBlock
 import net.minecraft.data.*
+import net.minecraft.item.Item
 import net.minecraft.item.Items
 import net.minecraft.item.crafting.IRecipeSerializer
 import net.minecraft.item.crafting.Ingredient
+import net.minecraft.tags.ITag
 import net.minecraft.tags.ItemTags
 import net.minecraft.util.IItemProvider
 import net.minecraft.util.ResourceLocation
 import net.minecraftforge.common.Tags
-import net.minecraftforge.registries.ForgeRegistries
-import thedarkcolour.hardcoredungeons.HardcoreDungeons
+import net.minecraftforge.registries.IForgeRegistryEntry
 import thedarkcolour.hardcoredungeons.block.decoration.SlabBlock
 import thedarkcolour.hardcoredungeons.block.decoration.StairsBlock
 import thedarkcolour.hardcoredungeons.block.misc.CompressedBlock
+import thedarkcolour.hardcoredungeons.compat.getBiomesOPlentyCompat
 import thedarkcolour.hardcoredungeons.registry.HBlocks
 import thedarkcolour.hardcoredungeons.registry.HItems
 import thedarkcolour.hardcoredungeons.tags.HItemTags
+import thedarkcolour.hardcoredungeons.util.modLoc
 import java.util.function.Consumer
 
 class RecipeGenerator(generatorIn: DataGenerator) : RecipeProvider(generatorIn) {
@@ -73,22 +76,28 @@ class RecipeGenerator(generatorIn: DataGenerator) : RecipeProvider(generatorIn) 
             builder.patternLine("III")
             builder.addCriterion("has_item", hasItem(Items.GUNPOWDER))
         }
+        consumer.shaped(HItems.INCENDIARY_BULLET, 8) { builder ->
+            builder.key('I', HItems.BULLET)
+            builder.key('G', Items.BLAZE_POWDER)
+            builder.patternLine("III")
+            builder.patternLine("IGI")
+            builder.patternLine("III")
+            builder.addCriterion("has_item", hasItem(Items.GUNPOWDER))
+        }
 
 
-        // chocolate block
-        consumer.shaped(HBlocks.CHOCOLATE_BLOCK, 1) { builder ->
-            builder.key('C', Items.COCOA_BEANS)
-            builder.patternLine("CCC")
-            builder.patternLine("CCC")
-            builder.patternLine("CCC")
-            builder.addCriterion("has_item", hasItem(Items.COCOA_BEANS))
-        }
-        consumer.slab(HBlocks.CHOCOLATE_SLAB, HBlocks.CHOCOLATE_BLOCK)
-        consumer.stairs(HBlocks.CHOCOLATE_STAIRS, HBlocks.CHOCOLATE_BLOCK)
-        consumer.shapeless(Items.COCOA_BEANS, 9) { builder ->
-            builder.addIngredient(HBlocks.CHOCOLATE_BLOCK)
-            builder.addCriterion("has_item", hasItem(HBlocks.CHOCOLATE_BLOCK))
-        }
+        // tools
+        consumer.sword(HItems.MALACHITE_SWORD, HItems.MALACHITE_CRYSTAL)
+        consumer.shovel(HItems.MALACHITE_SHOVEL, HItems.MALACHITE_CRYSTAL)
+        consumer.pickaxe(HItems.MALACHITE_PICKAXE, HItems.MALACHITE_CRYSTAL)
+        consumer.axe(HItems.MALACHITE_AXE, HItems.MALACHITE_CRYSTAL)
+        consumer.hoe(HItems.MALACHITE_HOE, HItems.MALACHITE_CRYSTAL)
+
+        consumer.sword(HItems.RAINBOWSTONE_SWORD, HItems.RAINBOWSTONE_GEM)
+        consumer.shovel(HItems.RAINBOWSTONE_SHOVEL, HItems.RAINBOWSTONE_GEM)
+        consumer.pickaxe(HItems.RAINBOWSTONE_PICKAXE, HItems.RAINBOWSTONE_GEM)
+        consumer.axe(HItems.RAINBOWSTONE_AXE, HItems.RAINBOWSTONE_GEM)
+        consumer.hoe(HItems.RAINBOWSTONE_HOE, HItems.RAINBOWSTONE_GEM)
 
 
         // stonecutter recipes for HCD blocks
@@ -98,6 +107,9 @@ class RecipeGenerator(generatorIn: DataGenerator) : RecipeProvider(generatorIn) 
         consumer.stonecutterRecipes(HBlocks.CASTLETON_STONE, HBlocks.CASTLETON_BRICKS, HBlocks.CASTLETON_BRICK_STAIRS, HBlocks.CASTLETON_BRICK_FENCE, HBlocks.CASTLETON_BRICK_WALL, slab = HBlocks.CASTLETON_BRICK_SLAB)
         consumer.stonecutterRecipes(HBlocks.CASTLETON_BRICKS, HBlocks.CASTLETON_BRICK_STAIRS, HBlocks.CASTLETON_BRICK_FENCE, HBlocks.CASTLETON_BRICK_WALL, slab = HBlocks.CASTLETON_BRICK_SLAB)
         consumer.stonecutterRecipes(HBlocks.CHARGED_CASTLETON_BRICKS, HBlocks.CHARGED_CASTLETON_BRICK_STAIRS, HBlocks.CHARGED_CASTLETON_BRICK_FENCE, HBlocks.CHARGED_CASTLETON_BRICK_WALL, slab = HBlocks.CHARGED_CASTLETON_BRICK_SLAB)
+        consumer.stonecutterRecipes(Blocks.DIAMOND_BLOCK, HBlocks.CHISELED_DIAMOND_BLOCK)
+        consumer.stonecutterRecipes(HBlocks.RAINBOW_BRICKS, HBlocks.RAINBOW_BRICK_STAIRS, HBlocks.RAINBOW_BRICK_WALL, HBlocks.RAINBOW_BRICK_FENCE, slab = HBlocks.RAINBOW_BRICK_SLAB)
+        consumer.stonecutterRecipes(HBlocks.RAINBOW_ROCK, HBlocks.RAINBOW_BRICKS, HBlocks.RAINBOW_BRICK_STAIRS, HBlocks.RAINBOW_BRICK_WALL, HBlocks.RAINBOW_BRICK_FENCE, slab = HBlocks.RAINBOW_BRICK_SLAB)
 
 
         // food
@@ -189,211 +201,283 @@ class RecipeGenerator(generatorIn: DataGenerator) : RecipeProvider(generatorIn) 
 
         // compressed (storage) block recipes
         consumer.compressionRecipes(HBlocks.COMPRESSED_COBBLESTONE)
+
+        consumer.storage(HBlocks.CHOCOLATE_BLOCK, Items.COCOA_BEANS)
+        consumer.slab(HBlocks.CHOCOLATE_SLAB, HBlocks.CHOCOLATE_BLOCK)
+        consumer.stairs(HBlocks.CHOCOLATE_STAIRS, HBlocks.CHOCOLATE_BLOCK)
+
+        consumer.storage(HBlocks.MALACHITE_BLOCK, HItems.MALACHITE_CRYSTAL, HItemTags.GEMS_MALACHITE)
+        consumer.storage(HBlocks.RAINBOWSTONE_BLOCK, HItems.RAINBOWSTONE_GEM)
+
+        getBiomesOPlentyCompat()?.genRecipes(consumer)
     }
 
-    private fun Consumer<IFinishedRecipe>.slabs2Full(slab: Block, full: Block) {
-        shaped(full, 1, modLoc(slab.registryName!!.path + "_from_slabs")) { builder ->
-            builder.key('#', slab)
-            builder.patternLine("#")
-            builder.patternLine("#")
-            builder.addCriterion("has_item", hasItem(slab))
-        }
-    }
+     companion object {
+         fun path(entry: IForgeRegistryEntry<*>): String {
+             return entry.registryName!!.path
+         }
 
-    private fun Consumer<IFinishedRecipe>.campfireRecipe(input: IItemProvider, output: IItemProvider, experience: Float, duration: Int = 600) {
-        val inputItem = input.asItem()
-        val outputItem = output.asItem()
+         private fun ShapedRecipeBuilder.lines(first: String, second: String? = null, third: String? = null) {
+             patternLine(first)
+             patternLine(second ?: return)
+             patternLine(third ?: return)
+         }
 
-        CookingRecipeBuilder.cookingRecipe(Ingredient.fromItems(inputItem), outputItem, experience, duration, IRecipeSerializer.CAMPFIRE_COOKING).addCriterion("has_item", hasItem(inputItem)).build(this, outputItem.registryName!!.path + "_from_campfire")
-    }
+         private fun CookingRecipeBuilder.buildNullable(consumer: Consumer<IFinishedRecipe>, recipeName: String?) {
+             if (recipeName != null) {
+                 build(consumer, recipeName)
+             } else {
+                 build(consumer)
+             }
+         }
 
-    private fun Consumer<IFinishedRecipe>.smeltingRecipe(
-        input: IItemProvider,
-        output: IItemProvider,
-        experience: Float,
-        recipeName: String? = null,
-        smokingRecipe: Boolean = false,
-        campfireRecipe: Boolean = false,
-        blastingRecipe: Boolean = false,
-    ) {
-        val builder = CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(input), output, experience, 200).addCriterion("has_item", hasItem(input))
+         // 3x3 storage recipe (to and from)
+         private fun Consumer<IFinishedRecipe>.storage(storage: Block, regular: Item, regularTag: ITag<Item>? = null) {
+             val item = regular.asItem()
+             // compress
+             shaped(storage, 1) { builder ->
+                 if (regularTag != null) {
+                     builder.key('F', regularTag)
+                 } else {
+                     builder.key('F', item)
+                 }
+                 builder.lines("FFF", "FFF", "FFF")
+                 builder.addCriterion("has_item", if (regularTag != null) hasItem(regularTag) else hasItem(item))
+             }
+             // decompress
+             shapeless(item, 9, id = modLoc(path(item) + "_from_" + path(storage))) { builder ->
+                 builder.addIngredient(storage)
+                 builder.addCriterion("has_item", hasItem(storage))
+             }
+         }
 
-        if (recipeName != null) {
-            builder.build(this, recipeName)
-        } else {
-            builder.build(this)
-        }
+         fun Consumer<IFinishedRecipe>.slabs2Full(slab: Block, full: Block) {
+             shaped(full, 1, modLoc(path(full) + "_from_slabs")) { builder ->
+                 builder.key('#', slab)
+                 builder.lines("#", "#")
+                 builder.addCriterion("has_item", hasItem(slab))
+             }
+         }
 
-        if (smokingRecipe)  smokingRecipe (input, output, experience)
-        if (campfireRecipe) campfireRecipe(input, output, experience)
-        if (blastingRecipe) blastingRecipe(input, output, experience)
-    }
+         private fun Consumer<IFinishedRecipe>.campfireRecipe(input: IItemProvider, output: IItemProvider, experience: Float, duration: Int = 600) {
+             val inputItem = input.asItem()
+             val outputItem = output.asItem()
 
-    private fun Consumer<IFinishedRecipe>.blastingRecipe(
-        input: IItemProvider,
-        output: IItemProvider,
-        experience: Float,
-        recipeName: String? = null,
-    ) {
-        val item = input.asItem()
-        val builder = CookingRecipeBuilder.blastingRecipe(Ingredient.fromItems(item), output, experience, 100)
+             CookingRecipeBuilder.cookingRecipe(Ingredient.fromItems(inputItem), outputItem, experience, duration, IRecipeSerializer.CAMPFIRE_COOKING).addCriterion("has_item", hasItem(inputItem)).build(this, path(outputItem) + "_from_campfire")
+         }
 
-        builder.addCriterion("has_item", hasItem(input))
+         private fun Consumer<IFinishedRecipe>.smeltingRecipe(
+             input: IItemProvider,
+             output: IItemProvider,
+             experience: Float,
+             recipeName: String? = null,
+             smokingRecipe: Boolean = false,
+             campfireRecipe: Boolean = false,
+             blastingRecipe: Boolean = false,
+         ) {
+             CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(input), output, experience, 200).addCriterion("has_item", hasItem(input)).buildNullable(this, recipeName)
 
-        if (recipeName != null) {
-            builder.build(this, recipeName)
-        } else {
-            builder.build(this, item.registryName!!.path + "_from_blasting")
-        }
-    }
+             if (smokingRecipe)  smokingRecipe (input, output, experience)
+             if (campfireRecipe) campfireRecipe(input, output, experience)
+             if (blastingRecipe) blastingRecipe(input, output, experience)
+         }
 
-    private fun Consumer<IFinishedRecipe>.smokingRecipe(
-        input: IItemProvider,
-        output: IItemProvider,
-        experience: Float,
-        recipeName: String? = null,
-    ) {
-        val item = input.asItem()
-        val builder = CookingRecipeBuilder.cookingRecipe(Ingredient.fromItems(item), output, experience, 100, IRecipeSerializer.SMOKING)
+         private fun Consumer<IFinishedRecipe>.blastingRecipe(
+             input: IItemProvider,
+             output: IItemProvider,
+             experience: Float,
+             recipeName: String? = null,
+         ) {
+             val item = input.asItem()
 
-        builder.addCriterion("has_item", hasItem(input))
+             CookingRecipeBuilder.blastingRecipe(Ingredient.fromItems(item), output, experience, 100).addCriterion("has_item", hasItem(input)).build(this, recipeName ?: path(item) + "_from_blasting")
+         }
 
-        if (recipeName != null) {
-            builder.build(this, recipeName)
-        } else {
-            builder.build(this, item.registryName!!.path + "_from_smoking")
-        }
-    }
+         private fun Consumer<IFinishedRecipe>.smokingRecipe(
+             input: IItemProvider,
+             output: IItemProvider,
+             experience: Float,
+             recipeName: String? = null,
+         ) {
+             val item = input.asItem()
 
-    private fun Consumer<IFinishedRecipe>.stonecutterRecipes(
-        base: IItemProvider,
-        vararg others: IItemProvider,
-        slab: IItemProvider? = null,
-    ) {
-        if (slab != null) {
-            stonecutting(base, slab, 2)
-        }
+             CookingRecipeBuilder.cookingRecipe(Ingredient.fromItems(item), output, experience, 100, IRecipeSerializer.SMOKING).addCriterion("has_item", hasItem(item)).build(this, recipeName ?: path(item) + "_from_smoking")
+         }
 
-        for (other in others) {
-            stonecutting(base, other)
-        }
-    }
+         private fun Consumer<IFinishedRecipe>.stonecutterRecipes(
+             base: IItemProvider,
+             vararg others: IItemProvider,
+             slab: IItemProvider? = null,
+         ) {
+             for (other in others) {
+                 stonecutting(base, other)
+             }
 
-    private fun Consumer<IFinishedRecipe>.stonecutting(
-        input: IItemProvider,
-        output: IItemProvider,
-        outputCount: Int = 1,
-    ) = SingleItemRecipeBuilder.stonecuttingRecipe(Ingredient.fromItems(input), output, outputCount)
-        .addCriterion("has_item", hasItem(input))
-        .build(this, input.asItem().registryName!!.path + "_from_" + output.asItem().registryName!!.path)
+             stonecutting(base, slab ?: return, 2)
+         }
 
-    private fun Consumer<IFinishedRecipe>.compressionRecipes(compressedBlock: CompressedBlock) {
-        val variants = compressedBlock.blockVariants
+         private fun Consumer<IFinishedRecipe>.stonecutting(
+             input: IItemProvider,
+             output: IItemProvider,
+             outputCount: Int = 1,
+         ) = SingleItemRecipeBuilder.stonecuttingRecipe(Ingredient.fromItems(input), output, outputCount)
+             .addCriterion("has_item", hasItem(input))
+             .build(this, path(input.asItem()) + "_from_" + path(output.asItem()))
 
-        variants.forEachIndexed { i, block ->
-            val previous = if (i == 0) compressedBlock.block() else variants[i - 1]
+         private fun Consumer<IFinishedRecipe>.compressionRecipes(compressedBlock: CompressedBlock) {
+             val variants = compressedBlock.blockVariants
 
-            shaped(block, 1) { builder ->
-                builder.key('#', previous)
-                builder.patternLine("###")
-                builder.patternLine("###")
-                builder.patternLine("###")
-                builder.addCriterion("has_previous", if (i == 0) hasItem(Tags.Items.COBBLESTONE) else hasItem(previous))
-            }
+             variants.forEachIndexed { i, block ->
+                 val previous = if (i == 0) compressedBlock.block() else variants[i - 1]
 
-            shapeless(previous, 9, modLoc(previous.registryName!!.path + "from_" + block.registryName!!.path)) { builder ->
-                builder.addIngredient(block)
-                builder.addCriterion("has_item", if (i == 0) hasItem(Tags.Items.COBBLESTONE) else hasItem(previous))
-            }
-        }
-    }
+                 shaped(block, 1) { builder ->
+                     builder.key('#', previous)
+                     builder.lines("###", "###", "###")
+                     builder.addCriterion("has_previous", if (i == 0) hasItem(Tags.Items.COBBLESTONE) else hasItem(previous))
+                 }
 
-    private fun Consumer<IFinishedRecipe>.shapeless(
-        result: IItemProvider,
-        resultCount: Int,
-        id: ResourceLocation = ForgeRegistries.ITEMS.getKey(result.asItem())!!,
-        addIngredients: (ShapelessRecipeBuilder) -> Unit,
-    ) {
-        val builder = ShapelessRecipeBuilder(result, resultCount)
-        addIngredients(builder)
+                 shapeless(previous, 9, modLoc(path(previous) + "_from_" + path(block))) { builder ->
+                     builder.addIngredient(block)
+                     builder.addCriterion("has_item", if (i == 0) hasItem(Tags.Items.COBBLESTONE) else hasItem(previous))
+                 }
+             }
+         }
 
-        builder.build(this, id)
-    }
+         private fun Consumer<IFinishedRecipe>.pickaxe(
+             result: IItemProvider,
+             material: IItemProvider,
+             rod: IItemProvider = Items.STICK,
+         ) {
+             shaped(result, 1) { builder ->
+                 builder.key('I', rod)
+                 builder.key('#', material)
+                 builder.lines("###", " I ", " I ")
+                 builder.addCriterion("has_item", hasItem(material))
+             }
+         }
 
-    private fun Consumer<IFinishedRecipe>.shaped(
-        result: IItemProvider,
-        resultCount: Int,
-        id: ResourceLocation = ForgeRegistries.ITEMS.getKey(result.asItem())!!,
-        addIngredients: (ShapedRecipeBuilder) -> Unit,
-    ) {
-        val builder = ShapedRecipeBuilder(result, resultCount)
-        addIngredients(builder)
+         private fun Consumer<IFinishedRecipe>.shovel(
+             result: IItemProvider,
+             material: IItemProvider,
+             rod: IItemProvider = Items.STICK,
+         ) {
+             shaped(result, 1) { builder ->
+                 builder.key('I', rod)
+                 builder.key('#', material)
+                 builder.lines("#", "I", "I")
+                 builder.addCriterion("has_item", hasItem(material))
+             }
+         }
 
-        builder.build(this, id)
-    }
+         private fun Consumer<IFinishedRecipe>.axe(
+             result: IItemProvider,
+             material: IItemProvider,
+             rod: IItemProvider = Items.STICK,
+         ) {
+             shaped(result, 1) { builder ->
+                 builder.key('I', rod)
+                 builder.key('#', material)
+                 builder.lines("##", "#I", " I")
+                 builder.addCriterion("has_item", hasItem(material))
+             }
+         }
 
-    private fun Consumer<IFinishedRecipe>.slab(
-        slab: SlabBlock,
-        block: Block,
-    ) {
-        // slab recipe
-        shaped(slab, 6) { builder ->
-            builder.key('#', block)
-            builder.patternLine("###")
-            builder.addCriterion("has_block", hasItem(block))
-        }
-        // convert from slab to full block
-        slabs2Full(slab, block)
-        /*shaped(block, 1,
-            modLoc(block.registryName!!.path + "_from_slabs")
-        ) { builder ->
-            builder.key('#', slab)
-            builder.patternLine("#")
-            builder.patternLine("#")
-            builder.addCriterion("has_block", hasItem(block))
-        }*/
-    }
+         private fun Consumer<IFinishedRecipe>.hoe(
+             result: IItemProvider,
+             material: IItemProvider,
+             rod: IItemProvider = Items.STICK,
+         ) {
+             shaped(result, 1) { builder ->
+                 builder.key('I', rod)
+                 builder.key('#', material)
+                 builder.lines("##", " I", " I")
+                 builder.addCriterion("has_item", hasItem(material))
+             }
+         }
 
-    private fun Consumer<IFinishedRecipe>.stairs(
-        stairs: StairsBlock,
-        block: Block,
-    ) {
-        shaped(stairs, 4) { builder ->
-            builder.key('#', block)
-            builder.patternLine("#  ")
-            builder.patternLine("## ")
-            builder.patternLine("###")
-            builder.addCriterion("has_block", hasItem(block))
-        }
+         private fun Consumer<IFinishedRecipe>.sword(
+             result: IItemProvider,
+             material: IItemProvider,
+             rod: Item = Items.STICK,
+         ) {
+             shaped(result, 1) { builder ->
+                 builder.key('I', rod)
+                 builder.key('#', material)
+                 builder.lines("#", "#", "I")
+                 builder.addCriterion("has_item", hasItem(material))
+             }
+         }
 
-        // convert back into full block
-        stairs2Full(stairs, block)
-    }
+         private fun Consumer<IFinishedRecipe>.shapeless(
+             result: IItemProvider,
+             resultCount: Int,
+             id: ResourceLocation = result.asItem().registryName!!,
+             addIngredients: (ShapelessRecipeBuilder) -> Unit,
+         ) {
+             val builder = ShapelessRecipeBuilder(result, resultCount)
+             addIngredients(builder)
 
-    private fun Consumer<IFinishedRecipe>.stairs2Full(stairs: Block, block: Block) {
-        shaped(block, 3,
-            modLoc(block.registryName!!.path + "_from_stairs")
-        ) { builder ->
-            builder.key('#', stairs)
-            builder.patternLine("##")
-            builder.patternLine("##")
-            builder.addCriterion("has_block", hasItem(block))
-        }
-    }
+             builder.build(this, id)
+         }
 
-    private fun Consumer<IFinishedRecipe>.wall(
-        wall: WallBlock,
-        block: Block
-    ) {
-        shaped(wall, 6) { builder ->
-            builder.key('#', block)
-            builder.patternLine("###")
-            builder.patternLine("###")
-            builder.addCriterion("has_block", hasItem(block))
-        }
-    }
+         private fun Consumer<IFinishedRecipe>.shaped(
+             result: IItemProvider,
+             resultCount: Int,
+             id: ResourceLocation = result.asItem().registryName!!,
+             addIngredients: (ShapedRecipeBuilder) -> Unit,
+         ) {
+             val builder = ShapedRecipeBuilder(result, resultCount)
+             addIngredients(builder)
 
-    fun modLoc(path: String): ResourceLocation {
-        return ResourceLocation(HardcoreDungeons.ID, path)
-    }
+             builder.build(this, id)
+         }
+
+         private fun Consumer<IFinishedRecipe>.slab(
+             slab: SlabBlock,
+             block: Block,
+         ) {
+             // slab recipe
+             shaped(slab, 6) { builder ->
+                 builder.key('#', block)
+                 builder.patternLine("###")
+                 builder.addCriterion("has_block", hasItem(block))
+             }
+             // convert from slab to full block
+             slabs2Full(slab, block)
+         }
+
+         private fun Consumer<IFinishedRecipe>.stairs(
+             stairs: StairsBlock,
+             block: Block,
+         ) {
+             shaped(stairs, 4) { builder ->
+                 builder.key('#', block)
+                 builder.lines("#  ", "## ", "###")
+                 builder.addCriterion("has_block", hasItem(block))
+             }
+
+             stairs2Full(stairs, block) // convert back into full block
+         }
+
+         fun Consumer<IFinishedRecipe>.stairs2Full(stairs: Block, block: Block) {
+             shaped(block, 3,
+                 modLoc(path(block) + "_from_stairs")
+             ) { builder ->
+                 builder.key('#', stairs)
+                 builder.lines("##", "##")
+                 builder.addCriterion("has_block", hasItem(block))
+             }
+         }
+
+         private fun Consumer<IFinishedRecipe>.wall(
+             wall: WallBlock,
+             block: Block
+         ) {
+             shaped(wall, 6) { builder ->
+                 builder.key('#', block)
+                 builder.lines("###", "###")
+                 builder.addCriterion("has_block", hasItem(block))
+             }
+         }
+     }
 }

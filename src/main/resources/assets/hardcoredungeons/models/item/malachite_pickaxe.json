@@ -1,0 +1,14 @@
+{
+    "parent": "minecraft:item/handheld",
+    "textures": {
+        "layer0": "hardcoredungeons:item/malachite_pickaxe"
+    },
+    "overrides": [
+        {
+            "predicate": {
+                "hardcoredungeons:charged": 5
+            },
+            "model": "hardcoredungeons:item/charged_malachite_pickaxe"
+        }
+    ]
+}

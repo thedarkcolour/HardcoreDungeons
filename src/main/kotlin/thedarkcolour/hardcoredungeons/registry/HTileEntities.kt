@@ -15,6 +15,7 @@ object HTileEntities {
     //val TROPHY_BED = TileEntityType.Builder.create(::TrophyBedTileEntity, ).build(null).setRegistryKey("trophy_bed")
 
     fun registerTileEntities(tileEntities: IForgeRegistry<TileEntityType<*>>) {
+        tileEntities.register(DUNGEON_SPAWNER)
         //tileEntities.register(LUMLIGHT_CAMPFIRE)
         //tileEntities.register(EXTRACTOR)
     }

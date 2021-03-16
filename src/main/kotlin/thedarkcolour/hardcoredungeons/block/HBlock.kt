@@ -1,5 +1,6 @@
 package thedarkcolour.hardcoredungeons.block
 
+import net.minecraft.block.AbstractBlock
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
 import net.minecraft.util.math.BlockPos
@@ -8,10 +9,11 @@ import net.minecraft.util.math.shapes.VoxelShape
 import net.minecraft.util.math.shapes.VoxelShapes
 import net.minecraft.world.IBlockReader
 import net.minecraft.world.IWorldReader
+import thedarkcolour.hardcoredungeons.block.properties.BlockProperties
 import thedarkcolour.hardcoredungeons.block.properties.HProperties
 
 /**
- * Base block with an expanded version of [Block.Properties].
+ * Base block with an expanded version of [AbstractBlock.Properties].
  *
  * @property enchantmentPower the enchantment power of this block
  * @property shape the (collision and selection) shape of this block
@@ -19,8 +21,8 @@ import thedarkcolour.hardcoredungeons.block.properties.HProperties
  * @author TheDarkColour
  */
 open class HBlock(properties: HProperties) : Block(properties.build()) {
-    /** The VoxelShape that is used for collision and selection boxes. */
-    val shape = properties.getShape() ?: VoxelShapes.fullCube()
+    /** The [VoxelShape] that is used for collision and selection boxes. */
+    val shape: VoxelShape = properties.getShape() ?: VoxelShapes.fullCube()
     /** The enchantment power of this block. */
     private val enchantmentPower = properties.getEnchantmentPower()
 
@@ -39,9 +41,9 @@ open class HBlock(properties: HProperties) : Block(properties.build()) {
     }
 
     /**
-     * Writes the properties of this block to the supplied [HProperties]/
+     * Writes the properties of this block to the supplied [BlockProperties]
      */
-    open fun writeProperties(properties: thedarkcolour.hardcoredungeons.block.properties.BlockProperties<*>): thedarkcolour.hardcoredungeons.block.properties.BlockProperties<*> {
+    open fun writeProperties(properties: BlockProperties<*>): BlockProperties<*> {
         properties.shape(shape)
         properties.enchantmentPower(enchantmentPower)
 

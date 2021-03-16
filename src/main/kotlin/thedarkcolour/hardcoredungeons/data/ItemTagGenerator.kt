@@ -3,29 +3,22 @@ package thedarkcolour.hardcoredungeons.data
 import net.minecraft.data.BlockTagsProvider
 import net.minecraft.data.DataGenerator
 import net.minecraft.data.ItemTagsProvider
-import net.minecraft.tags.ITag
 import net.minecraft.tags.ItemTags
-import net.minecraft.util.ResourceLocation
 import net.minecraftforge.common.Tags
 import net.minecraftforge.common.data.ExistingFileHelper
 import thedarkcolour.hardcoredungeons.HardcoreDungeons
 import thedarkcolour.hardcoredungeons.registry.HItems
 import thedarkcolour.hardcoredungeons.tags.HItemTags
-import java.nio.file.Path
 
 class ItemTagGenerator(gen: DataGenerator, blockTags: BlockTagsProvider, helper: ExistingFileHelper) : ItemTagsProvider(gen, blockTags, HardcoreDungeons.ID, helper) {
-    var filter: Set<ResourceLocation>? = null
-
-    /**
-     * Register tags for each block.
-     */
     override fun registerTags() {
-        super.registerTags()
-        filter = tagToBuilder.entries.map(Map.Entry<ResourceLocation, ITag.Builder>::key).toHashSet()
-
         // hcd tags
         getOrCreateBuilder(HItemTags.LUMLIGHT_LOGS).add(HItems.LUMLIGHT_LOG, HItems.LUMLIGHT_WOOD, HItems.STRIPPED_LUMLIGHT_LOG, HItems.STRIPPED_LUMLIGHT_WOOD)
-        getOrCreateBuilder(HItemTags.INCENDIARY_AMMUNITION).add(HItems.INCENDIARY_BULLET)
+        getOrCreateBuilder(HItemTags.AMMUNITION_GENERIC).add(HItems.BULLET, HItems.SHELL, HItems.INCENDIARY_BULLET)
+        getOrCreateBuilder(HItemTags.AMMUNITION_SMALL).add(HItems.BULLET, HItems.INCENDIARY_BULLET)
+        getOrCreateBuilder(HItemTags.AMMUNITION_INCENDIARY).add(HItems.INCENDIARY_BULLET)
+        getOrCreateBuilder(HItemTags.GEMS_MALACHITE).add(HItems.MALACHITE_CRYSTAL)
+        getOrCreateBuilder(HItemTags.GEMS_RAINBOWSTONE).add(HItems.RAINBOWSTONE_GEM)
         //getBuilder(HBlockTags.GLASS_RAINBOW).add(HBlocks.RAINBOW_GLASS)
         //getBuilder(HBlockTags.GLASS_PANES_RAINBOW).add(HBlocks.RAINBOW_GLASS_PANE)
         //getBuilder(HBlockTags.FENCES_BRICK).add(HBlocks.CASTLETON_BRICK_FENCE, HBlocks.CHARGED_CASTLETON_BRICK_FENCE, HBlocks.RAINBOW_BRICK_FENCE, HBlocks.RAINBOW_FACTORY_BRICK_FENCE)
@@ -46,19 +39,9 @@ class ItemTagGenerator(gen: DataGenerator, blockTags: BlockTagsProvider, helper:
         //getOrCreateBuilder(Tags.Items.GLASS).add(HItemTags.GLASS_RAINBOW)
         //getOrCreateBuilder(Tags.Items.GLASS_PANES).add(HItemTags.GLASS_PANES_RAINBOW)
         getOrCreateBuilder(Tags.Items.MUSHROOMS).add(HItems.BLUE_LUMSHROOM, HItems.PURPLE_LUMSHROOM)
+        getOrCreateBuilder(Tags.Items.GEMS_DIAMOND).add(HItems.PRISTINE_DIAMOND)
+        getOrCreateBuilder(Tags.Items.GEMS).add(HItems.MALACHITE_CRYSTAL)
     }
 
-    /**
-     * Resolves a Path for the location to save the given tag.
-     */
-    override fun makePath(id: ResourceLocation): Path? {
-        return if (filter?.contains(id) == true) null else super.makePath(id)
-    }
-
-    /**
-     * Gets a name for this provider, to use in logging.
-     */
-    override fun getName(): String {
-        return "Hardcore Dungeons Block Tags"
-    }
+    override fun getName() = "HCD Block Tags"
 }
