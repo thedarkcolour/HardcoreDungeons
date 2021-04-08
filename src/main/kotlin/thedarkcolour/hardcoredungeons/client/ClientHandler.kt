@@ -8,6 +8,7 @@ import net.minecraftforge.client.event.ColorHandlerEvent
 import net.minecraftforge.client.event.ModelBakeEvent
 import net.minecraftforge.client.event.ParticleFactoryRegisterEvent
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent
+import thedarkcolour.hardcoredungeons.client.dimension.AubrumEffects
 import thedarkcolour.hardcoredungeons.client.dimension.CastletonEffects
 import thedarkcolour.hardcoredungeons.client.model.block.FullbrightBakedModel
 import thedarkcolour.hardcoredungeons.data.RecipeGenerator.Companion.path
@@ -30,6 +31,8 @@ object ClientHandler {
         MOD_BUS.addListener(::registerBlockColors)
         MOD_BUS.addListener(::registerItemColors)
         MOD_BUS.addListener(::registerBakedModels)
+
+        //FORGE_BUS.addListener(::postRender)
     }
 
     // apparently RenderTypeLookup is not thread safe so we enqueue for later
@@ -41,10 +44,21 @@ object ClientHandler {
         HItems.registerItemProperties()
 
         DimensionRenderInfo.field_239208_a_[HDimensions.CASTLETON_ID] = CastletonEffects
+        DimensionRenderInfo.field_239208_a_[HDimensions.AUBRUM_ID] = AubrumEffects
 
         //ClientRegistry.registerKeyBinding(HKeys.TOGGLE_HCD_OVERLAY)
 
     }
+
+    /*
+    private fun postRender(event: TickEvent.RenderTickEvent) {
+        val mc = Minecraft.getInstance()
+        val player = mc.player
+
+        if (event.phase == TickEvent.Phase.END && !mc.gameSettings.hideGUI && player != null && !player.isSpectator) {
+
+        }
+    }*/
 
     private fun registerBakedModels(event: ModelBakeEvent) {
         val registry = event.modelRegistry as MutableMap

@@ -17,7 +17,7 @@ class ButtonModelType : BlockModelType<AbstractButtonBlock>() {
     /**
      * Generate a model for block [block].
      */
-    override fun process(block: AbstractButtonBlock, gen: ModelGenerator) {
+    override fun process(block: AbstractButtonBlock, appearance: AbstractButtonBlock, gen: ModelGenerator) {
         val path = block.registryName!!.path
         val builder = gen.getVariantBuilder(block)
 

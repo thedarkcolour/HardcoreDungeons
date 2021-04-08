@@ -10,7 +10,7 @@ class PressurePlateModelType : BlockModelType<PressurePlateBlock>() {
     /**
      * Generate a model for block [block].
      */
-    override fun process(block: PressurePlateBlock, gen: ModelGenerator) {
+    override fun process(block: PressurePlateBlock, appearance: PressurePlateBlock, gen: ModelGenerator) {
         val path = block.registryName!!.path
         val builder = gen.getVariantBuilder(block)
 

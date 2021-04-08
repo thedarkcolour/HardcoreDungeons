@@ -4,7 +4,7 @@ import com.mojang.blaze3d.matrix.MatrixStack
 import com.mojang.blaze3d.vertex.IVertexBuilder
 import net.minecraft.client.renderer.entity.model.AgeableModel
 import net.minecraft.client.renderer.model.ModelRenderer
-import thedarkcolour.hardcoredungeons.entity.deer.DeerEntity
+import thedarkcolour.hardcoredungeons.entity.overworld.deer.DeerEntity
 import thedarkcolour.hardcoredungeons.util.PI
 import thedarkcolour.hardcoredungeons.util.toRadians
 import kotlin.math.cos

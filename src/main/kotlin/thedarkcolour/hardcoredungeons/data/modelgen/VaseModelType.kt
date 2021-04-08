@@ -9,7 +9,7 @@ class VaseModelType : BlockModelType<Block>() {
     /**
      * Generate a model for block [block].
      */
-    override fun process(block: Block, gen: ModelGenerator) {
+    override fun process(block: Block, appearance: Block, gen: ModelGenerator) {
         vase(block, gen)
     }
 

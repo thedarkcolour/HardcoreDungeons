@@ -4,7 +4,7 @@ import net.minecraft.network.PacketBuffer
 import net.minecraft.network.datasync.IDataSerializer
 import net.minecraftforge.registries.DataSerializerEntry
 import net.minecraftforge.registries.IForgeRegistry
-import thedarkcolour.hardcoredungeons.entity.deer.DeerType
+import thedarkcolour.hardcoredungeons.entity.overworld.deer.DeerType
 
 /**
  * @author TheDarkColour

@@ -9,8 +9,8 @@ import thedarkcolour.hardcoredungeons.client.model.entity.DoeModel
 import thedarkcolour.hardcoredungeons.client.model.entity.StagModel
 import thedarkcolour.hardcoredungeons.client.renderer.entity.layers.DeerFullbrightLayer
 import thedarkcolour.hardcoredungeons.entity.ReloadableRenderer
-import thedarkcolour.hardcoredungeons.entity.deer.DeerEntity
-import thedarkcolour.hardcoredungeons.entity.deer.DeerType
+import thedarkcolour.hardcoredungeons.entity.overworld.deer.DeerEntity
+import thedarkcolour.hardcoredungeons.entity.overworld.deer.DeerType
 import thedarkcolour.hardcoredungeons.util.modLoc
 
 class DeerRenderer(manager: EntityRendererManager) : ReloadableRenderer<DeerEntity, DoeModel>(manager, null, 0.4f) {

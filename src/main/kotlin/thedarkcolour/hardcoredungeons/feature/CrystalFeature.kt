@@ -24,7 +24,6 @@ class CrystalFeature(codec: Codec<CrystalFeatureConfig>) : Feature<CrystalFeatur
                 if (reader.getBlockState(mutable.move(Direction.DOWN)).isIn(BlockTags.BASE_STONE_OVERWORLD)) {
                     if (rand.nextFloat() < config.chance) {
                         setBlockState(reader, mutable.move(Direction.UP), config.crystalProvider.getBlockState(rand, mutable))
-                        //println(mutable)
                         return true
                     }
                 }

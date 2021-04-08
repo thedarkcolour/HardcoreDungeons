@@ -7,7 +7,7 @@ class TrapDoorModelType : BlockModelType<TrapDoorBlock>() {
     /**
      * Generate a model for block [block].
      */
-    override fun process(block: TrapDoorBlock, gen: ModelGenerator) {
+    override fun process(block: TrapDoorBlock, appearance: TrapDoorBlock, gen: ModelGenerator) {
         gen.trapdoorBlock(block, gen.modLoc("block/" + block.registryName!!.path), true)
     }
 }

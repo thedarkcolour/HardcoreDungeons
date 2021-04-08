@@ -8,7 +8,8 @@ object CastletonEffects : DimensionRenderInfo(Float.NaN, true, FogType.NONE, fal
         return p_230494_1_
     }
 
-    override fun func_230493_a_(p_230493_1_: Int, p_230493_2_: Int): Boolean {
+    // Render thick fog?
+    override fun func_230493_a_(x: Int, z: Int): Boolean {
         return false
     }
 

@@ -1,6 +1,7 @@
 package thedarkcolour.hardcoredungeons.data
 
 import com.google.gson.GsonBuilder
+import com.theonlytails.loottables.*
 import net.minecraft.advancements.criterion.*
 import net.minecraft.block.Block
 import net.minecraft.block.FlowerPotBlock
@@ -13,8 +14,13 @@ import net.minecraft.enchantment.Enchantments
 import net.minecraft.entity.EntityType
 import net.minecraft.item.Items
 import net.minecraft.loot.*
-import net.minecraft.loot.conditions.*
-import net.minecraft.loot.functions.*
+import net.minecraft.loot.conditions.BlockStateProperty
+import net.minecraft.loot.conditions.EntityHasProperty
+import net.minecraft.loot.conditions.MatchTool
+import net.minecraft.loot.conditions.SurvivesExplosion
+import net.minecraft.loot.functions.ApplyBonus
+import net.minecraft.loot.functions.ExplosionDecay
+import net.minecraft.loot.functions.SetCount
 import net.minecraft.state.Property
 import net.minecraft.state.properties.BlockStateProperties
 import net.minecraft.state.properties.DoubleBlockHalf
@@ -34,8 +40,29 @@ import thedarkcolour.hardcoredungeons.registry.HItems
 class LootGenerator(private val generator: DataGenerator) : LootTableProvider(generator) {
     private val entityTables = hashMapOf<EntityType<*>, LootTable.Builder>()
     private val blockTables = hashMapOf<Block, LootTable.Builder>()
+    //private val tables = hashMapOf<ResourceLocation, LootTable>()
 
     private fun addEntityLoot() {
+        entity(HEntities.DEER) {
+            pool {
+                itemEntry(HItems.DEER_ANTLER)
+                condition { randomChanceWithLooting(0.075f, 0.02f) }
+            }
+            pool {
+                itemEntry(HItems.VENISON) {
+                    function {
+                        setRandomCount(1.0f, 3.0f)
+                    }
+                    function {
+                        furnaceSmelt { condition { EntityHasProperty.builder(LootContext.EntityTarget.THIS, ON_FIRE) } }
+                    }
+                    function {
+                        looting(randomRangeValue(0.0f, 1.0f))
+                    }
+                }
+
+            }
+        }/*
         entityTables[HEntities.DEER] = LootTable.builder()
             .addLootPool(LootPool.builder().rolls(ConstantRange.of(1))
                 .addEntry(item(HItems.DEER_ANTLER)/*.acceptCondition(EntityHasProperty.builder(LootContext.EntityTarget.THIS, IS_STAG))*/)
@@ -43,7 +70,7 @@ class LootGenerator(private val generator: DataGenerator) : LootTableProvider(ge
             )
             .addLootPool(LootPool.builder().rolls(ConstantRange.of(1))
                 .addEntry(item(HItems.VENISON).acceptFunction(SetCount.builder(RandomValueRange.of(1.0f, 3.0f))).acceptFunction(Smelt.func_215953_b().acceptCondition(EntityHasProperty.builder(LootContext.EntityTarget.THIS, ON_FIRE))).acceptFunction(LootingEnchantBonus.builder(RandomValueRange.of(0.0F, 1.0F))))
-            )
+            )*/
     }
 
     private fun addBlockLoot() {
@@ -66,12 +93,21 @@ class LootGenerator(private val generator: DataGenerator) : LootTableProvider(ge
         // Add custom loot tables here!
         //
 
-        addLoot(HBlocks.CASTLETON_VASE, LootTable.builder().addLootPool(LootPool.builder()
-            .addEntry(item(HItems.BULLET).setCountRandom(3.0f, 7.0f).weight(5))
-            .addEntry(item(Items.ARROW).setCountRandom(2.0f, 6.0f).weight(5))
-            .addEntry(item(Items.MUSHROOM_STEW).weight(3))
-            .addEntry(item(HItems.CASTLE_GEM).weight(1))
-        ))
+        block(HBlocks.CASTLETON_VASE) {
+            pool {
+                itemEntry(HItems.BULLET, weight = 5).setCountRandom(3.0f, 7.0f)//.setCountRandom(3.0f, 7.0f)
+                itemEntry(Items.ARROW, weight = 5).setCountRandom(2.0f, 6.0f)
+                itemEntry(Items.MUSHROOM_STEW, weight = 3)
+                itemEntry(HItems.CASTLE_GEM, weight = 1)
+            }
+        }
+
+        block(HBlocks.CASTLETON_TREASURE_VASE) {
+            pool {
+                itemEntry(HItems.CASTLE_GEM).setCountBinomial(6, 0.6f)
+            }
+        }
+
         addLoot(HBlocks.CASTLETON_TREASURE_VASE, LootTable.builder().addLootPool(LootPool.builder()
             .addEntry(item(HItems.CASTLE_GEM).setCountBinomial(6, 0.6f).weight(10))
             .addEntry(item(HItems.CHILI_PEPPER).setCountBinomial(3, 0.7f).weight(5))
@@ -94,15 +130,32 @@ class LootGenerator(private val generator: DataGenerator) : LootTableProvider(ge
         dropSilk(block = HBlocks.RAINBOW_GLASS_PANE, normal = null, silk = item(HItems.RAINBOW_GLASS_PANE))
         dropSilk(block = HBlocks.SCRAP_METAL, normal = item(Items.IRON_NUGGET).setCountBinomial(5, 0.45f), silk = item(HItems.SCRAP_METAL))
     }
+/*
+    private fun pristineLootTable() {/*
+        blockTables[Blocks.DIAMOND_ORE] = */
+        tables[Blocks.DIAMOND_ORE.lootTable] = lootTable(LootParameterSets.BLOCK) {
+            pool {
+                alternativesEntry(itemEntry(Items.DIAMOND_ORE, addToPool = false))
+            }
+        }
+    }
+*/
+    fun block(block: Block, body: LootTable.Builder.() -> LootTable.Builder) {
+        blockTables[block] = lootTableBuilder(LootParameterSets.BLOCK, body)
+    }
 
-    private fun singlePool(block: Block, poolFunction: (LootPool.Builder) -> Unit) {
-        val pool = LootPool.builder().rolls(ConstantRange.of(1))
-        poolFunction(pool)
-        blockTables[block] = LootTable.builder().addLootPool(pool)
+    fun entity(block: EntityType<*>, body: LootTable.Builder.() -> LootTable.Builder) {
+        entityTables[block] = lootTableBuilder(LootParameterSets.ENTITY, body)
+    }
+
+    private fun singlePool(block: Block, poolFunction: LootPool.Builder.() -> Unit) {
+        blockTables[block] = lootTableBuilder(LootParameterSets.BLOCK) { pool { poolFunction() } }
     }
 
     private fun dropSelf(block: Block) {
-        singlePool(block) { pool -> pool.addEntry(item(block)).acceptCondition(SurvivesExplosion.builder()) }
+        singlePool(block) {
+            itemEntry(block) { condition { com.theonlytails.loottables.survivesExplosion() } }//addEntry(item(block)).acceptCondition(SurvivesExplosion.builder())
+        }
     }
 
     private fun dropSilk(block: Block, normal: LootEntry.Builder<*>?, silk: LootEntry.Builder<*>) {
@@ -110,17 +163,38 @@ class LootGenerator(private val generator: DataGenerator) : LootTableProvider(ge
         if (normal != null) {
             entry.alternatively(normal)
         }
-        singlePool(block) { pool -> pool.addEntry(entry) }
+        singlePool(block) { addEntry(entry) }
         //blockTables[block] = LootTable.builder().addLootPool(LootPool.builder().rolls(ConstantRange.of(1)).addEntry(entry))
     }
 
     private fun dropSlabs(block: Block) {
-        singlePool(block) { pool -> pool.addEntry(item(block)).survivesExplosion().setCount(2).acceptCondition(propertyCondition(block, SlabBlock.TYPE, SlabType.DOUBLE)) }
+        singlePool(block) { addEntry(item(block)).survivesExplosion().setCount(2).acceptCondition(propertyCondition(block, SlabBlock.TYPE, SlabType.DOUBLE)) }
         //blockTables[block] = LootTable.builder().addLootPool(LootPool.builder().rolls(ConstantRange.of(1)).addEntry(item(block)).survivesExplosion().setCount(2).acceptCondition(BlockStateProperty.builder(block).fromProperties(StatePropertiesPredicate.Builder.newBuilder().withProp(SlabBlock.TYPE, SlabType.DOUBLE))))
     }
 
+    private fun slabLoot(block: Block) {
+        lootTable(LootParameterSets.BLOCK) {
+            pool {
+                itemEntry(block) {
+                    function(::explosionDecay)
+                    function {
+                        setConstantCount(2) {
+                            condition {
+                                blockStateProperty(block) {
+                                    fromProperties(stateProperties {
+                                        withProp(BlockStateProperties.SLAB_TYPE, SlabType.DOUBLE)
+                                    })
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     private fun dropDoor(block: Block) {
-        singlePool(block) { pool -> pool.addEntry(item(block).survivesExplosion().acceptCondition(propertyCondition(block, BlockStateProperties.DOUBLE_BLOCK_HALF, DoubleBlockHalf.LOWER))) }
+        singlePool(block) { addEntry(item(block).survivesExplosion().acceptCondition(propertyCondition(block, BlockStateProperties.DOUBLE_BLOCK_HALF, DoubleBlockHalf.LOWER))) }
         //blockTables[block] = LootTable.builder().addLootPool(LootPool.builder().rolls(ConstantRange.of(1)).addEntry(ItemLootEntry.builder(block.asItem()).acceptCondition(BlockStateProperty.builder(block).fromProperties(StatePropertiesPredicate.Builder.newBuilder().withProp(BlockStateProperties.DOUBLE_BLOCK_HALF, DoubleBlockHalf.LOWER)))).survivesExplosion())
     }
 
@@ -153,12 +227,12 @@ class LootGenerator(private val generator: DataGenerator) : LootTableProvider(ge
         return acceptFunction(SetCount.builder(ConstantRange.of(count)))
     }
 
-    private fun StandaloneLootEntry.Builder<*>.setCountBinomial(n: Int, p: Float): StandaloneLootEntry.Builder<*> {
-        return acceptFunction(SetCount.builder(BinomialRange.of(n, p)))
+    private fun StandaloneLootEntry.Builder<*>.setCountBinomial(amount: Int, chance: Float): StandaloneLootEntry.Builder<*> {
+        return function { setBinomialCount(amount, chance) }//acceptFunction(SetCount.builder(BinomialRange.of(n, p)))
     }
 
     private fun StandaloneLootEntry.Builder<*>.setCountRandom(min: Float, max: Float): StandaloneLootEntry.Builder<*> {
-        return acceptFunction(SetCount.builder(RandomValueRange.of(min, max)))
+        return function { setRandomCount(min, max) }
     }
 
     private fun addLoot(block: Block, loot: LootTable.Builder) {
@@ -171,8 +245,8 @@ class LootGenerator(private val generator: DataGenerator) : LootTableProvider(ge
 
         val namespacedTables = hashMapOf<ResourceLocation, LootTable>()
 
-        for (entry in blockTables) {
-            namespacedTables[entry.key.lootTable] = entry.value.setParameterSet(LootParameterSets.BLOCK).build()
+        for ((key, value) in blockTables) {
+            namespacedTables[key.lootTable] = value.setParameterSet(LootParameterSets.BLOCK).build()
         }
 
         for (entry in entityTables) {

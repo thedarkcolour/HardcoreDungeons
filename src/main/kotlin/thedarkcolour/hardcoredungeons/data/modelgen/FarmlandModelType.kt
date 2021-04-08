@@ -9,11 +9,12 @@ class FarmlandModelType : BlockModelType<BonusFarmlandBlock>() {
     /**
      * Generate a model for block [block].
      */
-    override fun process(block: BonusFarmlandBlock, gen: ModelGenerator) {
+    override fun process(block: BonusFarmlandBlock, appearance: BonusFarmlandBlock, gen: ModelGenerator) {
         gen.blockItemModel(block)
         farmland(gen, block)
     }
 
+    // todo appearance
     private fun farmland(gen: ModelGenerator, block: BonusFarmlandBlock) {
         val state = gen.getVariantBuilder(block)
         val soil = gen.blockLoc(block.getSoilState().block)

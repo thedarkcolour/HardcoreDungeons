@@ -59,11 +59,13 @@ abstract class Lang(gen: DataGenerator, locale: String) : LanguageProvider(gen, 
             add(HBlocks.SHROOMY_VASE, "Shroomy Vase")
             add(HBlocks.ASHY_FARMLAND, "Ashy Farmland")
             add(HBlocks.SANDY_FARMLAND, "Sandy Farmland")
+            add(HItems.PRISTINE_DIAMOND, "Pristine Diamond")
 
             add(HBlocks.CASTLETON_SOIL, "Castleton Soil")
             add(HBlocks.CASTLETON_GRASS_BLOCK, "Castleton Grass")
             add(HBlocks.CASTLETON_LOAM, "Castleton Loam")
             add(HBlocks.CASTLETON_STONE, "Castleton Stone")
+            add(HBlocks.POLISHED_CASTLETON_STONE, "Polished Castleton Stone")
             add(HBlocks.CASTLETON_BRICKS, "Castleton Bricks")
             add(HBlocks.CASTLETON_BRICK_STAIRS, "Castleton Brick Stairs")
             add(HBlocks.CASTLETON_BRICK_SLAB, "Castleton Brick Slab")

@@ -59,11 +59,13 @@ object HItems {
     val VENISON = Item(Properties().group(Group).food(Food.Builder().hunger(3).saturation(0.2f).meat().build())).setRegistryKey("venison")
     val COOKED_VENISON = Item(Properties().group(Group).food(Food.Builder().hunger(7).saturation(0.9f).meat().build())).setRegistryKey("cooked_venison")
     val DEER_SPAWN_EGG = SpawnEggItem(HEntities.DEER, 0x4c2922, 0x202020, Properties().group(Group)).setRegistryKey("deer_spawn_egg")
-    val MALACHITE_SWORD = SwordItem(HItemTier.MALACHITE, 3, -2.4f, Properties().group(Group)).setRegistryKey("malachite_sword")
-    val MALACHITE_SHOVEL = ShovelItem(HItemTier.MALACHITE, 1.5f, -3.0f, Properties().group(Group)).setRegistryKey("malachite_shovel")
-    val MALACHITE_PICKAXE = MalachitePickaxeItem(HItemTier.MALACHITE, 1, -2.8f, Properties().group(Group)).setRegistryKey("malachite_pickaxe")
-    val MALACHITE_AXE = AxeItem(HItemTier.MALACHITE, 5.0f, -3.0f, Properties().group(Group)).setRegistryKey("malachite_axe")
-    val MALACHITE_HOE = HoeItem(HItemTier.MALACHITE, -3, 0.0f, Properties().group(Group)).setRegistryKey("malachite_hoe")
+    val MALACHITE_SWORD = SwordItem(HItemTier.MALACHITE, 3, -2.4f, Properties().group(Group).maxStackSize(1)).setRegistryKey("malachite_sword")
+    val MALACHITE_SHOVEL = ShovelItem(HItemTier.MALACHITE, 1.5f, -3.0f, Properties().group(Group).maxStackSize(1)).setRegistryKey("malachite_shovel")
+    val MALACHITE_PICKAXE = MalachitePickaxeItem(HItemTier.MALACHITE, 1, -2.8f, Properties().group(Group).maxStackSize(1)).setRegistryKey("malachite_pickaxe")
+    val MALACHITE_AXE = AxeItem(HItemTier.MALACHITE, 5.0f, -3.0f, Properties().group(Group).maxStackSize(1)).setRegistryKey("malachite_axe")
+    val MALACHITE_HOE = HoeItem(HItemTier.MALACHITE, -3, 0.0f, Properties().group(Group).maxStackSize(1)).setRegistryKey("malachite_hoe")
+    val MALACHITE_SCYTHE = ScytheItem(HItemTier.MALACHITE, -3, 0.0f, Properties().group(Group).maxStackSize(1)).setRegistryKey("malachite_scythe")
+    val MUSHROOM_ARCHER_SPAWN_EGG = SpawnEggItem(HEntities.MUSHROOM_ARCHER, 0x434142, 0x2984a3, Properties().group(Group)).setRegistryKey("knightly_juggernaut_spawn_egg")
 
     // Castleton blocks
     val CHARGED_CASTLETON_BRICK_FENCE by objectHolder<Item>("charged_castleton_brick_fence")
@@ -177,9 +179,10 @@ object HItems {
         items.registerSpawnEgg(DEER_SPAWN_EGG)
         items.registerHandheldItem(MALACHITE_SWORD)
         items.registerHandheldItem(MALACHITE_SHOVEL)
-        items.register(MALACHITE_PICKAXE) //items.registerHandheldItem(MALACHITE_PICKAXE)
+        items.registerHandheldItem(MALACHITE_PICKAXE) //items.registerHandheldItem(MALACHITE_PICKAXE)
         items.registerHandheldItem(MALACHITE_AXE)
         items.registerHandheldItem(MALACHITE_HOE)
+        items.registerHandheldItem(MALACHITE_SCYTHE)
 
         // Castleton items
         items.registerHandheldItem(CASTLETON_SWORD)

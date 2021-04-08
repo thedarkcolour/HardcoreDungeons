@@ -25,7 +25,7 @@ class WallModelType : BlockModelType<WallBlock>() {
     /**
      * Generate a model for block [block].
      */
-    override fun process(block: WallBlock, gen: ModelGenerator) {
+    override fun process(block: WallBlock, appearance: WallBlock, gen: ModelGenerator) {
         // Path of the wall ("cobblestone_wall")
         val path = block.registryName!!.path
 

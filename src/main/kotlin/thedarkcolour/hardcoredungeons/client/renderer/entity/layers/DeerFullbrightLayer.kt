@@ -6,7 +6,7 @@ import net.minecraft.client.renderer.entity.layers.LayerRenderer
 import net.minecraft.client.renderer.texture.OverlayTexture
 import thedarkcolour.hardcoredungeons.client.model.entity.DoeModel
 import thedarkcolour.hardcoredungeons.client.renderer.entity.DeerRenderer
-import thedarkcolour.hardcoredungeons.entity.deer.DeerEntity
+import thedarkcolour.hardcoredungeons.entity.overworld.deer.DeerEntity
 
 /**
  * Fullbright entity renderer that renders a different texture based on the type of deer.

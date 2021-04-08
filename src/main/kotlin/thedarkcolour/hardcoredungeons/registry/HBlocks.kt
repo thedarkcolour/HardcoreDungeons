@@ -7,6 +7,7 @@ import net.minecraft.block.*
 import net.minecraft.block.AbstractBlock.Properties
 import net.minecraft.block.material.Material
 import net.minecraft.block.material.MaterialColor
+import net.minecraft.block.material.PushReaction
 import net.minecraft.client.renderer.RenderType
 import net.minecraft.client.renderer.RenderTypeLookup
 import net.minecraft.client.renderer.color.BlockColors
@@ -49,9 +50,7 @@ import thedarkcolour.hardcoredungeons.block.plant.trees.LumlightTree
 import thedarkcolour.hardcoredungeons.block.portal.PortalBlock
 import thedarkcolour.hardcoredungeons.block.properties.HProperties
 import thedarkcolour.hardcoredungeons.block.properties.PlantProperties
-import thedarkcolour.hardcoredungeons.block.structure.DungeonSpawnerBlock
-import thedarkcolour.hardcoredungeons.block.structure.LockBlock
-import thedarkcolour.hardcoredungeons.block.structure.SpawnerChestBlock
+import thedarkcolour.hardcoredungeons.block.structure.*
 import thedarkcolour.hardcoredungeons.block.structure.castleton.FrayedSkullBlock
 import thedarkcolour.hardcoredungeons.block.structure.rainbowland.RainbowFactoryFurnaceBlock
 import thedarkcolour.hardcoredungeons.client.color.RainbowColor
@@ -69,7 +68,7 @@ import java.util.function.Supplier
 @Suppress("MemberVisibilityCanBePrivate", "HasPlatformType", "SpellCheckingInspection", "ReplacePutWithAssignment")
 object HBlocks {
     // @formatter:off
-    
+
     // Overworld
     val VASE = HBlock(HProperties.create(Material.MISCELLANEOUS, MaterialColor.GRAY).hardnessAndResistance(1.3f).shape(VoxelShapes.or(Block.makeCuboidShape(4.0, 0.0, 4.0, 12.0, 1.0, 12.0), Block.makeCuboidShape(3.0, 1.0, 3.0, 13.0, 9.0, 13.0), Block.makeCuboidShape(4.0, 9.0, 4.0, 12.0, 10.0, 12.0), Block.makeCuboidShape(6.0, 10.0, 6.0, 10.0, 11.0, 10.0), Block.makeCuboidShape(5.0, 11.0, 5.0, 11.0, 13.0, 11.0)))).setRegistryKey("vase")
     val SHROOMY_COBBLESTONE = Block(Properties.create(Material.ROCK).hardnessAndResistance(2.0F, 6.0F)).setRegistryKey("shroomy_cobblestone")
@@ -98,7 +97,9 @@ object HBlocks {
     val MALACHITE_CRYSTAL = createCrystal(MaterialColor.GREEN).setRegistryKey("malachite_crystal")
     val MALACHITE_BLOCK = HBlock(HProperties.create(Material.IRON, MaterialColor.GREEN)).setRegistryKey("malachite_block")
     val SPRUCE_PLANKS = VariantBlock(HProperties.fromVanilla(Blocks.SPRUCE_PLANKS), "spruce_planks", "large", hasBaseVariant = false)
-    val BOOKSHELF_VARIANTS = VariantBlock(HProperties.fromVanilla(Blocks.BOOKSHELF), "bookshelf", "spruce", "birch", "jungle", "acacia", "dark_oak", hasBaseVariant = false, registerFunction = { registry, block -> registry.registerBlock3dItem(block)})
+    //val BOOKSHELF_VARIANTS = VariantBlock(HProperties.fromVanilla(Blocks.BOOKSHELF), "bookshelf", "spruce", "birch", "jungle", "acacia", "dark_oak", hasBaseVariant = false, registerFunction = { registry, block -> registry.registerBlock3dItem(block)})
+    val MAZE_BUSH = MazeBushBlock(HProperties.create(Material.ROCK, MaterialColor.FOLIAGE).pushReaction(PushReaction.BLOCK).hardnessAndResistance(50.0F, 1200.0F).sound(SoundType.PLANT)).setRegistryKey("maze_bush")
+    val MAZE_BOSS_SPAWNER = MazeBossSpawnerBlock(HProperties.create(Material.IRON).indestructible()).setRegistryKey("maze_boss_spawner")
 
     // Castleton
     val CASTLETON_SOIL = Block(Properties.create(Material.EARTH, MaterialColor.GRAY).hardnessAndResistance(0.8f).sound(SoundType.GROUND)).setRegistryKey("castleton_soil")
@@ -107,6 +108,7 @@ object HBlocks {
     val POLISHED_CASTLETON_STONE = Block(Properties.from(CASTLETON_STONE)).setRegistryKey("polished_castleton_stone")
     val CASTLETON_LOAM = Block(Properties.create(Material.EARTH, MaterialColor.GRAY).hardnessAndResistance(0.6f).sound(SoundType.GROUND)).setRegistryKey("castleton_loam")
     val CASTLETON_BRICKS = Block(Properties.create(Material.ROCK, MaterialColor.GRAY).hardnessAndResistance(30.0f, 1200.0f)).setRegistryKey("castleton_bricks")
+    val DUNGEON_CASTLETON_BRICKS = HBlock(HProperties.fromVanilla(CASTLETON_BRICKS).indestructible()).setRegistryKey("dungeon_castleton_bricks")
     val CASTLETON_BRICK_STAIRS = createStairs(CASTLETON_BRICKS)
     val CASTLETON_BRICK_SLAB = SlabBlock(Properties.from(CASTLETON_BRICKS)).setRegistryKey("castleton_brick_slab")
     val CASTLETON_BRICK_FENCE = FenceBlock(Properties.from(CASTLETON_BRICKS)).setRegistryKey("castleton_brick_fence")
@@ -292,6 +294,8 @@ object HBlocks {
         blocks.registerCrossBlock(MALACHITE_CRYSTAL, hasItem = false)
         blocks.registerSimpleBlock(MALACHITE_BLOCK)
         SPRUCE_PLANKS.registerBlocks(blocks)
+        blocks.registerSimpleBlock(MAZE_BUSH)
+        blocks.registerBlock3dItem(MAZE_BOSS_SPAWNER)
 
         blocks.registerSimpleBlock(CASTLETON_SOIL)
         blocks.registerBlock(CASTLETON_GRASS_BLOCK)
@@ -299,6 +303,7 @@ object HBlocks {
         blocks.registerSimpleBlock(CASTLETON_STONE)
         blocks.registerSimpleBlock(POLISHED_CASTLETON_STONE)
         blocks.registerSimpleBlock(CASTLETON_BRICKS)
+        blocks.registerSimpleBlock(DUNGEON_CASTLETON_BRICKS, copyOf = CASTLETON_BRICKS)
         blocks.registerStairsBlock(CASTLETON_BRICK_STAIRS, CASTLETON_BRICKS)
         blocks.registerSlabBlock(CASTLETON_BRICK_SLAB, CASTLETON_BRICKS)
         blocks.registerFenceBlock(CASTLETON_BRICK_FENCE)
@@ -619,8 +624,8 @@ object HBlocks {
     /**
      * `cube_all` plus item block
      */
-    fun IForgeRegistry<Block>.registerSimpleBlock(block: Block) {
-        ModelType.CUBE_ALL.add(block)
+    fun IForgeRegistry<Block>.registerSimpleBlock(block: Block, copyOf: Block? = null) {
+        ModelType.CUBE_ALL.add(block, copyOf ?: block)
         this.registerBlock(block)
     }
 

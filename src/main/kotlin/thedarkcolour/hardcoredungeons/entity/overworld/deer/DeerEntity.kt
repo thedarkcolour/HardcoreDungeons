@@ -1,4 +1,4 @@
-package thedarkcolour.hardcoredungeons.entity.deer
+package thedarkcolour.hardcoredungeons.entity.overworld.deer
 
 import net.minecraft.entity.AgeableEntity
 import net.minecraft.entity.EntityType

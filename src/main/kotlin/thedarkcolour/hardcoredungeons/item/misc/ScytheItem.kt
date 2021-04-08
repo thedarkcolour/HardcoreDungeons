@@ -20,6 +20,7 @@ import net.minecraft.util.SoundEvents
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.MathHelper
 import net.minecraft.world.World
+import thedarkcolour.hardcoredungeons.util.toDegrees
 
 open class ScytheItem(
     tier: IItemTier,
@@ -28,7 +29,7 @@ open class ScytheItem(
     builder: Properties,
 ) : TieredItem(tier, builder), IVanishable {
     // total attack damage as float
-    private val attackDamage: Float = attackDamage + tier.attackDamage
+    private val attackDamage = attackDamage + tier.attackDamage
     // entity modifiers when held in primary hand
     private val attributeModifiers = ImmutableMultimap.of(
         Attributes.ATTACK_DAMAGE, AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Weapon modifier", this.attackDamage.toDouble(), AttributeModifier.Operation.ADDITION),
@@ -47,13 +48,13 @@ open class ScytheItem(
             // mostly from PlayerEntity for SwordItem with a few tweaks
             if (f2 > 0.7f && !playerIn.isSprinting && (playerIn.distanceWalkedModified - playerIn.prevDistanceWalkedModified < playerIn.aiMoveSpeed)) {
                 for (living in playerIn.world.getEntitiesWithinAABB(LivingEntity::class.java, target.boundingBox.grow(1.5, 0.25, 1.5))) {
-                    if (living != this && living != target && !playerIn.isOnSameTeam(living) && (living !is ArmorStandEntity || !living.hasMarker()) && playerIn.getDistanceSq(living) < 9.0) {
-                        living.applyKnockback(0.4f, MathHelper.sin(playerIn.rotationYaw * (Math.PI.toFloat() / 180f)).toDouble(), (-MathHelper.cos(playerIn.rotationYaw * (Math.PI.toFloat() / 180f))).toDouble())
+                    if (living != playerIn && living != target && !playerIn.isOnSameTeam(living) && (living !is ArmorStandEntity || !living.hasMarker()) && playerIn.getDistanceSq(living) < 9.0) {
+                        living.applyKnockback(0.4f, MathHelper.sin(toDegrees(playerIn.rotationYaw)).toDouble(), (-MathHelper.cos(toDegrees(playerIn.rotationYaw))).toDouble())
                         living.attackEntityFrom(DamageSource.causePlayerDamage(playerIn), (1.0f + EnchantmentHelper.getSweepingDamageRatio(playerIn) * playerIn.getAttributeValue(Attributes.ATTACK_DAMAGE).toFloat()))
                     }
                 }
 
-                playerIn.world.playSound(null as PlayerEntity?, playerIn.posX, playerIn.posY, playerIn.posZ, SoundEvents.ENTITY_PLAYER_ATTACK_SWEEP, playerIn.soundCategory, 1.0f, 1.0f)
+                playerIn.world.playSound(null, playerIn.posX, playerIn.posY, playerIn.posZ, SoundEvents.ENTITY_PLAYER_ATTACK_SWEEP, playerIn.soundCategory, 1.0f, 1.0f)
                 playerIn.spawnSweepParticles()
             }
         }

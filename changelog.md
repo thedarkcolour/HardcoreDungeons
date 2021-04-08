@@ -14,7 +14,7 @@
 * Added texture for Sugar Block
 * Added a few Config options
 * Added a tooltip to compressed blocks
-* Added WIP Dungeon Key & Lock
+* Added WIP Dungeon Key & Lock (for upcoming structures)
 * Buffed the Shroomy Sword
 
 ### Alpha 11

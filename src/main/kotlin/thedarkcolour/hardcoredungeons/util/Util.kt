@@ -31,8 +31,12 @@ const val PI = 3.14159265358979323846.toFloat()
 /**
  * [Math.toRadians] for `Float` values
  */
-fun toRadians(angle: Float): Float {
-    return angle / 180.0f * PI
+fun toRadians(degrees: Float): Float {
+    return degrees / 180.0f * PI
+}
+
+fun toDegrees(radians: Float): Float {
+    return radians * 180.0f / PI
 }
 
 class BlockPosNBTDelegate(private val tagName: String) : ReadWriteProperty<ItemStack, BlockPos?> {

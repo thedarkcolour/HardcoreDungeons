@@ -8,6 +8,7 @@ import net.minecraft.block.BlockState
 import net.minecraft.block.SoundType
 import net.minecraft.block.material.Material
 import net.minecraft.block.material.MaterialColor
+import net.minecraft.block.material.PushReaction
 import net.minecraft.item.DyeColor
 import net.minecraft.util.math.shapes.VoxelShape
 import net.minecraftforge.common.ToolType
@@ -33,6 +34,8 @@ abstract class BlockProperties<T : BlockProperties<T>> protected constructor() {
     private var shape: VoxelShape? = null
     /** The enchantment power bonus that this block should give. */
     private var enchantmentPower = 0.0f
+    /** The push reaction when a piston attempts to push this block. */
+    private var pushReaction: PushReaction = PushReaction.NORMAL
 
     /**
      * Set this block's collision shape to empty.
@@ -109,6 +112,14 @@ abstract class BlockProperties<T : BlockProperties<T>> protected constructor() {
      */
     fun zeroHardnessAndResistance(): T {
         return hardnessAndResistance(0.0f, 0.0f)
+    }
+
+    /**
+     * Unbreakable and unmovable block
+     */
+    fun indestructible(): T {
+        pushReaction(PushReaction.BLOCK)
+        return hardnessAndResistance(-1.0f, 3600000.0f)
     }
 
     /**
@@ -204,6 +215,15 @@ abstract class BlockProperties<T : BlockProperties<T>> protected constructor() {
      */
     fun getEnchantmentPower(): Float {
         return enchantmentPower
+    }
+
+    fun pushReaction(pushReaction: PushReaction): T {
+        this.pushReaction = pushReaction
+        return this as T
+    }
+
+    fun getPushReaction(): PushReaction {
+        return pushReaction
     }
 
     /**

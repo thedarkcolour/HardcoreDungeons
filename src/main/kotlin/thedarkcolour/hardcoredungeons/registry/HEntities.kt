@@ -22,8 +22,12 @@ import thedarkcolour.hardcoredungeons.entity.castleton.knightlyjuggernaut.Knight
 import thedarkcolour.hardcoredungeons.entity.castleton.knightlyjuggernaut.KnightlyJuggernautRenderer
 import thedarkcolour.hardcoredungeons.entity.castleton.voidrunner.VoidRunnerEntity
 import thedarkcolour.hardcoredungeons.entity.castleton.voidrunner.VoidRunnerRenderer
-import thedarkcolour.hardcoredungeons.entity.deer.CastletonDeerEntity
-import thedarkcolour.hardcoredungeons.entity.deer.DeerEntity
+import thedarkcolour.hardcoredungeons.entity.overworld.deer.CastletonDeerEntity
+import thedarkcolour.hardcoredungeons.entity.overworld.deer.DeerEntity
+import thedarkcolour.hardcoredungeons.entity.overworld.mazeboss.MazeBossEntity
+import thedarkcolour.hardcoredungeons.entity.overworld.mazeboss.MazeBossRenderer
+import thedarkcolour.hardcoredungeons.entity.overworld.mushroomarcher.MushroomArcherEntity
+import thedarkcolour.hardcoredungeons.entity.overworld.mushroomarcher.MushroomArcherRenderer
 import thedarkcolour.hardcoredungeons.entity.projectile.bullet.SmallBulletEntity
 import thedarkcolour.hardcoredungeons.entity.projectile.magic.MagicBoltEntity
 import thedarkcolour.hardcoredungeons.util.modLoc
@@ -51,6 +55,12 @@ object HEntities {
     val KNIGHTLY_JUGGERNAUT = Builder
         .create(::KnightlyJuggernautEntity, EntityClassification.CREATURE)
         .build(modLoc("knightly_juggernaut"))
+    val MAZE_BOSS = Builder
+        .create(::MazeBossEntity, EntityClassification.MONSTER)
+        .build(modLoc("maze_boss"))
+    val MUSHROOM_ARCHER = Builder
+        .create(::MushroomArcherEntity, EntityClassification.MONSTER)
+        .build(modLoc("mushroom_archer"))
 
     //val RAINBOWLAND_SHEEP = Builder
     //    .create(::RainbowlandSheepEntity, EntityClassification.CREATURE)
@@ -88,6 +98,8 @@ object HEntities {
 
     fun registerEntities(entities: IForgeRegistry<EntityType<*>>) {
         entities.register(DEER)
+        entities.register(MAZE_BOSS)
+        entities.register(MUSHROOM_ARCHER)
 
         entities.register(FRAYED_SOUL)
         entities.register(VOID_RUNNER)
@@ -108,9 +120,12 @@ object HEntities {
         event.put(KNIGHTLY_JUGGERNAUT, KnightlyJuggernautEntity.ATTRIBUTES.create())
         //event.put(RAINBOWLAND_SHEEP, RainbowlandSheepEntity.ATTRIBUTES.create())
         event.put(INFINITY, InfinityEntity.ATTRIBUTES.create())
+        event.put(MAZE_BOSS, MazeBossEntity.ATTRIBUTES.create())
     }
 
     fun registerEntityRenderers() {
+        RenderingRegistry.registerEntityRenderingHandler(MAZE_BOSS, ::MazeBossRenderer)
+        RenderingRegistry.registerEntityRenderingHandler(MUSHROOM_ARCHER, ::MushroomArcherRenderer)
         RenderingRegistry.registerEntityRenderingHandler(DEER, ::DeerRenderer)
         RenderingRegistry.registerEntityRenderingHandler(FRAYED_SOUL, ::FrayedSoulRenderer)
         RenderingRegistry.registerEntityRenderingHandler(VOID_RUNNER, ::VoidRunnerRenderer)

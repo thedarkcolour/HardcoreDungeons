@@ -8,7 +8,7 @@ class FenceModelType : BlockModelType<FenceBlock>() {
     /**
      * Generate a model for block [block].
      */
-    override fun process(block: FenceBlock, gen: ModelGenerator) {
+    override fun process(block: FenceBlock, appearance: FenceBlock, gen: ModelGenerator) {
 
         // Path of the wall ("oak_fence")
         val path = block.registryName!!.path

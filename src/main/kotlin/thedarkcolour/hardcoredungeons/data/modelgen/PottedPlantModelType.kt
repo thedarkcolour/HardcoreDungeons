@@ -9,7 +9,7 @@ import thedarkcolour.hardcoredungeons.data.ModelGenerator
 import thedarkcolour.hardcoredungeons.util.modLoc
 
 class PottedPlantModelType : BlockModelType<Block>() {
-    override fun process(block: Block, gen: ModelGenerator) {
+    override fun process(block: Block, appearance: Block, gen: ModelGenerator) {
         gen.simpleBlock(block, gen.models().potted(gen.name(block), modLoc(ModelProvider.BLOCK_FOLDER + "/" + block.registryName!!.path.removePrefix("potted_"))))
     }
 

@@ -4,7 +4,7 @@ import net.minecraft.block.Block
 import thedarkcolour.hardcoredungeons.data.ModelGenerator
 
 class BlockItemModelType : BlockModelType<Block>() {
-    override fun process(block: Block, gen: ModelGenerator) {
+    override fun process(block: Block, appearance: Block, gen: ModelGenerator) {
         gen.blockItemModel(block)
     }
 }
