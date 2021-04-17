@@ -4,6 +4,7 @@ import com.google.gson.GsonBuilder
 import com.theonlytails.loottables.*
 import net.minecraft.advancements.criterion.*
 import net.minecraft.block.Block
+import net.minecraft.block.Blocks
 import net.minecraft.block.FlowerPotBlock
 import net.minecraft.block.SlabBlock
 import net.minecraft.data.DataGenerator
@@ -19,7 +20,6 @@ import net.minecraft.loot.conditions.EntityHasProperty
 import net.minecraft.loot.conditions.MatchTool
 import net.minecraft.loot.conditions.SurvivesExplosion
 import net.minecraft.loot.functions.ApplyBonus
-import net.minecraft.loot.functions.ExplosionDecay
 import net.minecraft.loot.functions.SetCount
 import net.minecraft.state.Property
 import net.minecraft.state.properties.BlockStateProperties
@@ -50,15 +50,11 @@ class LootGenerator(private val generator: DataGenerator) : LootTableProvider(ge
             }
             pool {
                 itemEntry(HItems.VENISON) {
-                    function {
-                        setRandomCount(1.0f, 3.0f)
-                    }
-                    function {
-                        furnaceSmelt { condition { EntityHasProperty.builder(LootContext.EntityTarget.THIS, ON_FIRE) } }
-                    }
-                    function {
+                    function(
+                        setRandomCount(1.0f, 3.0f),
+                        furnaceSmelt { condition { EntityHasProperty.builder(LootContext.EntityTarget.THIS, ON_FIRE) } },
                         looting(randomRangeValue(0.0f, 1.0f))
-                    }
+                    )
                 }
 
             }
@@ -129,17 +125,38 @@ class LootGenerator(private val generator: DataGenerator) : LootTableProvider(ge
         dropSilk(block = HBlocks.RAINBOW_GLASS, normal = null, silk = item(HItems.RAINBOW_GLASS))
         dropSilk(block = HBlocks.RAINBOW_GLASS_PANE, normal = null, silk = item(HItems.RAINBOW_GLASS_PANE))
         dropSilk(block = HBlocks.SCRAP_METAL, normal = item(Items.IRON_NUGGET).setCountBinomial(5, 0.45f), silk = item(HItems.SCRAP_METAL))
+
+        pristineLootTable()
     }
-/*
-    private fun pristineLootTable() {/*
-        blockTables[Blocks.DIAMOND_ORE] = */
-        tables[Blocks.DIAMOND_ORE.lootTable] = lootTable(LootParameterSets.BLOCK) {
+
+    private fun pristineLootTable() {
+        block(Blocks.DIAMOND_ORE) {
             pool {
-                alternativesEntry(itemEntry(Items.DIAMOND_ORE, addToPool = false))
+                alternativesEntry(
+                    itemEntry(Items.DIAMOND_ORE, addToPool = false) {
+                        condition(hasSilkTouch)
+                    },
+                    itemEntry(HItems.PRISTINE_DIAMOND, addToPool = false) {
+                        condition(
+                            randomChance(0.4f),
+                            matchTool(itemHasEnchantment(enchantAtLeast(HEnchantments.PROSPECTING, 1)))
+                        )
+                        function(
+                            oreBonusCount(Enchantments.FORTUNE),
+                            explosionDecay()
+                        )
+                    },
+                    itemEntry(Items.DIAMOND, addToPool = false) {
+                        function(
+                            oreBonusCount(Enchantments.FORTUNE),
+                            explosionDecay()
+                        )
+                    }
+                )
             }
         }
     }
-*/
+
     fun block(block: Block, body: LootTable.Builder.() -> LootTable.Builder) {
         blockTables[block] = lootTableBuilder(LootParameterSets.BLOCK, body)
     }
@@ -149,12 +166,12 @@ class LootGenerator(private val generator: DataGenerator) : LootTableProvider(ge
     }
 
     private fun singlePool(block: Block, poolFunction: LootPool.Builder.() -> Unit) {
-        blockTables[block] = lootTableBuilder(LootParameterSets.BLOCK) { pool { poolFunction() } }
+        blockTables[block] = lootTableBuilder(LootParameterSets.BLOCK) { pool(body = poolFunction) }
     }
 
     private fun dropSelf(block: Block) {
         singlePool(block) {
-            itemEntry(block) { condition { com.theonlytails.loottables.survivesExplosion() } }//addEntry(item(block)).acceptCondition(SurvivesExplosion.builder())
+            itemEntry(block) { condition { com.theonlytails.loottables.survivesExplosion() } }
         }
     }
 
@@ -164,12 +181,10 @@ class LootGenerator(private val generator: DataGenerator) : LootTableProvider(ge
             entry.alternatively(normal)
         }
         singlePool(block) { addEntry(entry) }
-        //blockTables[block] = LootTable.builder().addLootPool(LootPool.builder().rolls(ConstantRange.of(1)).addEntry(entry))
     }
 
     private fun dropSlabs(block: Block) {
         singlePool(block) { addEntry(item(block)).survivesExplosion().setCount(2).acceptCondition(propertyCondition(block, SlabBlock.TYPE, SlabType.DOUBLE)) }
-        //blockTables[block] = LootTable.builder().addLootPool(LootPool.builder().rolls(ConstantRange.of(1)).addEntry(item(block)).survivesExplosion().setCount(2).acceptCondition(BlockStateProperty.builder(block).fromProperties(StatePropertiesPredicate.Builder.newBuilder().withProp(SlabBlock.TYPE, SlabType.DOUBLE))))
     }
 
     private fun slabLoot(block: Block) {
@@ -217,10 +232,6 @@ class LootGenerator(private val generator: DataGenerator) : LootTableProvider(ge
 
     private fun <T> ILootConditionConsumer<T>.survivesExplosion(): T {
         return acceptCondition(SurvivesExplosion.builder())
-    }
-
-    private fun <T> ILootFunctionConsumer<T>.explosionDecay(): T {
-        return acceptFunction(ExplosionDecay.builder())
     }
 
     private fun LootPool.Builder.setCount(count: Int): LootPool.Builder {

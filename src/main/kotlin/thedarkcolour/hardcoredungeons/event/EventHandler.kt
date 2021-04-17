@@ -13,6 +13,7 @@ import net.minecraft.util.math.BlockRayTraceResult
 import net.minecraft.world.server.ServerWorld
 import net.minecraftforge.event.AttachCapabilitiesEvent
 import net.minecraftforge.event.TickEvent
+import net.minecraftforge.event.entity.living.LivingDamageEvent
 import net.minecraftforge.event.entity.player.PlayerInteractEvent
 import net.minecraftforge.event.world.BlockEvent
 import net.minecraftforge.eventbus.api.Event
@@ -175,5 +176,9 @@ object EventHandler {
                 event.isCanceled = !event.player.isCreative
             }
         }
+    }
+
+    fun calculateElementDamage(event: LivingDamageEvent) {
+
     }
 }

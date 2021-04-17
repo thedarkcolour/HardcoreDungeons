@@ -11,16 +11,24 @@ import net.minecraftforge.api.distmarker.OnlyIn
 import thedarkcolour.hardcoredungeons.HardcoreDungeons
 import thedarkcolour.hardcoredungeons.client.model.armor.MushroomArmorModel
 import thedarkcolour.hardcoredungeons.item.HArmorMaterial
+import thedarkcolour.kotlinforforge.forge.runWhenOn
 
 class MushroomArmorItem(slot: EquipmentSlotType, properties: Properties) : ArmorItem(HArmorMaterial.SHROOMY, slot, properties) {
     @OnlyIn(Dist.CLIENT)
-    private val model = MushroomArmorModel(slot)
+    private var model: Any? = null
 
+    init {
+        runWhenOn(Dist.CLIENT) {
+            model = MushroomArmorModel(slot)
+        }
+    }
+
+    @OnlyIn(Dist.CLIENT)
     override fun <A : BipedModel<*>> getArmorModel(entityLiving: LivingEntity?, itemStack: ItemStack?, armorSlot: EquipmentSlotType?, _default: A): A {
         return model as A
     }
 
-    override fun getArmorTexture(stack: ItemStack?, entity: Entity?, slot: EquipmentSlotType?, type: String?): String? {
+    override fun getArmorTexture(stack: ItemStack?, entity: Entity?, slot: EquipmentSlotType?, type: String?): String {
         return HardcoreDungeons.ID + ":textures/models/armor/mushroom_armor.png"
     }
 }

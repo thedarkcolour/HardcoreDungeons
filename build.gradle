@@ -15,7 +15,7 @@ buildscript {
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'com.wynprice.cursemaven'
 
-version = '12'
+version = '13'
 group = 'thedarkcolour' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'hardcoredungeons'
 
@@ -77,6 +77,7 @@ sourceSets.main.resources {
 
 repositories {
     jcenter()
+    mavenCentral()
     maven {
         name = 'curios'
         url = 'https://maven.theillusivec4.top/'
@@ -98,17 +99,13 @@ repositories {
         name = 'curseforge'
         url = 'https://minecraft.curseforge.com/api/maven/'
     }
-    maven {
-        name = 'jitpack'
-        url = 'https://jitpack.io'
-    }
 }
 
 dependencies {
     minecraft 'net.minecraftforge:forge:1.16.5-36.0.58'
 
     // loot tables dsl
-    implementation fg.deobf(project.dependencies.create(group: "com.github.TheOnlyTails", name: "LootTables", version: '0.2.8') { transitive = false })
+    implementation fg.deobf(project.dependencies.create(group: 'com.theonlytails', name: 'loottables', version: '0.2.10') { transitive = false })
 
     // biomes o plenty
     implementation fg.deobf('curse.maven:biomes-o-plenty:3181401')
