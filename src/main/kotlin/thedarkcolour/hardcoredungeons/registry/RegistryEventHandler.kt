@@ -12,8 +12,6 @@ import net.minecraftforge.event.RegistryEvent.Register
 import net.minecraftforge.event.world.BiomeLoadingEvent
 import net.minecraftforge.eventbus.api.EventPriority
 import net.minecraftforge.registries.DataSerializerEntry
-import thedarkcolour.hardcoredungeons.block.HBlocks
-import thedarkcolour.hardcoredungeons.block.HItemsNew
 import thedarkcolour.kotlinforforge.forge.FORGE_BUS
 import thedarkcolour.kotlinforforge.forge.MOD_BUS
 
