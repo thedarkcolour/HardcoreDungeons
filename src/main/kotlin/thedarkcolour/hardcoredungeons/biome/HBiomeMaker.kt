@@ -9,61 +9,83 @@ import net.minecraft.world.gen.carver.ConfiguredCarvers
 import net.minecraft.world.gen.surfacebuilders.ConfiguredSurfaceBuilder
 import net.minecraft.world.gen.surfacebuilders.ISurfaceBuilderConfig
 import net.minecraft.world.gen.surfacebuilders.SurfaceBuilder
+import thedarkcolour.hardcoredungeons.feature.HConfiguredFeatures
 import thedarkcolour.hardcoredungeons.registry.HEntities
-import thedarkcolour.hardcoredungeons.registry.HFeatures
 import thedarkcolour.hardcoredungeons.registry.HSurfaceBuilders
+import thedarkcolour.hardcoredungeons.surfacebuilder.HConfiguredSurfaceBuilders
 
 object HBiomeMaker {
-    fun makeCastletonHillsBiome(): Biome {
-        val genSettings = genSettings(HSurfaceBuilders.CASTLETON_SURFACE)
-        genSettings.withCarver(GenerationStage.Carving.AIR, ConfiguredCarvers.field_243767_a)
+    private val DEFAULT_CASTLETON_EFFECTS = effects(0x6fa3bf, 0x1f37f2, 0x113d51, 0x1d5a75)
 
-        HFeatures.addSparseLumlightTrees(genSettings)
-        HFeatures.addPurpleLumshrooms(genSettings)
-        DefaultBiomeFeatures.withBlueIce(genSettings)
+    fun makeCastletonForest(): Biome {
+        val genSettings = genSettings(HConfiguredSurfaceBuilders.CASTLETON_SURFACE)
+        genSettings.addCarver(GenerationStage.Carving.AIR, ConfiguredCarvers.CAVE)
+        genSettings.addCarver(GenerationStage.Carving.AIR, ConfiguredCarvers.CANYON)
+
+        HConfiguredFeatures.withPurpleLumshrooms(genSettings)
 
         return biome(
             precipitation = Biome.RainType.NONE,
-            category = Biome.Category.PLAINS,
+            Biome.Category.FOREST,
+            depth = 0.1f,
+            scale = 0.3f,
+            temperature = 1.5f,
+            downfall = 0.0f,
+            effects = DEFAULT_CASTLETON_EFFECTS,
+            genSettings = genSettings
+        )
+    }
+
+    fun makeCastletonHillsBiome(): Biome {
+        val genSettings = genSettings(HConfiguredSurfaceBuilders.CASTLETON_SURFACE)
+        genSettings.addCarver(GenerationStage.Carving.AIR, ConfiguredCarvers.CAVE)
+
+        HConfiguredFeatures.withSparseLumlightTrees(genSettings)
+        HConfiguredFeatures.withPurpleLumshrooms(genSettings)
+        DefaultBiomeFeatures.addBlueIce(genSettings)
+
+        return biome(
+            precipitation = Biome.RainType.NONE,
+            biomeCategory = Biome.Category.PLAINS,
             depth = 1.5f,
             scale = 0.07f,
             temperature = 1.5f,
             downfall = 0.0f,
-            effects = effects(0x6fa3bf, 0x1f37f2, 0x113d51, 0x1d5a75),
+            effects = DEFAULT_CASTLETON_EFFECTS,
             genSettings = genSettings
         )
     }
 
     fun makeKnightlyShrublandBiome(): Biome {
-        val genSettings = genSettings(HSurfaceBuilders.CASTLETON_SURFACE)
+        val genSettings = genSettings(HConfiguredSurfaceBuilders.CASTLETON_SURFACE)
 
-        HFeatures.withLumlightCabin(genSettings)
-        HFeatures.withLumlightShrubs(genSettings)
+        HConfiguredFeatures.withLumlightCabin(genSettings)
+        HConfiguredFeatures.withLumlightShrubs(genSettings)
 
         val spawnSettings = spawnSettings()
         spawnSettings.addSpawn(EntityClassification.CREATURE, HEntities.CASTLETON_DEER, 6, 2, 6)
 
         return biome(
             precipitation = Biome.RainType.NONE,
-            category = Biome.Category.PLAINS,
+            biomeCategory = Biome.Category.PLAINS,
             depth = 0.1f,
             scale = 0.3f,
             temperature = 1.5f,
             downfall = 0.0f,
-            effects = effects(0x6fa3bf, 0x1f37f2, 0x113d51, 0x1d5a75),
+            effects = DEFAULT_CASTLETON_EFFECTS,
             genSettings = genSettings
         )
     }
 
     fun makeRainbowPlainsBiome(): Biome {
-        val genSettings = genSettings(HSurfaceBuilders.RAINBOWLAND_SURFACE)
+        val genSettings = genSettings(HConfiguredSurfaceBuilders.RAINBOWLAND_SURFACE)
 
-        HFeatures.withRainbowlandOres(genSettings)
-        HFeatures.withRainbowlandStructures(genSettings)
+        HConfiguredFeatures.withRainbowlandOres(genSettings)
+        HConfiguredFeatures.withRainbowlandStructures(genSettings)
 
         return biome(
             precipitation = Biome.RainType.NONE,
-            category = Biome.Category.PLAINS,
+            biomeCategory = Biome.Category.PLAINS,
             depth = 0.1f,
             scale = 0.2f,
             temperature = 1.5f,
@@ -74,23 +96,23 @@ object HBiomeMaker {
     }
 
     fun makeThickForestBiome(): Biome {
-        val genSettings = genSettings(HSurfaceBuilders.THICK_FOREST, SurfaceBuilder.PODZOL_DIRT_GRAVEL_CONFIG)
+        val genSettings = genSettings(HSurfaceBuilders.THICK_FOREST, SurfaceBuilder.CONFIG_PODZOL)
 
-        DefaultBiomeFeatures.withCavesAndCanyons(genSettings)
-        DefaultBiomeFeatures.withStrongholdAndMineshaft(genSettings)
-        DefaultBiomeFeatures.withMonsterRoom(genSettings)
-        DefaultBiomeFeatures.withCommonOverworldBlocks(genSettings)
-        DefaultBiomeFeatures.withOverworldOres(genSettings)
-        DefaultBiomeFeatures.withDisks(genSettings)
-        DefaultBiomeFeatures.withMountainEdgeTrees(genSettings)
-        DefaultBiomeFeatures.withDefaultFlowers(genSettings)
-        DefaultBiomeFeatures.withForestGrass(genSettings)
-        DefaultBiomeFeatures.withTaigaGrassVegetation(genSettings)
-        DefaultBiomeFeatures.withTreesInWater(genSettings)
-        //DefaultBiomeFeatures.withExtraGoldOre(genSettings)
-        DefaultBiomeFeatures.withWarmFlowers(genSettings)
-        DefaultBiomeFeatures.withSugarCaneAndPumpkins(genSettings)
-        HFeatures.withOakShrubs(genSettings)
+        DefaultBiomeFeatures.addDefaultCarvers(genSettings)
+        DefaultBiomeFeatures.addDefaultOverworldLandStructures(genSettings)
+        DefaultBiomeFeatures.addDefaultMonsterRoom(genSettings)
+        DefaultBiomeFeatures.addDefaultUndergroundVariety(genSettings) // different stones
+        DefaultBiomeFeatures.addDefaultOres(genSettings) // ores
+        DefaultBiomeFeatures.addDefaultSoftDisks(genSettings) // sand + clay
+        DefaultBiomeFeatures.addMountainEdgeTrees(genSettings) // spruce and oak
+        DefaultBiomeFeatures.addDefaultFlowers(genSettings) // default flowers
+        DefaultBiomeFeatures.addForestGrass(genSettings) // grass
+        DefaultBiomeFeatures.addTaigaGrass(genSettings) // ferns
+        DefaultBiomeFeatures.addWaterTrees(genSettings) // water trees
+        //DefaultBiomeFeatures.addExtraGold(genSettings)
+        DefaultBiomeFeatures.addWarmFlowers(genSettings) // warm flowers
+        DefaultBiomeFeatures.addDefaultExtraVegetation(genSettings) // pumpkin + sugar cane
+        HConfiguredFeatures.withOakShrubs(genSettings)
 
         val spawnSettings = spawnSettings()
         spawnSettings.addSpawn(EntityClassification.CREATURE, EntityType.SHEEP, 12, 4, 4)
@@ -107,7 +129,7 @@ object HBiomeMaker {
 
         return biome(
             precipitation = Biome.RainType.RAIN,
-            category = Biome.Category.FOREST,
+            biomeCategory = Biome.Category.FOREST,
             depth = 0.2f,
             scale = 0.25f,
             temperature = 0.7f,
@@ -119,23 +141,23 @@ object HBiomeMaker {
     }
 
     fun makeMushroomCliffsBiome(): Biome {
-        val genSettings = genSettings(SurfaceBuilder.DEFAULT, SurfaceBuilder.MYCELIUM_DIRT_GRAVEL_CONFIG)
+        val genSettings = genSettings(SurfaceBuilder.DEFAULT, SurfaceBuilder.CONFIG_MYCELIUM)
 
-        DefaultBiomeFeatures.withCavesAndCanyons(genSettings)
-        DefaultBiomeFeatures.withStrongholdAndMineshaft(genSettings)
-        DefaultBiomeFeatures.withMonsterRoom(genSettings)
-        DefaultBiomeFeatures.withCommonOverworldBlocks(genSettings)
-        DefaultBiomeFeatures.withOverworldOres(genSettings)
-        DefaultBiomeFeatures.withDisks(genSettings)
-        DefaultBiomeFeatures.withMushroomBiomeVegetation(genSettings)
-        DefaultBiomeFeatures.withNormalMushroomGeneration(genSettings)
-        DefaultBiomeFeatures.withSugarCaneAndPumpkins(genSettings)
+        DefaultBiomeFeatures.addDefaultCarvers(genSettings) // canyon + cave
+        DefaultBiomeFeatures.addDefaultOverworldLandStructures(genSettings) // stronghold etc.
+        DefaultBiomeFeatures.addDefaultMonsterRoom(genSettings) // dungeon
+        DefaultBiomeFeatures.addDefaultUndergroundVariety(genSettings) // different stones
+        DefaultBiomeFeatures.addDefaultOres(genSettings) // ores
+        DefaultBiomeFeatures.addDefaultSoftDisks(genSettings) // clay + sand
+        DefaultBiomeFeatures.addMushroomFieldVegetation(genSettings) // mushroom island vegetation
+        DefaultBiomeFeatures.addDefaultMushrooms(genSettings) // mushrooms
+        DefaultBiomeFeatures.addDefaultExtraVegetation(genSettings) // pumpkin + sugar cane
 
-        HFeatures.withShroomyBoulders(genSettings)
+        HConfiguredFeatures.addShroomyBoulders(genSettings)
 
         return biome(
             precipitation = Biome.RainType.NONE,
-            category = Biome.Category.MUSHROOM,
+            biomeCategory = Biome.Category.MUSHROOM,
             depth = 0.3625f,
             scale = 1.225f,
             temperature = 0.9f,
@@ -146,11 +168,11 @@ object HBiomeMaker {
     }
 
     fun makeAubrumWastelandBiome(): Biome {
-        val genSettings = genSettings(HSurfaceBuilders.AUBRUM_WASTELAND_SURFACE)
+        val genSettings = genSettings(HConfiguredSurfaceBuilders.AUBRUM_WASTELAND_SURFACE)
 
         return biome(
             precipitation = Biome.RainType.NONE,
-            category = Biome.Category.PLAINS,
+            biomeCategory = Biome.Category.PLAINS,
             depth = 0.02f,
             scale = 0.4f,
             temperature = 1.5f,
@@ -161,11 +183,11 @@ object HBiomeMaker {
     }
 
     fun makeGoldenForestBiome(): Biome {
-        val genSettings = genSettings(HSurfaceBuilders.AUBRUM_WASTELAND_SURFACE)
+        val genSettings = genSettings(HConfiguredSurfaceBuilders.AUBRUM_WASTELAND_SURFACE)
 
         return biome(
             precipitation = Biome.RainType.NONE,
-            category = Biome.Category.MUSHROOM,
+            biomeCategory = Biome.Category.MUSHROOM,
             depth = 0.3625f,
             scale = 0.1f,
             temperature = 1.5f,
@@ -177,11 +199,11 @@ object HBiomeMaker {
     }
 
     fun makeAubrumMountainsBiome(): Biome {
-        val genSettings = genSettings(HSurfaceBuilders.AUBRUM_WASTELAND_SURFACE)
+        val genSettings = genSettings(HConfiguredSurfaceBuilders.AUBRUM_WASTELAND_SURFACE)
 
         return biome(
             precipitation = Biome.RainType.NONE,
-            category = Biome.Category.MUSHROOM,
+            biomeCategory = Biome.Category.MUSHROOM,
             depth = 0.3625f,
             scale = 1.225f,
             temperature = 1.5f,
@@ -192,13 +214,13 @@ object HBiomeMaker {
     }
 
     fun makeAuriPlainsBiome(): Biome {
-        val genSettings = genSettings(HSurfaceBuilders.AUBRUM_WASTELAND_SURFACE)
+        val genSettings = genSettings(HConfiguredSurfaceBuilders.AUBRUM_WASTELAND_SURFACE)
 
-        HFeatures.withAubrumFlowers(genSettings)
+        HConfiguredFeatures.withAubrumFlowers(genSettings)
 
         return biome(
             precipitation = Biome.RainType.NONE,
-            category = Biome.Category.MUSHROOM,
+            biomeCategory = Biome.Category.MUSHROOM,
             depth = 0.02f,
             scale = 0.1f,
             temperature = 1.5f,
@@ -209,15 +231,15 @@ object HBiomeMaker {
     }
 
     fun makeGumdropFieldsBiome(): Biome {
-        val genSettings = genSettings(HSurfaceBuilders.SUGARY_SURFACE)
+        val genSettings = genSettings(HConfiguredSurfaceBuilders.SUGARY_SURFACE)
         val spawnSettings = spawnSettings()
 
-        //HFeatures.withSparseCandyCanes(genSettings)
-        //HFeatures.withSparseChocolateBars(genSettings)
+        //HConfiguredFeatures.withSparseCandyCanes(genSettings)
+        //HConfiguredFeatures.withSparseChocolateBars(genSettings)
 
         return biome(
             precipitation = Biome.RainType.NONE,
-            category = Biome.Category.PLAINS,
+            biomeCategory = Biome.Category.PLAINS,
             depth = 0.04f,
             scale = 0.2f,
             temperature = 1.5f,
@@ -229,15 +251,15 @@ object HBiomeMaker {
     }
 
     fun makeCandyPlainsBiome(): Biome {
-        val genSettings = genSettings(HSurfaceBuilders.SUGARY_SURFACE)
+        val genSettings = genSettings(HConfiguredSurfaceBuilders.SUGARY_SURFACE)
         val spawnSettings = spawnSettings()
 
-        HFeatures.withSparseCandyCanes(genSettings)
-        HFeatures.withSparseChocolateBars(genSettings)
+        HConfiguredFeatures.withSparseCandyCanes(genSettings)
+        HConfiguredFeatures.withSparseChocolateBars(genSettings)
 
         return biome(
             precipitation = Biome.RainType.NONE,
-            category = Biome.Category.PLAINS,
+            biomeCategory = Biome.Category.PLAINS,
             depth = 0.04f,
             scale = 0.2f,
             temperature = 1.5f,
@@ -254,7 +276,7 @@ object HBiomeMaker {
      */
     fun biome(
         precipitation: Biome.RainType,
-        category: Biome.Category,
+        biomeCategory: Biome.Category,
         depth: Float,
         scale: Float,
         temperature: Float,
@@ -265,14 +287,14 @@ object HBiomeMaker {
     ): Biome {
         return Biome.Builder()
             .precipitation(precipitation)
-            .category(category)
+            .biomeCategory(biomeCategory)
             .depth(depth)
             .scale(scale)
             .temperature(temperature)
             .downfall(downfall)
-            .setEffects(effects.build())
-            .withGenerationSettings(genSettings.build())
-            .withMobSpawnSettings(spawnSettings?.build() ?: MobSpawnInfo.EMPTY)
+            .specialEffects(effects.build())
+            .generationSettings(genSettings.build())
+            .mobSpawnSettings(spawnSettings?.build() ?: MobSpawnInfo.EMPTY)
             .build()
     }
 
@@ -287,30 +309,25 @@ object HBiomeMaker {
         skyFogColor: Int,
     ): BiomeAmbience.Builder {
         return BiomeAmbience.Builder()
-            .setWaterColor(waterColor)
-            .setWaterFogColor(waterFogColor)
-            .withSkyColor(skyColor)
-            .setFogColor(skyFogColor)
+            .waterColor(waterColor)
+            .waterFogColor(waterFogColor)
+            .skyColor(skyColor)
+            .fogColor(skyFogColor)
     }
 
     /** Shortcut function and enforces surface builder */
     fun <C : ISurfaceBuilderConfig> genSettings(surfaceBuilder: SurfaceBuilder<C>, config: C): BiomeGenerationSettings.Builder {
-        return BiomeGenerationSettings.Builder().withSurfaceBuilder(surfaceBuilder.func_242929_a(config))
+        return BiomeGenerationSettings.Builder().surfaceBuilder(surfaceBuilder.configured(config))
     }
 
     /** Shortcut function and enforces surface builder */
     fun <C : ISurfaceBuilderConfig> genSettings(surfaceBuilder: ConfiguredSurfaceBuilder<C>): BiomeGenerationSettings.Builder {
-        return BiomeGenerationSettings.Builder().withSurfaceBuilder(surfaceBuilder)
+        return BiomeGenerationSettings.Builder().surfaceBuilder(surfaceBuilder)
     }
 
     /** Shortcut function */
     fun spawnSettings(): MobSpawnInfo.Builder {
         return MobSpawnInfo.Builder()
-    }
-
-    /** Just for consistency why the fuck is it not build */
-    fun MobSpawnInfo.Builder.build(): MobSpawnInfo {
-        return copy()
     }
 
     /** Shortcut function */
@@ -321,11 +338,11 @@ object HBiomeMaker {
         min: Int,
         max: Int
     ): MobSpawnInfo.Builder {
-        return withSpawner(classification, MobSpawnInfo.Spawners(entityType, weight, min, max))
+        return addSpawn(classification, MobSpawnInfo.Spawners(entityType, weight, min, max))
     }
 
     private fun getSkyForTemp(temperature: Float): Int {
         val a = MathHelper.clamp(temperature / 3.0f, -1.0f, 1.0f)
-        return MathHelper.hsvToRGB(0.62222224f - a * 0.05f, 0.5f + a * 0.1f, 1.0f)
+        return MathHelper.hsvToRgb(0.62222224f - a * 0.05f, 0.5f + a * 0.1f, 1.0f)
     }
 }

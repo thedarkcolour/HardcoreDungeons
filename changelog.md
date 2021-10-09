@@ -1,5 +1,16 @@
 ## Hardcore Dungeons Changelog
 
+### Alpha 14
+* Malachite Block and Rainbowstone Block can now be used as a beacon base
+* Rainbow Glass can now be used to color beacon beams
+* Fixed Scythes not dealing damage
+* Added Candyland Portal with placeholder textures
+* Added some oak plank variants
+* Fixed incorrect player capability name
+
+### Alpha 13
+* Bugfix for server crash and other incomplete stuff
+
 ### Alpha 12
 * Updated to Minecraft 1.16.5
 * Added more people to the mod credits

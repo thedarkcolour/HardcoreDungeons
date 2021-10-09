@@ -23,18 +23,18 @@ class GrassBlock(
     properties: Properties
 ) : Block(properties) {
     override fun tick(state: BlockState, world: ServerWorld, pos: BlockPos, random: Random) {
-        val abovePos = pos.up()
+        val abovePos = pos.above()
 
         if (!canSurvive(world.getBlockState(abovePos), world, abovePos)) {
             if (world.isAreaLoaded(pos, 3)) {
-                world.setBlockState(pos, soil())
+                world.setBlockAndUpdate(pos, soil())
             }
         } else {
-            if (world.getLight(abovePos) >= 9 || (nocturnal && world.canBlockSeeSky(pos))) {
+            if (world.getLightEmission(abovePos) >= 9 || (nocturnal && world.canSeeSkyFromBelowWater(pos))) {
                 for (i in 0..3) {
-                    val randomPos = abovePos.add(random.nextInt(3) - 1, random.nextInt(5) - 3, random.nextInt(3) - 1)
+                    val randomPos = abovePos.offset(random.nextInt(3) - 1, random.nextInt(5) - 3, random.nextInt(3) - 1)
                     if (world.getBlockState(randomPos) == soil() && canSpread(state, world, abovePos)) {
-                        world.setBlockState(randomPos, defaultState)
+                        world.setBlockAndUpdate(randomPos, defaultBlockState())
                     }
                 }
             }
@@ -42,22 +42,22 @@ class GrassBlock(
     }
 
     private fun canSurvive(state: BlockState, world: ServerWorld, abovePos: BlockPos): Boolean {
-        return if (state.block == Blocks.SNOW && state.get(SnowBlock.LAYERS) == 1) {
+        return if (state.block == Blocks.SNOW && state.getValue(SnowBlock.LAYERS) == 1) {
             true
         } else {
-            val i = LightEngine.func_215613_a(world, state, abovePos, state, abovePos, Direction.UP, state.getOpacity(world, abovePos))
+            val i = LightEngine.getLightBlockInto(world, state, abovePos, state, abovePos, Direction.UP, state.getLightBlock(world, abovePos))
             i < world.maxLightLevel
         }
     }
 
     private fun canSpread(state: BlockState, world: ServerWorld, abovePos: BlockPos): Boolean {
-        return canSurvive(state, world, abovePos) && !world.getFluidState(abovePos).isTagged(FluidTags.WATER)
+        return canSurvive(state, world, abovePos) && !world.getFluidState(abovePos).`is`(FluidTags.WATER)
     }
 
     // replace with correct soil when a tree grows on this grass
     override fun onPlantGrow(state: BlockState, world: IWorld, pos: BlockPos, source: BlockPos) {
-        if (state.isIn(Tags.Blocks.DIRT)) {
-            world.setBlockState(pos, soil(), 2)
+        if (state.`is`(Tags.Blocks.DIRT)) {
+            world.setBlock(pos, soil(), 2)
         }
     }
 
@@ -68,6 +68,6 @@ class GrassBlock(
         facing: Direction,
         plantable: IPlantable
     ): Boolean {
-        return plantable.getPlant(world, pos.offset(facing)).isIn(plantableTag)
+        return plantable.getPlant(world, pos.relative(facing)).`is`(plantableTag)
     }
 }

@@ -13,13 +13,13 @@ import thedarkcolour.hardcoredungeons.item.misc.SwordWithLoreItem
 /**
  * @author TheDarkColour
  */
-class ShroomySwordItem(properties: Properties) : SwordWithLoreItem(HItemTier.SHROOMY, 3, -2.7f, properties, { it.setFormatting(TextFormatting.GRAY) }) {
+class ShroomySwordItem(properties: Properties) : SwordWithLoreItem(HItemTier.SHROOMY, 3, -2.7f, properties, { it.applyFormat(TextFormatting.GRAY) }) {
     override fun onLeftClickEntity(stack: ItemStack, player: PlayerEntity, entity: Entity): Boolean {
         if (entity is LivingEntity) {
             // poison damage stacks
-            val a = entity.activePotionMap.containsKey(Effects.POISON)
+            val a = entity.activeEffectsMap.containsKey(Effects.POISON)
 
-            entity.addPotionEffect(EffectInstance(Effects.POISON, 80, if (a) 3 else 2))
+            entity.addEffect(EffectInstance(Effects.POISON, 80, if (a) 3 else 2))
         }
         return super.onLeftClickEntity(stack, player, entity)
     }

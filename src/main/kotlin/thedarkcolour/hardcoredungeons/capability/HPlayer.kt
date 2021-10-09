@@ -27,7 +27,7 @@ interface HPlayer {
     }
 
     companion object {
-        val ID = modLoc("swimming")
+        val ID = modLoc("player")
 
         fun get(): Capability<HPlayer> {
             return CAP
@@ -42,8 +42,8 @@ interface HPlayer {
                     }
 
                     override fun readNBT(capability: Capability<HPlayer>?, instance: HPlayer, side: Direction?, nbt: INBT) {
-                        // prevent weird nbt hackery
-                        instance.portalCooldown = (nbt as ByteNBT).byte.coerceAtLeast(0)
+                        // prevent weird nbt stuff
+                        instance.portalCooldown = (nbt as ByteNBT).asByte.coerceAtLeast(0)
                     }
                 },
                 ::Impl

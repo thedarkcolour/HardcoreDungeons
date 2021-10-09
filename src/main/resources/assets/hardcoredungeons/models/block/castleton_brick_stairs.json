@@ -1,8 +1,0 @@
-{
-    "parent": "block/stairs",
-    "textures": {
-        "bottom": "hardcoredungeons:block/castleton_bricks",
-        "top": "hardcoredungeons:block/castleton_bricks",
-        "side": "hardcoredungeons:block/castleton_bricks"
-    }
-}

@@ -16,12 +16,12 @@ open class SwordWithLoreItem(
     properties: Properties,
     private val style: (Style) -> Style,
 ) : SwordItem(tier, damage, speed, properties) {
-    override fun addInformation(
+    override fun appendHoverText(
         stack: ItemStack,
         worldIn: World?,
         tooltip: MutableList<ITextComponent>,
         flagIn: ITooltipFlag
     ) {
-        tooltip.add(TranslationTextComponent("$translationKey.lore").setStyle(style(Style.EMPTY)))
+        tooltip.add(TranslationTextComponent("$descriptionId.lore").setStyle(style(Style.EMPTY)))
     }
 }

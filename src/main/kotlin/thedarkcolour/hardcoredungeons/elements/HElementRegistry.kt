@@ -67,7 +67,7 @@ object HElementRegistry {
         addElement(EntityType.PHANTOM, HElement.WIND)
         addElement(EntityType.PIG, HElement.EARTH)
         addElement(EntityType.PIGLIN, HElement.FIRE)
-        addElement(EntityType.field_242287_aj, HElement.FIRE)
+        addElement(EntityType.PIGLIN_BRUTE, HElement.FIRE)
         addElement(EntityType.PILLAGER, HElement.EARTH)
         addElement(EntityType.POLAR_BEAR, HElement.WATER)
         addElement(EntityType.PUFFERFISH, HElement.WATER)

@@ -7,12 +7,9 @@ import net.minecraft.entity.item.ArmorStandEntity
 import net.minecraft.inventory.EquipmentSlotType
 import thedarkcolour.hardcoredungeons.util.PI
 
-
-
-
-
+// Thanks to Botania
 open class ArmorModel(val slot: EquipmentSlotType) : BipedModel<LivingEntity>(1.0f) {
-    override fun setRotationAngles(
+    override fun setupAnim(
         entityIn: LivingEntity,
         limbSwing: Float,
         limbSwingAmount: Float,
@@ -21,40 +18,40 @@ open class ArmorModel(val slot: EquipmentSlotType) : BipedModel<LivingEntity>(1.
         headPitch: Float,
     ) {
         if (entityIn !is ArmorStandEntity) {
-            return super.setRotationAngles(entityIn, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch)
+            return super.setupAnim(entityIn, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch)
         }
 
-        bipedHead.rotateAngleX = ONE_RADIAN * entityIn.headRotation.x
-        bipedHead.rotateAngleY = ONE_RADIAN * entityIn.headRotation.y
-        bipedHead.rotateAngleZ = ONE_RADIAN * entityIn.headRotation.z
-        bipedHead.setRotationPoint(0.0f, 1.0f, 0.0f)
-        bipedBody.rotateAngleX = ONE_RADIAN * entityIn.bodyRotation.x
-        bipedBody.rotateAngleY = ONE_RADIAN * entityIn.bodyRotation.y
-        bipedBody.rotateAngleZ = ONE_RADIAN * entityIn.bodyRotation.z
-        bipedLeftArm.rotateAngleX = ONE_RADIAN * entityIn.leftArmRotation.x
-        bipedLeftArm.rotateAngleY = ONE_RADIAN * entityIn.leftArmRotation.y
-        bipedLeftArm.rotateAngleZ = ONE_RADIAN * entityIn.leftArmRotation.z
-        bipedRightArm.rotateAngleX = ONE_RADIAN * entityIn.rightArmRotation.x
-        bipedRightArm.rotateAngleY = ONE_RADIAN * entityIn.rightArmRotation.y
-        bipedRightArm.rotateAngleZ = ONE_RADIAN * entityIn.rightArmRotation.z
-        bipedLeftLeg.rotateAngleX = ONE_RADIAN * entityIn.leftLegRotation.x
-        bipedLeftLeg.rotateAngleY = ONE_RADIAN * entityIn.leftLegRotation.y
-        bipedLeftLeg.rotateAngleZ = ONE_RADIAN * entityIn.leftLegRotation.z
-        bipedLeftLeg.setRotationPoint(1.9f, 11.0f, 0.0f)
-        bipedRightLeg.rotateAngleX = ONE_RADIAN * entityIn.rightLegRotation.x
-        bipedRightLeg.rotateAngleY = ONE_RADIAN * entityIn.rightLegRotation.y
-        bipedRightLeg.rotateAngleZ = ONE_RADIAN * entityIn.rightLegRotation.z
-        bipedRightLeg.setRotationPoint(-1.9f, 11.0f, 0.0f)
-        bipedHeadwear.copyModelAngles(bipedHead)
+        head.xRot = ONE_DEGREES * entityIn.headPose.x
+        head.yRot = ONE_DEGREES * entityIn.headPose.y
+        head.zRot = ONE_DEGREES * entityIn.headPose.z
+        head.setPos(0.0f, 1.0f, 0.0f)
+        body.xRot = ONE_DEGREES * entityIn.bodyPose.x
+        body.yRot = ONE_DEGREES * entityIn.bodyPose.y
+        body.zRot = ONE_DEGREES * entityIn.bodyPose.z
+        leftArm.xRot = ONE_DEGREES * entityIn.leftArmPose.x
+        leftArm.yRot = ONE_DEGREES * entityIn.leftArmPose.y
+        leftArm.zRot = ONE_DEGREES * entityIn.leftArmPose.z
+        rightArm.xRot = ONE_DEGREES * entityIn.rightArmPose.x
+        rightArm.yRot = ONE_DEGREES * entityIn.rightArmPose.y
+        rightArm.zRot = ONE_DEGREES * entityIn.rightArmPose.z
+        leftLeg.xRot = ONE_DEGREES * entityIn.leftLegPose.x
+        leftLeg.yRot = ONE_DEGREES * entityIn.leftLegPose.y
+        leftLeg.zRot = ONE_DEGREES * entityIn.leftLegPose.z
+        leftLeg.setPos(1.9f, 11.0f, 0.0f)
+        rightLeg.xRot = ONE_DEGREES * entityIn.rightLegPose.x
+        rightLeg.yRot = ONE_DEGREES * entityIn.rightLegPose.y
+        rightLeg.zRot = ONE_DEGREES * entityIn.rightLegPose.z
+        rightLeg.setPos(-1.9f, 11.0f, 0.0f)
+        hat.copyFrom(head)
     }
 
     protected fun setRotateAngle(modelRenderer: ModelRenderer, x: Float, y: Float, z: Float) {
-        modelRenderer.rotateAngleX = x
-        modelRenderer.rotateAngleY = y
-        modelRenderer.rotateAngleZ = z
+        modelRenderer.xRot = x
+        modelRenderer.yRot = y
+        modelRenderer.zRot = z
     }
 
     companion object {
-        const val ONE_RADIAN = PI / 180.0f
+        const val ONE_DEGREES = PI / 180.0f
     }
 }

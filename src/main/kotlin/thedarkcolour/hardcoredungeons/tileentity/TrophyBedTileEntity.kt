@@ -13,11 +13,11 @@ class TrophyBedTileEntity(type: TileEntityType<*> = TODO()/*HTileEntities.TROPHY
     }
 
     override fun getUpdatePacket(): SUpdateTileEntityPacket? {
-        return SUpdateTileEntityPacket(pos, -1, updateTag)
+        return SUpdateTileEntityPacket(blockPos, -1, updateTag)
     }
 
     override fun onDataPacket(net: NetworkManager?, pkt: SUpdateTileEntityPacket) {
-        read(world!!.getBlockState(pos), pkt.nbtCompound)
+        load(level!!.getBlockState(blockPos), pkt.tag)
     }
 
     enum class Pattern {

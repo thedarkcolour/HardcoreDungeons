@@ -1,16 +1,14 @@
 package thedarkcolour.hardcoredungeons.data
 
+import net.minecraft.block.Block
 import net.minecraft.data.BlockTagsProvider
 import net.minecraft.data.DataGenerator
-import net.minecraft.tags.BlockTags
 import net.minecraft.tags.ITag
-import net.minecraft.util.ResourceLocation
 import net.minecraftforge.common.Tags.Blocks
 import net.minecraftforge.common.data.ExistingFileHelper
 import thedarkcolour.hardcoredungeons.HardcoreDungeons
-import thedarkcolour.hardcoredungeons.registry.HBlocks
+import thedarkcolour.hardcoredungeons.block.HBlocks
 import thedarkcolour.hardcoredungeons.tags.HBlockTags
-import java.nio.file.Path
 
 /**
  * Generates block tags for Hardcore Dungeons blocks.
@@ -19,99 +17,112 @@ import java.nio.file.Path
  */
 class BlockTagGenerator(gen: DataGenerator, helper: ExistingFileHelper) : BlockTagsProvider(gen, HardcoreDungeons.ID, helper) {
     /**
-     * A set of all non Hardcore Dungeons blocks and tags
-     * that is used to avoid generating unused tags.
-     */
-    private var filter: Set<ResourceLocation>? = null
-
-    /**
      * Register tags for each block.
      */
-    override fun registerTags() {
-        super.registerTags()
-
-        // Collect all tags before this point (vanilla tags are already registered)
-        // These tags will not be saved by Hardcore Dungeons data provider
-        filter = tagToBuilder.entries.map(Map.Entry<ResourceLocation, ITag.Builder>::key).toHashSet()
+    override fun addTags() {
 
         // hcd tags
-        getOrCreateBuilder(HBlockTags.LUMLIGHT_LOGS).add(HBlocks.LUMLIGHT_LOG, HBlocks.LUMLIGHT_WOOD, HBlocks.STRIPPED_LUMLIGHT_LOG, HBlocks.STRIPPED_LUMLIGHT_WOOD)
-        getOrCreateBuilder(HBlockTags.COTTONMARSH_LOGS).add(HBlocks.COTTONMARSH_LOG, HBlocks.COTTONMARSH_WOOD, HBlocks.STRIPPED_COTTONMARSH_LOG, HBlocks.STRIPPED_COTTONMARSH_WOOD)
-        getOrCreateBuilder(HBlockTags.AURI_LOGS).add(HBlocks.AURI_LOG, HBlocks.AURI_WOOD, HBlocks.STRIPPED_AURI_LOG, HBlocks.STRIPPED_AURI_WOOD)
-        getOrCreateBuilder(HBlockTags.GLASS_RAINBOW).add(HBlocks.RAINBOW_GLASS)
-        getOrCreateBuilder(HBlockTags.GLASS_PANES_RAINBOW).add(HBlocks.RAINBOW_GLASS_PANE)
-        getOrCreateBuilder(HBlockTags.FENCES_BRICK).add(HBlocks.CASTLETON_BRICK_FENCE, HBlocks.CHARGED_CASTLETON_BRICK_FENCE, HBlocks.RAINBOW_BRICK_FENCE, HBlocks.RAINBOW_FACTORY_BRICK_FENCE)
-        getOrCreateBuilder(HBlockTags.CASTLETON_GRASS_PLANTABLE).add(HBlocks.LUMLIGHT_SAPLING, HBlocks.BLUE_LUMSHROOM, HBlocks.PURPLE_LUMSHROOM)
-        getOrCreateBuilder(HBlockTags.RAINBOW_GRASS_PLANTABLE).add(HBlocks.COTTONMARSH_SAPLING)
-        getOrCreateBuilder(HBlockTags.AURIGRASS_PLANTABLE).add(HBlocks.FLAME_ROSE, HBlocks.GOLDEN_TULIP)
-        getOrCreateBuilder(HBlockTags.SUGARY_GRASS_PLANTABLE).add(HBlocks.GREEN_GUMDROP, HBlocks.MINI_GREEN_GUMDROP, HBlocks.PINK_GUMDROP, HBlocks.MINI_PINK_GUMDROP, HBlocks.BLUE_GUMDROP, HBlocks.MINI_BLUE_GUMDROP, HBlocks.PURPLE_GUMDROP, HBlocks.MINI_PURPLE_GUMDROP, HBlocks.RED_GUMDROP, HBlocks.MINI_RED_GUMDROP, HBlocks.YELLOW_GUMDROP, HBlocks.MINI_YELLOW_GUMDROP)
+        HBlocks.LUMLIGHT_WOOD.addTags(this)
+        HBlocks.COTTONMARSH_WOOD.addTags(this)
+        HBlocks.AURI_WOOD.addTags(this)
+
+        tag(HBlockTags.GLASS_RAINBOW).add(HBlocks.RAINBOW_GLASS)
+        tag(HBlockTags.GLASS_PANES_RAINBOW).add(HBlocks.RAINBOW_GLASS_PANE)
+        HBlocks.CASTLETON_STONE.addTags(this)
+        HBlocks.CHARGED_CASTLETON_BRICKS.addTags(this)
+        HBlocks.RAINBOW_ROCK.addTags(this)
+        HBlocks.RAINBOW_FACTORY_BRICKS.addTags(this)
+        //tag(HBlockTags.FENCES_BRICK).add(, HBlocksNew.CHARGED_CASTLETON_BRICK_FENCE, HBlocksNew.RAINBOW_BRICK_FENCE, HBlocksNew.RAINBOW_FACTORY_BRICK_FENCE)
+        tag(HBlockTags.CASTLETON_GRASS_PLANTABLE).add(HBlocks.LUMLIGHT_WOOD.sapling.plant, HBlocks.BLUE_LUMSHROOM.plant, HBlocks.PURPLE_LUMSHROOM.plant)
+        tag(HBlockTags.RAINBOW_GRASS_PLANTABLE).add(HBlocks.LUMLIGHT_WOOD.sapling.plant)
+        tag(HBlockTags.AURIGRASS_PLANTABLE).add(HBlocks.FLAME_ROSE.plant, HBlocks.GOLDEN_TULIP.plant)
+        tag(HBlockTags.SUGARY_GRASS_PLANTABLE).add(HBlocks.GREEN_GUMDROP.plant, HBlocks.MINI_GREEN_GUMDROP.plant, HBlocks.PINK_GUMDROP.plant, HBlocks.MINI_PINK_GUMDROP.plant, HBlocks.BLUE_GUMDROP.plant, HBlocks.MINI_BLUE_GUMDROP.plant, HBlocks.PURPLE_GUMDROP.plant, HBlocks.MINI_PURPLE_GUMDROP.plant, HBlocks.RED_GUMDROP.plant, HBlocks.MINI_RED_GUMDROP.plant, HBlocks.YELLOW_GUMDROP.plant, HBlocks.MINI_YELLOW_GUMDROP.plant)
+
+        HBlocks.CHILI_PEPPER.addTags(this)
+        HBlocks.WILD_BERROOK.addTags(this)
+
+        HBlocks.AUBRUM_PORTAL.addTags(this)
+        HBlocks.CANDYLAND_PORTAL.addTags(this)
+        HBlocks.CASTLETON_PORTAL.addTags(this)
+        HBlocks.RAINBOWLAND_PORTAL.addTags(this)
 
         // vanilla tags
-        getOrCreateBuilder(BlockTags.PLANKS).add(HBlocks.LUMLIGHT_PLANKS)
-        getOrCreateBuilder(BlockTags.WOODEN_DOORS).add(HBlocks.LUMLIGHT_DOOR)
-        getOrCreateBuilder(BlockTags.WOODEN_STAIRS).add(HBlocks.AURI_STAIRS, HBlocks.LUMLIGHT_STAIRS)
-        getOrCreateBuilder(BlockTags.WOODEN_SLABS).add(HBlocks.AURI_SLAB, HBlocks.LUMLIGHT_SLAB)
-        getOrCreateBuilder(BlockTags.WOODEN_FENCES).add(HBlocks.LUMLIGHT_FENCE)
-        getOrCreateBuilder(BlockTags.WOODEN_PRESSURE_PLATES).add(HBlocks.LUMLIGHT_PRESSURE_PLATE)
-        getOrCreateBuilder(BlockTags.PORTALS).add(HBlocks.AUBRUM_PORTAL, HBlocks.CASTLETON_PORTAL, HBlocks.RAINBOWLAND_PORTAL)
-        getOrCreateBuilder(BlockTags.WALL_POST_OVERRIDE).add(HBlocks.LUMLIGHT_PRESSURE_PLATE, HBlocks.CASTLETON_TORCH, HBlocks.CROWN, HBlocks.CHALICE)
-        getOrCreateBuilder(BlockTags.SAPLINGS).add(HBlocks.LUMLIGHT_SAPLING)
-        getOrCreateBuilder(BlockTags.CROPS).add(HBlocks.CHILI_PEPPER)
-        getOrCreateBuilder(BlockTags.BEE_GROWABLES).add(HBlocks.CHILI_PEPPER)
-        getOrCreateBuilder(BlockTags.LEAVES).add(HBlocks.COTTONMARSH_LEAVES, HBlocks.LUMLIGHT_LEAVES)
-        getOrCreateBuilder(BlockTags.LOGS).addTag(HBlockTags.LUMLIGHT_LOGS)//.addTag(HBlockTags.COTTONMARSH_LOGS)
-        getOrCreateBuilder(BlockTags.IMPERMEABLE).addTag(HBlockTags.GLASS_RAINBOW)
+        /*tag(BlockTags.WALLS).add(HBlocksNew.SHROOMY_COBBLESTONE_WALL, HBlocksNew.SHROOMY_STONE_BRICK_WALL, HBlocksNew.CASTLETON_BRICK_WALL, HBlocksNew.CHARGED_CASTLETON_BRICK_WALL, HBlocksNew.RAINBOW_BRICK_WALL, HBlocksNew.RAINBOW_FACTORY_BRICK_WALL)
+        tag(BlockTags.FENCES).add(HBlocksNew.CASTLETON_BRICK_FENCE, HBlocksNew.CHARGED_CASTLETON_BRICK_FENCE, HBlocksNew.LUMLIGHT_FENCE, HBlocksNew.RAINBOW_BRICK_FENCE, HBlocksNew.RAINBOW_FACTORY_BRICK_FENCE)
+        tag(BlockTags.LEAVES).add(HBlocksNew.COTTONMARSH_LEAVES, HBlocksNew.LUMLIGHT_LEAVES)
+        tag(BlockTags.IMPERMEABLE).add(HBlocksNew.RAINBOW_GLASS)
+        tag(BlockTags.STANDING_SIGNS).add(HBlocksNew.LUMLIGHT_SIGN)
+        tag(BlockTags.WALL_SIGNS).add(HBlocksNew.LUMLIGHT_WALL_SIGN)
+        tag(BlockTags.SIGNS).add(HBlocksNew.LUMLIGHT_SIGN, HBlocksNew.LUMLIGHT_WALL_SIGN)
+        tag(BlockTags.WITHER_IMMUNE).add(HBlocksNew.DUNGEON_CASTLETON_BRICKS)
+        tag(BlockTags.CROPS).add(HBlocksNew.CHILI_PEPPER, HBlocksNew.WILD_BERROOK)
+        tag(BlockTags.PORTALS).add(HBlocksNew.AUBRUM_PORTAL, HBlocksNew.CASTLETON_PORTAL, HBlocksNew.RAINBOWLAND_PORTAL, HBlocksNew.CANDYLAND_PORTAL)
+        tag(BlockTags.BEACON_BASE_BLOCKS).add(HBlocksNew.RAINBOWSTONE_BLOCK, HBlocksNew.MALACHITE_BLOCK)
+        tag(BlockTags.PLANKS).add(HBlocksNew.LUMLIGHT_PLANKS, *HBlocksNew.OAK_PLANKS.variants, *HBlocksNew.SPRUCE_PLANKS.variants)
+        tag(BlockTags.WOODEN_DOORS).add(HBlocksNew.LUMLIGHT_DOOR)
+        tag(BlockTags.WOODEN_STAIRS).add(HBlocksNew.AURI_STAIRS, HBlocksNew.LUMLIGHT_STAIRS)
+        tag(BlockTags.WOODEN_SLABS).add(HBlocksNew.AURI_SLAB, HBlocksNew.LUMLIGHT_SLAB)
+        tag(BlockTags.WOODEN_FENCES).add(HBlocksNew.LUMLIGHT_FENCE)
+        tag(BlockTags.WOODEN_PRESSURE_PLATES).add(HBlocksNew.LUMLIGHT_PRESSURE_PLATE)
+        tag(BlockTags.PORTALS).add(HBlocksNew.AUBRUM_PORTAL, HBlocksNew.CASTLETON_PORTAL, HBlocksNew.RAINBOWLAND_PORTAL)
+        tag(BlockTags.WALL_POST_OVERRIDE).add(HBlocksNew.LUMLIGHT_PRESSURE_PLATE, HBlocksNew.CASTLETON_TORCH, HBlocksNew.CROWN, HBlocksNew.CHALICE)
+        tag(BlockTags.SAPLINGS).add(HBlocksNew.LUMLIGHT_SAPLING)
+        tag(BlockTags.CROPS).add(HBlocksNew.CHILI_PEPPER)
+        tag(BlockTags.BEE_GROWABLES).add(HBlocksNew.CHILI_PEPPER)
+        tag(BlockTags.LOGS).addTag(HBlockTags.LUMLIGHT_LOGS)//.addTag(HBlockTags.COTTONMARSH_LOGS)
+        tag(BlockTags.IMPERMEABLE).addTag(HBlockTags.GLASS_RAINBOW)
 
         // forge tags
-        getOrCreateBuilder(Blocks.DIRT).add(HBlocks.CASTLETON_SOIL, HBlocks.CASTLETON_GRASS_BLOCK, HBlocks.RAINBOW_SOIL, HBlocks.RAINBOW_GRASS_BLOCK, HBlocks.AURIGRASS_BLOCK, HBlocks.AURISOIL, HBlocks.SUGARY_GRASS_BLOCK, HBlocks.SUGARY_SOIL)
-        getOrCreateBuilder(Blocks.FENCES).add(HBlocks.LUMLIGHT_FENCE, HBlocks.CHARGED_CASTLETON_BRICK_FENCE)
-        getOrCreateBuilder(Blocks.FENCE_GATES_WOODEN).add(HBlocks.LUMLIGHT_FENCE_GATE)
-        getOrCreateBuilder(Blocks.GLASS).addTag(HBlockTags.GLASS_RAINBOW)
-        getOrCreateBuilder(Blocks.GLASS_PANES).addTag(HBlockTags.GLASS_PANES_RAINBOW) // the chaotic glass
-        getOrCreateBuilder(Blocks.GLASS_BLACK).addTag(HBlockTags.GLASS_RAINBOW)
-        getOrCreateBuilder(Blocks.GLASS_BLUE).addTag(HBlockTags.GLASS_RAINBOW)
-        getOrCreateBuilder(Blocks.GLASS_BROWN).addTag(HBlockTags.GLASS_RAINBOW)
-        getOrCreateBuilder(Blocks.GLASS_CYAN).addTag(HBlockTags.GLASS_RAINBOW)
-        getOrCreateBuilder(Blocks.GLASS_GRAY).addTag(HBlockTags.GLASS_RAINBOW)
-        getOrCreateBuilder(Blocks.GLASS_GREEN).addTag(HBlockTags.GLASS_RAINBOW)
-        getOrCreateBuilder(Blocks.GLASS_LIGHT_BLUE).addTag(HBlockTags.GLASS_RAINBOW)
-        getOrCreateBuilder(Blocks.GLASS_LIGHT_GRAY).addTag(HBlockTags.GLASS_RAINBOW)
-        getOrCreateBuilder(Blocks.GLASS_LIME).addTag(HBlockTags.GLASS_RAINBOW)
-        getOrCreateBuilder(Blocks.GLASS_MAGENTA).addTag(HBlockTags.GLASS_RAINBOW)
-        getOrCreateBuilder(Blocks.GLASS_ORANGE).addTag(HBlockTags.GLASS_RAINBOW)
-        getOrCreateBuilder(Blocks.GLASS_PINK).addTag(HBlockTags.GLASS_RAINBOW)
-        getOrCreateBuilder(Blocks.GLASS_PURPLE).addTag(HBlockTags.GLASS_RAINBOW)
-        getOrCreateBuilder(Blocks.GLASS_RED).addTag(HBlockTags.GLASS_RAINBOW)
-        getOrCreateBuilder(Blocks.GLASS_WHITE).addTag(HBlockTags.GLASS_RAINBOW)
-        getOrCreateBuilder(Blocks.GLASS_YELLOW).addTag(HBlockTags.GLASS_RAINBOW)
-        getOrCreateBuilder(Blocks.GLASS_PANES).addTag(HBlockTags.GLASS_PANES_RAINBOW)
-        getOrCreateBuilder(Blocks.GLASS_PANES_BLACK).addTag(HBlockTags.GLASS_PANES_RAINBOW)
-        getOrCreateBuilder(Blocks.GLASS_PANES_BLUE).addTag(HBlockTags.GLASS_PANES_RAINBOW)
-        getOrCreateBuilder(Blocks.GLASS_PANES_BROWN).addTag(HBlockTags.GLASS_PANES_RAINBOW)
-        getOrCreateBuilder(Blocks.GLASS_PANES_COLORLESS).addTag(HBlockTags.GLASS_PANES_RAINBOW)
-        getOrCreateBuilder(Blocks.GLASS_PANES_CYAN).addTag(HBlockTags.GLASS_PANES_RAINBOW)
-        getOrCreateBuilder(Blocks.GLASS_PANES_GRAY).addTag(HBlockTags.GLASS_PANES_RAINBOW)
-        getOrCreateBuilder(Blocks.GLASS_PANES_GREEN).addTag(HBlockTags.GLASS_PANES_RAINBOW)
-        getOrCreateBuilder(Blocks.GLASS_PANES_LIGHT_BLUE).addTag(HBlockTags.GLASS_PANES_RAINBOW)
-        getOrCreateBuilder(Blocks.GLASS_PANES_LIGHT_GRAY).addTag(HBlockTags.GLASS_PANES_RAINBOW)
-        getOrCreateBuilder(Blocks.GLASS_PANES_LIME).addTag(HBlockTags.GLASS_PANES_RAINBOW)
-        getOrCreateBuilder(Blocks.GLASS_PANES_MAGENTA).addTag(HBlockTags.GLASS_PANES_RAINBOW)
-        getOrCreateBuilder(Blocks.GLASS_PANES_ORANGE).addTag(HBlockTags.GLASS_PANES_RAINBOW)
-        getOrCreateBuilder(Blocks.GLASS_PANES_PINK).addTag(HBlockTags.GLASS_PANES_RAINBOW)
-        getOrCreateBuilder(Blocks.GLASS_PANES_PURPLE).addTag(HBlockTags.GLASS_PANES_RAINBOW)
-        getOrCreateBuilder(Blocks.GLASS_PANES_RED).addTag(HBlockTags.GLASS_PANES_RAINBOW)
+        tag(Blocks.DIRT).add(HBlocksNew.CASTLETON_SOIL, HBlocksNew.CASTLETON_GRASS_BLOCK, HBlocksNew.RAINBOW_SOIL, HBlocksNew.RAINBOW_GRASS_BLOCK, HBlocksNew.AURIGRASS_BLOCK, HBlocksNew.AURISOIL, HBlocksNew.SUGARY_GRASS_BLOCK, HBlocksNew.SUGARY_SOIL)
+        tag(Blocks.FENCES).add(HBlocksNew.CASTLETON_BRICK_FENCE, HBlocksNew.CHARGED_CASTLETON_BRICK_FENCE, HBlocksNew.RAINBOW_BRICK_FENCE, HBlocksNew.RAINBOW_FACTORY_BRICK_FENCE)
+        tag(Blocks.FENCES_WOODEN).add(HBlocksNew.LUMLIGHT_FENCE)
+        tag(Blocks.FENCE_GATES).add(HBlocksNew.LUMLIGHT_FENCE_GATE)
+        tag(Blocks.FENCE_GATES_WOODEN).add(HBlocksNew.LUMLIGHT_FENCE_GATE)*/
+        HBlocks.CASTLETON_SOIL.addTags(this)
+        HBlocks.RAINBOW_SOIL.addTags(this)
+        HBlocks.AURISOIL.addTags(this)
+        HBlocks.SUGARY_SOIL.addTags(this)
+
+        tag(Blocks.GLASS).addTag(HBlockTags.GLASS_RAINBOW)
+        tag(Blocks.GLASS_PANES).addTag(HBlockTags.GLASS_PANES_RAINBOW) // the chaotic glass
+        tag(Blocks.GLASS_BLACK).addTag(HBlockTags.GLASS_RAINBOW)
+        tag(Blocks.GLASS_BLUE).addTag(HBlockTags.GLASS_RAINBOW)
+        tag(Blocks.GLASS_BROWN).addTag(HBlockTags.GLASS_RAINBOW)
+        tag(Blocks.GLASS_CYAN).addTag(HBlockTags.GLASS_RAINBOW)
+        tag(Blocks.GLASS_GRAY).addTag(HBlockTags.GLASS_RAINBOW)
+        tag(Blocks.GLASS_GREEN).addTag(HBlockTags.GLASS_RAINBOW)
+        tag(Blocks.GLASS_LIGHT_BLUE).addTag(HBlockTags.GLASS_RAINBOW)
+        tag(Blocks.GLASS_LIGHT_GRAY).addTag(HBlockTags.GLASS_RAINBOW)
+        tag(Blocks.GLASS_LIME).addTag(HBlockTags.GLASS_RAINBOW)
+        tag(Blocks.GLASS_MAGENTA).addTag(HBlockTags.GLASS_RAINBOW)
+        tag(Blocks.GLASS_ORANGE).addTag(HBlockTags.GLASS_RAINBOW)
+        tag(Blocks.GLASS_PINK).addTag(HBlockTags.GLASS_RAINBOW)
+        tag(Blocks.GLASS_PURPLE).addTag(HBlockTags.GLASS_RAINBOW)
+        tag(Blocks.GLASS_RED).addTag(HBlockTags.GLASS_RAINBOW)
+        tag(Blocks.GLASS_WHITE).addTag(HBlockTags.GLASS_RAINBOW)
+        tag(Blocks.GLASS_YELLOW).addTag(HBlockTags.GLASS_RAINBOW)
+        tag(Blocks.GLASS_PANES).addTag(HBlockTags.GLASS_PANES_RAINBOW)
+        tag(Blocks.GLASS_PANES_BLACK).addTag(HBlockTags.GLASS_PANES_RAINBOW)
+        tag(Blocks.GLASS_PANES_BLUE).addTag(HBlockTags.GLASS_PANES_RAINBOW)
+        tag(Blocks.GLASS_PANES_BROWN).addTag(HBlockTags.GLASS_PANES_RAINBOW)
+        tag(Blocks.GLASS_PANES_COLORLESS).addTag(HBlockTags.GLASS_PANES_RAINBOW)
+        tag(Blocks.GLASS_PANES_CYAN).addTag(HBlockTags.GLASS_PANES_RAINBOW)
+        tag(Blocks.GLASS_PANES_GRAY).addTag(HBlockTags.GLASS_PANES_RAINBOW)
+        tag(Blocks.GLASS_PANES_GREEN).addTag(HBlockTags.GLASS_PANES_RAINBOW)
+        tag(Blocks.GLASS_PANES_LIGHT_BLUE).addTag(HBlockTags.GLASS_PANES_RAINBOW)
+        tag(Blocks.GLASS_PANES_LIGHT_GRAY).addTag(HBlockTags.GLASS_PANES_RAINBOW)
+        tag(Blocks.GLASS_PANES_LIME).addTag(HBlockTags.GLASS_PANES_RAINBOW)
+        tag(Blocks.GLASS_PANES_MAGENTA).addTag(HBlockTags.GLASS_PANES_RAINBOW)
+        tag(Blocks.GLASS_PANES_ORANGE).addTag(HBlockTags.GLASS_PANES_RAINBOW)
+        tag(Blocks.GLASS_PANES_PINK).addTag(HBlockTags.GLASS_PANES_RAINBOW)
+        tag(Blocks.GLASS_PANES_PURPLE).addTag(HBlockTags.GLASS_PANES_RAINBOW)
+        tag(Blocks.GLASS_PANES_RED).addTag(HBlockTags.GLASS_PANES_RAINBOW)
     }
 
-    /**
-     * Resolves a Path for the location to save the given tag.
-     */
-    override fun makePath(id: ResourceLocation): Path? {
-        return if (filter?.contains(id) == true) null else super.makePath(id)
+    public override fun tag(tag: ITag.INamedTag<Block>): Builder<Block> {
+        return super.tag(tag)
     }
 
-    /**
-     * Gets a name for this provider, to use in logging.
-     */
     override fun getName(): String {
         return "Hardcore Dungeons Block Tags"
     }

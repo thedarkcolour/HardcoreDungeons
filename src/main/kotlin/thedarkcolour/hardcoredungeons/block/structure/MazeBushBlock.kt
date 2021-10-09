@@ -5,14 +5,14 @@ import net.minecraft.entity.LivingEntity
 import net.minecraft.util.DamageSource
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
-import thedarkcolour.hardcoredungeons.block.HBlock
-import thedarkcolour.hardcoredungeons.block.properties.HProperties
+import thedarkcolour.hardcoredungeons.block.base.HBlock
+import thedarkcolour.hardcoredungeons.block.base.properties.HProperties
 
 class MazeBushBlock(properties: HProperties) : HBlock(properties) {
-    override fun onEntityWalk(worldIn: World, pos: BlockPos, entityIn: Entity) {
+    override fun stepOn(worldIn: World, pos: BlockPos, entityIn: Entity) {
         if (entityIn is LivingEntity) {
-            entityIn.attackEntityFrom(DamageSource.CACTUS, 1.0f)
+            entityIn.hurt(DamageSource.CACTUS, 1.0f)
         }
-        super.onEntityWalk(worldIn, pos, entityIn)
+        super.stepOn(worldIn, pos, entityIn)
     }
 }

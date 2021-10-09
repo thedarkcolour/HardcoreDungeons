@@ -1,6 +1,0 @@
-{
-    "parent": "block/cross",
-    "textures": {
-        "cross": "hardcoredungeons:block/flame_rose"
-    }
-}

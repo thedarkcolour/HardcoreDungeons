@@ -22,20 +22,20 @@ class FullbrightBakedModel(private val base: IBakedModel, private val fullbright
         return QUAD_CACHE.getUnchecked(CacheKey(state ?: return base.getQuads(state, side, rand), side, base, fullbrightSprites, rand))
     }
 
-    override fun isBuiltInRenderer(): Boolean {
-        return base.isBuiltInRenderer
+    override fun isCustomRenderer(): Boolean {
+        return base.isCustomRenderer
     }
 
-    override fun isAmbientOcclusion(): Boolean {
-        return base.isAmbientOcclusion
+    override fun useAmbientOcclusion(): Boolean {
+        return base.useAmbientOcclusion()
     }
 
     override fun isGui3d(): Boolean {
         return base.isGui3d
     }
 
-    override fun isSideLit(): Boolean {
-        return base.isSideLit
+    override fun usesBlockLight(): Boolean {
+        return base.usesBlockLight()
     }
 
     override fun getOverrides(): ItemOverrideList {
@@ -43,8 +43,8 @@ class FullbrightBakedModel(private val base: IBakedModel, private val fullbright
     }
 
     @Suppress("DEPRECATION")
-    override fun getParticleTexture(): TextureAtlasSprite {
-        return base.particleTexture
+    override fun getParticleIcon(): TextureAtlasSprite {
+        return base.particleIcon
     }
 
     companion object {
@@ -54,7 +54,7 @@ class FullbrightBakedModel(private val base: IBakedModel, private val fullbright
             }
         })
 
-        private val FULL_LIGHT = LightTexture.packLight(15, 15)
+        private val FULL_LIGHT = LightTexture.pack(15, 15)
 
         private fun transformQuads(oldQuads: List<BakedQuad>, textures: Set<ResourceLocation>): List<BakedQuad> {
             val newQuads = ArrayList(oldQuads)
@@ -71,21 +71,21 @@ class FullbrightBakedModel(private val base: IBakedModel, private val fullbright
         }
 
         private fun transformQuad(quad: BakedQuad): BakedQuad {
-            val vertexData = quad.vertexData.clone()
+            val vertexData = quad.vertices.clone()
 
             vertexData[6] = FULL_LIGHT
             vertexData[6 + 8] = FULL_LIGHT
             vertexData[6 + 8 + 8] = FULL_LIGHT
             vertexData[6 + 8 + 8 + 8] = FULL_LIGHT
 
-            return BakedQuad(vertexData, quad.tintIndex, quad.face, quad.sprite, quad.applyDiffuseLighting())
+            return BakedQuad(vertexData, quad.tintIndex, quad.direction, quad.sprite, quad.isShade)
         }
 
         /**
          * Adds fullbright effects to every possible state of the block.
          */
         fun addFullBrightEffects(registry: MutableMap<ResourceLocation, IBakedModel>, block: Block, fullbrightLayers: Set<ResourceLocation>) {
-            for (state in block.stateContainer.validStates) {
+            for (state in block.stateDefinition.possibleStates) {
                 addFullBrightEffects(registry, state, fullbrightLayers)
             }
         }
@@ -96,7 +96,7 @@ class FullbrightBakedModel(private val base: IBakedModel, private val fullbright
          * @param state variant to add fullbright effects to
          */
         private fun addFullBrightEffects(registry: MutableMap<ResourceLocation, IBakedModel>, state: BlockState, fullbrightLayers: Set<ResourceLocation>) {
-            val key = BlockModelShapes.getModelLocation(state)
+            val key = BlockModelShapes.stateToModelLocation(state)
 
             if (registry.containsKey(key)) {
                 registry[key] = FullbrightBakedModel(registry[key]!!, fullbrightLayers)

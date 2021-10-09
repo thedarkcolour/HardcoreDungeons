@@ -20,7 +20,7 @@ class CastletonDeerEntity(type: EntityType<CastletonDeerEntity>, worldIn: World)
      * Checks if the parameter is an item which this animal can be fed to breed it (wheat, carrots or seeds depending on
      * the animal type)
      */
-    override fun isBreedingItem(stack: ItemStack): Boolean {
+    override fun isFood(stack: ItemStack): Boolean {
         return stack.item == HItems.WILD_BERROOK
     }
 
@@ -29,7 +29,7 @@ class CastletonDeerEntity(type: EntityType<CastletonDeerEntity>, worldIn: World)
     }
 
     private fun pickRandomPattern(): DeerType {
-        return when (rand.nextFloat()) {
+        return when (random.nextFloat()) {
             in 0.00f..0.24f -> DeerType.BLUE_EYED_DOE
             in 0.25f..0.49f -> DeerType.PURPLE_SPOTTED_STAG
             in 0.50f..0.74f -> DeerType.BLUE_SPOTTED_STAG
@@ -37,7 +37,7 @@ class CastletonDeerEntity(type: EntityType<CastletonDeerEntity>, worldIn: World)
         }
     }
 
-    override fun onInitialSpawn(
+    override fun finalizeSpawn(
         worldIn: IServerWorld,
         difficultyIn: DifficultyInstance,
         reason: SpawnReason,
@@ -55,7 +55,7 @@ class CastletonDeerEntity(type: EntityType<CastletonDeerEntity>, worldIn: World)
             targetSelector.addGoal(2, MeleeAttackGoal(this, 0.3, false))
         }
 
-        return super.onInitialSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag)
+        return super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag)
     }
 
     fun isSameColor(goalOwner: MobEntity): Boolean {

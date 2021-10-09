@@ -10,8 +10,8 @@
                 "amplitudes": [ 1.0, 1.0 ]
             },
             "altitude_noise": {
-                "firstOctave": -7,
-                "amplitudes": [ 1.0, 1.0 ]
+                "firstOctave": -4,
+                "amplitudes": [ 0.7, 1.0 ]
             },
             "weirdness_noise": {
                 "firstOctave": -7,
@@ -28,21 +28,21 @@
                 {
                     "biome": "hardcoredungeons:knightly_shrubland",
                     "parameters": {
-                        "altitude": 0.3,
+                        "altitude": 0.2,
                         "weirdness": 0.5,
-                        "offset": 0.1,
                         "temperature": 0.0,
-                        "humidity": 1.0
+                        "humidity": 1.0,
+                        "offset": 0.3
                     }
                 },
                 {
                     "biome": "hardcoredungeons:castleton_hills",
                     "parameters": {
-                        "altitude": 0.3,
-                        "weirdness": 0.5,
-                        "offset": 0.4,
+                        "altitude": 0.5,
+                        "weirdness": 0.3,
                         "temperature": 0.0,
-                        "humidity": 1.0
+                        "humidity": 0.6,
+                        "offset": 0.1
                     }
                 }
             ]

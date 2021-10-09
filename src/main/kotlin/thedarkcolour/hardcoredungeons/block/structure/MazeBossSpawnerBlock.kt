@@ -4,7 +4,7 @@ import net.minecraft.block.BlockState
 import net.minecraft.tileentity.TileEntity
 import net.minecraft.world.IBlockReader
 import thedarkcolour.hardcoredungeons.block.decoration.HorizontalBlock
-import thedarkcolour.hardcoredungeons.block.properties.HProperties
+import thedarkcolour.hardcoredungeons.block.base.properties.HProperties
 import thedarkcolour.hardcoredungeons.tileentity.MazeBossSpawnerTileEntity
 
 class MazeBossSpawnerBlock(properties: HProperties) : HorizontalBlock(properties) {

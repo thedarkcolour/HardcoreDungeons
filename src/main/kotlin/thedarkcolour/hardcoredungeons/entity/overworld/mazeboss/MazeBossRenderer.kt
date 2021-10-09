@@ -7,7 +7,7 @@ import net.minecraft.util.ResourceLocation
 import thedarkcolour.hardcoredungeons.util.modLoc
 
 class MazeBossRenderer(manager: EntityRendererManager) : BipedRenderer<MazeBossEntity, SkeletonModel<MazeBossEntity>>(manager, SkeletonModel(), 0.4f) {
-    override fun getEntityTexture(entity: MazeBossEntity): ResourceLocation {
+    override fun getTextureLocation(entity: MazeBossEntity): ResourceLocation {
         return SKELETON_TEXTURES
     }
 

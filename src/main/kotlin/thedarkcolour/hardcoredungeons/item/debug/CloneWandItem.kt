@@ -20,47 +20,47 @@ class CloneWandItem(properties: Properties) : Item(properties) {
     private val structureMap = hashMapOf<PlayerEntity, ImmutableMap<BlockPos, BlockState>?>()
     private val undoMap = hashMapOf<PlayerEntity, ImmutableMap<BlockPos, BlockState>?>()
 
-    override fun onItemUse(ctx: ItemUseContext): ActionResultType {
-        val world = ctx.world
+    override fun useOn(ctx: ItemUseContext): ActionResultType {
+        val world = ctx.level
 
 
-        if (!world.isRemote) {
-            val stack = ctx.item
-            val pos = ctx.pos
+        if (!world.isClientSide) {
+            val stack = ctx.itemInHand
+            val pos = ctx.clickedPos
             val player = ctx.player ?: return ActionResultType.PASS
 
-            if (player.isSneaking) {
-                val startPos = stack.startPos
+            if (player.isShiftKeyDown) {
+                val startPos = stack.startPos // delegate
 
                 if (startPos == null) {
-                    stack.startPos = pos
-                    player.sendStatusMessage(StringTextComponent("Clone starting position: (${pos.x} ${pos.y} ${pos.z})"), true)
+                    stack.startPos = pos // delegate
+                    player.displayClientMessage(StringTextComponent("Clone starting position: (${pos.x} ${pos.y} ${pos.z})"), true)
                 } else {
                     val immutableMapBuilder = ImmutableMap.builder<BlockPos, BlockState>()
 
-                    BlockPos.getAllInBoxMutable(startPos, pos).map(BlockPos::toImmutable).forEach { blockPos ->
-                        immutableMapBuilder.put(blockPos.subtract(startPos), world.getBlockState(blockPos))
+                    for (mutable in BlockPos.betweenClosed(startPos, pos)) {
+                        immutableMapBuilder.put(mutable.subtract(startPos), world.getBlockState(mutable))
                     }
 
                     structureMap[player] = immutableMapBuilder.build()
-                    player.sendStatusMessage(StringTextComponent("Saved blocks from (${startPos.x} ${startPos.y} ${startPos.z}) to (${pos.x} ${pos.y} ${pos.z})"), true)
-                    stack.startPos = null
+                    player.displayClientMessage(StringTextComponent("Saved blocks from (${startPos.x} ${startPos.y} ${startPos.z}) to (${pos.x} ${pos.y} ${pos.z})"), true)
+                    stack.startPos = null // delegate
                 }
             } else {
-                val face = ctx.face
-                val offset = pos.offset(face)
+                val face = ctx.clickedFace
+                val offset = pos.relative(face)
                 val pos2BlockState = (structureMap[player]?.entries ?: return ActionResultType.PASS)
                 val immutableMapBuilder = ImmutableMap.builder<BlockPos, BlockState>()
 
                 for (entry in pos2BlockState) {
                     val state = entry.value
-                    val posOffset = entry.key.add(offset)
+                    val posOffset = entry.key.offset(offset)
                     immutableMapBuilder.put(posOffset, world.getBlockState(posOffset))
-                    world.setBlockState(posOffset, state)
+                    world.setBlockAndUpdate(posOffset, state)
                 }
 
                 undoMap[player] = immutableMapBuilder.build()
-                player.sendStatusMessage(StringTextComponent("Cloned structure anchored at (${offset.x} ${offset.y} ${offset.z})"), true)
+                player.displayClientMessage(StringTextComponent("Cloned structure anchored at (${offset.x} ${offset.y} ${offset.z})"), true)
             }
         }
 
@@ -69,33 +69,33 @@ class CloneWandItem(properties: Properties) : Item(properties) {
 
     private var ItemStack.startPos by BlockPosNBTDelegate("StartPos")
 
-    override fun getUseAction(stack: ItemStack) = UseAction.BOW
+    override fun getUseAnimation(stack: ItemStack) = UseAction.BOW
 
     override fun getUseDuration(stack: ItemStack) = 40
 
-    override fun onItemUseFinish(stack: ItemStack, worldIn: World, entityLiving: LivingEntity): ItemStack {
+    override fun finishUsingItem(stack: ItemStack, worldIn: World, entityLiving: LivingEntity): ItemStack {
         if (entityLiving is PlayerEntity) {
             undoMap[entityLiving]?.let { pos2StateMap ->
                 for (entry in pos2StateMap) {
-                    worldIn.setBlockState(entry.key, entry.value)
+                    worldIn.setBlockAndUpdate(entry.key, entry.value)
                 }
-                entityLiving.sendStatusMessage(StringTextComponent("Undo!"), true)
+                entityLiving.displayClientMessage(StringTextComponent("Undo!"), true)
                 undoMap[entityLiving] = null
             }
         }
         return stack
     }
 
-    override fun onItemRightClick(worldIn: World, playerIn: PlayerEntity, handIn: Hand): ActionResult<ItemStack> {
-        if (!worldIn.isRemote) {
+    override fun use(worldIn: World, playerIn: PlayerEntity, handIn: Hand): ActionResult<ItemStack> {
+        if (!worldIn.isClientSide) {
             if (playerIn.isCrouching) {
-                playerIn.getHeldItem(handIn).removeChildTag("StartPos")
-                playerIn.sendStatusMessage(StringTextComponent("Cleared start position"), true)
+                playerIn.getItemInHand(handIn).removeTagKey("StartPos")
+                playerIn.displayClientMessage(StringTextComponent("Cleared start position"), true)
             } else if (undoMap[playerIn] != null) {
-                playerIn.sendStatusMessage(StringTextComponent("Hold to undo"), true)
-                playerIn.activeHand = handIn
+                playerIn.displayClientMessage(StringTextComponent("Hold to undo"), true)
+                playerIn.startUsingItem(handIn)
             }
         }
-        return ActionResult.resultPass(playerIn.getHeldItem(handIn))
+        return ActionResult.pass(playerIn.getItemInHand(handIn))
     }
 }

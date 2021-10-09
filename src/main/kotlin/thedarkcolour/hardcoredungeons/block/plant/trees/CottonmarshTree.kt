@@ -6,7 +6,7 @@ import net.minecraft.world.gen.feature.ConfiguredFeature
 import java.util.*
 
 object CottonmarshTree : Tree() {
-    override fun getTreeFeature(randomIn: Random, p_225546_2_: Boolean): ConfiguredFeature<BaseTreeFeatureConfig, *>? {
+    override fun getConfiguredFeature(randomIn: Random, p_225546_2_: Boolean): ConfiguredFeature<BaseTreeFeatureConfig, *>? {
         return null
     }
 }

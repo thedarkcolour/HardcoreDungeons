@@ -24,7 +24,7 @@ abstract class HContainer(type: HContainerType<*>, id: Int, val playerIn: Player
      */
     fun isTagInRange(worldPos: WorldPos, playerIn: PlayerEntity, tag: ITag.INamedTag<Block>): Boolean {
         return worldPos.invokeDefaulted(true) { worldIn, pos ->
-            worldIn.getBlockState(pos).isIn(tag) && isUsableInRange(pos, playerIn)
+            worldIn.getBlockState(pos).`is`(tag) && isUsableInRange(pos, playerIn)
         }
     }
 
@@ -38,7 +38,7 @@ abstract class HContainer(type: HContainerType<*>, id: Int, val playerIn: Player
      */
     fun isBlockInRange(worldPos: WorldPos, playerIn: PlayerEntity, block: Block): Boolean {
         return worldPos.invokeDefaulted(true) { worldIn, pos ->
-            worldIn.getBlockState(pos).isIn(block) && isUsableInRange(pos, playerIn)
+            worldIn.getBlockState(pos).`is`(block) && isUsableInRange(pos, playerIn)
         }
     }
 
@@ -46,10 +46,12 @@ abstract class HContainer(type: HContainerType<*>, id: Int, val playerIn: Player
      * Checks if the position is within the player's usable distance.
      */
     private fun isUsableInRange(pos: BlockPos, playerIn: PlayerEntity): Boolean {
-        return playerIn.getDistanceSq(pos.x.toDouble() + 0.5, pos.y.toDouble() + 0.5, pos.z.toDouble() + 0.5) <= 64.0
+        return playerIn.distanceToSqr(pos.x.toDouble() + 0.5, pos.y.toDouble() + 0.5, pos.z.toDouble() + 0.5) <= 64.0
     }
 
-    // this one just gets copy + pasted each time
+    /**
+     * Make sure to add your own slots **before** adding player slots.
+     */
     protected fun addPlayerSlots(playerInv: PlayerInventory) {
         for (row in 0..2) {
             for (col in 0..8) {

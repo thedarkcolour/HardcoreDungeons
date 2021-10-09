@@ -18,19 +18,27 @@ enum class HArmorMaterial(
     private val knockbackReduction: Float,
     repairMaterial: () -> Ingredient
 ) : IArmorMaterial {
-    TOWER(22, intArrayOf(2, 6, 7, 3), 9, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 0.0f, 0.5f, Ingredient::EMPTY),
-    SHROOMY(18, intArrayOf(3, 7, 7, 2), 16, SoundEvents.ITEM_ARMOR_EQUIP_LEATHER, 0.1f, 0.0f, { Ingredient.fromTag(net.minecraftforge.common.Tags.Items.MUSHROOMS) })
+    TOWER(22, intArrayOf(2, 6, 7, 3), 9, SoundEvents.ARMOR_EQUIP_IRON, 0.0f, 0.5f, Ingredient::EMPTY),
+    SPEED_BOOTS(30, intArrayOf(0, 0, 0, 3), 17, SoundEvents.ARMOR_EQUIP_LEATHER, 0.4f, 0.0f, Ingredient::EMPTY),
+    SHROOMY(
+        18,
+        intArrayOf(3, 7, 7, 2),
+        16,
+        SoundEvents.ARMOR_EQUIP_LEATHER,
+        0.1f,
+        0.0f,
+        { Ingredient.of(net.minecraftforge.common.Tags.Items.MUSHROOMS) })
     ;
 
-    private val materialName = HardcoreDungeons.ID + ":" + name.toLowerCase(Locale.ROOT)
+    private val materialName = HardcoreDungeons.ID + ":" + name.lowercase(Locale.ROOT)
     private val repairMaterial = LazyValue(repairMaterial)
     private val maxDamage = intArrayOf(13 * durability, 15 * durability, 16 * durability, 11 * durability)
 
-    override fun getDurability(slot: EquipmentSlotType) = maxDamage[slot.index]
-    override fun getDamageReductionAmount(slot: EquipmentSlotType) = reduction[slot.index]
-    override fun getEnchantability() = enchantability
-    override fun getSoundEvent() = soundEvent
-    override fun getRepairMaterial(): Ingredient = repairMaterial.value
+    override fun getDurabilityForSlot(slot: EquipmentSlotType) = maxDamage[slot.index]
+    override fun getDefenseForSlot(slot: EquipmentSlotType) = reduction[slot.index]
+    override fun getEnchantmentValue() = enchantability
+    override fun getEquipSound() = soundEvent
+    override fun getRepairIngredient(): Ingredient = repairMaterial.get()
     override fun getName() = materialName
     override fun getToughness() = toughness
     override fun getKnockbackResistance() = knockbackReduction

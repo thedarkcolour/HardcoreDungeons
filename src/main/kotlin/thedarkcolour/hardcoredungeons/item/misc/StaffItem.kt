@@ -12,36 +12,21 @@ import thedarkcolour.hardcoredungeons.entity.projectile.magic.MagicBoltEntity
 import thedarkcolour.hardcoredungeons.registry.HEntities
 
 class StaffItem(properties: Properties) : Item(properties) {
-    /**
-     * How long it takes to use or consume an item
-     */
     override fun getUseDuration(stack: ItemStack) = 25
+    override fun getUseAnimation(stack: ItemStack) = UseAction.BLOCK
 
-    /**
-     * returns the action that specifies what animation to play when the items is being used
-     */
-    override fun getUseAction(stack: ItemStack) = UseAction.BLOCK
-
-    /**
-     * Called to trigger the item's "innate" right click behavior.
-     * To handle when this item is used on a Block, see [onItemUse]
-     */
-    override fun onItemRightClick(worldIn: World, playerIn: PlayerEntity, hand: Hand): ActionResult<ItemStack> {
-        val stack = playerIn.getHeldItem(hand)
-        playerIn.activeHand = hand
-        return ActionResult.resultConsume(stack)
+    override fun use(worldIn: World, playerIn: PlayerEntity, hand: Hand): ActionResult<ItemStack> {
+        val stack = playerIn.getItemInHand(hand)
+        playerIn.startUsingItem(hand)
+        return ActionResult.consume(stack)
     }
 
-    /**
-     * Called when the player finishes using this Item (E.g. finishes eating.). Not called when the player stops using
-     * the Item before the action is complete.
-     */
-    override fun onItemUseFinish(stack: ItemStack, worldIn: World, playerIn: LivingEntity): ItemStack {
-        if (!worldIn.isRemote) {
-            val vec = playerIn.lookVec
+    override fun finishUsingItem(stack: ItemStack, worldIn: World, playerIn: LivingEntity): ItemStack {
+        if (!worldIn.isClientSide) {
+            val vec = playerIn.lookAngle
             val magic = MagicBoltEntity(HEntities.MAGIC_BOLT, worldIn)
 
-            magic.shoot(playerIn, playerIn.posX, playerIn.posYEye - 0.1, playerIn.posZ, vec.x, vec.y, vec.z)
+            magic.shoot(playerIn, playerIn.x, playerIn.eyeY - 0.1, playerIn.z, vec.x, vec.y, vec.z)
         }
 
         return stack
@@ -50,5 +35,5 @@ class StaffItem(properties: Properties) : Item(properties) {
     /**
      * Return the enchantability factor of the item, most of the time is based on material.
      */
-    override fun getItemEnchantability() = 1
+    override fun getEnchantmentValue() = 1
 }

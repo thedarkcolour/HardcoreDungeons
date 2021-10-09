@@ -16,7 +16,6 @@ import net.minecraftforge.common.ForgeMod
 import net.minecraftforge.common.util.FakePlayer
 import thedarkcolour.hardcoredungeons.registry.HEntities
 
-// DO NOT USE MY NAME IN VAIN !!!!
 class InfinityEntity(entityType: EntityType<out LivingEntity>, worldIn: World) : LivingEntity(entityType, worldIn) {
     /** Whether the boss is still awaiting a player to fight */
     private var isIdle = true
@@ -24,24 +23,24 @@ class InfinityEntity(entityType: EntityType<out LivingEntity>, worldIn: World) :
     /** The **single** player this boss is fighting */
     private var engagedPlayer: PlayerEntity? = null
 
-    override fun getArmorInventoryList(): Iterable<ItemStack> {
+    override fun getArmorSlots(): Iterable<ItemStack> {
         return emptyList()
     }
 
-    override fun setItemStackToSlot(slotIn: EquipmentSlotType, stack: ItemStack) = Unit
+    override fun setItemSlot(slotIn: EquipmentSlotType, stack: ItemStack) = Unit
 
-    override fun getItemStackFromSlot(slotIn: EquipmentSlotType): ItemStack = ItemStack.EMPTY
+    override fun getItemBySlot(slotIn: EquipmentSlotType): ItemStack = ItemStack.EMPTY
 
-    override fun getPrimaryHand(): HandSide {
+    override fun getMainArm(): HandSide {
         return HandSide.LEFT
     }
 
-    override fun attackEntityFrom(source: DamageSource, damage: Float): Boolean {
-        return if (source.trueSource != source.immediateSource) {
+    override fun hurt(source: DamageSource, damage: Float): Boolean {
+        return if (source.entity != source.directEntity) {
             false
         } else if (source is PlayerEntity && source !is FakePlayer && engagedPlayer == source) {
             // all hits deal one damage
-            damageEntity(source, 0.5f)
+            actuallyHurt(source, 0.5f)
             true
         } else false
     }
@@ -50,27 +49,27 @@ class InfinityEntity(entityType: EntityType<out LivingEntity>, worldIn: World) :
      * Find the trajectory from the boss to the player
      */
     fun getTrajectory(target: PlayerEntity): Vector3d {
-        return target.positionVec.subtract(positionVec)
+        return target.position().subtract(this.position())
     }
 
     open class InfinityGoal(val infinity: InfinityEntity) : Goal() {
-        override fun shouldExecute(): Boolean {
+        override fun canUse(): Boolean {
             return !infinity.isIdle && infinity.engagedPlayer != null
         }
     }
 
     companion object {
-        val ATTRIBUTES: AttributeModifierMap.MutableAttribute = AttributeModifierMap.createMutableAttribute()
-            .createMutableAttribute(Attributes.MAX_HEALTH, 300.0)
-            .createMutableAttribute(Attributes.KNOCKBACK_RESISTANCE, 1.0)
-            .createMutableAttribute(Attributes.MOVEMENT_SPEED)
-            .createMutableAttribute(Attributes.ARMOR)
-            .createMutableAttribute(Attributes.ARMOR_TOUGHNESS)
-            .createMutableAttribute(ForgeMod.SWIM_SPEED.get())
-            .createMutableAttribute(ForgeMod.NAMETAG_DISTANCE.get())
-            .createMutableAttribute(ForgeMod.ENTITY_GRAVITY.get())
-            .createMutableAttribute(Attributes.FOLLOW_RANGE, 16.0)
-            .createMutableAttribute(Attributes.ATTACK_KNOCKBACK)
+        val ATTRIBUTES: AttributeModifierMap.MutableAttribute = AttributeModifierMap.builder()
+            .add(Attributes.MAX_HEALTH, 300.0)
+            .add(Attributes.KNOCKBACK_RESISTANCE, 1.0)
+            .add(Attributes.MOVEMENT_SPEED)
+            .add(Attributes.ARMOR)
+            .add(Attributes.ARMOR_TOUGHNESS)
+            .add(ForgeMod.SWIM_SPEED.get())
+            .add(ForgeMod.NAMETAG_DISTANCE.get())
+            .add(ForgeMod.ENTITY_GRAVITY.get())
+            .add(Attributes.FOLLOW_RANGE, 16.0)
+            .add(Attributes.ATTACK_KNOCKBACK)
     }
 
     class AwaitPlayerAI {
@@ -81,21 +80,21 @@ class InfinityEntity(entityType: EntityType<out LivingEntity>, worldIn: World) :
         /** The duration of this task in ticks */
         var progress = 0
 
-        override fun shouldContinueExecuting(): Boolean {
-            return shouldExecute() && progress++ < 200
+        override fun canContinueToUse(): Boolean {
+            return canUse() && progress++ < 200
         }
 
-        override fun resetTask() {
+        override fun stop() {
             progress = 0
         }
 
         override fun tick() {
             if (progress % 4 == 0) {
-                val entity = HEntities.BLACK_STAR(infinity.world)
+                val entity = HEntities.BLACK_STAR(infinity.level)
                 val trajectory = infinity.getTrajectory(target)
 
                 // todo have an offset so we don't spawn stars inside of the boss
-                entity.shoot(infinity, infinity.positionVec, trajectory.mul(0.1, 0.1, 0.1))
+                entity.shoot(infinity, infinity.position(), trajectory.multiply(0.1, 0.1, 0.1))
             }
         }
     }

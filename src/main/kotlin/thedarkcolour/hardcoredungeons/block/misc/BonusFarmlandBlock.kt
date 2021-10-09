@@ -15,32 +15,31 @@ import net.minecraft.tags.FluidTags
 import net.minecraft.util.Direction
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.shapes.ISelectionContext
-import net.minecraft.util.math.shapes.VoxelShape
 import net.minecraft.world.IBlockReader
 import net.minecraft.world.IWorld
 import net.minecraft.world.IWorldReader
 import net.minecraft.world.World
 import net.minecraft.world.server.ServerWorld
 import net.minecraftforge.common.*
-import thedarkcolour.hardcoredungeons.block.HBlock
-import thedarkcolour.hardcoredungeons.block.properties.HProperties
+import thedarkcolour.hardcoredungeons.block.base.BlockMaker
+import thedarkcolour.hardcoredungeons.block.base.HBlock
+import thedarkcolour.hardcoredungeons.block.base.properties.HProperties
 import java.util.*
-import java.util.function.Supplier
 
 /**
  * @property boostMap crops and their chance to grow 2 stages instead of 1
  */
 class BonusFarmlandBlock(
-    val getSoilState: () -> BlockState = Blocks.DIRT::getDefaultState,
-    val boostMap: Object2FloatMap<Supplier<Block>> = EMPTY, // default to empty map
+    val getSoilState: () -> BlockState = Blocks.DIRT::defaultBlockState,
+    val boostMap: Object2FloatMap<() -> Block> = EMPTY, // default to empty map
     properties: HProperties,
-) : HBlock(properties.tickRandomly()) {
+) : HBlock(properties.randomTicks()) {
 
     init {
-        defaultState = defaultState.with(MOISTURE, 0)
+        registerDefaultState(stateDefinition.any().setValue(MOISTURE, 0))
     }
 
-    override fun updatePostPlacement(
+    override fun updateShape(
         stateIn: BlockState,
         facing: Direction,
         facingState: BlockState,
@@ -48,61 +47,61 @@ class BonusFarmlandBlock(
         currentPos: BlockPos,
         facingPos: BlockPos,
     ): BlockState {
-        if (facing == Direction.UP && !stateIn.isValidPosition(worldIn, currentPos)) {
-            worldIn.pendingBlockTicks.scheduleTick(currentPos, this, 1)
+        if (facing == Direction.UP && !stateIn.canSurvive(worldIn, currentPos)) {
+            worldIn.blockTicks.scheduleTick(currentPos, this, 1)
         }
 
         return stateIn
     }
 
-    override fun isValidPosition(state: BlockState, worldIn: IWorldReader, pos: BlockPos): Boolean {
-        val state1 = worldIn.getBlockState(pos.up())
-        return !state1.material.isSolid || state.block.isIn(Tags.Blocks.FENCE_GATES) || state.block is MovingPistonBlock
+    override fun canSurvive(state: BlockState, worldIn: IWorldReader, pos: BlockPos): Boolean {
+        val state1 = worldIn.getBlockState(pos.above())
+        return !state1.material.isSolid || state.block.`is`(Tags.Blocks.FENCE_GATES) || state.block is MovingPistonBlock
     }
 
     override fun getStateForPlacement(context: BlockItemUseContext): BlockState? {
-        return if (!defaultState.isValidPosition(context.world, context.pos)) {
+        return if (!defaultBlockState().canSurvive(context.level, context.clickedPos)) {
             getSoilState()
         } else super.getStateForPlacement(context)
     }
 
-    override fun isTransparent(state: BlockState) = true
+    override fun useShapeForLightOcclusion(state: BlockState) = true
 
-    override fun getShape(state: BlockState?, worldIn: IBlockReader?, pos: BlockPos?, ctx: ISelectionContext?) = SHAPE
+    override fun getShape(state: BlockState?, worldIn: IBlockReader?, pos: BlockPos?, ctx: ISelectionContext?) = BlockMaker.FARMLAND_SHAPE
 
     override fun tick(state: BlockState, worldIn: ServerWorld, pos: BlockPos, rand: Random) {
-        if (!state.isValidPosition(worldIn, pos)) {
+        if (!state.canSurvive(worldIn, pos)) {
             turnToSoil(state, worldIn, pos)
         } else {
-            val i = state.get(FarmlandBlock.MOISTURE)
-            if (!hasWater(worldIn, pos) && !worldIn.isRainingAt(pos.up())) {
+            val i = state.getValue(FarmlandBlock.MOISTURE)
+            if (!hasWater(worldIn, pos) && !worldIn.isRainingAt(pos.above())) {
                 if (i > 0) {
-                    worldIn.setBlockState(pos, state.with(FarmlandBlock.MOISTURE, Integer.valueOf(i - 1)), 2)
+                    worldIn.setBlock(pos, state.setValue(FarmlandBlock.MOISTURE, Integer.valueOf(i - 1)), 2)
                 } else if (!hasCrops(worldIn, pos)) {
                     turnToSoil(state, worldIn, pos)
                 }
             } else if (i < 7) {
-                worldIn.setBlockState(pos, state.with(FarmlandBlock.MOISTURE, Integer.valueOf(7)), 2)
+                worldIn.setBlock(pos, state.setValue(FarmlandBlock.MOISTURE, Integer.valueOf(7)), 2)
             }
         }
     }
 
-    override fun onFallenUpon(worldIn: World, pos: BlockPos, entityIn: Entity, fallDistance: Float) {
-        if (!worldIn.isRemote && ForgeHooks.onFarmlandTrample(worldIn, pos, getSoilState(), fallDistance, entityIn)) {
+    override fun fallOn(worldIn: World, pos: BlockPos, entityIn: Entity, fallDistance: Float) {
+        if (!worldIn.isClientSide && ForgeHooks.onFarmlandTrample(worldIn, pos, getSoilState(), fallDistance, entityIn)) {
             turnToSoil(worldIn.getBlockState(pos), worldIn, pos)
         }
 
-        super.onFallenUpon(worldIn, pos, entityIn, fallDistance)
+        super.fallOn(worldIn, pos, entityIn, fallDistance)
     }
 
-    override fun allowsMovement(state: BlockState, worldIn: IBlockReader, pos: BlockPos, type: PathType) = false
+    override fun isPathfindable(state: BlockState, worldIn: IBlockReader, pos: BlockPos, type: PathType) = false
 
-    override fun fillStateContainer(builder: StateContainer.Builder<Block, BlockState>) {
+    override fun createBlockStateDefinition(builder: StateContainer.Builder<Block, BlockState>) {
         builder.add(MOISTURE)
     }
 
     override fun isFertile(state: BlockState, world: IBlockReader?, pos: BlockPos?): Boolean {
-        return state.get(MOISTURE) > 0
+        return state.getValue(MOISTURE) > 0
     }
 
     override fun canSustainPlant(
@@ -112,20 +111,20 @@ class BonusFarmlandBlock(
         facing: Direction,
         plantable: IPlantable
     ): Boolean {
-        val type = plantable.getPlantType(world, pos.offset(facing))
+        val type = plantable.getPlantType(world, pos.relative(facing))
 
         return type == PlantType.CROP || type == PlantType.PLAINS
     }
 
-    override fun ticksRandomly(state: BlockState) = true
+    override fun isRandomlyTicking(state: BlockState) = true
 
     private fun turnToSoil(state: BlockState, worldIn: World, pos: BlockPos) {
-        worldIn.setBlockState(pos, nudgeEntitiesWithNewState(state, getSoilState(), worldIn, pos))
+        worldIn.setBlockAndUpdate(pos, pushEntitiesUp(state, getSoilState(), worldIn, pos))
     }
 
     private fun hasWater(worldIn: IWorldReader, pos: BlockPos): Boolean {
-        for (pos1 in BlockPos.getAllInBoxMutable(pos.x - 4, pos.y, pos.z - 4, pos.x + 4, pos.y + 1, pos.z + 4)) {
-            if (worldIn.getFluidState(pos1).isTagged(FluidTags.WATER)) {
+        for (pos1 in BlockPos.betweenClosed(pos.x - 4, pos.y, pos.z - 4, pos.x + 4, pos.y + 1, pos.z + 4)) {
+            if (worldIn.getFluidState(pos1).`is`(FluidTags.WATER)) {
                 return true
             }
         }
@@ -133,26 +132,25 @@ class BonusFarmlandBlock(
     }
 
     private fun hasCrops(worldIn: IWorldReader, pos: BlockPos): Boolean {
-        val state = worldIn.getBlockState(pos.up())
+        val state = worldIn.getBlockState(pos.above())
         val block = state.block
 
         return block is IPlantable && canSustainPlant(state, worldIn, pos, Direction.UP, block)
     }
 
     companion object {
-        val MOISTURE: IntegerProperty = BlockStateProperties.MOISTURE_0_7
-        val SHAPE: VoxelShape = makeCuboidShape(0.0, 0.0, 0.0, 16.0, 15.0, 16.0)
+        val MOISTURE: IntegerProperty = BlockStateProperties.MOISTURE
 
-        val EMPTY = object : Object2FloatMap<Supplier<Block>> {
-            override fun containsKey(key: Supplier<Block>?) = false
+        val EMPTY = object : Object2FloatMap<() -> Block> {
+            override fun containsKey(key: (() -> Block)?) = false
             override fun getFloat(key: Any?) = 0.0f
             override fun defaultReturnValue(rv: Float) = Unit
             override fun defaultReturnValue() = 0.0f
-            override fun putAll(from: Map<out Supplier<Block>, Float>) = Unit
+            override fun putAll(from: Map<out () -> Block, Float>) = Unit
             override fun containsValue(value: Float) = false
             override fun isEmpty() = true
-            override fun object2FloatEntrySet(): ObjectSet<Object2FloatMap.Entry<Supplier<Block>>> = ObjectSets.emptySet()
-            override val keys: ObjectSet<Supplier<Block>> = ObjectSets.emptySet()
+            override fun object2FloatEntrySet(): ObjectSet<Object2FloatMap.Entry<() -> Block>> = ObjectSets.emptySet()
+            override val keys: ObjectSet<() -> Block> = ObjectSets.emptySet()
             override val values = FloatLists.EMPTY_LIST
             override val size = 0
             override fun getOrDefault(key: Any?, defaultValue: Float) = defaultValue

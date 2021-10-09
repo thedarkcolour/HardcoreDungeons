@@ -11,7 +11,7 @@ import net.minecraftforge.client.model.generators.ConfiguredModel
 import net.minecraftforge.client.model.generators.ModelFile
 import net.minecraftforge.common.data.ExistingFileHelper
 import thedarkcolour.hardcoredungeons.HardcoreDungeons
-import thedarkcolour.hardcoredungeons.block.decoration.StairsBlock
+import thedarkcolour.hardcoredungeons.block.base.HStairsBlock
 import thedarkcolour.hardcoredungeons.data.modelgen.ModelType
 
 class ModelGenerator(gen: DataGenerator, private val helper: ExistingFileHelper) : BlockStateProvider(gen, HardcoreDungeons.ID, helper) {
@@ -41,13 +41,24 @@ class ModelGenerator(gen: DataGenerator, private val helper: ExistingFileHelper)
      * @param path the path of the registry name for a model
      * @param parent the path of the parent model registry name
      */
-    private fun blockItemModel(path: String, parent: String) {
+    fun blockItemModel(path: String, parent: String) {
         itemModels().getBuilder(path)
             .parent(ModelFile.UncheckedModelFile(modLoc("block/$parent")))
     }
 
+    // Adds a single block model to the state definition without any conditions.
+    fun singleModel(block: Block): BlockModelBuilder {
+        val builder = blockModel(block.registryName!!.path)
+
+        getVariantBuilder(block)
+            .partialState()
+            .addModels(ConfiguredModel(builder))
+
+        return builder
+    }
+
     private fun stairs(stairs: Block, block: Block) {
-        if (stairs is StairsBlock) {
+        if (stairs is HStairsBlock) {
             stairsBlock(stairs, ResourceLocation(HardcoreDungeons.ID, "block/" + block.registryName!!.path))
             blockItemModel(stairs)
         } else {
@@ -55,13 +66,11 @@ class ModelGenerator(gen: DataGenerator, private val helper: ExistingFileHelper)
         }
     }
 
-
-
     private fun vase(vase: Block) {
         blockItemModel(vase)
 
         val path = vase.registryName!!.path
-        val blockPath = blockLoc(path)
+        val blockPath = textureLoc(path)
         val f = ConfiguredModel.builder().modelFile(ModelFile.UncheckedModelFile(blockPath)).buildLast()
 
         models().getBuilder(path)
@@ -103,8 +112,8 @@ class ModelGenerator(gen: DataGenerator, private val helper: ExistingFileHelper)
 
         val m = models().getBuilder(path)
             .parent(ModelFile.UncheckedModelFile(mcLoc("block/cube_column")))
-            .texture("end", blockLoc(end))
-            .texture("side", blockLoc(path))
+            .texture("end", textureLoc(end))
+            .texture("side", textureLoc(path))
 
         getVariantBuilder(side)
             .partialState()
@@ -121,48 +130,59 @@ class ModelGenerator(gen: DataGenerator, private val helper: ExistingFileHelper)
             .parent(ModelFile.UncheckedModelFile(mcLoc("item/generated")))
             .texture("layer0", modLoc("item/$path"))
 
-    fun blockLoc(b: Block, suffix: String? = null): ResourceLocation
-            = blockLoc(b.registryName!!.path + (suffix ?: ""), namespace = b.registryName!!.namespace)
+    // Fancy version of blockTexture
+    fun textureLoc(block: Block, suffix: String? = null): ResourceLocation {
+        return textureLoc(block.registryName!!.path + (suffix ?: ""), namespace = block.registryName!!.namespace)
+    }
 
-    fun blockLoc(path: String, namespace: String = HardcoreDungeons.ID): ResourceLocation
-            = ResourceLocation(namespace, "block/$path")
+    /**
+     * Gets a texture location in the blocks folder using
+     * the given [path] and [namespace].
+     */
+    fun textureLoc(path: String, namespace: String = HardcoreDungeons.ID): ResourceLocation {
+        return ResourceLocation(namespace, "block/$path")
+    }
 
     /**
      * Gets a model builder for the block.
      */
     private fun getBuilder(block: Block): BlockModelBuilder {
-        val outputLoc = extendWithFolder(if (name.contains(":")) mcLoc(name) else modLoc(name))
+        val outputLoc = intoBlockFolder(if (name.contains(":")) mcLoc(name) else modLoc(name))
         val b = models().generatedModels.computeIfAbsent(outputLoc) { k -> BlockModelBuilder(k, helper) }
         BLOCK_MODEL_LOOKUP[b] = outputLoc
         return b
     }
 
-    fun mcFile(path: String): ModelFile {
+    fun mcModel(path: String): ModelFile {
         return ModelFile.UncheckedModelFile(mcLoc(path))
     }
 
-    fun modFile(path: String): ModelFile {
+    // Returns a vanilla model to be used as a model parent.
+    fun mcBlock(path: String): ModelFile {
+        return mcModel("block/$path")
+    }
+
+    fun modModel(path: String): ModelFile {
         return ModelFile.UncheckedModelFile(modLoc(path))
     }
 
     /**
      * Creates a block model builder for json file [name].
+     * Name does not need 'block/' prefix.
      *
      * @param name the name of the .json file to be exported in modid/assets/models/block/
      */
     fun blockModel(name: String): BlockModelBuilder {
-        val outputLoc = extendWithFolder(if (name.contains(":")) ResourceLocation(name) else modLoc(name))
+        val outputLoc = intoBlockFolder(if (name.contains(":")) ResourceLocation(name) else modLoc(name))
         val model = models().generatedModels.computeIfAbsent(outputLoc) { k -> BlockModelBuilder(k, helper) }
         BLOCK_MODEL_LOOKUP[model] = outputLoc
         return model
     }
 
-    private fun extendWithFolder(rl: ResourceLocation): ResourceLocation {
+    private fun intoBlockFolder(rl: ResourceLocation): ResourceLocation {
         val path = rl.path
 
-        return if (path.contains('/')) {
-            rl
-        } else ResourceLocation(rl.namespace, "block/$path")
+        return if (path.contains('/')) rl else ResourceLocation(rl.namespace, "block/$path")
     }
 
     fun configure(b: BlockModelBuilder): ConfiguredModel {

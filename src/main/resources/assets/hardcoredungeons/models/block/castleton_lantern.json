@@ -1,6 +1,0 @@
-{
-    "parent": "block/template_lantern",
-    "textures": {
-        "lantern": "hardcoredungeons:block/castleton_lantern"
-    }
-}

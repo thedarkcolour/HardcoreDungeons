@@ -36,12 +36,12 @@ import java.util.*
  *
  * @author TheDarkColour
  */
-class SimpleStructure(structureID: String, addPieces: (MutableMap<Vector3i, ResourceLocation>) -> Unit) : Structure<NoFeatureConfig>(NoFeatureConfig.field_236558_a_) {
-    private val pieces: Map<Vector3i, ResourceLocation>
+class SimpleStructure(structureID: String, addPieces: (MutableMap<Vector3i, ResourceLocation>) -> Unit) : Structure<NoFeatureConfig>(NoFeatureConfig.CODEC) {
+    private val pieceMap: Map<Vector3i, ResourceLocation>
 
     init {
-        pieces = hashMapOf()
-        addPieces(pieces)
+        pieceMap = hashMapOf()
+        addPieces(pieceMap)
 
         setRegistryKey(structureID)
     }
@@ -51,7 +51,7 @@ class SimpleStructure(structureID: String, addPieces: (MutableMap<Vector3i, Reso
      */
     override fun getStartFactory() = IStartFactory(::Start)
 
-    override fun getDecorationStage(): GenerationStage.Decoration {
+    override fun step(): GenerationStage.Decoration {
         return GenerationStage.Decoration.SURFACE_STRUCTURES
     }
 
@@ -67,7 +67,7 @@ class SimpleStructure(structureID: String, addPieces: (MutableMap<Vector3i, Reso
     // requires an instance reference to add component structure pieces
     // as they are stored in SimpleStructure and are not passed into the constructor
     inner class Start(structure: Structure<NoFeatureConfig>, posX: Int, posZ: Int, bounds: MutableBoundingBox, references: Int, seed: Long) : StructureStart<NoFeatureConfig>(structure, posX, posZ, bounds, references, seed) {
-        override fun func_230364_a_(
+        override fun generatePieces(
             dynamicRegistry: DynamicRegistries,
             generator: ChunkGenerator,
             manager: TemplateManager,
@@ -76,24 +76,23 @@ class SimpleStructure(structureID: String, addPieces: (MutableMap<Vector3i, Reso
             biome: Biome,
             config: NoFeatureConfig,
         ) {
-            val rotation = Rotation.values()[rand.nextInt(Rotation.values().size)]
+            val rotation = Rotation.values()[random.nextInt(Rotation.values().size)]
             // rand.nextInt(Rotation.values().size) // in case ive made some horrible mistake
             // bit shift * 16
             val x = (chunkX shl 4)
             val z = (chunkZ shl 4)
 
-            val y = generator.getHeight(x, z, Heightmap.Type.WORLD_SURFACE_WG)
+            val y = generator.getBaseHeight(x, z, Heightmap.Type.WORLD_SURFACE_WG)
 
             // replace from the pieces passed into constructor
             var rotationOffset: BlockPos
 
-            for (entry in pieces) {
-                val original = entry.key
+            for ((key, value) in pieceMap) {
                 val offset = when (rotation) {
-                    Rotation.NONE -> original
-                    Rotation.CLOCKWISE_90 -> BlockPos(-original.z, original.y, original.x)
-                    Rotation.CLOCKWISE_180 -> BlockPos(-original.x, original.y, -original.z)
-                    Rotation.COUNTERCLOCKWISE_90 -> BlockPos(original.z, original.y, -original.x)
+                    Rotation.NONE -> key
+                    Rotation.CLOCKWISE_90 -> BlockPos(-key.z, key.y, key.x)
+                    Rotation.CLOCKWISE_180 -> BlockPos(-key.x, key.y, -key.z)
+                    Rotation.COUNTERCLOCKWISE_90 -> BlockPos(key.z, key.y, -key.x)
                 }
                 // x shl 5 = x * 32 because of piece sizes
                 // and add integral position values
@@ -102,10 +101,10 @@ class SimpleStructure(structureID: String, addPieces: (MutableMap<Vector3i, Reso
                     (offset.y shl 5) + y,// - yOffset,
                     (offset.z shl 5) + z,
                 )
-                components.add(Piece(manager, entry.value, rotationOffset, rotation))
+                pieces.add(Piece(manager, value, rotationOffset, rotation))
             }
 
-            recalculateStructureSize()
+            calculateBoundingBox()
         }
     }
 
@@ -113,10 +112,9 @@ class SimpleStructure(structureID: String, addPieces: (MutableMap<Vector3i, Reso
         private val location: ResourceLocation
         private val pieceRotation: Rotation
 
-        constructor(manager: TemplateManager, piece: ResourceLocation, pos: BlockPos, rotation: Rotation) : super(
-            HStructures.SIMPLE_STRUCTURE_PIECE, 0) {
+        constructor(manager: TemplateManager, piece: ResourceLocation, pos: BlockPos, rotation: Rotation) : super(HStructures.SIMPLE_STRUCTURE_PIECE, 0) {
             this.location = piece
-            this.templatePosition = pos.up()
+            this.templatePosition = pos.above()
             this.pieceRotation = rotation
             setupPiece(manager)
         }
@@ -128,13 +126,13 @@ class SimpleStructure(structureID: String, addPieces: (MutableMap<Vector3i, Reso
         }
 
         private fun setupPiece(manager: TemplateManager) {
-            val template = manager.getTemplateDefaulted(location)
+            val template = manager.getOrCreate(location)
             val settings = PlacementSettings().setRotation(pieceRotation).setMirror(Mirror.NONE)
             setup(template, templatePosition, settings)
         }
 
-        override fun readAdditional(tagCompound: CompoundNBT) {
-            super.readAdditional(tagCompound)
+        override fun addAdditionalSaveData(tagCompound: CompoundNBT) {
+            super.addAdditionalSaveData(tagCompound)
             tagCompound.putString("Template", location.toString())
             tagCompound.putString("Rot", pieceRotation.name)
         }
@@ -150,7 +148,7 @@ class SimpleStructure(structureID: String, addPieces: (MutableMap<Vector3i, Reso
             // todo add stuff here
         }
 
-        override fun func_230383_a_(
+        override fun postProcess(
             worldIn: ISeedReader,
             manager: StructureManager,
             generator: ChunkGenerator,
@@ -160,9 +158,9 @@ class SimpleStructure(structureID: String, addPieces: (MutableMap<Vector3i, Reso
             blockPos: BlockPos
         ): Boolean {
             val settings = PlacementSettings().setRotation(pieceRotation).setMirror(Mirror.NONE)
-            templatePosition.add(Template.transformedBlockPos(settings, BlockPos.ZERO))
+            templatePosition.offset(Template.calculateRelativePosition(settings, BlockPos.ZERO))
 
-            return super.func_230383_a_(worldIn, manager, generator, rand, bounds, chunkPos, blockPos)
+            return super.postProcess(worldIn, manager, generator, rand, bounds, chunkPos, blockPos)
         }
     }
 }

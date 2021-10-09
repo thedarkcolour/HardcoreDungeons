@@ -9,12 +9,12 @@ import thedarkcolour.hardcoredungeons.registry.HBiomes
 
 object MushroomCliffsBiomeLayer : IBishopTransformer {
     init {
-        LayerUtil.field_242937_a[DynamicRegistries.Impl.func_239770_b_().getRegistry(Registry.BIOME_KEY).getId(HBiomes.MUSHROOM_CLIFFS)] = 15
+        LayerUtil.CATEGORIES[DynamicRegistries.builtin().registryOrThrow(Registry.BIOME_REGISTRY).getId(HBiomes.MUSHROOM_CLIFFS)] = 15
     }
 
     override fun apply(p0: INoiseRandom, p1: Int, p2: Int, p3: Int, p4: Int, p5: Int): Int {
         return if (LayerUtil.isShallowOcean(p5) && LayerUtil.isShallowOcean(p4) && LayerUtil.isShallowOcean(p1)
-            && LayerUtil.isShallowOcean(p3) && LayerUtil.isShallowOcean(p2) && p0.random(20) == 0
-        ) DynamicRegistries.Impl.func_239770_b_().getRegistry(Registry.BIOME_KEY).getId(HBiomes.MUSHROOM_CLIFFS) else p5
+            && LayerUtil.isShallowOcean(p3) && LayerUtil.isShallowOcean(p2) && p0.nextRandom(20) == 0
+        ) DynamicRegistries.builtin().registryOrThrow(Registry.BIOME_REGISTRY).getId(HBiomes.MUSHROOM_CLIFFS) else p5
     }
 }

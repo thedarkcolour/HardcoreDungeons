@@ -10,8 +10,8 @@ import net.minecraft.util.IItemProvider
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.BlockRayTraceResult
 import net.minecraft.world.World
-import thedarkcolour.hardcoredungeons.block.HBlock
-import thedarkcolour.hardcoredungeons.block.properties.HProperties
+import thedarkcolour.hardcoredungeons.block.base.HBlock
+import thedarkcolour.hardcoredungeons.block.base.properties.HProperties
 
 /**
  * @param key The item used to unlock this door
@@ -19,7 +19,7 @@ import thedarkcolour.hardcoredungeons.block.properties.HProperties
  * @param properties Block properties
  */
 class LockBlock(private val key: IItemProvider, private val keyspace: () -> Block, properties: HProperties) : HBlock(properties) {
-    override fun onBlockActivated(
+    override fun use(
         state: BlockState,
         worldIn: World,
         pos: BlockPos,
@@ -28,8 +28,8 @@ class LockBlock(private val key: IItemProvider, private val keyspace: () -> Bloc
         hit: BlockRayTraceResult,
     ): ActionResultType {
         val key = key.asItem()
-        if (key == player.getHeldItem(Hand.MAIN_HAND).item || key == player.getHeldItem(Hand.OFF_HAND).item) {
-            if (worldIn.isRemote) {
+        if (key == player.getItemInHand(Hand.MAIN_HAND).item || key == player.getItemInHand(Hand.OFF_HAND).item) {
+            if (worldIn.isClientSide) {
                 return ActionResultType.SUCCESS
             } else {
                 val positions = arrayListOf(pos)
@@ -48,7 +48,7 @@ class LockBlock(private val key: IItemProvider, private val keyspace: () -> Bloc
 
     private fun collectAdjacentBlocks(worldIn: World, from: BlockPos, target: Block, list: MutableList<BlockPos>, limit: Int) {
         for (direction in Direction.values()) {
-            val p = from.offset(direction)
+            val p = from.relative(direction)
 
             if (list.size >= limit) {
                 return

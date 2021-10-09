@@ -14,76 +14,72 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.RayTraceResult
 import net.minecraft.world.IBlockReader
 import net.minecraft.world.World
-import thedarkcolour.hardcoredungeons.block.properties.HProperties
+import thedarkcolour.hardcoredungeons.block.base.properties.HProperties
 import thedarkcolour.hardcoredungeons.registry.HItems
 import thedarkcolour.hardcoredungeons.registry.HParticles
 import java.util.*
 
 class CastletonTorchBlock(properties: HProperties) : TorchBlock(properties.build(), HParticles.CASTLETON_TORCH_FLAME) {
     init {
-        defaultState = defaultState.with(LIT, false)
+        registerDefaultState(stateDefinition.any().setValue(LIT, false))
     }
 
-    override fun fillStateContainer(builder: StateContainer.Builder<Block, BlockState>) {
+    override fun createBlockStateDefinition(builder: StateContainer.Builder<Block, BlockState>) {
         builder.add(LIT)
     }
 
     override fun getStateForPlacement(context: BlockItemUseContext): BlockState {
-        return defaultState.with(LIT, context.item.item == HItems.CASTLETON_TORCH)
+        return defaultBlockState().setValue(LIT, context.itemInHand.item == HItems.CASTLETON_TORCH)
     }
 
-    override fun animateTick(state: BlockState, worldIn: World, pos: BlockPos, rand: Random?) {
-        if (state[LIT]) {
+    override fun animateTick(state: BlockState, level: World, pos: BlockPos, rand: Random?) {
+        if (state.getValue(LIT)) {
             val d0 = pos.x.toDouble() + 0.5
             val d1 = pos.y.toDouble() + 0.7
             val d2 = pos.z.toDouble() + 0.5
-            worldIn.addParticle(ParticleTypes.SMOKE, d0, d1, d2, 0.0, 0.0, 0.0)
-            worldIn.addParticle(HParticles.CASTLETON_TORCH_FLAME, d0, d1, d2, 0.0, 0.0, 0.0)
+            level.addParticle(ParticleTypes.SMOKE, d0, d1, d2, 0.0, 0.0, 0.0)
+            level.addParticle(HParticles.CASTLETON_TORCH_FLAME, d0, d1, d2, 0.0, 0.0, 0.0)
         }
     }
 
-    override fun getLightValue(state: BlockState, world: IBlockReader?, pos: BlockPos?): Int {
-        return if (state[LIT]) super.getLightValue(state, world, pos) else 0
+    // todo remove
+    override fun getLightValue(state: BlockState, level: IBlockReader?, pos: BlockPos?): Int {
+        return if (state.getValue(LIT)) super.getLightValue(state, level, pos) else 0
     }
 
     override fun getPickBlock(
-        state: BlockState, result: RayTraceResult?, world: IBlockReader?, pos: BlockPos?, player: PlayerEntity?
+        state: BlockState, result: RayTraceResult?, level: IBlockReader?, pos: BlockPos?, player: PlayerEntity?
     ): ItemStack {
-        return if (state[LIT]) ItemStack(HItems.CASTLETON_TORCH) else ItemStack(HItems.BURNT_CASTLETON_TORCH)
+        return if (state.getValue(LIT)) ItemStack(HItems.CASTLETON_TORCH) else ItemStack(HItems.BURNT_CASTLETON_TORCH)
     }
 
     class Wall(properties: HProperties) : WallTorchBlock(properties.build(), HParticles.CASTLETON_TORCH_FLAME) {
-        init {
-            defaultState = defaultState.with(LIT, true)
-        }
-
         override fun getStateForPlacement(context: BlockItemUseContext): BlockState? {
-            return super.getStateForPlacement(context)?.with(LIT, context.item.item == HItems.CASTLETON_TORCH)
+            return super.getStateForPlacement(context)?.setValue(LIT, context.itemInHand.item == HItems.CASTLETON_TORCH)
         }
 
-        override fun fillStateContainer(builder: StateContainer.Builder<Block, BlockState>) {
-            builder.add(HORIZONTAL_FACING, LIT)
+        override fun createBlockStateDefinition(builder: StateContainer.Builder<Block, BlockState>) {
+            builder.add(FACING, LIT)
         }
 
-        override fun animateTick(state: BlockState, worldIn: World, pos: BlockPos, rand: Random?) {
-            if (state[LIT]) {
-                val direction1 = state.get(HORIZONTAL_FACING).opposite
-                val d0 = pos.x + 0.5 + 0.27 * direction1.xOffset
+        override fun animateTick(state: BlockState, level: World, pos: BlockPos, rand: Random?) {
+            if (state.getValue(LIT)) {
+                val direction1 = state.getValue(FACING).opposite
+                val d0 = pos.x + 0.5 + 0.27 * direction1.stepX
                 val d1 = pos.y + 0.92
-                val d2 = pos.z + 0.5 + 0.27 * direction1.zOffset
-                worldIn.addParticle(ParticleTypes.SMOKE, d0, d1, d2, 0.0, 0.0, 0.0)
-                worldIn.addParticle(HParticles.CASTLETON_TORCH_FLAME, d0, d1, d2, 0.0, 0.0, 0.0)
+                val d2 = pos.z + 0.5 + 0.27 * direction1.stepZ
+                level.addParticle(ParticleTypes.SMOKE, d0, d1, d2, 0.0, 0.0, 0.0)
+                level.addParticle(HParticles.CASTLETON_TORCH_FLAME, d0, d1, d2, 0.0, 0.0, 0.0)
             }
         }
 
-        override fun getLightValue(state: BlockState, world: IBlockReader?, pos: BlockPos?): Int {
-            return if (state[LIT]) super.getLightValue(state, world, pos) else 0
+        // todo remove
+        override fun getLightValue(state: BlockState, level: IBlockReader?, pos: BlockPos?): Int {
+            return if (state.getValue(LIT)) super.getLightValue(state, level, pos) else 0
         }
 
-        override fun getPickBlock(
-            state: BlockState, result: RayTraceResult?, world: IBlockReader?, pos: BlockPos?, player: PlayerEntity?
-        ): ItemStack {
-            return if (state[LIT]) ItemStack(HItems.CASTLETON_TORCH) else ItemStack(HItems.BURNT_CASTLETON_TORCH)
+        override fun getPickBlock(state: BlockState, result: RayTraceResult?, level: IBlockReader?, pos: BlockPos?, player: PlayerEntity?): ItemStack {
+            return if (state.getValue(LIT)) ItemStack(HItems.CASTLETON_TORCH) else ItemStack(HItems.BURNT_CASTLETON_TORCH)
         }
     }
 

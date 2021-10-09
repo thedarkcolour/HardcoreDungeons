@@ -18,15 +18,16 @@ import net.minecraft.world.server.ServerWorld
 import net.minecraftforge.common.ForgeHooks
 import net.minecraftforge.common.IPlantable
 import net.minecraftforge.common.PlantType
+import thedarkcolour.hardcoredungeons.block.base.properties.HProperties
 import java.util.*
 
-class ChiliPepperBlock(properties: Properties) : DoublePlantBlock(properties), IGrowable {
+class ChiliPepperBlock(properties: HProperties) : DoublePlantBlock(properties.build()), IGrowable {
     init {
-        defaultState = defaultState.with(HALF, DoubleBlockHalf.LOWER)
+        registerDefaultState(stateDefinition.any().setValue(HALF, DoubleBlockHalf.LOWER))
     }
 
     override fun getShape(state: BlockState, worldIn: IBlockReader, pos: BlockPos, context: ISelectionContext): VoxelShape {
-        return if (state.get(HALF) == DoubleBlockHalf.UPPER) {
+        return if (state.getValue(HALF) == DoubleBlockHalf.UPPER) {
             if (isTall(worldIn, pos, state)) {
                 SHAPE_TOP
             } else {
@@ -41,18 +42,18 @@ class ChiliPepperBlock(properties: Properties) : DoublePlantBlock(properties), I
         return OffsetType.NONE
     }
 
-    override fun fillStateContainer(builder: StateContainer.Builder<Block, BlockState>) {
+    override fun createBlockStateDefinition(builder: StateContainer.Builder<Block, BlockState>) {
         builder.add(HALF, AGE)
     }
 
-    override fun isValidGround(state: BlockState, worldIn: IBlockReader, pos: BlockPos): Boolean {
+    override fun mayPlaceOn(state: BlockState, worldIn: IBlockReader, pos: BlockPos): Boolean {
         return state.block == Blocks.FARMLAND
     }
 
     /**
      * Determines if this crop is below maximum age.
      */
-    private fun isNotMaxAge(state: BlockState) = state.get(AGE) < 10
+    private fun isNotMaxAge(state: BlockState) = state.getValue(AGE) < 10
 
     /**
      * Determines whether the upper part of the plant has grown past 1 block height.
@@ -60,34 +61,34 @@ class ChiliPepperBlock(properties: Properties) : DoublePlantBlock(properties), I
      * @return if the plant is visually taller than 1 block.
      */
     private fun isTall(worldIn: IBlockReader, pos: BlockPos, state: BlockState): Boolean {
-        return state.get(AGE) > 4
+        return state.getValue(AGE) > 4
     }
 
-    override fun canGrow(worldIn: IBlockReader, pos: BlockPos, state: BlockState, isClient: Boolean) = isNotMaxAge(state)
+    override fun isValidBonemealTarget(worldIn: IBlockReader, pos: BlockPos, state: BlockState, isClient: Boolean) = isNotMaxAge(state)
 
-    override fun canUseBonemeal(worldIn: World, rand: Random, pos: BlockPos, state: BlockState): Boolean {
+    override fun isBonemealSuccess(worldIn: World, rand: Random, pos: BlockPos, state: BlockState): Boolean {
         return true
     }
 
-    override fun grow(worldIn: ServerWorld, rand: Random, pos: BlockPos, state: BlockState) {
-        val growth = (state.get(AGE) + MathHelper.nextInt(rand, 3, 6)).coerceAtMost(10)
+    override fun performBonemeal(worldIn: ServerWorld, rand: Random, pos: BlockPos, state: BlockState) {
+        val growth = (state.getValue(AGE) + MathHelper.nextInt(rand, 3, 6)).coerceAtMost(10)
 
-        if (state.get(HALF) == DoubleBlockHalf.LOWER) {
-            worldIn.setBlockState(pos, defaultState.with(AGE, growth))
-            worldIn.setBlockState(pos.up(), defaultState.with(HALF, DoubleBlockHalf.UPPER).with(AGE, growth))
+        if (state.getValue(HALF) == DoubleBlockHalf.LOWER) {
+            worldIn.setBlockAndUpdate(pos, defaultBlockState().setValue(AGE, growth))
+            worldIn.setBlockAndUpdate(pos.above(), defaultBlockState().setValue(HALF, DoubleBlockHalf.UPPER).setValue(AGE, growth))
         } else {
-            worldIn.setBlockState(pos.down(), defaultState.with(AGE, growth))
-            worldIn.setBlockState(pos, defaultState.with(HALF, DoubleBlockHalf.UPPER).with(AGE, growth))
+            worldIn.setBlockAndUpdate(pos.below(), defaultBlockState().setValue(AGE, growth))
+            worldIn.setBlockAndUpdate(pos, defaultBlockState().setValue(HALF, DoubleBlockHalf.UPPER).setValue(AGE, growth))
         }
     }
 
     override fun randomTick(state: BlockState, worldIn: ServerWorld, pos: BlockPos, rand: Random) {
-        if (state.get(HALF) == DoubleBlockHalf.LOWER) {
+        if (state.getValue(HALF) == DoubleBlockHalf.LOWER) {
             if (isNotMaxAge(state)) {
-                val chance = getGrowthChance(state, worldIn, pos.toMutable())
+                val chance = getGrowthChance(state, worldIn, pos.mutable())
                 if (ForgeHooks.onCropsGrowPre(worldIn, pos, state, rand.nextInt((25.0f / chance).toInt() + 1) == 0)) {
-                    worldIn.setBlockState(pos, defaultState.with(HALF, DoubleBlockHalf.LOWER).with(AGE, state.get(AGE) + 1))
-                    worldIn.setBlockState(pos.up(), defaultState.with(HALF, DoubleBlockHalf.UPPER).with(AGE, state.get(AGE) + 1))
+                    worldIn.setBlockAndUpdate(pos, defaultBlockState().setValue(HALF, DoubleBlockHalf.LOWER).setValue(AGE, state.getValue(AGE) + 1))
+                    worldIn.setBlockAndUpdate(pos.above(), defaultBlockState().setValue(HALF, DoubleBlockHalf.UPPER).setValue(AGE, state.getValue(AGE) + 1))
                     ForgeHooks.onCropsGrowPost(worldIn, pos, state)
                 }
             }
@@ -97,7 +98,7 @@ class ChiliPepperBlock(properties: Properties) : DoublePlantBlock(properties), I
     private fun getGrowthChance(blockState: BlockState, worldIn: ServerWorld, pos: BlockPos.Mutable): Float {
         var f = 1.0f
 
-        val state = if (blockState.get(HALF) == DoubleBlockHalf.UPPER) {
+        val state = if (blockState.getValue(HALF) == DoubleBlockHalf.UPPER) {
             worldIn.getBlockState(pos.move(Direction.DOWN))
         } else {
             blockState
@@ -105,7 +106,7 @@ class ChiliPepperBlock(properties: Properties) : DoublePlantBlock(properties), I
         for (x in -1..1) {
             for (z in -1..1) {
                 var i = 0.0f
-                val blockPos = pos.add(x, -1, z)
+                val blockPos = pos.offset(x, -1, z)
                 val state1 = worldIn.getBlockState(blockPos)
 
                 if (state1.canSustainPlant(worldIn, blockPos, Direction.UP, state.block as IPlantable)) {
@@ -148,9 +149,9 @@ class ChiliPepperBlock(properties: Properties) : DoublePlantBlock(properties), I
     }
 
     override fun getStateForPlacement(context: BlockItemUseContext): BlockState? {
-        val pos = context.pos.up()
+        val pos = context.clickedPos.above()
 
-        return if (context.world.getBlockState(pos).isAir(context.world, pos)) {
+        return if (context.level.getBlockState(pos).isAir(context.level, pos)) {
             super.getStateForPlacement(context)
         } else {
             null
@@ -158,8 +159,8 @@ class ChiliPepperBlock(properties: Properties) : DoublePlantBlock(properties), I
     }
 
     companion object {
-        private val SHAPE_BOTTOM = Block.makeCuboidShape(2.0, 0.0, 2.0, 14.0, 16.0, 14.0)
-        private val SHAPE_TOP = Block.makeCuboidShape(2.0, 0.0, 2.0, 14.0, 13.0, 14.0)
+        private val SHAPE_BOTTOM = box(2.0, 0.0, 2.0, 14.0, 16.0, 14.0)
+        private val SHAPE_TOP = box(2.0, 0.0, 2.0, 14.0, 13.0, 14.0)
         val AGE = IntegerProperty.create("age", 0, 10)
         val HALF = BlockStateProperties.DOUBLE_BLOCK_HALF
     }

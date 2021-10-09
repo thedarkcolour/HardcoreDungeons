@@ -1,7 +1,0 @@
-{
-    "parent": "block/cube_column",
-    "textures": {
-        "end": "hardcoredungeons:block/candy_cane_end",
-        "side": "hardcoredungeons:block/candy_cane_side"
-    }
-}

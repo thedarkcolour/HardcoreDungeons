@@ -11,7 +11,7 @@ import thedarkcolour.hardcoredungeons.registry.HItems
 
 // extra functionality hehehe
 class ChaliceItem(properties: Properties) : Item(properties) {
-    override fun itemInteractionForEntity(
+    override fun interactLivingEntity(
         stack: ItemStack,
         playerIn: PlayerEntity,
         target: LivingEntity,
@@ -19,8 +19,8 @@ class ChaliceItem(properties: Properties) : Item(properties) {
     ): ActionResultType {
         if (target is CowEntity) {
             stack.shrink(1)
-            playerIn.addItemStackToInventory(ItemStack(HItems.CUM_CHALICE))
-            return ActionResultType.func_233537_a_(playerIn.world.isRemote)
+            playerIn.addItem(ItemStack(HItems.CUM_CHALICE))
+            return ActionResultType.sidedSuccess(playerIn.level.isClientSide)
         }
         
         return ActionResultType.PASS

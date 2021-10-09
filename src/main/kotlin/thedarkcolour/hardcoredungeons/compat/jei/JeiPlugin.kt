@@ -7,6 +7,7 @@ import mezz.jei.api.registration.ISubtypeRegistration
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 import net.minecraft.util.ResourceLocation
+import net.minecraft.util.text.TranslationTextComponent
 import thedarkcolour.hardcoredungeons.registry.HItems
 import thedarkcolour.hardcoredungeons.util.modLoc
 
@@ -29,6 +30,6 @@ class JeiPlugin : IModPlugin {
 
         val stacks = items.map(::ItemStack)
         val ingredientType = registration.ingredientManager.getIngredientType(ItemStack::class.java)
-        registration.addIngredientInfo(stacks, ingredientType, langKey)
+        registration.addIngredientInfo(stacks, ingredientType, TranslationTextComponent(langKey))
     }
 }

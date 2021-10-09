@@ -29,7 +29,7 @@ class HEntityType<T>(
     immuneToFire: Boolean = false,
     spawnNaturally: Boolean = true,
     specialSpawns: ImmutableSet<Block> = ImmutableSet.of(),
-    size: EntitySize = EntitySize.flexible(0.6F, 1.8F),
+    size: EntitySize = EntitySize.scalable(0.6F, 1.8F),
     velocityUpdateSpecial: Predicate<EntityType<*>> = DEFAULT_VELOCITY,
     trackingRangeSpecial: ToIntFunction<EntityType<*>> = ToIntFunction { 5 },
     updateIntervalSpecial: ToIntFunction<EntityType<*>> = ToIntFunction { 3 },

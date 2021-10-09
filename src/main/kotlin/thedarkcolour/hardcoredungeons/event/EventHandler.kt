@@ -18,12 +18,15 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent
 import net.minecraftforge.event.world.BlockEvent
 import net.minecraftforge.eventbus.api.Event
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent
+import thedarkcolour.hardcoredungeons.block.HBlocks
 import thedarkcolour.hardcoredungeons.block.misc.BonusFarmlandBlock
-import thedarkcolour.hardcoredungeons.block.portal.PortalBlock
+import thedarkcolour.hardcoredungeons.block.portal.HPortalBlock
 import thedarkcolour.hardcoredungeons.capability.HPlayer
 import thedarkcolour.hardcoredungeons.capability.PlayerHelper
 import thedarkcolour.hardcoredungeons.config.HConfig
-import thedarkcolour.hardcoredungeons.registry.HBlocks
+import thedarkcolour.hardcoredungeons.feature.HConfiguredFeatures
+import thedarkcolour.hardcoredungeons.structure.HConfiguredStructures
+import thedarkcolour.hardcoredungeons.surfacebuilder.HConfiguredSurfaceBuilders
 import thedarkcolour.hardcoredungeons.tileentity.DungeonSpawnerTileEntity
 import thedarkcolour.kotlinforforge.forge.FORGE_BUS
 import thedarkcolour.kotlinforforge.forge.MOD_BUS
@@ -46,7 +49,7 @@ object EventHandler {
         val pos = event.pos
 
         // get the BonusFarmlandBlock instance hopefully
-        val farmland = world.getBlockState(pos.down()).block
+        val farmland = world.getBlockState(pos.below()).block
 
         // do not override vanilla farmland for now
         if (farmland !is BonusFarmlandBlock) return
@@ -55,7 +58,7 @@ object EventHandler {
         val crop = state.block
 
         for (entry in farmland.boostMap.object2FloatEntrySet()) {
-            if (entry.key.get() == crop) {
+            if (entry.key == crop) {
                 // we only have a few crops supported
                 if (crop is IGrowable && world is ServerWorld) {
 
@@ -74,7 +77,7 @@ object EventHandler {
         BlockItem(HBlocks.GOLDEN_CARROTS, Item.Properties()).also {
             // don't put non-existent items in the block2item map
             // and add the correct middle mouse thing
-            BlockItem.BLOCK_TO_ITEM[HBlocks.GOLDEN_CARROTS] = Items.GOLDEN_CARROT
+            BlockItem.BY_BLOCK[HBlocks.GOLDEN_CARROTS] = Items.GOLDEN_CARROT
         }
     }
 
@@ -88,8 +91,8 @@ object EventHandler {
 
         val world = event.world
         val pos = event.pos
-        val up = pos.up()
-        val cropState = HBlocks.GOLDEN_CARROTS.defaultState
+        val up = pos.above()
+        val cropState = HBlocks.GOLDEN_CARROTS.defaultBlockState()
 
         val player = event.player
 
@@ -97,7 +100,7 @@ object EventHandler {
             if (player.isCreative) {
                 heldItem.grow(1)
             }
-            GOLDEN_CARROTS_PLACER.onItemUse(ItemUseContext(player, event.hand, BlockRayTraceResult(null, event.face, pos, false)))
+            GOLDEN_CARROTS_PLACER.useOn(ItemUseContext(player, event.hand, BlockRayTraceResult(null, event.face, pos, false)))
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -122,6 +125,11 @@ object EventHandler {
 
     private fun commonSetup(event: FMLCommonSetupEvent) {
         HPlayer.registerCapability()
+
+        // World generation
+        HConfiguredFeatures.registerConfiguredFeatures()
+        HConfiguredSurfaceBuilders.registerConfiguredSurfaceBuilders()
+        HConfiguredStructures.registerConfiguredStructures()
     }
 
     private fun attachCapability(event: AttachCapabilitiesEvent<Entity>) {
@@ -143,13 +151,13 @@ object EventHandler {
         val end = BlockPos(bounds.maxX - 0.001, bounds.maxY - 0.001, bounds.maxZ - 0.001)
         val cursor = BlockPos.Mutable()
 
-        if (player.world.isAreaLoaded(start, end)) {
+        if (player.level.hasChunksAt(start, end)) {
             loop@for (i in start.x..end.x) {
                 for (j in start.y..end.y) {
                     for (k in start.z..end.z) {
-                        cursor.setPos(i, j, k)
+                        cursor.set(i, j, k)
 
-                        if (player.world.getBlockState(cursor).block is PortalBlock) {
+                        if (player.level.getBlockState(cursor).block is HPortalBlock) {
                             return
                         }
                     }
@@ -168,7 +176,7 @@ object EventHandler {
         val state = event.state
         val worldIn = event.world
         val pos = event.pos
-        val tile = worldIn.getTileEntity(pos)
+        val tile = worldIn.getBlockEntity(pos)
 
         if (tile is DungeonSpawnerTileEntity) {
             if (tile.remainingKills > 0) {

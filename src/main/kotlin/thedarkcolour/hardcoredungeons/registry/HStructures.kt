@@ -1,14 +1,9 @@
 package thedarkcolour.hardcoredungeons.registry
 
-import com.google.common.collect.ImmutableList
 import com.google.common.collect.ImmutableMap
 import net.minecraft.util.ResourceLocation
 import net.minecraft.util.math.vector.Vector3i
-import net.minecraft.util.registry.Registry
-import net.minecraft.util.registry.WorldGenRegistries
-import net.minecraft.world.gen.FlatGenerationSettings
 import net.minecraft.world.gen.feature.IFeatureConfig
-import net.minecraft.world.gen.feature.StructureFeature
 import net.minecraft.world.gen.feature.structure.IStructurePieceType
 import net.minecraft.world.gen.feature.structure.Structure
 import net.minecraft.world.gen.settings.DimensionStructuresSettings
@@ -25,7 +20,7 @@ object HStructures {
     val RAINBOW_FACTORY_PIECE_0 = ResourceLocation(HardcoreDungeons.ID, "rainbow_factory_slice_0")
     val RAINBOW_FACTORY_PIECE_1 = ResourceLocation(HardcoreDungeons.ID, "rainbow_factory_slice_1")
 
-    val SIMPLE_STRUCTURE_PIECE: IStructurePieceType = IStructurePieceType.register(
+    val SIMPLE_STRUCTURE_PIECE: IStructurePieceType = IStructurePieceType.setPieceId(
         SimpleStructure::Piece,
         "hardcoredungeons:simple_structure_piece"
     )
@@ -45,28 +40,22 @@ object HStructures {
         map[Vector3i(0, 0, 1)] = RAINBOW_FACTORY_PIECE_1
     }, StructureSeparationSettings(32, 8, 523332), true)
 
-    val MUSHROOM_HUT_FEATURE: StructureFeature<*, *> = register("mushroom_hut_feature", MUSHROOM_HUT.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG))
-    val LUMLIGHT_CABIN_FEATURE: StructureFeature<*, *> = register("lumlight_cabin_feature", LUMLIGHT_CABIN.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG))
-    val RAINBOW_FACTORY_FEATURE: StructureFeature<*, *> = register("rainbow_factory_feature", RAINBOW_FACTORY.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG))
-
     fun <C : IFeatureConfig> structure(
         structure: Structure<C>,
         separationSettings: StructureSeparationSettings,
         addLand: Boolean
     ): Structure<C> {
-        Structure.NAME_STRUCTURE_BIMAP[structure.registryName.toString().toLowerCase(Locale.ROOT)] = structure
+        Structure.STRUCTURES_REGISTRY[structure.registryName.toString().lowercase(Locale.ROOT)] = structure
 
         if (addLand) {
-            Structure.field_236384_t_ =
-                ImmutableList.Builder<Structure<*>>()
-                    .addAll(Structure.field_236384_t_)
-                    .add(structure)
-                    .build()
+            Structure.NOISE_AFFECTING_FEATURES = ArrayList(Structure.NOISE_AFFECTING_FEATURES).also { list ->
+                list.add(structure)
+            }
         }
 
-        DimensionStructuresSettings.field_236191_b_ =
+        DimensionStructuresSettings.DEFAULTS =
             ImmutableMap.builder<Structure<*>, StructureSeparationSettings>()
-                .putAll(DimensionStructuresSettings.field_236191_b_)
+                .putAll(DimensionStructuresSettings.DEFAULTS)
                 .put(structure, separationSettings)
                 .build()
 
@@ -82,18 +71,13 @@ object HStructures {
     fun addDimensionalSpacing(event: WorldEvent.Load) {
         if (event.world is ServerWorld) {
             val serverWorld = event.world as ServerWorld
-            val tempMap = HashMap(serverWorld.chunkProvider.generator.func_235957_b_().func_236195_a_())
+            val tempMap = HashMap(serverWorld.chunkSource.generator.settings.structureConfig())
 
-            tempMap[LUMLIGHT_CABIN] = DimensionStructuresSettings.field_236191_b_[LUMLIGHT_CABIN]
-            tempMap[MUSHROOM_HUT] = DimensionStructuresSettings.field_236191_b_[MUSHROOM_HUT]
-            tempMap[RAINBOW_FACTORY] = DimensionStructuresSettings.field_236191_b_[RAINBOW_FACTORY]
+            tempMap[LUMLIGHT_CABIN] = DimensionStructuresSettings.DEFAULTS[LUMLIGHT_CABIN]
+            tempMap[MUSHROOM_HUT] = DimensionStructuresSettings.DEFAULTS[MUSHROOM_HUT]
+            tempMap[RAINBOW_FACTORY] = DimensionStructuresSettings.DEFAULTS[RAINBOW_FACTORY]
 
-            serverWorld.chunkProvider.generator.func_235957_b_().field_236193_d_ = tempMap
+            serverWorld.chunkSource.generator.settings.structureConfig = tempMap
         }
-    }
-
-    fun <FC : IFeatureConfig, F : Structure<FC>> register(name: String, feature: StructureFeature<FC, F>): StructureFeature<FC, F> {
-        FlatGenerationSettings.STRUCTURES[feature.field_236268_b_] = feature
-        return Registry.register(WorldGenRegistries.CONFIGURED_STRUCTURE_FEATURE, ResourceLocation("hardcoredungeons", name), feature)
     }
 }

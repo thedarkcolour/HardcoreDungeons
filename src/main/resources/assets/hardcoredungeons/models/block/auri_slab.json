@@ -1,8 +1,0 @@
-{
-    "parent": "block/slab",
-    "textures": {
-        "bottom": "hardcoredungeons:block/auri_planks",
-        "top": "hardcoredungeons:block/auri_planks",
-        "side": "hardcoredungeons:block/auri_planks"
-    }
-}

@@ -21,7 +21,7 @@ class DeerFullbrightLayer(private val renderer: DeerRenderer) : LayerRenderer<De
         val texture = renderer.getOverlayTexture(entity)
 
         if (texture != null) {
-            entityModel.render(stack, buffer.getBuffer(texture), 15728640, OverlayTexture.NO_OVERLAY, 1.0f, 1.0f, 1.0f, 1.0f)
+            parentModel.renderToBuffer(stack, buffer.getBuffer(texture), 15728640, OverlayTexture.NO_OVERLAY, 1.0f, 1.0f, 1.0f, 1.0f)
         }
     }
 }

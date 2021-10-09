@@ -11,7 +11,7 @@ import net.minecraft.world.World
 
 // yes i added a whole new item for this :sunglasses:
 class CumChaliceItem(properties: Properties) : Item(properties) {
-    override fun getUseAction(stack: ItemStack): UseAction {
+    override fun getUseAnimation(stack: ItemStack): UseAction {
         return UseAction.DRINK
     }
 
@@ -19,7 +19,7 @@ class CumChaliceItem(properties: Properties) : Item(properties) {
         return 40
     }
 
-    override fun onItemRightClick(worldIn: World, playerIn: PlayerEntity, handIn: Hand): ActionResult<ItemStack> {
-        return DrinkHelper.startDrinking(worldIn, playerIn, handIn)
+    override fun use(worldIn: World, playerIn: PlayerEntity, handIn: Hand): ActionResult<ItemStack> {
+        return DrinkHelper.useDrink(worldIn, playerIn, handIn)
     }
 }

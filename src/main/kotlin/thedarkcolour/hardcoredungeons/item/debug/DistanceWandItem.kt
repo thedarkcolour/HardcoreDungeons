@@ -11,27 +11,24 @@ import kotlin.math.abs
 class DistanceWandItem(properties: Properties) : Item(properties) {
     private var ItemStack.startPos by BlockPosNBTDelegate("StartPos")
 
-    override fun onItemUse(ctx: ItemUseContext): ActionResultType {
-        val world = ctx.world
+    override fun useOn(ctx: ItemUseContext): ActionResultType {
+        val world = ctx.level
 
-        if (!world.isRemote) {
-            val stack = ctx.item
-            val pos = ctx.pos
+        if (!world.isClientSide) {
+            val stack = ctx.itemInHand
+            val pos = ctx.clickedPos
             val player = ctx.player ?: return ActionResultType.PASS
 
             val startPos = stack.startPos
 
             if (startPos == null) {
                 stack.startPos = pos
-                player.sendStatusMessage(StringTextComponent("Measurement starting position: (${pos.x} ${pos.y} ${pos.z})"), true)
+                player.displayClientMessage(StringTextComponent("Measurement starting position: (${pos.x} ${pos.y} ${pos.z})"), true)
             } else {
                 val dX = if (pos.x == startPos.x) 0 else abs(pos.x - startPos.x) + 1
                 val dY = if (pos.y == startPos.y) 0 else abs(pos.y - startPos.y) + 1
                 val dZ = if (pos.z == startPos.z) 0 else abs(pos.z - startPos.z) + 1
-                player.sendStatusMessage(
-                    StringTextComponent("Distance (XYZ): $dX, $dY, $dZ"),
-                    false
-                )
+                player.displayClientMessage(StringTextComponent("Distance (XYZ): $dX, $dY, $dZ"), false)
                 stack.startPos = null
             }
         }

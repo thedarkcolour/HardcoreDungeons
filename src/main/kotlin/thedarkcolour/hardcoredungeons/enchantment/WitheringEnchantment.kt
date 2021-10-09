@@ -13,17 +13,17 @@ import kotlin.math.roundToInt
 class WitheringEnchantment : Enchantment(Rarity.RARE, EnchantmentType.WEAPON, arrayOf(EquipmentSlotType.MAINHAND)) {
     override fun getMaxLevel() = 3
 
-    override fun onEntityDamaged(user: LivingEntity, target: Entity, level: Int) {
-        if (target is LivingEntity && target.getActivePotionEffect(Effects.WITHER) == null) {
-            target.addPotionEffect(EffectInstance(Effects.WITHER, (1.5 + level * 14).roundToInt(), 3))
+    override fun doPostAttack(user: LivingEntity, target: Entity, level: Int) {
+        if (target is LivingEntity && target.getEffect(Effects.WITHER) == null) {
+            target.addEffect(EffectInstance(Effects.WITHER, (1.5 + level * 14).roundToInt(), 3))
         }
     }
 
-    override fun getMinEnchantability(enchantmentLevel: Int): Int {
+    override fun getMinCost(enchantmentLevel: Int): Int {
         return 10 + 20 * (enchantmentLevel - 1)
     }
 
-    override fun getMaxEnchantability(enchantmentLevel: Int): Int {
-        return getMinEnchantability(enchantmentLevel) + 55
+    override fun getMaxCost(enchantmentLevel: Int): Int {
+        return getMinCost(enchantmentLevel) + 55
     }
 }

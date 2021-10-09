@@ -4,7 +4,7 @@ import net.minecraft.client.renderer.model.ModelRenderer
 
 // Helper function from BlockBench
 fun ModelRenderer.setRotationAngle(x: Float, y: Float, z: Float) {
-    rotateAngleX = x
-    rotateAngleY = y
-    rotateAngleZ = z
+    xRot = x
+    yRot = y
+    zRot = z
 }

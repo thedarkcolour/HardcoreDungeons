@@ -1,6 +1,0 @@
-{
-    "variants": {
-        "axis=z": { "model": "hardcoredungeons:block/castleton_portal_ew" },
-        "axis=x": { "model": "hardcoredungeons:block/castleton_portal_ns" }
-    }
-}

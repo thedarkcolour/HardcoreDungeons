@@ -10,20 +10,20 @@ import net.minecraft.world.gen.feature.Feature
 import java.util.*
 
 class CrystalFeature(codec: Codec<CrystalFeatureConfig>) : Feature<CrystalFeatureConfig>(codec) {
-    override fun generate(
+    override fun place(
         reader: ISeedReader,
         generator: ChunkGenerator,
         rand: Random,
         pos: BlockPos,
         config: CrystalFeatureConfig,
     ): Boolean {
-        val mutable = pos.toMutable().move(Direction.UP, 40)
+        val mutable = pos.mutable().move(Direction.UP, 40)
 
         for (y in 40 downTo 5) {
-            if (reader.isAirBlock(mutable)) {
-                if (reader.getBlockState(mutable.move(Direction.DOWN)).isIn(BlockTags.BASE_STONE_OVERWORLD)) {
+            if (reader.isEmptyBlock(mutable)) {
+                if (reader.getBlockState(mutable.move(Direction.DOWN)).`is`(BlockTags.BASE_STONE_OVERWORLD)) {
                     if (rand.nextFloat() < config.chance) {
-                        setBlockState(reader, mutable.move(Direction.UP), config.crystalProvider.getBlockState(rand, mutable))
+                        setBlock(reader, mutable.move(Direction.UP), config.crystalProvider.getState(rand, mutable))
                         return true
                     }
                 }

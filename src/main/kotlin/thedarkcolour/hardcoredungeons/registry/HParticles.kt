@@ -4,35 +4,26 @@ import net.minecraft.client.Minecraft
 import net.minecraft.client.particle.FlameParticle
 import net.minecraft.client.particle.LavaParticle
 import net.minecraft.particles.BasicParticleType
-import net.minecraft.particles.ParticleType
-import net.minecraftforge.registries.IForgeRegistry
+import net.minecraftforge.registries.ForgeRegistries
+import thedarkcolour.hardcoredungeons.HardcoreDungeons
 import thedarkcolour.hardcoredungeons.particle.SoulFrayParticle
+import thedarkcolour.kotlinforforge.forge.KDeferredRegister
 
 /**
  * @author TheDarkColour
  */
 object HParticles {
-    val SOUL_FRAY = BasicParticleType(false).setRegistryKey("soul_fray")
-    val CASTLETON_TORCH_FLAME = BasicParticleType(false).setRegistryKey("castleton_torch_flame")
-    val CASTLETON_CAMPFIRE_POP = BasicParticleType(false).setRegistryKey("castleton_campfire_pop")
+    val PARTICLE_TYPES = KDeferredRegister(ForgeRegistries.PARTICLE_TYPES, HardcoreDungeons.ID)
 
-    fun registerParticles(particles: IForgeRegistry<ParticleType<*>>) {
-        particles.register(SOUL_FRAY)
-        particles.register(CASTLETON_TORCH_FLAME)
-        particles.register(CASTLETON_CAMPFIRE_POP)
-    }
+    val SOUL_FRAY by PARTICLE_TYPES.registerObject("soul_fray") { BasicParticleType(false) }
+    val CASTLETON_TORCH_FLAME by PARTICLE_TYPES.registerObject("castleton_torch_flame") { BasicParticleType(false) }
+    val CASTLETON_CAMPFIRE_POP by PARTICLE_TYPES.registerObject("castleton_campfire_pop") { BasicParticleType(false) }
 
     fun registerParticleFactories() {
-        val manager = Minecraft.getInstance().particles
+        val manager = Minecraft.getInstance().particleEngine
 
-        manager.registerFactory(SOUL_FRAY, SoulFrayParticle::Factory)
-        manager.registerFactory(CASTLETON_TORCH_FLAME, FlameParticle::Factory)
-        manager.registerFactory(CASTLETON_CAMPFIRE_POP, LavaParticle::Factory)
+        manager.register(SOUL_FRAY, SoulFrayParticle::Factory)
+        manager.register(CASTLETON_TORCH_FLAME, FlameParticle::Factory)
+        manager.register(CASTLETON_CAMPFIRE_POP, LavaParticle::Factory)
     }
 }
-
-
-
-//
-// val sprites = ObfuscationReflectionHelper.getPrivateValue<MutableMap<ResourceLocation, Any>, ParticleManager>(ParticleManager::class.java, manager, "field_215242_i")!!
-// sprites[ForgeRegistries.PARTICLE_TYPES.getKey(SOUL_FRAY)!!] = sprites[ForgeRegistries.PARTICLE_TYPES.getKey(ParticleTypes.CLOUD)!!]!!

@@ -33,16 +33,16 @@ class HItemTier(
 ) : IItemTier {
     companion object {
         val CANDY_CANE = createTier(2, 726, 7.0f, 3.0f, 17, HItems::CANDY_CANE) // todo make unique
-        val MALACHITE = createTier(3, 1824, 8.0f, 2.0f, 18, HItemTags::GEMS_MALACHITE)
+        val MALACHITE = createTier(3, 1824, 8.0f, 2.0f, 18, HItemTags.GEMS_MALACHITE)
         val VALABLADE = createTier(0, 1237, 5.0f, 3.0f, 26)
-        val SHROOMY = createTier(3, 726, 7.0f, 3.0f, 17, Tags.Items::MUSHROOMS)
+        val SHROOMY = createTier(3, 726, 7.0f, 3.0f, 17, Tags.Items.MUSHROOMS)
 
         fun createTier(level: Int, durability: Int, efficiency: Float, damage: Float, enchantability: Int, item: IItemProvider): HItemTier {
-            return HItemTier(level, durability, efficiency, damage, enchantability) { Ingredient.fromItems(item.asItem()) }
+            return HItemTier(level, durability, efficiency, damage, enchantability) { Ingredient.of(item.asItem()) }
         }
 
-        fun createTier(level: Int, durability: Int, efficiency: Float, damage: Float, enchantability: Int, item: () -> ITag<Item>): HItemTier {
-            return HItemTier(level, durability, efficiency, damage, enchantability) { Ingredient.fromTag(item()) }
+        fun createTier(level: Int, durability: Int, efficiency: Float, damage: Float, enchantability: Int, item: ITag<Item>): HItemTier {
+            return HItemTier(level, durability, efficiency, damage, enchantability) { Ingredient.of(item) }
         }
 
         fun createTier(level: Int, durability: Int, efficiency: Float, damage: Float, enchantability: Int): HItemTier {
@@ -59,27 +59,27 @@ class HItemTier(
         repairMaterial: Supplier<Ingredient>,
     ) : this(harvestLevel, durability, efficiency, damage, enchantability, LazyValue(repairMaterial))
 
-    override fun getRepairMaterial(): Ingredient {
-        return repairMaterial.value
+    override fun getRepairIngredient(): Ingredient {
+        return repairMaterial.get()
     }
 
-    override fun getHarvestLevel(): Int {
+    override fun getLevel(): Int {
         return harvestLevel
     }
 
-    override fun getMaxUses(): Int {
+    override fun getUses(): Int {
         return durability
     }
 
-    override fun getAttackDamage(): Float {
+    override fun getAttackDamageBonus(): Float {
         return damage
     }
 
-    override fun getEnchantability(): Int {
+    override fun getEnchantmentValue(): Int {
         return enchantability
     }
 
-    override fun getEfficiency(): Float {
+    override fun getSpeed(): Float {
         return efficiency
     }
 }

@@ -1,6 +1,0 @@
-{
-    "variants": {
-        "axis=z": { "model": "hardcoredungeons:block/rainbowland_portal_ew" },
-        "axis=x": { "model": "hardcoredungeons:block/rainbowland_portal_ns" }
-    }
-}

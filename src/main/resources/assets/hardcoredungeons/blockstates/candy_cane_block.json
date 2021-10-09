@@ -1,7 +1,0 @@
-{
-    "variants": {
-        "axis=y": { "model": "hardcoredungeons:block/candy_cane_block" },
-        "axis=z": { "model": "hardcoredungeons:block/candy_cane_block", "x": 90 },
-        "axis=x": { "model": "hardcoredungeons:block/candy_cane_block", "x": 90, "y": 90 }
-    }
-}

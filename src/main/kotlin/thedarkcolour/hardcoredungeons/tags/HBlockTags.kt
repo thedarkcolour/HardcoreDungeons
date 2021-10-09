@@ -17,7 +17,7 @@ object HBlockTags {
 
     val GLASS_RAINBOW = tag("glass/rainbow")
     val GLASS_PANES_RAINBOW = tag("glass_panes/rainbow")
-    val FENCES_BRICK = tag("fences/brick")
+    //val FENCES_BRICK = tag("fences/brick")
 
     val CASTLETON_GRASS_PLANTABLE = tag("castleton_grass_plantable")
     val RAINBOW_GRASS_PLANTABLE = tag("rainbow_grass_plantable")
@@ -25,6 +25,6 @@ object HBlockTags {
     val SUGARY_GRASS_PLANTABLE = tag("sugary_grass_plantable")
 
     private fun tag(name: String): ITag.INamedTag<Block> {
-        return BlockTags.makeWrapperTag(HardcoreDungeons.ID + ":" + name)
+        return BlockTags.bind(HardcoreDungeons.ID + ":" + name)
     }
 }

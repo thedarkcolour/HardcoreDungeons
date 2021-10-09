@@ -18,35 +18,35 @@ abstract class ProjectileEntity(
 ) : DamagingProjectileEntity(type, worldIn), HEntityType.HEntity {
 
     var shootingEntity: LivingEntity?
-        get() = func_234616_v_() as LivingEntity?
-        set(shooter) = setShooter(shooter)
+        get() = getOwner() as LivingEntity?
+        set(shooter) = setOwner(shooter)
 
     fun shoot(shooter: LivingEntity, pos: Vector3d, acceleration: Vector3d) {
         this.shoot(shooter, pos.x, pos.y, pos.z, acceleration.x, acceleration.y, acceleration.z)
     }
 
     open fun shoot(shooter: LivingEntity, x: Double, y: Double, z: Double, mX: Double, mY: Double, mZ: Double) {
-        setLocationAndAngles(x, y, z, rotationYaw, rotationPitch)
-        setPosition(x, y, z)
+        moveTo(x, y, z, yRot, xRot)
+        setPos(x, y, z)
         val d0 = sqrt(mX * mX + mY * mY + mZ * mZ)
-        accelerationX = mX / d0 * 0.1
-        accelerationY = mY / d0 * 0.1
-        accelerationZ = mZ / d0 * 0.1
+        zPower = mX / d0 * 0.1
+        zPower = mY / d0 * 0.1
+        zPower = mZ / d0 * 0.1
 
         shootingEntity = shooter
 
-        world.addEntity(this)
+        level.addFreshEntity(this)
     }
 
-    override fun onImpact(result: RayTraceResult) {
-        super.onImpact(result)
+    override fun onHit(result: RayTraceResult) {
+        super.onHit(result)
     }
 
     override fun getAttributes(): AttributeModifierMap.MutableAttribute {
-        return AttributeModifierMap.createMutableAttribute()
+        return AttributeModifierMap.builder()
     }
 
-    override fun createSpawnPacket(): IPacket<*> = NetworkHooks.getEntitySpawningPacket(this)
+    override fun getAddEntityPacket(): IPacket<*> = NetworkHooks.getEntitySpawningPacket(this)
 
-    override fun isFireballFiery() = false
+    override fun shouldBurn() = false
 }

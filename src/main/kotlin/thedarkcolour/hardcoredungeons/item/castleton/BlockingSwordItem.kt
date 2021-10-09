@@ -11,13 +11,13 @@ import net.minecraft.util.Hand
 import net.minecraft.world.World
 
 class BlockingSwordItem(properties: Properties) : SwordItem(ItemTier.GOLD, 9, -2.4f, properties) {
-    override fun onItemRightClick(worldIn: World, playerIn: PlayerEntity, handIn: Hand): ActionResult<ItemStack> {
-        val stack = playerIn.getHeldItem(handIn)
-        playerIn.activeHand = handIn
+    override fun use(worldIn: World, playerIn: PlayerEntity, handIn: Hand): ActionResult<ItemStack> {
+        val stack = playerIn.getItemInHand(handIn)
+        playerIn.startUsingItem(handIn)
         return ActionResult(ActionResultType.SUCCESS, stack)
     }
 
-    override fun getUseAction(stack: ItemStack) = UseAction.BLOCK
+    override fun getUseAnimation(stack: ItemStack) = UseAction.BLOCK
 
     override fun getUseDuration(stack: ItemStack) = 72000
 }

@@ -14,13 +14,14 @@ import thedarkcolour.hardcoredungeons.data.advancements.OverworldAdvancements
 import java.io.IOException
 import java.nio.file.Path
 
+// todo
 class AdvancementGenerator(private val gen: DataGenerator) : AdvancementProvider(gen) {
     private val advancementGroups = listOf<AdvancementGroup>(OverworldAdvancements())
 
     /**
      * Performs this provider's action.
      */
-    override fun act(cache: DirectoryCache) {
+    override fun run(cache: DirectoryCache) {
         val path = gen.outputFolder
         val set: MutableSet<ResourceLocation> = Sets.newHashSet()
         val consumer = { advancement: Advancement ->
@@ -28,7 +29,7 @@ class AdvancementGenerator(private val gen: DataGenerator) : AdvancementProvider
             val path1 = getPath(path, advancement)
 
             try {
-                IDataProvider.save(GSON, cache, advancement.copy().serialize(), path1)
+                IDataProvider.save(GSON, cache, advancement.deconstruct().serializeToJson(), path1)
             } catch (io: IOException) {
                 LOGGER.error("Couldn't save advancement {}", path1, io)
             }

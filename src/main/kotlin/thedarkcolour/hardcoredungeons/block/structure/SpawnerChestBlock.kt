@@ -20,18 +20,18 @@ import net.minecraft.util.text.TranslationTextComponent
 import net.minecraft.world.IBlockReader
 import net.minecraft.world.IWorld
 import net.minecraft.world.World
-import thedarkcolour.hardcoredungeons.block.HBlock
-import thedarkcolour.hardcoredungeons.block.properties.HProperties
+import thedarkcolour.hardcoredungeons.block.base.HBlock
+import thedarkcolour.hardcoredungeons.block.base.properties.HProperties
 
 // todo re evaluate cause this is just a copy paste
 class SpawnerChestBlock(properties: HProperties) : HBlock(properties), IWaterLoggable {
     init {
-        defaultState = defaultState.with(HORIZONTAL_FACING, Direction.NORTH).with(CHEST_TYPE, ChestType.SINGLE).with(WATERLOGGED, false)
+        registerDefaultState(stateDefinition.any().setValue(HORIZONTAL_FACING, Direction.NORTH).setValue(CHEST_TYPE, ChestType.SINGLE).setValue(WATERLOGGED, false))
     }
 
-    override fun getRenderType(state: BlockState) = BlockRenderType.ENTITYBLOCK_ANIMATED
+    override fun getRenderShape(state: BlockState) = BlockRenderType.ENTITYBLOCK_ANIMATED
 
-    override fun updatePostPlacement(
+    override fun updateShape(
         stateIn: BlockState,
         facing: Direction,
         facingState: BlockState,
@@ -40,16 +40,16 @@ class SpawnerChestBlock(properties: HProperties) : HBlock(properties), IWaterLog
         facingPos: BlockPos
     ): BlockState {
         if (facingState.block == this && facing.axis.isHorizontal) {
-            val chestType = facingState.get(CHEST_TYPE)
-            if (stateIn.get(CHEST_TYPE) == ChestType.SINGLE &&
+            val chestType = facingState.getValue(CHEST_TYPE)
+            if (stateIn.getValue(CHEST_TYPE) == ChestType.SINGLE &&
                 chestType != ChestType.SINGLE &&
-                stateIn.get(HORIZONTAL_FACING) == facingState.get(HORIZONTAL_FACING) &&
-                ChestBlock.getDirectionToAttached(facingState) == facing.opposite
+                stateIn.getValue(HORIZONTAL_FACING) == facingState.getValue(HORIZONTAL_FACING) &&
+                ChestBlock.getConnectedDirection(facingState) == facing.opposite
             ) {
-                return stateIn.with(CHEST_TYPE, chestType.opposite())
+                return stateIn.setValue(CHEST_TYPE, chestType.opposite)
             }
-        } else if (ChestBlock.getDirectionToAttached(stateIn) == facing) {
-            return stateIn.with(CHEST_TYPE, ChestType.SINGLE)
+        } else if (ChestBlock.getConnectedDirection(stateIn) == facing) {
+            return stateIn.setValue(CHEST_TYPE, ChestType.SINGLE)
         }
 
         return stateIn
@@ -61,57 +61,57 @@ class SpawnerChestBlock(properties: HProperties) : HBlock(properties), IWaterLog
         pos: BlockPos?,
         ctx: ISelectionContext?
     ): VoxelShape {
-        return if (state!!.get(ChestBlock.TYPE) == ChestType.SINGLE) {
-            ChestBlock.SHAPE_SINGLE
+        return if (state!!.getValue(ChestBlock.TYPE) == ChestType.SINGLE) {
+            ChestBlock.AABB
         } else {
-            when (ChestBlock.getDirectionToAttached(state)) {
-                Direction.NORTH -> ChestBlock.SHAPE_NORTH
-                Direction.SOUTH -> ChestBlock.SHAPE_SOUTH
-                Direction.WEST -> ChestBlock.SHAPE_WEST
-                Direction.EAST -> ChestBlock.SHAPE_EAST
-                else -> ChestBlock.SHAPE_NORTH
+            when (ChestBlock.getConnectedDirection(state)) {
+                Direction.NORTH -> ChestBlock.NORTH_AABB
+                Direction.SOUTH -> ChestBlock.SOUTH_AABB
+                Direction.WEST -> ChestBlock.WEST_AABB
+                Direction.EAST -> ChestBlock.EAST_AABB
+                else -> ChestBlock.NORTH_AABB
             }
         }
     }
 
     override fun getStateForPlacement(context: BlockItemUseContext): BlockState? {
         var chestType = ChestType.SINGLE
-        var direction = context.placementHorizontalFacing.opposite
-        val state = context.world.getFluidState(context.pos)
-        val flag = context.hasSecondaryUseForPlayer()
-        val direction1 = context.face
+        var direction = context.horizontalDirection.opposite
+        val state = context.level.getFluidState(context.clickedPos)
+        val flag = context.isSecondaryUseActive
+        val direction1 = context.clickedFace
         if (direction1.axis.isHorizontal && flag) {
             val direction2 = getDirectionToAttach(context, direction1.opposite)
-            if (direction2 != null && direction2.axis !== direction1.axis) {
+            if (direction2 != null && direction2.axis != direction1.axis) {
                 direction = direction2
-                chestType = if (direction2.rotateYCCW() == direction1.opposite) ChestType.RIGHT else ChestType.LEFT
+                chestType = if (direction2.counterClockWise == direction1.opposite) ChestType.RIGHT else ChestType.LEFT
             }
         }
 
         if (chestType == ChestType.SINGLE && !flag) {
-            if (direction == getDirectionToAttach(context, direction.rotateY())) {
+            if (direction == getDirectionToAttach(context, direction.clockWise)) {
                 chestType = ChestType.LEFT
-            } else if (direction == getDirectionToAttach(context, direction.rotateYCCW())) {
+            } else if (direction == getDirectionToAttach(context, direction.counterClockWise)) {
                 chestType = ChestType.RIGHT
             }
         }
 
-        return defaultState.with(ChestBlock.FACING, direction).with(ChestBlock.TYPE, chestType).with(ChestBlock.WATERLOGGED, state.fluid == Fluids.WATER)
+        return defaultBlockState().setValue(ChestBlock.FACING, direction).setValue(ChestBlock.TYPE, chestType).setValue(ChestBlock.WATERLOGGED, state.type == Fluids.WATER)
     }
 
     private fun getDirectionToAttach(context: BlockItemUseContext, direction: Direction): Direction? {
-        val state = context.world.getBlockState(context.pos.offset(direction))
+        val state = context.level.getBlockState(context.clickedPos.relative(direction))
 
-        return if (state.block == this && state.get(ChestBlock.TYPE) == ChestType.SINGLE) {
-            state.get(ChestBlock.FACING)
+        return if (state.block == this && state.getValue(ChestBlock.TYPE) == ChestType.SINGLE) {
+            state.getValue(ChestBlock.FACING)
         } else null
     }
 
     override fun getFluidState(state: BlockState): FluidState {
-        return if (state.get(WATERLOGGED)) Fluids.WATER.getStillFluidState(false) else Fluids.EMPTY.defaultState
+        return if (state.getValue(WATERLOGGED)) Fluids.WATER.getSource(false) else Fluids.EMPTY.defaultFluidState()
     }
 
-    override fun onBlockActivated(
+    override fun use(
         state: BlockState,
         worldIn: World,
         pos: BlockPos,
@@ -119,7 +119,7 @@ class SpawnerChestBlock(properties: HProperties) : HBlock(properties), IWaterLog
         handIn: Hand,
         hit: BlockRayTraceResult
     ): ActionResultType {
-        return if (worldIn.isRemote()) {
+        return if (worldIn.isClientSide()) {
             ActionResultType.SUCCESS
         } else {
             //HContainers.DUNGEON_LOOT.openContainer(playerIn)
@@ -127,11 +127,11 @@ class SpawnerChestBlock(properties: HProperties) : HBlock(properties), IWaterLog
         }
     }
 
-    override fun allowsMovement(state: BlockState, worldIn: IBlockReader, pos: BlockPos, type: PathType): Boolean {
+    override fun isPathfindable(state: BlockState, worldIn: IBlockReader, pos: BlockPos, type: PathType): Boolean {
         return false
     }
 
-    override fun fillStateContainer(builder: StateContainer.Builder<Block, BlockState>) {
+    override fun createBlockStateDefinition(builder: StateContainer.Builder<Block, BlockState>) {
         builder.add(HORIZONTAL_FACING, CHEST_TYPE, WATERLOGGED)
     }
 

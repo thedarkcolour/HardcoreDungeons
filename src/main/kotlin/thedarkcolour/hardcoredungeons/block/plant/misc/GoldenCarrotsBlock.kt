@@ -4,14 +4,13 @@ import net.minecraft.block.CarrotBlock
 import net.minecraft.item.BlockItem
 import net.minecraft.item.Items
 import net.minecraft.util.IItemProvider
-import thedarkcolour.hardcoredungeons.registry.HBlocks
 
 class GoldenCarrotsBlock(properties: Properties) : CarrotBlock(properties) {
     init {
-        BlockItem.BLOCK_TO_ITEM[HBlocks.GOLDEN_CARROTS] = Items.GOLDEN_CARROT
+        BlockItem.BY_BLOCK[this] = Items.GOLDEN_CARROT
     }
 
-    override fun getSeedsItem(): IItemProvider {
+    override fun getBaseSeedId(): IItemProvider {
         return Items.GOLDEN_CARROT
     }
 }

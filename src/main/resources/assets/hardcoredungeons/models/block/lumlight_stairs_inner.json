@@ -1,8 +1,0 @@
-{
-    "parent": "block/inner_stairs",
-    "textures": {
-        "bottom": "hardcoredungeons:block/lumlight_planks",
-        "top": "hardcoredungeons:block/lumlight_planks",
-        "side": "hardcoredungeons:block/lumlight_planks"
-    }
-}

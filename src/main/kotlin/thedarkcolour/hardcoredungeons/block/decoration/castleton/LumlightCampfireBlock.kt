@@ -6,20 +6,20 @@ import net.minecraft.util.SoundCategory
 import net.minecraft.util.SoundEvents
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
-import thedarkcolour.hardcoredungeons.block.properties.HProperties
-import thedarkcolour.hardcoredungeons.registry.HBlocks
+import thedarkcolour.hardcoredungeons.block.HBlocks
+import thedarkcolour.hardcoredungeons.block.base.properties.HProperties
 import thedarkcolour.hardcoredungeons.registry.HParticles
 import java.util.*
 
 class LumlightCampfireBlock(properties: HProperties) : CampfireBlock(true, 2, properties.build()) {
-    override fun animateTick(stateIn: BlockState, worldIn: World, pos: BlockPos, rand: Random) {
-        if (stateIn[LIT]) {
+    override fun animateTick(state: BlockState, level: World, pos: BlockPos, rand: Random) {
+        if (state.getValue(LIT)) {
             if (rand.nextInt(10) == 0) {
-                worldIn.playSound(
+                level.playLocalSound(
                     (pos.x + 0.5f).toDouble(),
                     (pos.y + 0.5f).toDouble(),
                     (pos.z + 0.5f).toDouble(),
-                    SoundEvents.BLOCK_CAMPFIRE_CRACKLE,
+                    SoundEvents.CAMPFIRE_CRACKLE,
                     SoundCategory.BLOCKS,
                     0.5f + rand.nextFloat(),
                     rand.nextFloat() * 0.7f + 0.6f,
@@ -28,7 +28,7 @@ class LumlightCampfireBlock(properties: HProperties) : CampfireBlock(true, 2, pr
             }
             if (rand.nextInt(5) == 0) {
                 for (i in 0 until rand.nextInt(1) + 1) {
-                    worldIn.addParticle(
+                    level.addParticle(
                         HParticles.CASTLETON_CAMPFIRE_POP,
                         (pos.x + 0.5f).toDouble(),
                         (pos.y + 0.5f).toDouble(),
@@ -42,7 +42,7 @@ class LumlightCampfireBlock(properties: HProperties) : CampfireBlock(true, 2, pr
         }
     }
 
-    override fun isHayBlock(state: BlockState): Boolean {
-        return state.block == HBlocks.CRACKED_CASTLETON_BRICKS
+    override fun isSmokeSource(state: BlockState): Boolean {
+        return state.block == HBlocks.CRACKED_CASTLETON_BRICKS/*HBlocks.CRACKED_CASTLETON_BRICKS*/
     }
 }

@@ -31,7 +31,7 @@ interface WorldPos {
      * The [BlockState] at this [WorldPos]
      */
     val state: BlockState
-        get() = invokeDefaulted(Blocks.AIR.defaultState) { worldIn, pos ->
+        get() = invokeDefaulted(Blocks.AIR.defaultBlockState()) { worldIn, pos ->
             worldIn.getBlockState(pos)
         }
 

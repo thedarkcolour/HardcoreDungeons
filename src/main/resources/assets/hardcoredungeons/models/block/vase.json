@@ -1,6 +1,0 @@
-{
-    "parent": "hardcoredungeons:block/template_vase",
-    "textures": {
-        "vase": "hardcoredungeons:block/vase"
-    }
-}

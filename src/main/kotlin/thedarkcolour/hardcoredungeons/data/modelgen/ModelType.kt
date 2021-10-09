@@ -2,6 +2,7 @@ package thedarkcolour.hardcoredungeons.data.modelgen
 
 import thedarkcolour.hardcoredungeons.data.ModelGenerator
 
+// todo split out of block registry and do a similar thing to the other generators
 @Suppress("LeakingThis")
 abstract class ModelType<T> {
     init {
@@ -12,29 +13,4 @@ abstract class ModelType<T> {
      * Ran during model generation.
      */
     abstract fun generateModels(gen: ModelGenerator)
-
-    companion object {
-        // block models
-        val CUBE_ALL = CubeAllModelType()
-        val BLOCK_ITEM = BlockItemModelType()
-        val SLAB_BLOCK = SlabModelType()
-        val CROSS_BLOCK = CrossModelType()
-        val POTTED_PLANT_BLOCK = PottedPlantModelType()
-        val STAIRS_BLOCK = StairsModelType()
-        val WALL_BLOCK = WallModelType()
-        val FENCE_BLOCK = FenceModelType()
-        val BUTTON_BLOCK = ButtonModelType()
-        //val COLUMN_BLOCK = ColumnModelType()
-        val PILLAR_BLOCK = PillarModelType()
-        val DOOR_BLOCK = DoorModelType()
-        val TRAPDOOR_BLOCK = TrapDoorModelType()
-        val PRESSURE_PLATE = PressurePlateModelType()
-        val FARMLAND_BLOCK = FarmlandModelType()
-        val VASE_BLOCK = VaseModelType()
-
-        // item models
-        val SIMPLE_ITEM = SimpleItemModelType()
-        val HANDHELD_ITEM = HandheldModelType()
-        val SPAWN_EGG = SpawnEggModelType()
-    }
 }

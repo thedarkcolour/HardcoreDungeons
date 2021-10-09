@@ -22,48 +22,48 @@ class MagicBoltEntity(type: EntityType<out ProjectileEntity>, worldIn: World) : 
     override fun tick() {
         super.tick()
 
-        if (ticksExisted == 40) {
+        if (tickCount == 40) {
             remove()
         }
 
-        val d0 = rand.nextGaussian() * 0.02
-        val d1 = rand.nextGaussian() * 0.02
-        val d2 = rand.nextGaussian() * 0.02
-        val pos = position
+        val d0 = random.nextGaussian() * 0.02
+        val d1 = random.nextGaussian() * 0.02
+        val d2 = random.nextGaussian() * 0.02
+        val pos = position()
 
         for (i in 0..2) {
-            world.addParticle(HParticles.SOUL_FRAY, pos.x + 0.5, pos.y + 0.5, pos.z + 0.5, d0, d1, d2)
+            level.addParticle(HParticles.SOUL_FRAY, pos.x + 0.5, pos.y + 0.5, pos.z + 0.5, d0, d1, d2)
         }
     }
 
     /**
      * Called when this EntityFireball hits a block or entity.
      */
-    override fun onImpact(result: RayTraceResult) {
-        super.onImpact(result)
-        if (!world.isRemote) {
+    override fun onHit(result: RayTraceResult) {
+        super.onHit(result)
+        if (!level.isClientSide) {
             val shooter = shootingEntity
 
             if (result is EntityRayTraceResult && result.entity != shooter) {
                 val entity = result.entity
-                val flag = entity.attackEntityFrom(DamageSource.MAGIC, 7.0f)
+                val flag = entity.hurt(DamageSource.MAGIC, 7.0f)
 
                 if (flag && shooter != null) {
-                    applyEnchantments(shooter, entity)
+                    doEnchantDamageEffects(shooter, entity)
                 }
             } else if (result.type == RayTraceResult.Type.BLOCK) {
                 remove()
 
-                val d0 = rand.nextGaussian() * 0.02
-                val d1 = rand.nextGaussian() * 0.02
-                val d2 = rand.nextGaussian() * 0.02
-                val pos = position
+                val d0 = random.nextGaussian() * 0.02
+                val d1 = random.nextGaussian() * 0.02
+                val d2 = random.nextGaussian() * 0.02
+                val pos = position()
 
                 for (i in 0..4) {
-                    world.addParticle(HParticles.SOUL_FRAY, pos.x + 0.5, pos.y + 0.5, pos.z + 0.5, d0, d1, d2)
+                    level.addParticle(HParticles.SOUL_FRAY, pos.x + 0.5, pos.y + 0.5, pos.z + 0.5, d0, d1, d2)
                 }
             }
-            setMotion(0.0, 0.0, 0.0)
+            setDeltaMovement(0.0, 0.0, 0.0)
         }
     }
 

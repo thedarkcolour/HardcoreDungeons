@@ -31,8 +31,8 @@ class OverworldAdvancements : AdvancementGroup("overworld") {
                 true,
                 false
             )*/
-            .withCriterion("crafted_item", InventoryChangeTrigger.Instance.forItems(Items.IRON_SWORD))
-            .register(p1, "hardcoredungeons:overworld/root")
+            .addCriterion("crafted_item", InventoryChangeTrigger.Instance.hasItems(Items.IRON_SWORD))
+            .save(p1, "hardcoredungeons:overworld/root")
 
         //AdvancementBuilder.builder().withParent(root).withDisplay(
         //    HItems.
@@ -50,8 +50,8 @@ class OverworldAdvancements : AdvancementGroup("overworld") {
         parent: Advancement? = null,
     ): AdvancementBuilder {
         val prefix = "advancements.${HardcoreDungeons.ID}.${group}.${name}."
-        val b = AdvancementBuilder.builder().withDisplay(icon, TranslationTextComponent(prefix + "title"), TranslationTextComponent(prefix + "description"), background, frameType, showToast, announceToChat, hidden)
-        if (parent != null) b.withParent(parent)
+        val b = AdvancementBuilder.advancement().display(icon, TranslationTextComponent(prefix + "title"), TranslationTextComponent(prefix + "description"), background, frameType, showToast, announceToChat, hidden)
+        if (parent != null) b.parent(parent)
         return b
     }
 }

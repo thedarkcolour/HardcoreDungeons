@@ -1,8 +1,0 @@
-{
-    "parent": "block/template_farmland",
-    "textures": {
-        "particle": "hardcoredungeons:block/rainbow_soil",
-        "dirt": "hardcoredungeons:block/rainbow_soil",
-        "top": "hardcoredungeons:block/rainbow_farmland_moist"
-    }
-}

@@ -11,21 +11,21 @@ import net.minecraftforge.common.ForgeMod
 import thedarkcolour.hardcoredungeons.registry.HEntities
 
 class KnightlyJuggernautEntity(type: EntityType<KnightlyJuggernautEntity>, worldIn: World) : AnimalEntity(type, worldIn) {
-    override fun func_241840_a(worldIn: ServerWorld, ageable: AgeableEntity): KnightlyJuggernautEntity {
-        return HEntities.KNIGHTLY_JUGGERNAUT.create(world)!!
+    override fun getBreedOffspring(worldIn: ServerWorld, ageable: AgeableEntity): KnightlyJuggernautEntity {
+        return HEntities.KNIGHTLY_JUGGERNAUT.create(level)!!
     }
 
     companion object {
-        val ATTRIBUTES: AttributeModifierMap.MutableAttribute = AttributeModifierMap.createMutableAttribute()
-            .createMutableAttribute(Attributes.MAX_HEALTH, 80.0)
-            .createMutableAttribute(Attributes.KNOCKBACK_RESISTANCE, 0.5)
-            .createMutableAttribute(Attributes.MOVEMENT_SPEED)
-            .createMutableAttribute(Attributes.ARMOR)
-            .createMutableAttribute(Attributes.ARMOR_TOUGHNESS)
-            .createMutableAttribute(ForgeMod.SWIM_SPEED.get())
-            .createMutableAttribute(ForgeMod.NAMETAG_DISTANCE.get())
-            .createMutableAttribute(ForgeMod.ENTITY_GRAVITY.get())
-            .createMutableAttribute(Attributes.FOLLOW_RANGE, 16.0)
-            .createMutableAttribute(Attributes.ATTACK_KNOCKBACK)
+        val ATTRIBUTES: AttributeModifierMap.MutableAttribute = AttributeModifierMap.builder()
+            .add(Attributes.MAX_HEALTH, 80.0)
+            .add(Attributes.KNOCKBACK_RESISTANCE, 0.5)
+            .add(Attributes.MOVEMENT_SPEED)
+            .add(Attributes.ARMOR)
+            .add(Attributes.ARMOR_TOUGHNESS)
+            .add(ForgeMod.SWIM_SPEED.get())
+            .add(ForgeMod.NAMETAG_DISTANCE.get())
+            .add(ForgeMod.ENTITY_GRAVITY.get())
+            .add(Attributes.FOLLOW_RANGE, 16.0)
+            .add(Attributes.ATTACK_KNOCKBACK)
     }
 }

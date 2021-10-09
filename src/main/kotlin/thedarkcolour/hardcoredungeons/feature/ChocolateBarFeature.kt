@@ -6,21 +6,21 @@ import net.minecraft.world.ISeedReader
 import net.minecraft.world.gen.ChunkGenerator
 import net.minecraft.world.gen.feature.Feature
 import net.minecraft.world.gen.feature.NoFeatureConfig
-import thedarkcolour.hardcoredungeons.registry.HBlocks
+import thedarkcolour.hardcoredungeons.block.HBlocks
 import java.util.*
 
 class ChocolateBarFeature(codec: Codec<NoFeatureConfig>) : Feature<NoFeatureConfig>(codec) {
-    override fun generate(
+    override fun place(
         worldIn: ISeedReader,
         generator: ChunkGenerator,
         rand: Random,
         pos: BlockPos,
         config: NoFeatureConfig,
     ): Boolean {
-        if (!worldIn.getBlockState(pos.down()).isSolid) return false
+        if (!worldIn.getBlockState(pos.below()).canOcclude()) return false
 
-        for (a in BlockPos.getAllInBoxMutable(pos, pos.add(2, 6, 0))) {
-            setBlockState(worldIn, a, HBlocks.CHOCOLATE_BLOCK.defaultState)
+        for (a in BlockPos.betweenClosed(pos, pos.offset(2, 6, 0))) {
+            setBlock(worldIn, a, HBlocks.CHOCOLATE_BLOCK.block.defaultBlockState())
         }
 
         return true

@@ -1,33 +1,24 @@
 modLoader="kotlinforforge"
-loaderVersion="[1.9,)"
+loaderVersion="[1.12,)"
 license="All rights reserved"
 
-[[mods]] #mandatory
-modId="hardcoredungeons" #mandatory
-version="${file.jarVersion}" #mandatory
-displayName="Hardcore Dungeons" #mandatory
-logoFile="logo.png" #optional
-# A text field displayed in the mod UI
-credits="Herobrine knows all. Thanks to DJRoundTable, Sara, and AlexCipher" #optional
-# A text field displayed in the mod UI
-authors="TheDarkColour, genericrandom64" #optional
-# The description text for the mod (multi line!) (#mandatory)
+[[mods]]
+modId="hardcoredungeons"
+version="${file.jarVersion}"
+displayName="Hardcore Dungeons"
+logoFile="logo.png"
+credits="Herobrine knows all. Thanks to DJRoundTable, and AlexCipher"
+authors="TheDarkColour, genericrandom64"
 description='''
 Adds lots of exploration related content to the game.
 '''
-# A dependency - use the . to indicate dependency for a specific modid. Dependencies are optional.
-[[dependencies.hardcoredungeons]] #optional
-    # the modid of the dependency
-    modId="forge" #mandatory
-    # Does this dependency have to exist - if not, ordering below must be specified
-    mandatory=true #mandatory
-    # The version range of the dependency
-    versionRange="[36.0.42,)" #mandatory
-    # An ordering relationship for the dependency - BEFORE or AFTER required if the relationship is not mandatory
+
+[[dependencies.hardcoredungeons]]
+    modId="forge"
+    mandatory=true
+    versionRange="[36.0.42,)"
     ordering="NONE"
-    # Side this dependency is applied on - BOTH, CLIENT or SERVER
     side="BOTH"
-# Here's another dependency
 [[dependencies.hardcoredungeons]]
     modId="minecraft"
     mandatory=true

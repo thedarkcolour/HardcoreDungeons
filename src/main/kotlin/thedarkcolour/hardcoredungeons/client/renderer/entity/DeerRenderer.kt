@@ -26,7 +26,7 @@ class DeerRenderer(manager: EntityRendererManager) : ReloadableRenderer<DeerEnti
         entity: DeerEntity, entityYaw: Float, partialTicks: Float,
         stack: MatrixStack, buffer: IRenderTypeBuffer, light: Int
     ) {
-        entityModel = if (entity.isTheDarkColour()) {
+        model = if (entity.isTheDarkColour()) {
             stag
         } else when {
             entity.deerType.isStag() -> stag
@@ -37,7 +37,7 @@ class DeerRenderer(manager: EntityRendererManager) : ReloadableRenderer<DeerEnti
         super.render(entity, entityYaw, partialTicks, stack, buffer, light)
     }
 
-    override fun getEntityTexture(entity: DeerEntity): ResourceLocation {
+    override fun getTextureLocation(entity: DeerEntity): ResourceLocation {
         if (entity.isTheDarkColour()) {
             return THEDARKCOLOUR
         }
@@ -77,15 +77,15 @@ class DeerRenderer(manager: EntityRendererManager) : ReloadableRenderer<DeerEnti
     companion object {
         private val FOREST_STAG = modLoc("textures/entity/deer/overworld/forest_stag.png")
         private val BLUE_EYED_FEMALE = modLoc("textures/entity/deer/castleton/blue_eyed_female.png")
-        private val BLUE_EYED_FEMALE_OVERLAY = RenderType.getEyes(modLoc("textures/entity/deer/castleton/blue_eyed_female_overlay.png"))
+        private val BLUE_EYED_FEMALE_OVERLAY = RenderType.eyes(modLoc("textures/entity/deer/castleton/blue_eyed_female_overlay.png"))
         private val BLUE_EYED_STAG = modLoc("textures/entity/deer/castleton/blue_eyed_stag.png")
-        private val BLUE_EYED_STAG_OVERLAY = RenderType.getEyes(modLoc("textures/entity/deer/castleton/blue_eyed_stag_overlay.png"))
+        private val BLUE_EYED_STAG_OVERLAY = RenderType.eyes(modLoc("textures/entity/deer/castleton/blue_eyed_stag_overlay.png"))
         private val BLUE_SPOTTED_STAG = modLoc("textures/entity/deer/castleton/spotted_stag.png")
-        private val BLUE_SPOTTED_STAG_OVERLAY = RenderType.getEyes(modLoc("textures/entity/deer/castleton/blue_spotted_stag_overlay.png"))
+        private val BLUE_SPOTTED_STAG_OVERLAY = RenderType.eyes(modLoc("textures/entity/deer/castleton/blue_spotted_stag_overlay.png"))
         //private val BLUE_SPOTTED_DOE_OVERLAY = RenderType.getEyes(modLoc("textures/entity/deer/castleton/blue_spotted_stag_overlay.png"))
         private val PURPLE_SPOTTED_STAG = modLoc("textures/entity/deer/castleton/spotted_stag.png")
-        private val PURPLE_SPOTTED_STAG_OVERLAY = RenderType.getEyes(modLoc("textures/entity/deer/castleton/purple_spotted_stag_overlay.png"))
+        private val PURPLE_SPOTTED_STAG_OVERLAY = RenderType.eyes(modLoc("textures/entity/deer/castleton/purple_spotted_stag_overlay.png"))
         private val THEDARKCOLOUR = modLoc("textures/entity/deer/thedarkcolour.png")
-        private val THEDARKCOLOUR_OVERLAY = RenderType.getEyes(modLoc("textures/entity/deer/thedarkcolour_overlay.png"))
+        private val THEDARKCOLOUR_OVERLAY = RenderType.eyes(modLoc("textures/entity/deer/thedarkcolour_overlay.png"))
     }
 }

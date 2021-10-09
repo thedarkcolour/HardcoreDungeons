@@ -27,26 +27,26 @@ object AubrumEffects : DimensionRenderInfo(Float.NaN, true, FogType.NONE, false,
         RenderSystem.enableBlend()
         RenderSystem.defaultBlendFunc()
         RenderSystem.depthMask(false)
-        mc.textureManager.bindTexture(SKY_TEXTURES_AUBRUM)
+        mc.textureManager.bind(SKY_TEXTURES_AUBRUM)
         val tessellator = Tessellator.getInstance()
-        val buffer = tessellator.buffer
+        val buffer = tessellator.builder
         for (i in 0..5) {
-            stack.push()
+            stack.pushPose()
             when (i) {
-                1 -> stack.rotate(Vector3f.XP.rotationDegrees(90.0f))
-                2 -> stack.rotate(Vector3f.XP.rotationDegrees(-90.0f))
-                3 -> stack.rotate(Vector3f.XP.rotationDegrees(180.0f))
-                4 -> stack.rotate(Vector3f.ZP.rotationDegrees(90.0f))
-                5 -> stack.rotate(Vector3f.ZP.rotationDegrees(-90.0f))
+                1 -> stack.mulPose(Vector3f.XP.rotationDegrees(90.0f))
+                2 -> stack.mulPose(Vector3f.XP.rotationDegrees(-90.0f))
+                3 -> stack.mulPose(Vector3f.XP.rotationDegrees(180.0f))
+                4 -> stack.mulPose(Vector3f.ZP.rotationDegrees(90.0f))
+                5 -> stack.mulPose(Vector3f.ZP.rotationDegrees(-90.0f))
             }
-            val matrix4f = stack.last.matrix
+            val matrix4f = stack.last().pose()
             buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_COLOR)
-            buffer.pos(matrix4f, -100.0f, -100.0f, -100.0f).tex(0.0f, 0.0f).color(40, 40, 40, 255).endVertex()
-            buffer.pos(matrix4f, -100.0f, -100.0f, 100.0f).tex(0.0f, 16.0f).color(40, 40, 40, 255).endVertex()
-            buffer.pos(matrix4f, 100.0f, -100.0f, 100.0f).tex(16.0f, 16.0f).color(40, 40, 40, 255).endVertex()
-            buffer.pos(matrix4f, 100.0f, -100.0f, -100.0f).tex(16.0f, 0.0f).color(40, 40, 40, 255).endVertex()
-            tessellator.draw()
-            stack.pop()
+            buffer.vertex(matrix4f, -100.0f, -100.0f, -100.0f).uv(0.0f, 0.0f).color(40, 40, 40, 255).endVertex()
+            buffer.vertex(matrix4f, -100.0f, -100.0f, 100.0f).uv(0.0f, 16.0f).color(40, 40, 40, 255).endVertex()
+            buffer.vertex(matrix4f, 100.0f, -100.0f, 100.0f).uv(16.0f, 16.0f).color(40, 40, 40, 255).endVertex()
+            buffer.vertex(matrix4f, 100.0f, -100.0f, -100.0f).uv(16.0f, 0.0f).color(40, 40, 40, 255).endVertex()
+            tessellator.end()
+            stack.popPose()
         }
         RenderSystem.depthMask(true)
         RenderSystem.enableTexture()
@@ -54,15 +54,15 @@ object AubrumEffects : DimensionRenderInfo(Float.NaN, true, FogType.NONE, false,
         RenderSystem.enableAlphaTest()
     }
 
-    override fun func_230494_a_(p_230494_1_: Vector3d, p_230494_2_: Float): Vector3d {
+    override fun getBrightnessDependentFogColor(p_230494_1_: Vector3d, p_230494_2_: Float): Vector3d {
         return p_230494_1_
     }
 
-    override fun func_230493_a_(x: Int, z: Int): Boolean {
+    override fun isFoggyAt(x: Int, z: Int): Boolean {
         return false
     }
 
-    override fun func_230492_a_(p_230492_1_: Float, p_230492_2_: Float): FloatArray? {
+    override fun getSunriseColor(p_230492_1_: Float, p_230492_2_: Float): FloatArray? {
         return null
     }
 }

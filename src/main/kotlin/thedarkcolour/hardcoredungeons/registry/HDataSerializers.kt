@@ -19,12 +19,12 @@ object HDataSerializers {
 
     private inline fun <reified T : Enum<T>> enumSerializer() = object : IDataSerializer<T> {
         override fun read(buf: PacketBuffer): T =
-            buf.readEnumValue(T::class.java)
+            buf.readEnum(T::class.java)
 
         override fun write(buf: PacketBuffer, value: T) {
-            buf.writeEnumValue(value)
+            buf.writeEnum(value)
         }
 
-        override fun copyValue(value: T) = value
+        override fun copy(value: T) = value
     }
 }

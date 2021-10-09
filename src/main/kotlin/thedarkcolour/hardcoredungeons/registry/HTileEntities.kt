@@ -1,29 +1,24 @@
 package thedarkcolour.hardcoredungeons.registry
 
+import net.minecraft.block.Block
+import net.minecraft.tileentity.TileEntity
 import net.minecraft.tileentity.TileEntityType
-import net.minecraftforge.registries.IForgeRegistry
+import net.minecraftforge.registries.ForgeRegistries
+import thedarkcolour.hardcoredungeons.block.HBlocks
+import thedarkcolour.hardcoredungeons.block.HRegistry
 import thedarkcolour.hardcoredungeons.tileentity.DungeonSpawnerTileEntity
 import thedarkcolour.hardcoredungeons.tileentity.MazeBossSpawnerTileEntity
-import thedarkcolour.hardcoredungeons.tileentity.SpawnerChestTileEntity
+import thedarkcolour.hardcoredungeons.tileentity.SootTrapControllerTileEntity
+import thedarkcolour.kotlinforforge.forge.ObjectHolderDelegate
+import java.util.function.Supplier
 
 @Suppress("HasPlatformType", "NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
-object HTileEntities {
-    val DUNGEON_SPAWNER = TileEntityType.Builder.create(::DungeonSpawnerTileEntity, HBlocks.DUNGEON_SPAWNER).build(null).setRegistryKey("dungeon_spawner")
+object HTileEntities : HRegistry<TileEntityType<*>>(ForgeRegistries.TILE_ENTITIES) {
+    val DUNGEON_SPAWNER by createType("dungeon_spawner", ::DungeonSpawnerTileEntity, { HBlocks.DUNGEON_SPAWNER })
+    val MAZE_BOSS_SPAWNER by createType("maze_boss_spawner", ::MazeBossSpawnerTileEntity, { HBlocks.MAZE_BOSS_SPAWNER })
+    val SOOT_TRAP_CONTROLLER by createType("soot_trap_controller", ::SootTrapControllerTileEntity, { HBlocks.SOOT_TRAP_CONTROLLER })
 
-    //val LUMLIGHT_CAMPFIRE = TileEntityType.Builder.create(::LumlightCampfireTileEntity, HBlocks.LUMLIGHT_CAMPFIRE).build(null).setRegistryKey("")
-    //val EXTRACTOR = TileEntityType.Builder.create(::ExtractorTileEntity, HBlocks.EXTRACTOR).build(null).setRegistryKey("extractor")
-    val SPAWNER_CHEST = TileEntityType.Builder.create(::SpawnerChestTileEntity, HBlocks.CASTLETON_DUNGEON_CHEST).build(null).setRegistryKey("spawner_chest")
-    //val TROPHY_BED = TileEntityType.Builder.create(::TrophyBedTileEntity, ).build(null).setRegistryKey("trophy_bed")
-    val MAZE_BOSS_SPAWNER = TileEntityType.Builder.create(::MazeBossSpawnerTileEntity, HBlocks.MAZE_BOSS_SPAWNER).build(null).setRegistryKey("maze_boss_spawner")
-
-    fun registerTileEntities(tileEntities: IForgeRegistry<TileEntityType<*>>) {
-        tileEntities.register(DUNGEON_SPAWNER)
-        tileEntities.register(MAZE_BOSS_SPAWNER)
-        //tileEntities.register(LUMLIGHT_CAMPFIRE)
-        //tileEntities.register(EXTRACTOR)
+    private fun <T : TileEntity> createType(name: String, supplier: Supplier<T>, vararg blocks: () -> Block): ObjectHolderDelegate<TileEntityType<T>> {
+        return register(name) { TileEntityType.Builder.of(supplier, *blocks.map { it.invoke() }.toTypedArray()).build(null) }
     }
-/*
-    fun registerTileEntityRenderers() {
-        //ClientRegistry.bindTileEntityRenderer()
-    }*/
 }

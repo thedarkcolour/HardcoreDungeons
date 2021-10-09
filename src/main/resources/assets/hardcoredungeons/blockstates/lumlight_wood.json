@@ -1,7 +1,0 @@
-{
-    "variants": {
-        "axis=y": { "model": "hardcoredungeons:block/lumlight_wood" },
-        "axis=z": { "model": "hardcoredungeons:block/lumlight_wood", "x": 90 },
-        "axis=x": { "model": "hardcoredungeons:block/lumlight_wood", "x": 90, "y": 90 }
-    }
-}

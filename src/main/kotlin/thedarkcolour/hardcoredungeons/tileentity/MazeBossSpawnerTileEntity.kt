@@ -9,8 +9,8 @@ import net.minecraft.util.math.AxisAlignedBB
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 import thedarkcolour.hardcoredungeons.HardcoreDungeons
+import thedarkcolour.hardcoredungeons.block.HBlocks
 import thedarkcolour.hardcoredungeons.entity.overworld.mazeboss.MazeBossEntity
-import thedarkcolour.hardcoredungeons.registry.HBlocks
 import thedarkcolour.hardcoredungeons.registry.HTileEntities
 import thedarkcolour.hardcoredungeons.util.toRadians
 
@@ -18,8 +18,8 @@ class MazeBossSpawnerTileEntity : TileEntity(HTileEntities.MAZE_BOSS_SPAWNER), I
     private lateinit var bounds: AxisAlignedBB
     private var ticks = 0
 
-    override fun validate() {
-        removed = false
+    override fun clearRemoved() {
+        remove = false
 
         val state = blockState
 
@@ -28,16 +28,16 @@ class MazeBossSpawnerTileEntity : TileEntity(HTileEntities.MAZE_BOSS_SPAWNER), I
             return
         }
 
-        bounds = createBounds(state.get(HORIZONTAL_FACING), pos)
+        bounds = createBounds(state.getValue(HORIZONTAL_FACING), blockPos)
     }
 
     private fun createBounds(direction: Direction, pos: BlockPos): AxisAlignedBB {
-        val right = direction.rotateY()
-        val mut = pos.toMutable()
+        val right = direction.clockWise
+        val mut = pos.mutable()
 
-        val start = mut.move(direction, 3).move(right, 7).move(0, -1, 0).toImmutable()
-        mut.setPos(pos)
-        val end = mut.move(direction, 17).move(right, -7).move(0, 3, 0).toImmutable()
+        val start = mut.move(direction, 3).move(right, 7).move(0, -1, 0).immutable()
+        mut.set(pos)
+        val end = mut.move(direction, 17).move(right, -7).move(0, 3, 0).immutable()
 
         return AxisAlignedBB(start, end)
     }
@@ -51,9 +51,9 @@ class MazeBossSpawnerTileEntity : TileEntity(HTileEntities.MAZE_BOSS_SPAWNER), I
 
         ticks = 0
 
-        val worldIn = world!!
-        val pos = pos
-        val players = worldIn.getEntitiesWithinAABB(PlayerEntity::class.java, bounds)
+        val worldIn = level!!
+        val pos = blockPos
+        val players = worldIn.getEntitiesOfClass(PlayerEntity::class.java, bounds)
 
         if (players.isNotEmpty()) {
             spawnBoss(worldIn, pos)
@@ -65,23 +65,23 @@ class MazeBossSpawnerTileEntity : TileEntity(HTileEntities.MAZE_BOSS_SPAWNER), I
 
     private fun spawnBoss(worldIn: World, pos: BlockPos) {
         val boss = MazeBossEntity(worldIn)
-        val direction = blockState.get(HORIZONTAL_FACING)
+        val direction = blockState.getValue(HORIZONTAL_FACING)
 
         boss.setSpawnLocation(pos, bounds, direction)
-        boss.setLocationAndAngles(pos.x + 0.5, pos.y.toDouble(), pos.z + 0.5, toRadians(direction.horizontalAngle), 0.0f)
-        worldIn.addEntity(boss)
+        boss.absMoveTo(pos.x + 0.5, pos.y.toDouble(), pos.z + 0.5, toRadians(direction.toYRot()), 0.0f)
+        worldIn.addFreshEntity(boss)
     }
 
     // fill in the door with bushes
     private fun closeArena(worldIn: World, pos: BlockPos) {
-        val direction = blockState.get(HORIZONTAL_FACING)
-        val right = direction.rotateY()
-        val mut = pos.toMutable()
-        val start = mut.move(direction, 9).move(right, 8).down(2)
-        val end = mut.move(direction, 2).move(right, 1).up(2)
+        val direction = blockState.getValue(HORIZONTAL_FACING)
+        val right = direction.clockWise
+        val mut = pos.mutable()
+        val start = mut.move(direction, 9).move(right, 8).below(2)
+        val end = mut.move(direction, 2).move(right, 1).above(2)
 
-        BlockPos.getAllInBoxMutable(start, end).forEach { p ->
-            worldIn.setBlockState(p, HBlocks.MAZE_BUSH.defaultState)
+        BlockPos.betweenClosed(start, end).forEach { p ->
+            worldIn.setBlockAndUpdate(p, HBlocks.MAZE_BUSH.defaultBlockState())
         }
     }
 }

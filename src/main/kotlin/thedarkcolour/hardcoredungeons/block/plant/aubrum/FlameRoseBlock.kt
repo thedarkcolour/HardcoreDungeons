@@ -5,7 +5,7 @@ import net.minecraft.particles.ParticleTypes
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 import thedarkcolour.hardcoredungeons.block.plant.FlowerBlock
-import thedarkcolour.hardcoredungeons.block.properties.PlantProperties
+import thedarkcolour.hardcoredungeons.block.plant.PlantProperties
 import java.util.*
 
 class FlameRoseBlock(properties: PlantProperties) : FlowerBlock(properties) {

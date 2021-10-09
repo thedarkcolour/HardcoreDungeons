@@ -1,7 +1,0 @@
-{
-    "variants": {
-        "axis=y": { "model": "hardcoredungeons:block/stripped_auri_wood" },
-        "axis=z": { "model": "hardcoredungeons:block/stripped_auri_wood", "x": 90 },
-        "axis=x": { "model": "hardcoredungeons:block/stripped_auri_wood", "x": 90, "y": 90 }
-    }
-}

@@ -25,15 +25,15 @@ class SmallBulletEntity(type: EntityType<out ProjectileEntity>, worldIn: World) 
     override fun tick() {
         super.tick()
 
-        accelerationY -= drop
+        yPower -= drop
 
-        if (ticksExisted == 100) {
+        if (tickCount == 100) {
             remove()
         }
     }
 
     override fun shoot(shooter: LivingEntity, x: Double, y: Double, z: Double, mX: Double, mY: Double, mZ: Double) {
-        val gun = shooter.activeItemStack.item
+        val gun = shooter.useItem.item
 
         if (gun is GunItem) {
             applyProperties(gun)
@@ -52,21 +52,21 @@ class SmallBulletEntity(type: EntityType<out ProjectileEntity>, worldIn: World) 
     /**
      * Called when this EntityFireball hits a block or entity.
      */
-    override fun onImpact(result: RayTraceResult) {
-        super.onImpact(result)
+    override fun onHit(result: RayTraceResult) {
+        super.onHit(result)
 
-        if (!world.isRemote) {
+        if (!level.isClientSide) {
             if (result.type == RayTraceResult.Type.ENTITY) {
                 val shooter = shootingEntity
                 val entity = (result as EntityRayTraceResult).entity
-                val flag = entity.attackEntityFrom(IndirectEntityDamageSource("arrow", shooter, this), damage)
+                val flag = entity.hurt(IndirectEntityDamageSource("arrow", shooter, this), damage)
 
-                if (fireTimer > 0) {
-                    entity.setFire(fireTimer)
+                if (remainingFireTicks > 0) {
+                    entity.setSecondsOnFire(remainingFireTicks)
                 }
 
                 if (flag && shooter != null) {
-                    applyEnchantments(shooter, entity)
+                    doEnchantDamageEffects(shooter, entity)
                 }
                 remove()
             } else if (result.type == RayTraceResult.Type.BLOCK) {

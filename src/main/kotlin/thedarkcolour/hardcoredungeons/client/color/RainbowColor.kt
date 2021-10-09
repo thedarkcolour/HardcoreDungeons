@@ -11,7 +11,7 @@ import java.awt.Color
 object RainbowColor : HColor {
     override fun getColor(state: BlockState?, worldIn: IBlockDisplayReader?, pos: BlockPos?, tintIndex: Int): Int {
         return if (pos == null) {
-            FoliageColors.getDefault()
+            FoliageColors.getDefaultColor()
         } else {
             getColor(pos.x, pos.y, pos.z)
         }
@@ -19,9 +19,19 @@ object RainbowColor : HColor {
 
     override fun getColor(stack: ItemStack, tintIndex: Int): Int {
         return Minecraft.getInstance().player?.let { player ->
-            val pos = player.position
+            val pos = player.blockPosition()
             getColor(pos.x, pos.y, pos.z)
         } ?: getColor(0, 70, 0)
+    }
+
+    fun getBeaconColor(pos: BlockPos): FloatArray {
+        val col = getColor(pos.x, pos.y, pos.z)
+
+        val i = (col and 0xff0000) shr 16
+        val j = (col and 0x00ff00) shr 8
+        val k = (col and 0x0000ff) shr 0
+
+        return floatArrayOf(i / 255.0f, j / 255.0f, k / 255.0f)
     }
 
     private fun getColor(posX: Int, posY: Int, posZ: Int): Int {

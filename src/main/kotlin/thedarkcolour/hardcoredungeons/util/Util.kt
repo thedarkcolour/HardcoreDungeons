@@ -16,20 +16,20 @@ import kotlin.reflect.KProperty
 fun <T> dataParameterDelegate(parameter: DataParameter<T>): ReadWriteProperty<Entity, T> {
     return object : ReadWriteProperty<Entity, T> {
         override fun getValue(thisRef: Entity, property: KProperty<*>): T {
-            return thisRef.dataManager[parameter]
+            return thisRef.entityData[parameter]
         }
 
         override fun setValue(thisRef: Entity, property: KProperty<*>, value: T) {
-            thisRef.dataManager[parameter] = value
+            thisRef.entityData[parameter] = value
         }
     }
 }
 
-/** `Float` value of PI */
+/** [Float] value of PI */
 const val PI = 3.14159265358979323846.toFloat()
 
 /**
- * [Math.toRadians] for `Float` values
+ * [Math.toRadians] for [Float] values
  */
 fun toRadians(degrees: Float): Float {
     return degrees / 180.0f * PI
@@ -41,14 +41,14 @@ fun toDegrees(radians: Float): Float {
 
 class BlockPosNBTDelegate(private val tagName: String) : ReadWriteProperty<ItemStack, BlockPos?> {
     override fun getValue(thisRef: ItemStack, property: KProperty<*>): BlockPos? {
-        return thisRef.getChildTag(tagName)?.let(NBTUtil::readBlockPos)
+        return thisRef.getTagElement(tagName)?.let(NBTUtil::readBlockPos)
     }
 
     override fun setValue(thisRef: ItemStack, property: KProperty<*>, value: BlockPos?) {
         if (value != null) {
-            thisRef.setTagInfo(tagName,  NBTUtil.writeBlockPos(value))
+            thisRef.addTagElement(tagName,  NBTUtil.writeBlockPos(value))
         } else {
-            thisRef.removeChildTag(tagName)
+            thisRef.removeTagKey(tagName)
         }
     }
 }

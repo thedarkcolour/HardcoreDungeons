@@ -116,9 +116,9 @@ object ASMHooks {
      */
     @JvmStatic
     fun isMushroomBiome(biomeId: Int): Boolean {
-        val b = DynamicRegistries.func_239770_b_().getRegistry(Registry.BIOME_KEY).getValueForKey(BiomeRegistry.getKeyFromID(biomeId))
+        val b = DynamicRegistries.builtin().registryOrThrow(Registry.BIOME_REGISTRY).get(BiomeRegistry.byId(biomeId))
 
-        return b?.category == Biome.Category.MUSHROOM
+        return b?.biomeCategory == Biome.Category.MUSHROOM
     }
 
     /**
@@ -132,7 +132,7 @@ object ASMHooks {
         context: LongFunction<out IExtendedNoiseRandom<T>>,
         area: IAreaFactory<T>
     ): IAreaFactory<T> {
-        var area = MushroomCliffsBiomeLayer.apply(context.apply(4L), area)
+        var area = MushroomCliffsBiomeLayer.run(context.apply(4L), area)
         return area
     }
 }

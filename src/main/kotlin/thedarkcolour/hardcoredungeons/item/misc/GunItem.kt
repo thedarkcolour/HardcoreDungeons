@@ -12,7 +12,6 @@ import net.minecraft.util.Hand
 import net.minecraft.world.World
 import thedarkcolour.hardcoredungeons.entity.projectile.bullet.SmallBulletEntity
 import thedarkcolour.hardcoredungeons.registry.HEntities
-import thedarkcolour.hardcoredungeons.registry.HItems
 import thedarkcolour.hardcoredungeons.tags.HItemTags
 import java.util.function.Predicate
 
@@ -20,17 +19,9 @@ import java.util.function.Predicate
  * Gun item for stuff like rifles and pistols.
  *
  * @property bulletDamage The base damage amount for bullets
- *
  * @property velocity The speed multiplier for bullets
- *
  * @property drop The amount of drop (ex. 0.002f, 0.0f)
- *
- * @property fireType todo remember this idea wtf is fire type
- *
- * @property automatic Whether this weapon is automatic or semi-automatic
- *
  * @property ammoItem The item to use for bullets
- *
  * @property chargeTime The amount of time it takes to charge up a shot
  */
 open class GunItem(
@@ -38,15 +29,14 @@ open class GunItem(
     val bulletDamage: Float = 3.0f,
     val velocity: Float = 1.2f,
     val drop: Float = 0.0f,
-    val fireType: FireType = FireType.SMALL_BULLET,
     private val automatic: Boolean = false,
-    val ammoItem: () -> Item = HItems::BULLET,
+    val ammoItem: () -> ITag<Item> = { HItemTags.AMMUNITION_SMALL },
     val chargeTime: Int = 1,
 ) : ShootableItem(properties) {
     /**
      * returns the action that specifies what animation to play when the items is being used
      */
-    override fun getUseAction(stack: ItemStack): UseAction {
+    override fun getUseAnimation(stack: ItemStack): UseAction {
         return UseAction.BOW
     }
 
@@ -55,31 +45,31 @@ open class GunItem(
      */
     override fun getUseDuration(stack: ItemStack) = chargeTime
 
-    override fun onItemRightClick(worldIn: World, playerIn: PlayerEntity, handIn: Hand): ActionResult<ItemStack> {
-        val stack = playerIn.getHeldItem(handIn)
+    override fun use(worldIn: World, playerIn: PlayerEntity, handIn: Hand): ActionResult<ItemStack> {
+        val stack = playerIn.getItemInHand(handIn)
 
-        return if (!playerIn.findAmmo(stack).isEmpty) {
-            playerIn.activeHand = handIn
-            ActionResult.resultConsume(stack)
+        return if (!playerIn.getProjectile(stack).isEmpty) {
+            playerIn.startUsingItem(handIn)
+            ActionResult.consume(stack)
         } else {
-            ActionResult.resultFail(stack)
+            ActionResult.fail(stack)
         }
     }
 
-    override fun onItemUseFinish(stack: ItemStack, worldIn: World, entity: LivingEntity): ItemStack {
-        val ammo = entity.findAmmo(stack)
+    override fun finishUsingItem(stack: ItemStack, worldIn: World, entity: LivingEntity): ItemStack {
+        val ammo = entity.getProjectile(stack)
 
-        if (!worldIn.isRemote) {
-            val vec = entity.lookVec
+        if (!worldIn.isClientSide) {
+            val vec = entity.lookAngle
 
             // change to match fire type????
             val bullet = SmallBulletEntity(HEntities.SMALL_BULLET, worldIn)
 
-            if (ammo.item.isIn(HItemTags.AMMUNITION_INCENDIARY)) {
-                bullet.setFire(10)
+            if (ammo.item.`is`(HItemTags.AMMUNITION_INCENDIARY)) {
+                bullet.setSecondsOnFire(10)
             }
 
-            bullet.shoot(entity, entity.posX, entity.posYEye - 0.1, entity.posZ, vec.x, vec.y, vec.z)
+            bullet.shoot(entity, entity.z, entity.eyeY - 0.1, entity.z, vec.x, vec.y, vec.z)
         }
 
         if (!(entity is PlayerEntity && entity.isCreative)) {
@@ -87,26 +77,21 @@ open class GunItem(
         }
 
         if (!automatic) {
-            entity.resetActiveHand()
+            entity.stopUsingItem()
         }
 
         return stack
     }
 
-    override fun getInventoryAmmoPredicate(): Predicate<ItemStack> {
-        return Predicate { stack -> stack.item.isIn(getAmmoTag()) }
+    override fun getAllSupportedProjectiles(): Predicate<ItemStack> {
+        return Predicate { stack -> stack.item.`is`(getAmmoTag()) }
     }
 
     open fun getAmmoTag(): ITag<Item> {
         return HItemTags.AMMUNITION_GENERIC
     }
 
-    override fun func_230305_d_(): Int {
+    override fun getDefaultProjectileRange(): Int {
         return 10 // doesn't really matter because we aren't going to shoot
-    }
-
-    enum class FireType {
-        SMALL_BULLET, MEDIUM_BULLET, LARGE_BULLET,
-        BIRDSHOT_SHELL, BUCKSHOT_SHELL, SLUG_SHELL
     }
 }

@@ -22,7 +22,7 @@ class MalachitePickaxeItem(
     attackSpeedIn: Float,
     properties: Properties,
 ) : PickaxeItem(tier, attackDamageIn, attackSpeedIn, properties) {
-    override fun onBlockDestroyed(
+    override fun mineBlock(
         stack: ItemStack,
         worldIn: World,
         state: BlockState,
@@ -33,22 +33,18 @@ class MalachitePickaxeItem(
 
         if (boost >= 5) {
             setBoost(stack, 0)
-            entityLiving.addPotionEffect(EffectInstance(Effects.HASTE, 100, 1, false, false))
+            entityLiving.addEffect(EffectInstance(Effects.DIG_SPEED, 100, 1, false, false))
         } else {
             setBoost(stack, boost)
         }
 
-        return super.onBlockDestroyed(stack, worldIn, state, pos, entityLiving)
+        return super.mineBlock(stack, worldIn, state, pos, entityLiving)
     }
 
     // hopefully reset the boost timer
     // might not work cause its probably clientside
     // CLIENTSIDE ONLY
-    override fun shouldCauseReequipAnimation(
-        oldStack: ItemStack,
-        newStack: ItemStack,
-        slotChanged: Boolean,
-    ): Boolean {
+    override fun shouldCauseReequipAnimation(oldStack: ItemStack, newStack: ItemStack, slotChanged: Boolean): Boolean {
         if (oldStack != newStack) {
             setBoost(oldStack, 0)
         }
@@ -59,7 +55,7 @@ class MalachitePickaxeItem(
     override fun getDestroySpeed(stack: ItemStack, state: BlockState): Float {
         val speed = super.getDestroySpeed(stack, state)
 
-        if (speed == efficiency && getBoost(stack) == 5) {
+        if (speed == this.speed && getBoost(stack) == 5) {
             return speed * 1.5f
         }
 

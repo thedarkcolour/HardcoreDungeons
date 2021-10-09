@@ -1,21 +1,19 @@
 package thedarkcolour.hardcoredungeons.registry
 
-import net.minecraft.block.Block
 import net.minecraft.enchantment.Enchantment
 import net.minecraft.entity.EntityType
 import net.minecraft.item.Item
-import net.minecraft.item.crafting.IRecipeSerializer
-import net.minecraft.particles.ParticleType
 import net.minecraft.potion.Effect
-import net.minecraft.tileentity.TileEntityType
 import net.minecraft.util.SoundEvent
-import net.minecraft.world.biome.Biome
 import net.minecraft.world.gen.feature.Feature
 import net.minecraft.world.gen.feature.structure.Structure
 import net.minecraft.world.gen.surfacebuilders.SurfaceBuilder
 import net.minecraftforge.event.RegistryEvent.Register
+import net.minecraftforge.event.world.BiomeLoadingEvent
 import net.minecraftforge.eventbus.api.EventPriority
 import net.minecraftforge.registries.DataSerializerEntry
+import thedarkcolour.hardcoredungeons.block.HBlocks
+import thedarkcolour.hardcoredungeons.block.HItemsNew
 import thedarkcolour.kotlinforforge.forge.FORGE_BUS
 import thedarkcolour.kotlinforforge.forge.MOD_BUS
 
@@ -31,10 +29,14 @@ object RegistryEventHandler {
      */
     @Suppress("DuplicatedCode")
     fun registerEvents() {
-        RegistryFixer.init()
+        // todo re-enable once forge is not broken
+        //RegistryFixer.init()
 
-        MOD_BUS.addGenericListener(::registerBiomes)
-        MOD_BUS.addGenericListener(::registerBlocks)
+        HBlocks.init()
+        HItemsNew.init()
+        HBiomes.init()
+        HTileEntities.init()
+        //MOD_BUS.addGenericListener(::registerBlocks)
         //MOD_BUS.addGenericListener(::registerContainerTypes)
         MOD_BUS.addGenericListener(::registerDataSerializers)
         //MOD_BUS.addGenericListener(::registerEffects)
@@ -43,20 +45,20 @@ object RegistryEventHandler {
         MOD_BUS.addGenericListener(::registerFeatures)
         MOD_BUS.addGenericListener(::registerStructures)
         MOD_BUS.addGenericListener(::registerItems)
-        MOD_BUS.addGenericListener(::registerParticles)
-        MOD_BUS.addGenericListener(::registerRecipes)
+        HParticles.PARTICLE_TYPES.register(MOD_BUS)
         MOD_BUS.addGenericListener(::registerSounds)
         MOD_BUS.addGenericListener(::registerSurfaceBuilders)
-        MOD_BUS.addGenericListener(::registerTileEntities)
+        //MOD_BUS.addGenericListener(::registerTileEntities)
 
         MOD_BUS.addListener(HEntities::registerEntityAttributes)
         FORGE_BUS.addListener(HStructures::addDimensionalSpacing)
-        FORGE_BUS.addListener(consumer = HBiomes::biomeLoading, priority = EventPriority.HIGH)
+        // Write as lambda to avoid classloading HBiomes early
+        FORGE_BUS.addListener(EventPriority.HIGH) { event: BiomeLoadingEvent -> HBiomes.biomeLoading(event) }
     }
     
-    private fun registerBiomes(event: Register<Biome>) = HBiomes.registerBiomes(event.registry)
+    //private fun registerBiomes(event: Register<Biome>) = HBiomes.registerBiomes(event.registry)
 
-    private fun registerBlocks(event: Register<Block>) = HBlocks.registerBlocks(event.registry)
+    //private fun registerBlocks(event: Register<Block>) = HBlocks.registerBlocks(event.registry)
 
     //private fun registerContainerTypes(event: Register<ContainerType<*>>) = HContainers.registerContainerTypes(event.registry)
 
@@ -74,13 +76,9 @@ object RegistryEventHandler {
 
     private fun registerItems(event: Register<Item>) = HItems.registerItems(event.registry)
 
-    private fun registerParticles(event: Register<ParticleType<*>>) = HParticles.registerParticles(event.registry)
-
-    private fun registerRecipes(event: Register<IRecipeSerializer<*>>) = HRecipes.registerRecipeSerializers(event.registry)
-
     private fun registerSounds(event: Register<SoundEvent>) = HSounds.registerSounds(event.registry)
 
     private fun registerSurfaceBuilders(event: Register<SurfaceBuilder<*>>) = HSurfaceBuilders.registerSurfaceBuilders(event.registry)
 
-    private fun registerTileEntities(event: Register<TileEntityType<*>>) = HTileEntities.registerTileEntities(event.registry)
+    //private fun registerTileEntities(event: Register<TileEntityType<*>>) = HTileEntities.registerTileEntities(event.registry)
 }

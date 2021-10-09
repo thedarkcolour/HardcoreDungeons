@@ -11,7 +11,7 @@ class BlackStarEntity(
     type: EntityType<out ProjectileEntity> = HEntities.BLACK_STAR,
     worldIn: World
 ) : ProjectileEntity(type, worldIn), HEntityType.HEntity {
-    override fun onImpact(result: RayTraceResult) {
-        super.onImpact(result)
+    override fun onHit(result: RayTraceResult) {
+        super.onHit(result)
     }
 }

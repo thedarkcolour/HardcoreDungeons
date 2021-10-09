@@ -29,51 +29,51 @@ open class ScytheItem(
     builder: Properties,
 ) : TieredItem(tier, builder), IVanishable {
     // total attack damage as float
-    private val attackDamage = attackDamage + tier.attackDamage
+    private val attackDamage = attackDamage + tier.attackDamageBonus
     // entity modifiers when held in primary hand
     private val attributeModifiers = ImmutableMultimap.of(
-        Attributes.ATTACK_DAMAGE, AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Weapon modifier", this.attackDamage.toDouble(), AttributeModifier.Operation.ADDITION),
-        Attributes.ATTACK_SPEED, AttributeModifier(ATTACK_SPEED_MODIFIER, "Weapon modifier", attackSpeed.toDouble(), AttributeModifier.Operation.ADDITION),
+        Attributes.ATTACK_DAMAGE, AttributeModifier(BASE_ATTACK_DAMAGE_UUID, "Weapon modifier", this.attackDamage.toDouble(), AttributeModifier.Operation.ADDITION),
+        Attributes.ATTACK_SPEED, AttributeModifier(BASE_ATTACK_SPEED_UUID, "Weapon modifier", attackSpeed.toDouble(), AttributeModifier.Operation.ADDITION),
     )
 
-    override fun canPlayerBreakBlockWhileHolding(state: BlockState, worldIn: World, pos: BlockPos, player: PlayerEntity): Boolean {
+    override fun canAttackBlock(state: BlockState, worldIn: World, pos: BlockPos, player: PlayerEntity): Boolean {
         return !player.isCreative
     }
 
-    override fun hitEntity(stack: ItemStack, target: LivingEntity, playerIn: LivingEntity): Boolean {
+    override fun hurtEnemy(stack: ItemStack, target: LivingEntity, playerIn: LivingEntity): Boolean {
         if (playerIn is PlayerEntity) {
-            val f2 = playerIn.getCooledAttackStrength(0.5f)
+            val f2 = playerIn.getAttackStrengthScale(0.5f)
 
             // if the sweep should play
             // mostly from PlayerEntity for SwordItem with a few tweaks
-            if (f2 > 0.7f && !playerIn.isSprinting && (playerIn.distanceWalkedModified - playerIn.prevDistanceWalkedModified < playerIn.aiMoveSpeed)) {
-                for (living in playerIn.world.getEntitiesWithinAABB(LivingEntity::class.java, target.boundingBox.grow(1.5, 0.25, 1.5))) {
-                    if (living != playerIn && living != target && !playerIn.isOnSameTeam(living) && (living !is ArmorStandEntity || !living.hasMarker()) && playerIn.getDistanceSq(living) < 9.0) {
-                        living.applyKnockback(0.4f, MathHelper.sin(toDegrees(playerIn.rotationYaw)).toDouble(), (-MathHelper.cos(toDegrees(playerIn.rotationYaw))).toDouble())
-                        living.attackEntityFrom(DamageSource.causePlayerDamage(playerIn), (1.0f + EnchantmentHelper.getSweepingDamageRatio(playerIn) * playerIn.getAttributeValue(Attributes.ATTACK_DAMAGE).toFloat()))
+            if (f2 > 0.7f && !playerIn.isSprinting && (playerIn.walkDist - playerIn.walkDistO < playerIn.speed)) {
+                for (living in playerIn.level.getEntitiesOfClass(LivingEntity::class.java, target.boundingBox.inflate(1.5, 0.25, 1.5))) {
+                    if (living != playerIn && /*living != target && */!playerIn.isAlliedTo(living) && (living !is ArmorStandEntity || !living.isMarker) && playerIn.distanceToSqr(living) < 9.0) {
+                        living.knockback(0.4f, MathHelper.sin(toDegrees(playerIn.yRot)).toDouble(), (-MathHelper.cos(toDegrees(playerIn.yRot))).toDouble())
+                        living.hurt(DamageSource.playerAttack(playerIn), (1.0f + EnchantmentHelper.getSweepingDamageRatio(playerIn) * playerIn.getAttributeValue(Attributes.ATTACK_DAMAGE).toFloat()))
                     }
                 }
 
-                playerIn.world.playSound(null, playerIn.posX, playerIn.posY, playerIn.posZ, SoundEvents.ENTITY_PLAYER_ATTACK_SWEEP, playerIn.soundCategory, 1.0f, 1.0f)
-                playerIn.spawnSweepParticles()
+                playerIn.level.playSound(null, playerIn.x, playerIn.y, playerIn.z, SoundEvents.PLAYER_ATTACK_SWEEP, playerIn.soundSource, 1.0f, 1.0f)
+                playerIn.sweepAttack()
             }
         }
-        stack.damageItem(1, playerIn) { entity ->
-            entity.sendBreakAnimation(EquipmentSlotType.MAINHAND)
+        stack.hurtAndBreak(1, playerIn) { entity ->
+            entity.broadcastBreakEvent(EquipmentSlotType.MAINHAND)
         }
         return true
     }
 
-    override fun onBlockDestroyed(
+    override fun mineBlock(
         stack: ItemStack,
         worldIn: World,
         state: BlockState,
         pos: BlockPos,
         entityLiving: LivingEntity,
     ): Boolean {
-        if (state.getBlockHardness(worldIn, pos) != 0.0f) {
-            stack.damageItem(2, entityLiving) { entity ->
-                entity.sendBreakAnimation(EquipmentSlotType.MAINHAND)
+        if (state.getDestroySpeed(worldIn, pos) != 0.0f) {
+            stack.hurtAndBreak(2, entityLiving) { entity ->
+                entity.broadcastBreakEvent(EquipmentSlotType.MAINHAND)
             }
         }
         return true

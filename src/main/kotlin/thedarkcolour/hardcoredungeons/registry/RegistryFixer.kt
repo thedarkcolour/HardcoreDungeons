@@ -8,12 +8,13 @@ import net.minecraft.potion.Effect
 import net.minecraft.tileentity.TileEntityType
 import net.minecraft.world.biome.Biome
 import net.minecraft.world.gen.surfacebuilders.SurfaceBuilder
+import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.event.RegistryEvent.MissingMappings
 import net.minecraftforge.registries.DataSerializerEntry
 import net.minecraftforge.registries.IForgeRegistryEntry
-import thedarkcolour.kotlinforforge.forge.MOD_BUS
+import thedarkcolour.hardcoredungeons.HardcoreDungeons
 
-/**
+/** todo fix
  * Handles missing registry entries.
  *
  * If a mapping remaps to a null value then the missing mapping is ignored.
@@ -30,7 +31,7 @@ object RegistryFixer {
         }
         createFixes<Block> { map ->
             map["corn"] = null
-            map["shroomy_bricks"] = HBlocks.SHROOMY_STONE_BRICKS
+            //map["shroomy_bricks"] = HBlocks.SHROOMY_STONE_BRICKS
             map["rainbow_factory_table"] = null
             map["table"] = null
             map["extractor"] = null
@@ -39,7 +40,7 @@ object RegistryFixer {
             map["stone_texture"] = null
             map["stone_texture_stairs"] = null
             map["stone_texture_slab"] = null
-            map["dungeon_mob_spawner"] = HBlocks.DUNGEON_SPAWNER
+            //map["dungeon_mob_spawner"] = HBlocks.DUNGEON_SPAWNER
         }
         createFixes<Effect> { map ->
             map["rage"] = null
@@ -91,7 +92,7 @@ object RegistryFixer {
 
         createMappings(map)
 
-        MOD_BUS.addGenericListener { event: MissingMappings<T> ->
+        MinecraftForge.EVENT_BUS.addGenericListener(T::class.java) { event: MissingMappings<T> ->
             fixMappings(event, map, exhaustive)
         }
     }
@@ -105,7 +106,7 @@ object RegistryFixer {
      * @param exhaustive whether to check every namespace for missing mappings
      */
     private fun <T : IForgeRegistryEntry<T>> fixMappings(event: MissingMappings<T>, newMappings: Map<String, T?>, exhaustive: Boolean = false) {
-        for (mapping in if (exhaustive) event.allMappings else event.mappings) {
+        for (mapping in if (exhaustive) event.allMappings else event.getMappings(HardcoreDungeons.ID)) {
             val path = mapping.key.path
 
             if (newMappings.contains(path)) {

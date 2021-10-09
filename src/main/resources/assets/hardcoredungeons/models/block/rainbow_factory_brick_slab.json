@@ -1,8 +1,0 @@
-{
-    "parent": "block/slab",
-    "textures": {
-        "bottom": "hardcoredungeons:block/rainbow_factory_bricks",
-        "top": "hardcoredungeons:block/rainbow_factory_bricks",
-        "side": "hardcoredungeons:block/rainbow_factory_bricks"
-    }
-}

@@ -15,34 +15,32 @@ import net.minecraft.world.World
 import thedarkcolour.hardcoredungeons.registry.HItems
 
 class EmptySyringeItem(properties: Properties) : Item(properties) {
-    override fun onItemRightClick(worldIn: World, playerIn: PlayerEntity, hand: Hand): ActionResult<ItemStack> {
-        val bottle = playerIn.getHeldItem(hand)
-        val result = rayTrace(worldIn, playerIn, FluidMode.SOURCE_ONLY)
+    override fun use(worldIn: World, playerIn: PlayerEntity, hand: Hand): ActionResult<ItemStack> {
+        val bottle = playerIn.getItemInHand(hand)
+        val result = getPlayerPOVHitResult(worldIn, playerIn, FluidMode.SOURCE_ONLY)
 
         if (result.type == RayTraceResult.Type.MISS) {
-            return ActionResult.resultPass(bottle)
+            return ActionResult.pass(bottle)
         } else {
             if (result.type == RayTraceResult.Type.BLOCK) {
-                val targetPos = (result as BlockRayTraceResult).pos
+                val targetPos = (result as BlockRayTraceResult).blockPos
 
-                if (!worldIn.isBlockModifiable(playerIn, targetPos)) {
-                    return ActionResult.resultPass(bottle)
+                if (!worldIn.mayInteract(playerIn, targetPos)) {
+                    return ActionResult.pass(bottle)
                 }
 
-                // @formatter:off
-                if (worldIn.getFluidState(targetPos).isTagged(FluidTags.WATER)) {
-                    worldIn.playSound(playerIn, playerIn.posX, playerIn.posY, playerIn.posZ, SoundEvents.ITEM_BOTTLE_FILL, SoundCategory.NEUTRAL, 1.0f, 1.0f)
-                    return ActionResult.func_233538_a_(turnBottleIntoItem(bottle, playerIn, PotionUtils.addPotionToItemStack(ItemStack(HItems.POTION_SYRINGE), Potions.WATER)), worldIn.isRemote())
+                if (worldIn.getFluidState(targetPos).`is`(FluidTags.WATER)) {
+                    worldIn.playSound(playerIn, playerIn.x, playerIn.y, playerIn.z, SoundEvents.BOTTLE_FILL, SoundCategory.NEUTRAL, 1.0f, 1.0f)
+                    return ActionResult.sidedSuccess(turnBottleIntoItem(bottle, playerIn, PotionUtils.setPotion(ItemStack(HItems.POTION_SYRINGE), Potions.WATER)), worldIn.isClientSide)
                 }
-                // @formatter:on
             }
 
-            return ActionResult.resultPass(bottle)
+            return ActionResult.pass(bottle)
         }
     }
 
     private fun turnBottleIntoItem(bottle: ItemStack, playerIn: PlayerEntity, filledBottle: ItemStack): ItemStack {
-        playerIn.addStat(Stats.ITEM_USED[this])
-        return DrinkHelper.fill(bottle, playerIn, filledBottle)
+        playerIn.awardStat(Stats.ITEM_USED[this])
+        return DrinkHelper.createFilledResult(bottle, playerIn, filledBottle)
     }
 }
