@@ -7,7 +7,7 @@ import net.minecraft.nbt.NBTUtil
 import net.minecraft.tileentity.TileEntity
 import net.minecraft.util.math.BlockPos
 import net.minecraftforge.common.util.Constants
-import thedarkcolour.hardcoredungeons.block.HBlocks
+import thedarkcolour.hardcoredungeons.registry.HBlocks
 import thedarkcolour.hardcoredungeons.registry.HTileEntities
 
 class SootTrapControllerTileEntity : TileEntity(HTileEntities.SOOT_TRAP_CONTROLLER) {

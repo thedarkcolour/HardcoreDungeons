@@ -114,7 +114,7 @@ dependencies {
     minecraft 'net.minecraftforge:forge:1.16.5-36.2.2'
 
     // Use the latest version of KotlinForForge
-    implementation('thedarkcolour:kotlinforforge:1.14.0')
+    implementation('thedarkcolour:kotlinforforge:1.15.1')
 /*
     // loot tables dsl
     implementation fg.deobf(project.dependencies.create(group: "com.theonlytails", name: "loottables", version: "0.2.14") {

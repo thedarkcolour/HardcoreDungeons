@@ -25,7 +25,7 @@ function initializeCoreMod() {
                 for (var i = 0; i < arrayLength; ++i) {
                     var insn = insnList.get(i);
 
-                    if (insn.getOpcode() == Opcodes.ILOAD && insn.getPrevious().getOpcode() == Opcodes.IFNE) {
+                    if (insn.getOpcode() === Opcodes.ILOAD && insn.getPrevious().getOpcode() === Opcodes.IFNE) {
                         var a = insnList.get(i + 1);
 
                         // add patch while original code is still in list

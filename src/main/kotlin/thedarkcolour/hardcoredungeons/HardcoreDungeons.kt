@@ -2,7 +2,6 @@ package thedarkcolour.hardcoredungeons
 
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.event.RegisterCommandsEvent
-import net.minecraftforge.fml.InterModComms
 import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent
 import org.apache.logging.log4j.LogManager
@@ -15,8 +14,6 @@ import thedarkcolour.hardcoredungeons.registry.RegistryEventHandler
 import thedarkcolour.kotlinforforge.forge.FORGE_BUS
 import thedarkcolour.kotlinforforge.forge.MOD_BUS
 import thedarkcolour.kotlinforforge.forge.runWhenOn
-import top.theillusivec4.curios.api.CuriosApi
-import top.theillusivec4.curios.api.SlotTypeMessage
 
 /**
  * Main mod class for Hardcore Dungeons.
@@ -50,7 +47,7 @@ object HardcoreDungeons {
      */
     private fun interModComms(event: InterModEnqueueEvent) {
         event.enqueueWork {
-            InterModComms.sendTo(CuriosApi.MODID, SlotTypeMessage.REGISTER_TYPE) {
+            /*InterModComms.sendTo(CuriosApi.MODID, SlotTypeMessage.REGISTER_TYPE) {
                 SlotTypeMessage.Builder("head").build()
             }
             InterModComms.sendTo(CuriosApi.MODID, SlotTypeMessage.REGISTER_TYPE) {
@@ -58,7 +55,7 @@ object HardcoreDungeons {
             }
             InterModComms.sendTo(CuriosApi.MODID, SlotTypeMessage.REGISTER_TYPE) {
                 SlotTypeMessage.Builder("necklace").build()
-            }
+            }*/
         }
     }
 

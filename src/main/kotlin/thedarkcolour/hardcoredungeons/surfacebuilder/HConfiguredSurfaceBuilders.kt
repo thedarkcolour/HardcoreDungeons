@@ -9,7 +9,7 @@ import net.minecraft.world.gen.surfacebuilders.ISurfaceBuilderConfig
 import net.minecraft.world.gen.surfacebuilders.SurfaceBuilder
 import net.minecraft.world.gen.surfacebuilders.SurfaceBuilderConfig
 import thedarkcolour.hardcoredungeons.HardcoreDungeons
-import thedarkcolour.hardcoredungeons.block.HBlocks
+import thedarkcolour.hardcoredungeons.registry.HBlocks
 
 object HConfiguredSurfaceBuilders {
     val RAINBOWLAND_SURFACE = defaultCfg(HBlocks.RAINBOW_SOIL.grass.defaultBlockState(), HBlocks.RAINBOW_SOIL.soil.defaultBlockState(), HBlocks.RAINBOW_SOIL.loam.defaultBlockState())
