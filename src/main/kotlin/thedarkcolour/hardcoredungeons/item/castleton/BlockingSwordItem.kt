@@ -8,7 +8,7 @@ import net.minecraft.item.UseAction
 import net.minecraft.util.ActionResult
 import net.minecraft.util.ActionResultType
 import net.minecraft.util.Hand
-import net.minecraft.world.World
+import net.minecraft.world.level.Level
 
 class BlockingSwordItem(properties: Properties) : SwordItem(ItemTier.GOLD, 9, -2.4f, properties) {
     override fun use(worldIn: World, playerIn: PlayerEntity, handIn: Hand): ActionResult<ItemStack> {

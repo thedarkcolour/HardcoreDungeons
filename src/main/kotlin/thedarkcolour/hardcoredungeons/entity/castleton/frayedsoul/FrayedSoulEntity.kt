@@ -10,7 +10,7 @@ import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.util.SoundEvent
 import net.minecraft.util.math.BlockPos
-import net.minecraft.world.World
+import net.minecraft.world.level.Level
 import net.minecraftforge.common.ForgeMod
 import thedarkcolour.hardcoredungeons.block.HBlocks
 import thedarkcolour.hardcoredungeons.registry.HSounds

@@ -1,14 +1,12 @@
 package thedarkcolour.hardcoredungeons.registry
 
-import net.minecraft.block.AbstractBlock
-import net.minecraft.block.Block
-import net.minecraft.block.Blocks
-import net.minecraft.block.SoundType
-import net.minecraft.block.material.Material
-import net.minecraft.block.material.MaterialColor
-import net.minecraft.block.material.PushReaction
-import net.minecraft.potion.Effects
-import net.minecraftforge.common.ToolType
+import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.Blocks
+import net.minecraft.world.level.block.SoundType
+import net.minecraft.world.level.block.state.BlockBehaviour
+import net.minecraft.world.level.material.Material
+import net.minecraft.world.level.material.MaterialColor
+import net.minecraft.world.level.material.PushReaction
 import net.minecraftforge.registries.ForgeRegistries
 import thedarkcolour.hardcoredungeons.block.HRegistry
 import thedarkcolour.hardcoredungeons.block.base.BlockMaker
@@ -44,7 +42,7 @@ import thedarkcolour.hardcoredungeons.tags.HItemTags
  *
  * @author TheDarkColour
  */
-@Suppress("ReplacePutWithAssignment", "Unused", "MemberVisibilityCanBePrivate", "ConvertLambdaToReference")
+@Suppress("ReplacePutWithAssignment", "Unused", "MemberVisibilityCanBePrivate")
 object HBlocks : HRegistry<Block>(ForgeRegistries.BLOCKS) {
     // @formatter:off
 
@@ -127,9 +125,9 @@ object HBlocks : HRegistry<Block>(ForgeRegistries.BLOCKS) {
 
     /** Dungeon features */
     val DUNGEON_CASTLETON_BRICKS by BlockMaker.unbreakableWithItem("dungeon_castleton_bricks", BlockModelType.CUBE_ALL, CASTLETON_STONE.brick::block) // Standalone? Adjust with needs later on
-    val DUNGEON_SPAWNER by BlockMaker.blockWithItem("dungeon_spawner") { DungeonSpawnerBlock(AbstractBlock.Properties.copy(Blocks.BARRIER)) } // Standalone? Adjust with needs later on
+    val DUNGEON_SPAWNER by BlockMaker.blockWithItem("dungeon_spawner") { DungeonSpawnerBlock(BlockBehaviour.Properties.copy(Blocks.BARRIER)) } // Standalone? Adjust with needs later on
     val BLUE_CASTLETON_DUNGEON_LOCK by BlockMaker.blockWithItem("blue_castleton_dungeon_lock") { LockBlock(HItems::BLUE_CASTLETON_DUNGEON_KEY, { Blocks.OBSIDIAN }, HProperties.of(Material.STONE, MaterialColor.COLOR_BLACK)) } // Door lock combo to handle key
-    val SOOT by BlockMaker.withItem("soot", ItemModelType.BLOCK_ITEM, BlockMaker.registerModelled("soot", BlockModelType.SOOT) { SafeSootBlock(HProperties.of(Material.SAND).shape(BlockMaker.FARMLAND_SHAPE).speedFactor(0.4f).strength(40.0f, 3000.0f).harvestTool(ToolType.SHOVEL).noOcclusion()) })
+    val SOOT by BlockMaker.withItem("soot", ItemModelType.BLOCK_ITEM, BlockMaker.registerModelled("soot", BlockModelType.SOOT) { SafeSootBlock(HProperties.of(Material.SAND).shape(BlockMaker.FARMLAND_SHAPE).speedFactor(0.4f).strength(40.0f, 3000.0f).noOcclusion()) })
     val SOOT_TRAP by BlockMaker.withItem("soot_trap", ItemModelType.BLOCK_ITEM, BlockMaker.registerModelled("soot_trap", BlockModelType.SOOT, appearance = { SOOT }) { SootTrapBlock(HProperties.copy(
         SOOT
     ).lootFrom { SOOT }) })
@@ -142,7 +140,8 @@ object HBlocks : HRegistry<Block>(ForgeRegistries.BLOCKS) {
     val CASTLETON_TREASURE_VASE by BlockMaker.vaseWithItem("castleton_treasure_vase", MaterialColor.TERRACOTTA_BLUE)
 
     /** Maze Boss */
-    val MAZE_BUSH by BlockMaker.cubeAllWithItem("maze_bush") { MazeBushBlock(HProperties.of(Material.STONE, MaterialColor.PLANT).pushReaction(PushReaction.BLOCK).strength(50.0F, 1200.0F).sound(SoundType.GRASS)) }
+    val MAZE_BUSH by BlockMaker.cubeAllWithItem("maze_bush") { MazeBushBlock(HProperties.of(Material.STONE, MaterialColor.PLANT).pushReaction(
+        PushReaction.BLOCK).strength(50.0F, 1200.0F).sound(SoundType.GRASS)) }
     val MAZE_BOSS_SPAWNER by BlockMaker.blockWithItem("maze_boss_spawner") { MazeBossSpawnerBlock(HProperties.of(Material.METAL).indestructible()) }
 
     /** Misc */
@@ -157,8 +156,8 @@ object HBlocks : HRegistry<Block>(ForgeRegistries.BLOCKS) {
     val RAINBOW_FARMLAND by BlockMaker.farmlandWithItem("rainbow_farmland", RAINBOW_SOIL::soil, { RAINBOW_SOIL.soil.defaultBlockState() }, HProperties.of(Material.DIRT, MaterialColor.COLOR_PURPLE).strength(0.5f).sound(SoundType.GRAVEL))
 
     /** Crops */
-    val CHILI_PEPPER = CropsCombo("chili_pepper", ItemMaker.food(2, 0.2f, fastEat = true, alwaysEdible = true)) { ChiliPepperBlock(HProperties.of(Material.PLANT).sound(SoundType.GRASS).strength(1.0f, 0.0f).noCollission().randomTicks()) } //BlockMaker.createBlock("chili_pepper", ItemModelType.SIMPLE_ITEM) { ChiliPepperBlock(AbstractBlock.Properties.of(Material.PLANT).sound(SoundType.GRASS).strength(1.0f, 0.0f).noCollission().randomTicks()) }
-    val GOLDEN_CARROTS by HBlocks.register("golden_carrots") { GoldenCarrotsBlock(AbstractBlock.Properties.copy(Blocks.CARROTS)) }
+    val CHILI_PEPPER = CropsCombo("chili_pepper", ItemMaker.food(2, 0.2f, fastEat = true, alwaysEdible = true)) { ChiliPepperBlock(HProperties.of(Material.PLANT).sound(SoundType.GRASS).strength(1.0f, 0.0f).noCollission().randomTicks()) } //BlockMaker.createBlock("chili_pepper", ItemModelType.SIMPLE_ITEM) { ChiliPepperBlock(BlockBehaviour.Properties.of(Material.PLANT).sound(SoundType.GRASS).strength(1.0f, 0.0f).noCollission().randomTicks()) }
+    val GOLDEN_CARROTS by HBlocks.register("golden_carrots") { GoldenCarrotsBlock(BlockBehaviour.Properties.copy(Blocks.CARROTS)) }
     val WILD_BERROOK = CropsCombo("wild_berrook", ItemMaker.food(2, 0.4f, fastEat = true)) { HCropsBlock(HProperties.of(Material.PLANT, MaterialColor.COLOR_LIGHT_BLUE).instabreak().noCollission().sound(SoundType.CROP)) }
 
     /** Potted plants */

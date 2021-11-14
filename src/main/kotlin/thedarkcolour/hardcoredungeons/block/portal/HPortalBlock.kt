@@ -1,7 +1,7 @@
 package thedarkcolour.hardcoredungeons.block.portal
 
-import net.minecraft.block.Block
-import net.minecraft.block.BlockState
+import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.entity.Entity
 import net.minecraft.entity.player.ServerPlayerEntity
 import net.minecraft.item.BlockItemUseContext
@@ -16,7 +16,7 @@ import net.minecraft.util.math.shapes.VoxelShape
 import net.minecraft.util.math.shapes.VoxelShapes
 import net.minecraft.world.IBlockReader
 import net.minecraft.world.IWorld
-import net.minecraft.world.World
+import net.minecraft.world.level.Level
 import thedarkcolour.hardcoredungeons.block.base.properties.HProperties
 import thedarkcolour.hardcoredungeons.capability.PlayerHelper
 

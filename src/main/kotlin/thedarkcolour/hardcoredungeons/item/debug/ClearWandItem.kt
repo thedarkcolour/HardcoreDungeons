@@ -1,6 +1,6 @@
 package thedarkcolour.hardcoredungeons.item.debug
 
-import net.minecraft.block.Blocks
+import net.minecraft.world.level.block.Blocks
 import net.minecraft.item.ItemUseContext
 import net.minecraft.util.ActionResultType
 

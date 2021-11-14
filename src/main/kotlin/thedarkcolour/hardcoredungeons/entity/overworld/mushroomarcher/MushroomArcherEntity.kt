@@ -11,7 +11,7 @@ import net.minecraft.potion.EffectInstance
 import net.minecraft.potion.Effects
 import net.minecraft.util.SoundEvent
 import net.minecraft.util.SoundEvents
-import net.minecraft.world.World
+import net.minecraft.world.level.Level
 import net.minecraftforge.common.ForgeMod
 import thedarkcolour.hardcoredungeons.registry.HEntities
 

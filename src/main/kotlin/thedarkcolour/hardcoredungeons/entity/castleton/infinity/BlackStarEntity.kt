@@ -2,7 +2,7 @@ package thedarkcolour.hardcoredungeons.entity.castleton.infinity
 
 import net.minecraft.entity.EntityType
 import net.minecraft.util.math.RayTraceResult
-import net.minecraft.world.World
+import net.minecraft.world.level.Level
 import thedarkcolour.hardcoredungeons.entity.HEntityType
 import thedarkcolour.hardcoredungeons.entity.projectile.ProjectileEntity
 import thedarkcolour.hardcoredungeons.registry.HEntities

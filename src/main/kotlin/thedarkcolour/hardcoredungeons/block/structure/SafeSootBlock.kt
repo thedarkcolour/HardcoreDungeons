@@ -1,15 +1,15 @@
 package thedarkcolour.hardcoredungeons.block.structure
 
-import net.minecraft.block.Block
-import net.minecraft.block.BlockState
-import net.minecraft.block.Blocks
+import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.block.Blocks
 import net.minecraft.tags.BlockTags
 import net.minecraft.util.Direction
 import net.minecraft.util.SoundCategory
 import net.minecraft.util.SoundEvents
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.IBlockReader
-import net.minecraft.world.World
+import net.minecraft.world.level.Level
 import net.minecraft.world.server.ServerWorld
 import thedarkcolour.hardcoredungeons.block.HBlocks
 import thedarkcolour.hardcoredungeons.block.base.HBlock

@@ -1,34 +1,28 @@
 package thedarkcolour.hardcoredungeons.entity.overworld.mazeboss
 
 import com.google.common.base.Preconditions
-import net.minecraft.entity.*
-import net.minecraft.entity.ai.attributes.AttributeModifierMap
-import net.minecraft.entity.ai.attributes.Attributes
-import net.minecraft.entity.ai.goal.Goal
-import net.minecraft.entity.player.PlayerEntity
-import net.minecraft.entity.player.ServerPlayerEntity
-import net.minecraft.nbt.CompoundNBT
-import net.minecraft.nbt.NBTUtil
-import net.minecraft.potion.EffectInstance
-import net.minecraft.potion.Effects
-import net.minecraft.util.Direction
-import net.minecraft.util.EntityPredicates
-import net.minecraft.util.math.AxisAlignedBB
-import net.minecraft.util.math.BlockPos
-import net.minecraft.world.World
+import net.minecraft.core.BlockPos
+import net.minecraft.world.entity.EntityType
+import net.minecraft.world.entity.ai.attributes.AttributeMap
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier
+import net.minecraft.world.entity.ai.attributes.Attributes
+import net.minecraft.world.entity.monster.Monster
+import net.minecraft.world.entity.monster.RangedAttackMob
+import net.minecraft.world.level.Level
+import net.minecraft.world.phys.AABB
 import net.minecraftforge.common.ForgeMod
 import net.minecraftforge.common.util.Constants
 import thedarkcolour.hardcoredungeons.registry.HEntities
 
-class MazeBossEntity(type: EntityType<MazeBossEntity>, worldIn: World) : MobEntity(type, worldIn), IRangedAttackMob {
+class MazeBossEntity(type: EntityType<MazeBossEntity>, LevelIn: Level) : Monster(type, LevelIn), RangedAttackMob {
     private var timeSinceLastEarthquake = 0
     private var isAgro = true // agro by default unless in a maze
 
     private var spawnLocation: BlockPos? = null
     private var mazeCenter: BlockPos? = null
-    private var bounds: AxisAlignedBB? = null
+    private var bounds: AABB? = null
 
-    constructor(worldIn: World) : this(HEntities.MAZE_BOSS, worldIn)
+    constructor(LevelIn: Level) : this(HEntities.MAZE_BOSS, LevelIn)
 
     override fun registerGoals() {
         goalSelector.addGoal(0, WalkToCenterGoal())
@@ -38,7 +32,7 @@ class MazeBossEntity(type: EntityType<MazeBossEntity>, worldIn: World) : MobEnti
     // Make the model stuff work cause i'm lazy
     override fun performRangedAttack(target: LivingEntity, distanceFactor: Float) {}
 
-    fun setSpawnLocation(pos: BlockPos, bounds: AxisAlignedBB, direction: Direction) {
+    fun setSpawnLocation(pos: BlockPos, bounds: AABB, direction: Direction) {
         Preconditions.checkArgument(pos !is BlockPos.Mutable)
 
         this.spawnLocation = pos
@@ -141,7 +135,7 @@ class MazeBossEntity(type: EntityType<MazeBossEntity>, worldIn: World) : MobEnti
     }
 
     companion object {
-        val ATTRIBUTES: AttributeModifierMap.MutableAttribute = AttributeModifierMap.builder()
+        val ATTRIBUTES: AttributeSupplier.Builder = AttributeSupplier.builder()
             .add(Attributes.MAX_HEALTH, 20.0)
             .add(Attributes.KNOCKBACK_RESISTANCE, 0.2)
             .add(Attributes.MOVEMENT_SPEED)

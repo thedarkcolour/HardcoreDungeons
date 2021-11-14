@@ -11,7 +11,7 @@ import net.minecraft.item.ItemStack
 import net.minecraft.nbt.CompoundNBT
 import net.minecraft.world.DifficultyInstance
 import net.minecraft.world.IServerWorld
-import net.minecraft.world.World
+import net.minecraft.world.level.Level
 import thedarkcolour.hardcoredungeons.registry.HItems
 
 class CastletonDeerEntity(type: EntityType<CastletonDeerEntity>, worldIn: World) : DeerEntity(type, worldIn) {

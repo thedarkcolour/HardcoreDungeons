@@ -2,7 +2,7 @@ package thedarkcolour.hardcoredungeons.feature
 
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
-import net.minecraft.block.BlockState
+import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.gen.blockstateprovider.BlockStateProvider
 import net.minecraft.world.gen.blockstateprovider.SimpleBlockStateProvider
 import net.minecraft.world.gen.feature.IFeatureConfig

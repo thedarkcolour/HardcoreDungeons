@@ -1,6 +1,6 @@
 package thedarkcolour.hardcoredungeons.block.plant
 
-import net.minecraft.block.BlockState
+import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.block.SaplingBlock
 import net.minecraft.block.trees.Tree
 import net.minecraft.util.math.BlockPos

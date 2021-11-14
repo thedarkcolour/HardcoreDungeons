@@ -7,7 +7,7 @@ import net.minecraft.item.Items
 import net.minecraft.util.DamageSource
 import net.minecraft.util.math.EntityRayTraceResult
 import net.minecraft.util.math.RayTraceResult
-import net.minecraft.world.World
+import net.minecraft.world.level.Level
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn
 import thedarkcolour.hardcoredungeons.entity.projectile.ProjectileEntity

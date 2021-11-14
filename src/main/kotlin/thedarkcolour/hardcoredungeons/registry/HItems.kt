@@ -1,6 +1,6 @@
 package thedarkcolour.hardcoredungeons.registry
 
-import net.minecraft.block.Block
+import net.minecraft.world.level.block.Block
 import net.minecraft.client.renderer.color.ItemColors
 import net.minecraft.inventory.EquipmentSlotType
 import net.minecraft.item.*

@@ -1,11 +1,14 @@
-package thedarkcolour.hardcoredungeons.tileentity
 
+package thedarkcolour.hardcoredungeons.tileentity
+/*
 import net.minecraft.network.NetworkManager
 import net.minecraft.network.play.server.SUpdateTileEntityPacket
 import net.minecraft.tileentity.TileEntity
 import net.minecraft.tileentity.TileEntityType
 
-class TrophyBedTileEntity(type: TileEntityType<*> = TODO()/*HTileEntities.TROPHY_BED*/) : TileEntity(type) {
+class TrophyBedTileEntity(type: TileEntityType<*> = TODO()*/
+/*HTileEntities.TROPHY_BED*//*
+) : TileEntity(type) {
     private lateinit var pattern: Pattern
 
     constructor(pattern: Pattern) : this() {
@@ -23,4 +26,4 @@ class TrophyBedTileEntity(type: TileEntityType<*> = TODO()/*HTileEntities.TROPHY
     enum class Pattern {
 
     }
-}
+}*/

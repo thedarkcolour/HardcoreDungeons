@@ -11,7 +11,7 @@ import net.minecraft.item.ItemStack
 import net.minecraft.util.DamageSource
 import net.minecraft.util.HandSide
 import net.minecraft.util.math.vector.Vector3d
-import net.minecraft.world.World
+import net.minecraft.world.level.Level
 import net.minecraftforge.common.ForgeMod
 import net.minecraftforge.common.util.FakePlayer
 import thedarkcolour.hardcoredungeons.registry.HEntities

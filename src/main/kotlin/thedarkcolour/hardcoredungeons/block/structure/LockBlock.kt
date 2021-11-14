@@ -1,7 +1,7 @@
 package thedarkcolour.hardcoredungeons.block.structure
 
-import net.minecraft.block.Block
-import net.minecraft.block.BlockState
+import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.util.ActionResultType
 import net.minecraft.util.Direction
@@ -9,7 +9,7 @@ import net.minecraft.util.Hand
 import net.minecraft.util.IItemProvider
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.BlockRayTraceResult
-import net.minecraft.world.World
+import net.minecraft.world.level.Level
 import thedarkcolour.hardcoredungeons.block.base.HBlock
 import thedarkcolour.hardcoredungeons.block.base.properties.HProperties
 

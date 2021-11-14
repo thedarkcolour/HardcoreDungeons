@@ -1,14 +1,14 @@
 package thedarkcolour.hardcoredungeons.entity
 
 import com.google.common.collect.ImmutableSet
-import net.minecraft.block.Block
+import net.minecraft.world.level.block.Block
 import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityClassification
 import net.minecraft.entity.EntitySize
 import net.minecraft.entity.EntityType
 import net.minecraft.entity.ai.attributes.AttributeModifierMap
 import net.minecraft.util.ResourceLocation
-import net.minecraft.world.World
+import net.minecraft.world.level.Level
 import net.minecraftforge.fml.network.FMLPlayMessages
 import java.util.function.BiFunction
 import java.util.function.Predicate

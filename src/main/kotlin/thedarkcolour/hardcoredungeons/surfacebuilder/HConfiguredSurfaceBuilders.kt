@@ -1,6 +1,6 @@
 package thedarkcolour.hardcoredungeons.surfacebuilder
 
-import net.minecraft.block.BlockState
+import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.util.ResourceLocation
 import net.minecraft.util.registry.Registry
 import net.minecraft.util.registry.WorldGenRegistries

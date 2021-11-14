@@ -1,6 +1,6 @@
 package thedarkcolour.hardcoredungeons.item.misc
 
-import net.minecraft.block.BlockState
+import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.entity.LivingEntity
 import net.minecraft.item.IItemTier
 import net.minecraft.item.ItemStack
@@ -8,7 +8,7 @@ import net.minecraft.item.PickaxeItem
 import net.minecraft.potion.EffectInstance
 import net.minecraft.potion.Effects
 import net.minecraft.util.math.BlockPos
-import net.minecraft.world.World
+import net.minecraft.world.level.Level
 import net.minecraftforge.common.util.Constants
 
 // hopefully we can make a speedy pickaxe with this

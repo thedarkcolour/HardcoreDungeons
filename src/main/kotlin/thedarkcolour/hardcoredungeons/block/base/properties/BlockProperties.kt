@@ -2,16 +2,15 @@
 
 package thedarkcolour.hardcoredungeons.block.base.properties
 
-import net.minecraft.block.AbstractBlock
-import net.minecraft.block.Block
-import net.minecraft.block.BlockState
-import net.minecraft.block.SoundType
-import net.minecraft.block.material.Material
-import net.minecraft.block.material.MaterialColor
-import net.minecraft.block.material.PushReaction
-import net.minecraft.item.DyeColor
-import net.minecraft.util.math.shapes.VoxelShape
-import net.minecraftforge.common.ToolType
+import net.minecraft.world.item.DyeColor
+import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.SoundType
+import net.minecraft.world.level.block.state.BlockBehaviour
+import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.material.Material
+import net.minecraft.world.level.material.MaterialColor
+import net.minecraft.world.level.material.PushReaction
+import net.minecraft.world.phys.shapes.VoxelShape
 import thedarkcolour.hardcoredungeons.block.base.HBlock
 import thedarkcolour.hardcoredungeons.block.base.properties.BlockProperties.Factory
 import java.util.function.ToIntFunction
@@ -31,7 +30,7 @@ import java.util.function.ToIntFunction
 @Suppress("FunctionName", "UNCHECKED_CAST")
 abstract class BlockProperties<T : BlockProperties<T>> protected constructor() {
     /** The vanilla representation of this [BlockProperties] instance. */
-    private lateinit var internal: AbstractBlock.Properties
+    private lateinit var internal: BlockBehaviour.Properties
     /** The VoxelShape shape that this block uses for collision and selection boxes. */
     private var shape: VoxelShape? = null
     /** The enchantment power bonus that this block should give. */
@@ -152,22 +151,6 @@ abstract class BlockProperties<T : BlockProperties<T>> protected constructor() {
     }
 
     /**
-     * Set the harvest level for this block.
-     */
-    fun harvestLevel(harvestLevel: Int): T {
-        internal.harvestLevel(harvestLevel)
-        return this as T
-    }
-
-    /**
-     * Set the harvest tool for this block.
-     */
-    fun harvestTool(harvestTool: ToolType): T {
-        internal.harvestTool(harvestTool)
-        return this as T
-    }
-
-    /**
      * Set the loot table of this block to empty.
      */
     fun noDrops(): T {
@@ -252,7 +235,7 @@ abstract class BlockProperties<T : BlockProperties<T>> protected constructor() {
     /**
      * Returns a Block.Properties for use in vanilla blocks.
      */
-    fun build(): AbstractBlock.Properties {
+    fun build(): BlockBehaviour.Properties {
         return internal
     }
 
@@ -283,7 +266,7 @@ abstract class BlockProperties<T : BlockProperties<T>> protected constructor() {
          */
         fun of(material: Material): T {
             val properties = createProperties()
-            properties.internal = AbstractBlock.Properties.of(material)
+            properties.internal = BlockBehaviour.Properties.of(material)
             return properties
         }
 
@@ -296,7 +279,7 @@ abstract class BlockProperties<T : BlockProperties<T>> protected constructor() {
          */
         fun of(material: Material, color: DyeColor): T {
             val properties = createProperties()
-            properties.internal = AbstractBlock.Properties.of(material, color)
+            properties.internal = BlockBehaviour.Properties.of(material, color)
             return properties
         }
 
@@ -309,13 +292,13 @@ abstract class BlockProperties<T : BlockProperties<T>> protected constructor() {
          */
         fun of(material: Material, color: MaterialColor): T {
             val properties = createProperties()
-            properties.internal = AbstractBlock.Properties.of(material, color)
+            properties.internal = BlockBehaviour.Properties.of(material, color)
             return properties
         }
 
         fun of(material: Material, color: (BlockState) -> MaterialColor): T {
             val properties = createProperties()
-            properties.internal = AbstractBlock.Properties.of(material, color)
+            properties.internal = BlockBehaviour.Properties.of(material, color)
             return properties
         }
 
@@ -325,7 +308,7 @@ abstract class BlockProperties<T : BlockProperties<T>> protected constructor() {
          */
         fun copy(block: Block): T {
             val properties = createProperties()
-            properties.internal = AbstractBlock.Properties.copy(block)
+            properties.internal = BlockBehaviour.Properties.copy(block)
 
             // Copy custom properties
             if (block is HBlock) block.writeProperties(properties)

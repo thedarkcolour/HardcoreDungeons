@@ -1,7 +1,7 @@
 package thedarkcolour.hardcoredungeons.block.plant.castleton
 
-import net.minecraft.block.Block
-import net.minecraft.block.BlockState
+import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.state.StateContainer
 import net.minecraft.state.properties.BlockStateProperties
 import thedarkcolour.hardcoredungeons.block.base.properties.HProperties

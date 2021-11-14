@@ -1,6 +1,6 @@
 package thedarkcolour.hardcoredungeons.registry
 
-import net.minecraft.block.Block
+import net.minecraft.world.level.block.Block
 import net.minecraft.entity.EntityType
 import net.minecraft.inventory.container.ContainerType
 import net.minecraft.item.Item

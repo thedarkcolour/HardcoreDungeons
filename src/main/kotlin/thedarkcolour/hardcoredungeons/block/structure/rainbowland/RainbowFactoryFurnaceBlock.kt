@@ -1,7 +1,7 @@
 package thedarkcolour.hardcoredungeons.block.structure.rainbowland
 
-import net.minecraft.block.Block
-import net.minecraft.block.BlockState
+import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.state.BooleanProperty
 import net.minecraft.state.DirectionProperty
 import net.minecraft.state.StateContainer

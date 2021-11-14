@@ -1,11 +1,12 @@
 package thedarkcolour.hardcoredungeons.data.modelgen.item
 
-import net.minecraft.item.Item
+import net.minecraft.world.item.Item
 import thedarkcolour.hardcoredungeons.data.ModelGenerator
 import thedarkcolour.hardcoredungeons.data.modelgen.ModelType
+import kotlin.properties.ReadOnlyProperty
 
 abstract class ItemModelType : ModelType<() -> Item>() {
-    private val items = ArrayList<() -> Item>()
+    private val items: ArrayList<ReadOnlyProperty<Item, Any?>> = ArrayList()
 
     /**
      * Ran during model generation.
@@ -27,7 +28,7 @@ abstract class ItemModelType : ModelType<() -> Item>() {
     abstract fun process(item: Item, gen: ModelGenerator)
 
     // Should be an ObjectHolderDelegate
-    fun add(item: () -> Item) {
+    fun add(item: ReadOnlyProperty<Item, Any?>) {
         items.add(item)
     }
 

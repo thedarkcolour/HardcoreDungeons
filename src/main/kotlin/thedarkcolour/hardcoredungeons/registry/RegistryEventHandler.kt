@@ -33,7 +33,7 @@ object RegistryEventHandler {
         HBlocks.init()
         HItemsNew.init()
         HBiomes.init()
-        HTileEntities.init()
+        HBlockEntities.init()
         //MOD_BUS.addGenericListener(::registerBlocks)
         //MOD_BUS.addGenericListener(::registerContainerTypes)
         MOD_BUS.addGenericListener(::registerDataSerializers)

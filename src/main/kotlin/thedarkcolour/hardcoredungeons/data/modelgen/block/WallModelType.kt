@@ -1,7 +1,7 @@
 package thedarkcolour.hardcoredungeons.data.modelgen.block
 
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap
-import net.minecraft.block.Block
+import net.minecraft.world.level.block.Block
 import net.minecraft.block.WallHeight
 import net.minecraft.state.EnumProperty
 import net.minecraft.state.properties.BlockStateProperties

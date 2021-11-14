@@ -1,6 +1,6 @@
 package thedarkcolour.hardcoredungeons.container
 
-import net.minecraft.block.Block
+import net.minecraft.world.level.block.Block
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.player.PlayerInventory
 import net.minecraft.inventory.container.Container

@@ -1,21 +1,20 @@
 package thedarkcolour.hardcoredungeons.tileentity
 
-import net.minecraft.entity.player.PlayerEntity
-import net.minecraft.state.properties.BlockStateProperties.HORIZONTAL_FACING
-import net.minecraft.tileentity.ITickableTileEntity
-import net.minecraft.tileentity.TileEntity
-import net.minecraft.util.Direction
-import net.minecraft.util.math.AxisAlignedBB
-import net.minecraft.util.math.BlockPos
-import net.minecraft.world.World
+import net.minecraft.core.BlockPos
+import net.minecraft.core.Direction
+import net.minecraft.world.level.Level
+import net.minecraft.world.level.block.entity.BlockEntity
+import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.block.state.properties.BlockStateProperties.HORIZONTAL_FACING
+import net.minecraft.world.phys.AABB
 import thedarkcolour.hardcoredungeons.HardcoreDungeons
-import thedarkcolour.hardcoredungeons.block.HBlocks
+import thedarkcolour.hardcoredungeons.registry.HBlocks
 import thedarkcolour.hardcoredungeons.entity.overworld.mazeboss.MazeBossEntity
-import thedarkcolour.hardcoredungeons.registry.HTileEntities
+import thedarkcolour.hardcoredungeons.registry.HBlockEntities
 import thedarkcolour.hardcoredungeons.util.toRadians
 
-class MazeBossSpawnerTileEntity : TileEntity(HTileEntities.MAZE_BOSS_SPAWNER), ITickableTileEntity {
-    private lateinit var bounds: AxisAlignedBB
+class MazeBossSpawnerTileEntity(pos: BlockPos, state: BlockState) : BlockEntity(HBlockEntities.MAZE_BOSS_SPAWNER, pos, state) {
+    private lateinit var bounds: AABB
     private var ticks = 0
 
     override fun clearRemoved() {
@@ -31,7 +30,7 @@ class MazeBossSpawnerTileEntity : TileEntity(HTileEntities.MAZE_BOSS_SPAWNER), I
         bounds = createBounds(state.getValue(HORIZONTAL_FACING), blockPos)
     }
 
-    private fun createBounds(direction: Direction, pos: BlockPos): AxisAlignedBB {
+    private fun createBounds(direction: Direction, pos: BlockPos): AABB {
         val right = direction.clockWise
         val mut = pos.mutable()
 
@@ -39,7 +38,7 @@ class MazeBossSpawnerTileEntity : TileEntity(HTileEntities.MAZE_BOSS_SPAWNER), I
         mut.set(pos)
         val end = mut.move(direction, 17).move(right, -7).move(0, 3, 0).immutable()
 
-        return AxisAlignedBB(start, end)
+        return AABB(start, end)
     }
 
     // Check if player is in spawn range and spawn the boss if they are
@@ -63,7 +62,7 @@ class MazeBossSpawnerTileEntity : TileEntity(HTileEntities.MAZE_BOSS_SPAWNER), I
         }
     }
 
-    private fun spawnBoss(worldIn: World, pos: BlockPos) {
+    private fun spawnBoss(worldIn: Level, pos: BlockPos) {
         val boss = MazeBossEntity(worldIn)
         val direction = blockState.getValue(HORIZONTAL_FACING)
 
@@ -73,7 +72,7 @@ class MazeBossSpawnerTileEntity : TileEntity(HTileEntities.MAZE_BOSS_SPAWNER), I
     }
 
     // fill in the door with bushes
-    private fun closeArena(worldIn: World, pos: BlockPos) {
+    private fun closeArena(worldIn: Level, pos: BlockPos) {
         val direction = blockState.getValue(HORIZONTAL_FACING)
         val right = direction.clockWise
         val mut = pos.mutable()

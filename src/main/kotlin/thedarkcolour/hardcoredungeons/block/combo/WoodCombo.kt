@@ -1,6 +1,6 @@
 package thedarkcolour.hardcoredungeons.block.combo
 
-import net.minecraft.block.Block
+import net.minecraft.world.level.block.Block
 import net.minecraft.block.PressurePlateBlock
 import net.minecraft.block.WoodType
 import net.minecraft.block.material.Material
@@ -13,6 +13,7 @@ import net.minecraft.state.properties.BlockStateProperties
 import net.minecraft.tags.BlockTags
 import net.minecraft.tags.ITag
 import net.minecraft.util.Direction
+import net.minecraft.world.item.AxeItem
 import net.minecraftforge.common.Tags
 import thedarkcolour.hardcoredungeons.HardcoreDungeons
 import thedarkcolour.hardcoredungeons.block.HBlocks
@@ -27,6 +28,7 @@ import thedarkcolour.hardcoredungeons.data.RecipeGenerator.Companion.shapeless
 import thedarkcolour.hardcoredungeons.data.RecipeGenerator.Companion.slab
 import thedarkcolour.hardcoredungeons.data.RecipeGenerator.Companion.stairs
 import thedarkcolour.hardcoredungeons.data.modelgen.item.ItemModelType
+import thedarkcolour.hardcoredungeons.registry.HBlocks
 import thedarkcolour.hardcoredungeons.tags.HItemTags
 import java.util.function.Consumer
 
@@ -91,11 +93,11 @@ class WoodCombo(
     }
 
     private fun registerAxeInteraction(target: Block, result: Block) {
-        if (AxeItem.STRIPABLES !is HashMap<*, *>) {
-            AxeItem.STRIPABLES = HashMap(AxeItem.STRIPABLES)
+        if (AxeItem.STRIPPABLES !is HashMap<*, *>) {
+            AxeItem.STRIPPABLES = HashMap(AxeItem.STRIPPABLES)
         }
 
-        AxeItem.STRIPABLES[target] = result
+        AxeItem.STRIPPABLES[target] = result
     }
 
     override fun addTags(gen: BlockTagGenerator) {

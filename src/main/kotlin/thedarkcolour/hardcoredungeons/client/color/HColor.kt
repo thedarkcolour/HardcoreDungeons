@@ -1,6 +1,6 @@
 package thedarkcolour.hardcoredungeons.client.color
 
-import net.minecraft.block.BlockState
+import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.client.renderer.color.IBlockColor
 import net.minecraft.client.renderer.color.IItemColor
 import net.minecraft.item.ItemStack

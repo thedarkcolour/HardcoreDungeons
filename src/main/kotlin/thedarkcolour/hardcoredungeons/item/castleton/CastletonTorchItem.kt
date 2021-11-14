@@ -1,7 +1,7 @@
 package thedarkcolour.hardcoredungeons.item.castleton
 
-import net.minecraft.block.Block
-import net.minecraft.block.BlockState
+import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.item.*
 import net.minecraft.util.Direction
 import net.minecraft.util.NonNullList

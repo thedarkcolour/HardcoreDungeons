@@ -1,23 +1,26 @@
 package thedarkcolour.hardcoredungeons.tileentity
 
-import net.minecraft.block.BlockState
-import net.minecraft.block.Blocks
+import net.minecraft.ResourceLocationException
+import net.minecraft.world.level.block.Blocks
 import net.minecraft.entity.*
-import net.minecraft.nbt.CompoundNBT
-import net.minecraft.nbt.ListNBT
+import net.minecraft.nbt.CompoundTag
+import net.minecraft.nbt.ListTag
 import net.minecraft.network.NetworkManager
 import net.minecraft.network.play.server.SUpdateTileEntityPacket
-import net.minecraft.tileentity.ITickableTileEntity
-import net.minecraft.tileentity.TileEntity
-import net.minecraft.tileentity.TileEntityType
+import net.minecraft.resources.ResourceLocation
+import net.minecraft.server.level.ServerLevel
 import net.minecraft.util.*
 import net.minecraft.util.math.AxisAlignedBB
 import net.minecraft.util.math.BlockPos
-import net.minecraft.world.server.ServerWorld
-import thedarkcolour.hardcoredungeons.registry.HTileEntities
+import net.minecraft.util.random.WeightedRandom
+import net.minecraft.world.entity.Entity
+import net.minecraft.world.level.SpawnData
+import net.minecraft.world.level.block.entity.BlockEntity
+import net.minecraft.world.level.block.entity.BlockEntityType
+import thedarkcolour.hardcoredungeons.registry.HBlockEntities
 
-class DungeonSpawnerTileEntity(tileEntityTypeIn: TileEntityType<*> = HTileEntities.DUNGEON_SPAWNER) : TileEntity(tileEntityTypeIn), ITickableTileEntity {
-    private val potentialSpawns = ArrayList<WeightedSpawnerEntity>()
+class DungeonSpawnerTileEntity(tileEntityTypeIn: BlockEntityType<*> = HBlockEntities.DUNGEON_SPAWNER) : BlockEntity(tileEntityTypeIn) {
+    private val potentialSpawns = ArrayList<SpawnData>()
     var remainingKills = 0
     var spawnDelay = 20
     var minSpawnDelay = 200
@@ -27,22 +30,22 @@ class DungeonSpawnerTileEntity(tileEntityTypeIn: TileEntityType<*> = HTileEntiti
     var maxNearbyEntities = 6
     var activatingRangeFromPlayer = 16
     var spawnRange = 4
-    var spawnData = WeightedSpawnerEntity()
+    var spawnData = SpawnData()
 
-    override fun load(state: BlockState, nbt: CompoundNBT) {
-        super.load(state, nbt)
+    override fun load(nbt: CompoundTag) {
+        super.load(nbt)
         spawnDelay = nbt.getShort("Delay").toInt()
         potentialSpawns.clear()
         if (nbt.contains("SpawnPotentials", 9)) {
             val list = nbt.getList("SpawnPotentials", 10)
 
             for (i in list.indices) {
-                potentialSpawns.add(WeightedSpawnerEntity(list.getCompound(i)))
+                potentialSpawns.add(SpawnData(list.getCompound(i)))
             }
         }
 
         if (nbt.contains("SpawnData", 10)) {
-            setNextSpawnData(WeightedSpawnerEntity(1, nbt.getCompound("SpawnData")))
+            setNextSpawnData(SpawnData(1, nbt.getCompound("SpawnData")))
         } else if (potentialSpawns.isNotEmpty()) {
             setNextSpawnData(WeightedRandom.getRandomItem(level!!.random, potentialSpawns))
         }
@@ -67,7 +70,7 @@ class DungeonSpawnerTileEntity(tileEntityTypeIn: TileEntityType<*> = HTileEntiti
         }
     }
 
-    override fun save(compound: CompoundNBT): CompoundNBT {
+    override fun save(compound: CompoundTag): CompoundTag {
         getEntityId() ?: super.save(compound)
 
         compound.putShort("Delay", spawnDelay.toShort())
@@ -79,7 +82,7 @@ class DungeonSpawnerTileEntity(tileEntityTypeIn: TileEntityType<*> = HTileEntiti
         compound.putShort("SpawnRange", spawnRange.toShort())
         compound.put("SpawnData", spawnData.tag.copy())
 
-        val nbtList = ListNBT()
+        val nbtList = ListTag()
 
         if (potentialSpawns.isEmpty()) {
             nbtList.add(spawnData.save())
@@ -97,7 +100,7 @@ class DungeonSpawnerTileEntity(tileEntityTypeIn: TileEntityType<*> = HTileEntiti
         val s = spawnData.tag.getString("id")
 
         return try {
-            if (StringUtils.isNullOrEmpty(s)) null else ResourceLocation(s)
+            if (s.isNullOrEmpty()) null else ResourceLocation(s)
         } catch (loc: ResourceLocationException) {
             null
         }
@@ -107,11 +110,12 @@ class DungeonSpawnerTileEntity(tileEntityTypeIn: TileEntityType<*> = HTileEntiti
         return level!!.hasNearbyAlivePlayer(blockPos.x + 0.5, blockPos.y + 0.5, blockPos.z + 0.5, activatingRangeFromPlayer.toDouble())
     }
 
+    // todo move into ticker
     override fun tick() {
         if (isActive) {
             val level = level!!
 
-            if (level !is ServerWorld) {
+            if (level !is ServerLevel) {
                 if (spawnDelay > 0) {
                     --spawnDelay
                 }
@@ -216,7 +220,7 @@ class DungeonSpawnerTileEntity(tileEntityTypeIn: TileEntityType<*> = HTileEntiti
         broadcastEvent(1)
     }
 
-    private fun setNextSpawnData(nextSpawnData: WeightedSpawnerEntity?) {
+    private fun setNextSpawnData(nextSpawnData: SpawnData?) {
         spawnData = nextSpawnData!!
 
         if (level != null) {
@@ -229,8 +233,8 @@ class DungeonSpawnerTileEntity(tileEntityTypeIn: TileEntityType<*> = HTileEntiti
         return SUpdateTileEntityPacket(blockPos, 1, updateTag)
     }
 
-    override fun getUpdateTag(): CompoundNBT {
-        val nbt = save(CompoundNBT())
+    override fun getUpdateTag(): CompoundTag {
+        val nbt = save(CompoundTag())
         nbt.remove("SpawnPotentials")
         return nbt
     }

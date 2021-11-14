@@ -7,7 +7,7 @@ import net.minecraft.entity.ai.attributes.Attributes
 import net.minecraft.entity.ai.goal.Goal
 import net.minecraft.util.DamageSource
 import net.minecraft.util.SoundEvent
-import net.minecraft.world.World
+import net.minecraft.world.level.Level
 import net.minecraftforge.common.ForgeMod
 import thedarkcolour.hardcoredungeons.registry.HSounds
 

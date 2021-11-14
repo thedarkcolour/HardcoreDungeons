@@ -1,11 +1,11 @@
 package thedarkcolour.hardcoredungeons.block.combo
 
-import net.minecraft.block.Block
-import net.minecraft.block.Blocks
+import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.Blocks
 import net.minecraft.tags.BlockTags
 import net.minecraft.util.RegistryKey
 import net.minecraft.util.ResourceLocation
-import net.minecraft.world.World
+import net.minecraft.world.level.Level
 import thedarkcolour.hardcoredungeons.block.base.BlockMaker
 import thedarkcolour.hardcoredungeons.block.base.properties.HProperties
 import thedarkcolour.hardcoredungeons.data.BlockTagGenerator

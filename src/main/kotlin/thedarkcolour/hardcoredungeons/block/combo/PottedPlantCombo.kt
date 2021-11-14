@@ -1,8 +1,8 @@
 package thedarkcolour.hardcoredungeons.block.combo
 
 import net.minecraft.block.AbstractBlock
-import net.minecraft.block.Block
-import net.minecraft.block.Blocks
+import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.Blocks
 import net.minecraft.block.FlowerPotBlock
 import net.minecraft.block.material.Material
 import net.minecraft.client.renderer.RenderType

@@ -18,7 +18,7 @@ import net.minecraft.util.math.shapes.ISelectionContext
 import net.minecraft.world.IBlockReader
 import net.minecraft.world.IWorld
 import net.minecraft.world.IWorldReader
-import net.minecraft.world.World
+import net.minecraft.world.level.Level
 import net.minecraft.world.server.ServerWorld
 import net.minecraftforge.common.*
 import thedarkcolour.hardcoredungeons.block.base.BlockMaker

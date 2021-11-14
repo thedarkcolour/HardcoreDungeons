@@ -2,19 +2,11 @@ package thedarkcolour.hardcoredungeons.block.base
 
 import it.unimi.dsi.fastutil.objects.Object2FloatMap
 import it.unimi.dsi.fastutil.objects.Object2FloatOpenHashMap
-import net.minecraft.block.*
-import net.minecraft.block.material.Material
-import net.minecraft.block.material.MaterialColor
-import net.minecraft.block.trees.Tree
-import net.minecraft.potion.Effects
-import net.minecraft.util.RegistryKey
-import net.minecraft.util.ResourceLocation
-import net.minecraft.util.Util
-import net.minecraft.util.math.shapes.VoxelShape
-import net.minecraft.util.math.shapes.VoxelShapes
-import net.minecraft.world.World
-import net.minecraftforge.common.ToolType
-import thedarkcolour.hardcoredungeons.block.HBlocks
+import net.minecraft.world.level.block.*
+import net.minecraft.world.level.material.Material
+import net.minecraft.world.level.material.MaterialColor
+import net.minecraft.world.phys.shapes.Shapes
+import net.minecraft.world.phys.shapes.VoxelShape
 import thedarkcolour.hardcoredungeons.block.base.properties.HProperties
 import thedarkcolour.hardcoredungeons.block.combo.PottedPlantCombo
 import thedarkcolour.hardcoredungeons.block.decoration.RotatableBlock
@@ -25,8 +17,8 @@ import thedarkcolour.hardcoredungeons.block.plant.PlantProperties
 import thedarkcolour.hardcoredungeons.block.portal.HPortalBlock
 import thedarkcolour.hardcoredungeons.data.modelgen.block.BlockModelType
 import thedarkcolour.hardcoredungeons.data.modelgen.item.ItemModelType
+import thedarkcolour.hardcoredungeons.registry.HBlocks
 import thedarkcolour.hardcoredungeons.registry.HBlocksOld
-import thedarkcolour.kotlinforforge.forge.ObjectHolderDelegate
 
 /**
  * Used in combos and anything else that's repeated
@@ -36,14 +28,14 @@ import thedarkcolour.kotlinforforge.forge.ObjectHolderDelegate
 object BlockMaker {
 
     // Preset shapes
-    val VASE_SHAPE: VoxelShape = VoxelShapes.or(cube(4.0, 0.0, 4.0, 12.0, 1.0, 12.0), cube(3.0, 1.0, 3.0, 13.0, 9.0, 13.0), cube(4.0, 9.0, 4.0, 12.0, 10.0, 12.0), cube(6.0, 10.0, 6.0, 10.0, 11.0, 10.0), cube(5.0, 11.0, 5.0, 11.0, 13.0, 11.0))
-    val WINE_BOTTLE_SHAPE: VoxelShape = VoxelShapes.or(cube(6.5, 0.0, 6.5, 9.5, 7.0, 9.5), cube(7.5, 7.0, 7.5, 8.5, 11.0, 8.5))
+    val VASE_SHAPE: VoxelShape = Shapes.or(cube(4.0, 0.0, 4.0, 12.0, 1.0, 12.0), cube(3.0, 1.0, 3.0, 13.0, 9.0, 13.0), cube(4.0, 9.0, 4.0, 12.0, 10.0, 12.0), cube(6.0, 10.0, 6.0, 10.0, 11.0, 10.0), cube(5.0, 11.0, 5.0, 11.0, 13.0, 11.0))
+    val WINE_BOTTLE_SHAPE: VoxelShape = Shapes.or(cube(6.5, 0.0, 6.5, 9.5, 7.0, 9.5), cube(7.5, 7.0, 7.5, 8.5, 11.0, 8.5))
     val DRUM_SHAPE: VoxelShape = cube(3.0, 0.0, 3.0, 13.0, 16.0, 13.0)
     val LOST_SKULL_SHAPE: VoxelShape = cube(4.0, 0.0, 4.0, 12.0, 8.0, 12.0)
     val PLATE_SHAPE: VoxelShape = cube(3.0, 0.0, 3.0, 13.0, 2.0, 13.0)
-    val CANDLE_SHAPE: VoxelShape = VoxelShapes.or(cube(6.0, 0.0, 6.0, 10.0, 1.0, 10.0), cube(7.0, 0.75, 7.0, 9.0, 2.75, 9.0), cube(6.0, 2.5, 6.0, 10.0, 4.5, 10.0), cube(7.0, 3.5, 7.0, 9.0, 15.5, 9.0), cube(7.5, 14.75, 7.5, 8.5, 15.75, 8.5))
+    val CANDLE_SHAPE: VoxelShape = Shapes.or(cube(6.0, 0.0, 6.0, 10.0, 1.0, 10.0), cube(7.0, 0.75, 7.0, 9.0, 2.75, 9.0), cube(6.0, 2.5, 6.0, 10.0, 4.5, 10.0), cube(7.0, 3.5, 7.0, 9.0, 15.5, 9.0), cube(7.5, 14.75, 7.5, 8.5, 15.75, 8.5))
     val CROWN_SHAPE: VoxelShape = cube(4.0, 0.0, 4.0, 12.0, 4.0, 12.0)
-    val CHALICE_SHAPE: VoxelShape = VoxelShapes.or(cube(6.0, 0.0, 6.0, 10.0, 1.0, 10.0), cube(7.0, 1.0, 7.0, 9.0, 3.0, 9.0), cube(6.0, 3.0, 6.0, 10.0, 4.0, 10.0), cube(5.0, 4.0, 5.0, 11.0, 8.0, 11.0))
+    val CHALICE_SHAPE: VoxelShape = Shapes.or(cube(6.0, 0.0, 6.0, 10.0, 1.0, 10.0), cube(7.0, 1.0, 7.0, 9.0, 3.0, 9.0), cube(6.0, 3.0, 6.0, 10.0, 4.0, 10.0), cube(5.0, 4.0, 5.0, 11.0, 8.0, 11.0))
     val FARMLAND_SHAPE: VoxelShape = cube(0.0, 0.0, 0.0, 16.0, 15.0, 16.0)
 
     inline fun props(material: Material, color: MaterialColor, apply: (HProperties) -> Unit): HProperties {

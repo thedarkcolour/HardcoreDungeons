@@ -1,6 +1,6 @@
 package thedarkcolour.hardcoredungeons.registry
 
-import net.minecraft.block.Block
+import net.minecraft.world.level.block.Block
 import net.minecraft.tileentity.TileEntity
 import net.minecraft.tileentity.TileEntityType
 import net.minecraftforge.registries.ForgeRegistries
@@ -13,7 +13,7 @@ import thedarkcolour.kotlinforforge.forge.ObjectHolderDelegate
 import java.util.function.Supplier
 
 @Suppress("HasPlatformType", "NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
-object HTileEntities : HRegistry<TileEntityType<*>>(ForgeRegistries.TILE_ENTITIES) {
+object HBlockEntities : HRegistry<TileEntityType<*>>(ForgeRegistries.TILE_ENTITIES) {
     val DUNGEON_SPAWNER by createType("dungeon_spawner", ::DungeonSpawnerTileEntity, { HBlocks.DUNGEON_SPAWNER })
     val MAZE_BOSS_SPAWNER by createType("maze_boss_spawner", ::MazeBossSpawnerTileEntity, { HBlocks.MAZE_BOSS_SPAWNER })
     val SOOT_TRAP_CONTROLLER by createType("soot_trap_controller", ::SootTrapControllerTileEntity, { HBlocks.SOOT_TRAP_CONTROLLER })

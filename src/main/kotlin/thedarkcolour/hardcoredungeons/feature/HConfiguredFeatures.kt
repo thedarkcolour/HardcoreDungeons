@@ -1,7 +1,7 @@
 package thedarkcolour.hardcoredungeons.feature
 
-import net.minecraft.block.Block
-import net.minecraft.block.Blocks
+import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.Blocks
 import net.minecraft.util.registry.Registry
 import net.minecraft.util.registry.WorldGenRegistries
 import net.minecraft.world.biome.BiomeGenerationSettings

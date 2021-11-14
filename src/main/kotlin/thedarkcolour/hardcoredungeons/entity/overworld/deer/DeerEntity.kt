@@ -15,7 +15,7 @@ import net.minecraft.network.datasync.DataSerializers
 import net.minecraft.network.datasync.EntityDataManager
 import net.minecraft.network.datasync.IDataSerializer
 import net.minecraft.util.text.ITextComponent
-import net.minecraft.world.World
+import net.minecraft.world.level.Level
 import net.minecraft.world.server.ServerWorld
 import net.minecraftforge.common.ForgeMod
 import net.minecraftforge.common.Tags

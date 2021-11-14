@@ -1,6 +1,6 @@
 package thedarkcolour.hardcoredungeons.data.modelgen.block
 
-import net.minecraft.block.Block
+import net.minecraft.world.level.block.Block
 import net.minecraft.util.ResourceLocation
 import net.minecraftforge.client.model.generators.BlockModelBuilder
 import net.minecraftforge.client.model.generators.BlockModelProvider

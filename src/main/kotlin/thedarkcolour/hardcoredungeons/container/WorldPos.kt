@@ -1,9 +1,9 @@
 package thedarkcolour.hardcoredungeons.container
 
-import net.minecraft.block.BlockState
-import net.minecraft.block.Blocks
+import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.block.Blocks
 import net.minecraft.util.math.BlockPos
-import net.minecraft.world.World
+import net.minecraft.world.level.Level
 
 /**
  * Kotlin-ified version of [net.minecraft.util.IWorldPosCallable]

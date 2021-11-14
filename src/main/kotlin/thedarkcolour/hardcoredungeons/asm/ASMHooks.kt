@@ -1,16 +1,8 @@
 package thedarkcolour.hardcoredungeons.asm
 
-import net.minecraft.util.registry.DynamicRegistries
-import net.minecraft.util.registry.Registry
-import net.minecraft.world.biome.Biome
-import net.minecraft.world.biome.BiomeRegistry
-import net.minecraft.world.gen.IExtendedNoiseRandom
-import net.minecraft.world.gen.area.IArea
-import net.minecraft.world.gen.area.IAreaFactory
 import net.minecraftforge.coremod.api.ASMAPI
 import org.objectweb.asm.Opcodes.*
 import org.objectweb.asm.tree.*
-import java.util.function.LongFunction
 
 /**
  * **NOT ACTUALLY USED BY THE COREMODS**
@@ -109,30 +101,30 @@ object ASMHooks {
         return insnList[insnList.indexOf(this) + aheadIndex]
     }
 
-    /**
-     * Used to patch the biome generation layer.
-     *
-     * @return if a biome id represents a Mushroom biome.
-     */
-    @JvmStatic
-    fun isMushroomBiome(biomeId: Int): Boolean {
-        val b = DynamicRegistries.builtin().registryOrThrow(Registry.BIOME_REGISTRY).get(BiomeRegistry.byId(biomeId))
+//    /**
+//     * Used to patch the biome generation layer.
+//     *
+//     * @return if a biome id represents a Mushroom biome.
+//     */
+//    @JvmStatic
+//    fun isMushroomBiome(biomeId: Int): Boolean {
+//        val b = DynamicRegistries.builtin().registryOrThrow(Registry.BIOME_REGISTRY).get(BiomeRegistry.byId(biomeId))
+//
+//        return b?.biomeCategory == Biome.Category.MUSHROOM
+//    }
 
-        return b?.biomeCategory == Biome.Category.MUSHROOM
-    }
-
-    /**
-     * Applies the Mushroom Cliffs biome to a world.
-     *
-     * Used to patch the `LayerUtil` class.
-     */
-    @Suppress("NAME_SHADOWING", "CanBeVal", "UnnecessaryVariable")
-    @JvmStatic
-    fun <T : IArea> applyToWorld(
-        context: LongFunction<out IExtendedNoiseRandom<T>>,
-        area: IAreaFactory<T>
-    ): IAreaFactory<T> {
-        var area = MushroomCliffsBiomeLayer.run(context.apply(4L), area)
-        return area
-    }
+//    /**
+//     * Applies the Mushroom Cliffs biome to a world.
+//     *
+//     * Used to patch the `LayerUtil` class.
+//     */
+//    @Suppress("NAME_SHADOWING", "CanBeVal", "UnnecessaryVariable")
+//    @JvmStatic
+//    fun <T : IArea> applyToWorld(
+//        context: LongFunction<out IExtendedNoiseRandom<T>>,
+//        area: IAreaFactory<T>
+//    ): IAreaFactory<T> {
+//        var area = MushroomCliffsBiomeLayer.run(context.apply(4L), area)
+//        return area
+//    }
 }

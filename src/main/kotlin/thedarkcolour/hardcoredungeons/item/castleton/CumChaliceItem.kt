@@ -7,7 +7,7 @@ import net.minecraft.item.UseAction
 import net.minecraft.util.ActionResult
 import net.minecraft.util.DrinkHelper
 import net.minecraft.util.Hand
-import net.minecraft.world.World
+import net.minecraft.world.level.Level
 
 // yes i added a whole new item for this :sunglasses:
 class CumChaliceItem(properties: Properties) : Item(properties) {

@@ -5,7 +5,7 @@ import net.minecraft.entity.EntityType
 import net.minecraft.entity.ai.attributes.AttributeModifierMap
 import net.minecraft.entity.ai.attributes.Attributes
 import net.minecraft.entity.passive.AnimalEntity
-import net.minecraft.world.World
+import net.minecraft.world.level.Level
 import net.minecraft.world.server.ServerWorld
 import net.minecraftforge.common.ForgeMod
 import thedarkcolour.hardcoredungeons.registry.HEntities

@@ -2,7 +2,7 @@ package thedarkcolour.hardcoredungeons.item.misc
 
 import com.google.common.collect.ImmutableMultimap
 import com.google.common.collect.Multimap
-import net.minecraft.block.BlockState
+import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.enchantment.EnchantmentHelper
 import net.minecraft.enchantment.IVanishable
 import net.minecraft.entity.LivingEntity
@@ -19,7 +19,7 @@ import net.minecraft.util.DamageSource
 import net.minecraft.util.SoundEvents
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.MathHelper
-import net.minecraft.world.World
+import net.minecraft.world.level.Level
 import thedarkcolour.hardcoredungeons.util.toDegrees
 
 open class ScytheItem(

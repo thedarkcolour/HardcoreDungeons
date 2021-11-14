@@ -9,7 +9,7 @@ import net.minecraft.item.UseAction
 import net.minecraft.tags.ITag
 import net.minecraft.util.ActionResult
 import net.minecraft.util.Hand
-import net.minecraft.world.World
+import net.minecraft.world.level.Level
 import thedarkcolour.hardcoredungeons.entity.projectile.bullet.SmallBulletEntity
 import thedarkcolour.hardcoredungeons.registry.HEntities
 import thedarkcolour.hardcoredungeons.tags.HItemTags

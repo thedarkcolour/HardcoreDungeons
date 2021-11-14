@@ -7,7 +7,7 @@ import net.minecraft.item.SwordItem
 import net.minecraft.util.text.ITextComponent
 import net.minecraft.util.text.Style
 import net.minecraft.util.text.TranslationTextComponent
-import net.minecraft.world.World
+import net.minecraft.world.level.Level
 
 open class SwordWithLoreItem(
     tier: IItemTier,

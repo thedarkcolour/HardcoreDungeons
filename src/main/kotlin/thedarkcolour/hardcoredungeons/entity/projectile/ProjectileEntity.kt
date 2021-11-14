@@ -7,7 +7,7 @@ import net.minecraft.entity.projectile.DamagingProjectileEntity
 import net.minecraft.network.IPacket
 import net.minecraft.util.math.RayTraceResult
 import net.minecraft.util.math.vector.Vector3d
-import net.minecraft.world.World
+import net.minecraft.world.level.Level
 import net.minecraftforge.fml.network.NetworkHooks
 import thedarkcolour.hardcoredungeons.entity.HEntityType
 import kotlin.math.sqrt

@@ -1,6 +1,6 @@
 package thedarkcolour.hardcoredungeons.block.decoration.rainbowland
 
-import net.minecraft.block.BlockState
+import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.block.GlassBlock
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.IWorldReader

@@ -1,7 +1,7 @@
 package thedarkcolour.hardcoredungeons.block.decoration.castleton
 
-import net.minecraft.block.Block
-import net.minecraft.block.BlockState
+import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.block.TorchBlock
 import net.minecraft.block.WallTorchBlock
 import net.minecraft.entity.player.PlayerEntity
@@ -13,7 +13,7 @@ import net.minecraft.state.StateContainer
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.RayTraceResult
 import net.minecraft.world.IBlockReader
-import net.minecraft.world.World
+import net.minecraft.world.level.Level
 import thedarkcolour.hardcoredungeons.block.base.properties.HProperties
 import thedarkcolour.hardcoredungeons.registry.HItems
 import thedarkcolour.hardcoredungeons.registry.HParticles

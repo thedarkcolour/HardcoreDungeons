@@ -8,9 +8,11 @@ import net.minecraft.entity.EntitySize
 import net.minecraft.entity.EntityType
 import net.minecraft.entity.EntityType.Builder
 import net.minecraft.util.ResourceLocation
+import net.minecraftforge.client.event.EntityRenderersEvent
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent
 import net.minecraftforge.fml.client.registry.ClientRegistry
 import net.minecraftforge.fml.client.registry.RenderingRegistry
+import net.minecraftforge.fmlclient.registry.ClientRegistry
 import net.minecraftforge.registries.IForgeRegistry
 import thedarkcolour.hardcoredungeons.client.renderer.entity.DeerRenderer
 import thedarkcolour.hardcoredungeons.client.renderer.entity.FrayedSoulRenderer
@@ -124,17 +126,18 @@ object HEntities {
         event.put(MUSHROOM_ARCHER, MushroomArcherEntity.ATTRIBUTES.build())
     }
 
-    fun registerEntityRenderers() {
-        RenderingRegistry.registerEntityRenderingHandler(MAZE_BOSS, ::MazeBossRenderer)
-        RenderingRegistry.registerEntityRenderingHandler(MUSHROOM_ARCHER, ::MushroomArcherRenderer)
-        RenderingRegistry.registerEntityRenderingHandler(DEER, ::DeerRenderer)
-        RenderingRegistry.registerEntityRenderingHandler(FRAYED_SOUL, ::FrayedSoulRenderer)
-        RenderingRegistry.registerEntityRenderingHandler(VOID_RUNNER, ::VoidRunnerRenderer)
-        //RenderingRegistry.registerEntityRenderingHandler(RAINBOWLAND_SHEEP, ::SheepRenderer)
-        RenderingRegistry.registerEntityRenderingHandler(CASTLETON_DEER, ::DeerRenderer)
-        RenderingRegistry.registerEntityRenderingHandler(KNIGHTLY_JUGGERNAUT, ::KnightlyJuggernautRenderer)
-        RenderingRegistry.registerEntityRenderingHandler(SMALL_BULLET) { SpriteRenderer(it, Minecraft.getInstance().itemRenderer) }
-        RenderingRegistry.registerEntityRenderingHandler(MAGIC_BOLT) { SpriteRenderer(it, Minecraft.getInstance().itemRenderer) }
+    fun registerEntityRenderers(event: EntityRenderersEvent.RegisterRenderers) {
+        event.registerEntityRenderer(MAZE_BOSS, ::MazeBossRenderer)
+        ClientRegistry.registerEntityRenderingHandler()
+        ClientRegistry.registerEntityRenderingHandler(MUSHROOM_ARCHER, ::MushroomArcherRenderer)
+        ClientRegistry.registerEntityRenderingHandler(DEER, ::DeerRenderer)
+        ClientRegistry.registerEntityRenderingHandler(FRAYED_SOUL, ::FrayedSoulRenderer)
+        ClientRegistry.registerEntityRenderingHandler(VOID_RUNNER, ::VoidRunnerRenderer)
+        //ClientRegistry.registerEntityRenderingHandler(RAINBOWLAND_SHEEP, ::SheepRenderer)
+        ClientRegistry.registerEntityRenderingHandler(CASTLETON_DEER, ::DeerRenderer)
+        ClientRegistry.registerEntityRenderingHandler(KNIGHTLY_JUGGERNAUT, ::KnightlyJuggernautRenderer)
+        ClientRegistry.registerEntityRenderingHandler(SMALL_BULLET) { SpriteRenderer(it, Minecraft.getInstance().itemRenderer) }
+        ClientRegistry.registerEntityRenderingHandler(MAGIC_BOLT) { SpriteRenderer(it, Minecraft.getInstance().itemRenderer) }
     }
 
     fun registerEntityShaders() {

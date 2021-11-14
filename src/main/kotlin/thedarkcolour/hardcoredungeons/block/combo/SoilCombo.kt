@@ -1,6 +1,6 @@
 package thedarkcolour.hardcoredungeons.block.combo
 
-import net.minecraft.block.Block
+import net.minecraft.world.level.block.Block
 import net.minecraft.tags.ITag
 import net.minecraftforge.common.Tags
 import thedarkcolour.hardcoredungeons.block.base.BlockMaker

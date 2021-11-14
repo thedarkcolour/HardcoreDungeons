@@ -2,8 +2,8 @@ package thedarkcolour.hardcoredungeons.client.model.block
 
 import com.google.common.cache.CacheBuilder
 import com.google.common.cache.CacheLoader
-import net.minecraft.block.Block
-import net.minecraft.block.BlockState
+import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.client.renderer.BlockModelShapes
 import net.minecraft.client.renderer.LightTexture
 import net.minecraft.client.renderer.model.BakedQuad

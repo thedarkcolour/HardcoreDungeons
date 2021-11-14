@@ -11,7 +11,7 @@ import net.minecraft.util.*
 import net.minecraft.util.math.BlockRayTraceResult
 import net.minecraft.util.math.RayTraceContext.FluidMode
 import net.minecraft.util.math.RayTraceResult
-import net.minecraft.world.World
+import net.minecraft.world.level.Level
 import thedarkcolour.hardcoredungeons.registry.HItems
 
 class EmptySyringeItem(properties: Properties) : Item(properties) {

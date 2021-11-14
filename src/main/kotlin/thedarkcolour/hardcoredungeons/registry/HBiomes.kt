@@ -1,9 +1,9 @@
 package thedarkcolour.hardcoredungeons.registry
 
-import net.minecraft.util.RegistryKey
-import net.minecraft.util.ResourceLocation
-import net.minecraft.util.registry.Registry
-import net.minecraft.world.biome.Biome
+import net.minecraft.core.Registry
+import net.minecraft.resources.ResourceKey
+import net.minecraft.resources.ResourceLocation
+import net.minecraft.world.level.biome.Biome
 import net.minecraftforge.common.BiomeManager
 import net.minecraftforge.event.world.BiomeLoadingEvent
 import net.minecraftforge.registries.ForgeRegistries
@@ -41,7 +41,7 @@ object HBiomes : HRegistry<Biome>(ForgeRegistries.BIOMES) {
     val GUMDROP_FIELDS by register("gumdrop_fields") { HBiomeMaker.makeGumdropFieldsBiome() }
     val CANDY_PLAINS by register("candy_plains") { HBiomeMaker.makeCandyPlainsBiome() }
 
-    val THICK_FOREST_KEY = RegistryKey.create(Registry.BIOME_REGISTRY, ResourceLocation(HardcoreDungeons.ID, "thick_forest"))
+    val THICK_FOREST_KEY = ResourceKey.create(Registry.BIOME_REGISTRY, ResourceLocation(HardcoreDungeons.ID, "thick_forest"))
 
     fun biomeLoading(event: BiomeLoadingEvent) {
         if (event.name == THICK_FOREST.registryName && HConfig.thickForestGenerates.value) {
