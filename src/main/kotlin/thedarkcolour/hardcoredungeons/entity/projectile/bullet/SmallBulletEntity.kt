@@ -1,12 +1,14 @@
 package thedarkcolour.hardcoredungeons.entity.projectile.bullet
 
-import net.minecraft.entity.EntityType
+import net.minecraft.world.entity.EntityType
 import net.minecraft.entity.IRendersAsItem
 import net.minecraft.entity.LivingEntity
-import net.minecraft.item.ItemStack
+import net.minecraft.world.item.ItemStack
 import net.minecraft.util.IndirectEntityDamageSource
 import net.minecraft.util.math.EntityRayTraceResult
 import net.minecraft.util.math.RayTraceResult
+import net.minecraft.world.entity.LivingEntity
+import net.minecraft.world.entity.projectile.ItemSupplier
 import net.minecraft.world.level.Level
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn
@@ -14,8 +16,8 @@ import thedarkcolour.hardcoredungeons.entity.projectile.ProjectileEntity
 import thedarkcolour.hardcoredungeons.item.misc.GunItem
 import thedarkcolour.hardcoredungeons.registry.HItems
 
-@OnlyIn(value = Dist.CLIENT, _interface = IRendersAsItem::class)
-class SmallBulletEntity(type: EntityType<out ProjectileEntity>, worldIn: World) : ProjectileEntity(type, worldIn), IRendersAsItem {
+@OnlyIn(value = Dist.CLIENT, _interface = ItemSupplier::class)
+class SmallBulletEntity(type: EntityType<out ProjectileEntity>, worldIn: Level) : ProjectileEntity(type, worldIn), ItemSupplier {
     private var drop = 0.0f
     private var damage = 0.0f
 

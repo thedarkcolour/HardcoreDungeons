@@ -7,7 +7,7 @@ import net.minecraft.state.BooleanProperty
 import net.minecraft.state.StateContainer
 import net.minecraft.state.properties.BlockStateProperties
 import net.minecraft.tileentity.TileEntity
-import net.minecraft.util.math.BlockPos
+import net.minecraft.core.BlockPos
 import net.minecraft.world.IBlockReader
 import net.minecraft.world.level.Level
 import thedarkcolour.hardcoredungeons.block.base.HBlock

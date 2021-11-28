@@ -2,7 +2,7 @@ package thedarkcolour.hardcoredungeons.container
 
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.Blocks
-import net.minecraft.util.math.BlockPos
+import net.minecraft.core.BlockPos
 import net.minecraft.world.level.Level
 
 /**

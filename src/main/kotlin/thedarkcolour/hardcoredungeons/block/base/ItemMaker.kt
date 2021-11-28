@@ -7,34 +7,46 @@ import net.minecraft.world.level.block.Block
 import thedarkcolour.hardcoredungeons.data.modelgen.item.ItemModelType
 import thedarkcolour.hardcoredungeons.item.Group
 import thedarkcolour.hardcoredungeons.registry.HItemsNew
-import kotlin.properties.ReadOnlyProperty
+import thedarkcolour.kotlinforforge.forge.ObjectHolderDelegate
 
-private typealias ItemObject<T> = ReadOnlyProperty<T, Any?>
-
-// todo write comments
 object ItemMaker {
-    fun <T : Item> handheld(name: String, supplier: () -> T): ItemObject<T> {
+    /**
+     * For creating items with handheld models, like Pickaxes and Shovels
+     */
+    fun <T : Item> handheld(name: String, supplier: () -> T): ObjectHolderDelegate<T> {
         return registerModelled(name, ItemModelType.HANDHELD_ITEM, supplier)
     }
 
-    fun <T : Item> simple(name: String, supplier: () -> T): ItemObject<T> {
+    /**
+     * For making simple 2D item models, like Apples, Bread, or other common simple items
+     */
+    fun <T : Item> simple(name: String, supplier: () -> T): ObjectHolderDelegate<T> {
         return registerModelled(name, ItemModelType.SIMPLE_ITEM, supplier)
     }
 
-    fun simpleItem(name: String): ItemObject<Item> {
+    /**
+     * For creating a simple item with no properties, like Iron Ingots, Gunpowder, or most crafting ingredients
+     */
+    fun simpleItem(name: String): ObjectHolderDelegate<Item> {
         return simple(name) { Item(Item.Properties().tab(Group)) }
     }
 
-    fun simpleBlockItem(name: String, block: () -> Block): ReadOnlyProperty<BlockItem, Any?> {
+    fun simpleBlockItem(name: String, block: () -> Block): ObjectHolderDelegate<BlockItem> {
         return blockItem(name, ItemModelType.SIMPLE_ITEM, block)
     }
 
-    fun foodBlockItem(name: String, block: () -> Block, food: FoodProperties): ReadOnlyProperty<BlockItem, Any?> {
+    /**
+     * Special kind of BlockItem that can be eaten, like Carrots, Potatoes, and Sweet Berries
+     */
+    fun foodBlockItem(name: String, block: () -> Block, food: FoodProperties): ObjectHolderDelegate<BlockItem> {
         return registerModelled(name, ItemModelType.SIMPLE_ITEM) {
             BlockItem(block(), Item.Properties().tab(Group).food(food))
         }
     }
 
+    /**
+     * Kotlin method to convert the FoodBuilder to a function with default params
+     */
     fun food(nutrition: Int, saturation: Float, alwaysEdible: Boolean = false, fastEat: Boolean = false, meat: Boolean = false): FoodProperties {
         val foodBuilder = FoodProperties.Builder().nutrition(nutrition).saturationMod(saturation)
         if (alwaysEdible) foodBuilder.alwaysEat()
@@ -43,11 +55,14 @@ object ItemMaker {
         return foodBuilder.build()
     }
 
-    fun blockItem(name: String, type: ItemModelType = ItemModelType.BLOCK_ITEM, block: () -> Block): ReadOnlyProperty<BlockItem, Any?> {
+    fun blockItem(name: String, type: ItemModelType = ItemModelType.BLOCK_ITEM, block: () -> Block): ObjectHolderDelegate<BlockItem> {
         return registerModelled(name, type) { BlockItem(block(), Item.Properties().tab(Group)) }
     }
 
-    fun <T : Item> registerModelled(name: String, type: ItemModelType, supplier: () -> T): ReadOnlyProperty<T, Any?> {
+    /**
+     * Registers an item and sets its model for data generation
+     */
+    fun <T : Item> registerModelled(name: String, type: ItemModelType, supplier: () -> T): ObjectHolderDelegate<T> {
         val obj = HItemsNew.register(name, supplier)
         HItemsNew.onceRegistered { type.add(obj) }
         return obj

@@ -1,15 +1,14 @@
 package thedarkcolour.hardcoredungeons.enchantment
 
-import net.minecraft.enchantment.Enchantment
-import net.minecraft.enchantment.EnchantmentType
-import net.minecraft.enchantment.Enchantments
-import net.minecraft.inventory.EquipmentSlotType
-import net.minecraft.item.ItemStack
-import net.minecraft.item.PickaxeItem
-import net.minecraftforge.common.ToolType
+import net.minecraft.world.entity.EquipmentSlot
+import net.minecraft.world.item.PickaxeItem
+import net.minecraft.world.item.enchantment.Enchantment
+import net.minecraft.world.item.enchantment.EnchantmentCategory
+import net.minecraft.world.item.enchantment.Enchantments
 
+// todo add random gold nuggets
 // Gives tools a chance to mine "pristine" minerals instead of regular ones
-class ProspectingEnchantment : Enchantment(Rarity.VERY_RARE, PICKAXE, arrayOf(EquipmentSlotType.MAINHAND)) {
+class ProspectingEnchantment : Enchantment(Rarity.VERY_RARE, PICKAXE, arrayOf(EquipmentSlot.MAINHAND)) {
     override fun checkCompatibility(ench: Enchantment): Boolean {
         return this != ench && this != Enchantments.SILK_TOUCH
     }
@@ -21,8 +20,8 @@ class ProspectingEnchantment : Enchantment(Rarity.VERY_RARE, PICKAXE, arrayOf(Eq
     companion object {
         // use alternative name to avoid conflicting enum names
         // todo should this just be digger?
-        val PICKAXE: EnchantmentType = EnchantmentType.create("HCD_PICKAXE") { item ->
-            item is PickaxeItem || item.getToolTypes(ItemStack(item)).contains(ToolType.PICKAXE)
+        val PICKAXE: EnchantmentCategory = EnchantmentCategory.create("HCD_PICKAXE") { item ->
+            item is PickaxeItem //  || TODO figure out how to test if item is pickaxe
         }
     }
 }

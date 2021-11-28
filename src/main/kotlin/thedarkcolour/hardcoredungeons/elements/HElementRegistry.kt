@@ -1,6 +1,6 @@
 package thedarkcolour.hardcoredungeons.elements
 
-import net.minecraft.entity.EntityType
+import net.minecraft.world.entity.EntityType
 import net.minecraft.entity.LivingEntity
 import net.minecraft.item.Item
 import net.minecraft.item.Items

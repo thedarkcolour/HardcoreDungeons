@@ -1,7 +1,7 @@
 package thedarkcolour.hardcoredungeons.client.color
 
 import net.minecraft.client.renderer.color.IItemColor
-import net.minecraft.item.ItemStack
+import net.minecraft.world.item.ItemStack
 import net.minecraft.potion.PotionUtils
 
 object PotionColor : IItemColor {

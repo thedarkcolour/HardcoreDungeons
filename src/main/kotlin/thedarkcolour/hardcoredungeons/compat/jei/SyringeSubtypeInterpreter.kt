@@ -2,7 +2,7 @@ package thedarkcolour.hardcoredungeons.compat.jei
 
 import mezz.jei.api.ingredients.subtypes.IIngredientSubtypeInterpreter
 import mezz.jei.api.ingredients.subtypes.UidContext
-import net.minecraft.item.ItemStack
+import net.minecraft.world.item.ItemStack
 import net.minecraft.potion.PotionUtils
 
 // From JEI's PotionSubtypeInterpreter class

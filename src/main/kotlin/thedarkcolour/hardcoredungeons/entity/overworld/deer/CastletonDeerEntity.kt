@@ -1,25 +1,20 @@
 package thedarkcolour.hardcoredungeons.entity.overworld.deer
 
-import net.minecraft.entity.EntityType
-import net.minecraft.entity.ILivingEntityData
-import net.minecraft.entity.MobEntity
-import net.minecraft.entity.SpawnReason
-import net.minecraft.entity.ai.goal.HurtByTargetGoal
-import net.minecraft.entity.ai.goal.MeleeAttackGoal
-import net.minecraft.entity.ai.goal.PanicGoal
-import net.minecraft.item.ItemStack
-import net.minecraft.nbt.CompoundNBT
+import net.minecraft.nbt.CompoundTag
 import net.minecraft.world.DifficultyInstance
-import net.minecraft.world.IServerWorld
+import net.minecraft.world.entity.EntityType
+import net.minecraft.world.entity.Mob
+import net.minecraft.world.entity.MobSpawnType
+import net.minecraft.world.entity.SpawnGroupData
+import net.minecraft.world.entity.ai.goal.MeleeAttackGoal
+import net.minecraft.world.entity.ai.goal.PanicGoal
+import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal
+import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
+import net.minecraft.world.level.ServerLevelAccessor
 import thedarkcolour.hardcoredungeons.registry.HItems
 
-class CastletonDeerEntity(type: EntityType<CastletonDeerEntity>, worldIn: World) : DeerEntity(type, worldIn) {
-
-    /**
-     * Checks if the parameter is an item which this animal can be fed to breed it (wheat, carrots or seeds depending on
-     * the animal type)
-     */
+class CastletonDeerEntity(type: EntityType<CastletonDeerEntity>, level: Level) : DeerEntity(type, level) {
     override fun isFood(stack: ItemStack): Boolean {
         return stack.item == HItems.WILD_BERROOK
     }
@@ -38,13 +33,12 @@ class CastletonDeerEntity(type: EntityType<CastletonDeerEntity>, worldIn: World)
     }
 
     override fun finalizeSpawn(
-        worldIn: IServerWorld,
+        worldIn: ServerLevelAccessor,
         difficultyIn: DifficultyInstance,
-        reason: SpawnReason,
-        spawnDataIn: ILivingEntityData?,
-        dataTag: CompoundNBT?
-    ): ILivingEntityData? {
-
+        reason: MobSpawnType,
+        spawnDataIn: SpawnGroupData?,
+        dataTag: CompoundTag?
+    ): SpawnGroupData? {
         // goals must be registered later because dataManager is null when goals are normally registered.
         if (deerType.isDoe()) {
             goalSelector.addGoal(1, PanicGoal(this, 0.7))
@@ -58,7 +52,7 @@ class CastletonDeerEntity(type: EntityType<CastletonDeerEntity>, worldIn: World)
         return super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag)
     }
 
-    fun isSameColor(goalOwner: MobEntity): Boolean {
+    fun isSameColor(goalOwner: Mob): Boolean {
         if (goalOwner !is CastletonDeerEntity) return false
 
         return goalOwner.deerType.isBlue() == goalOwner.deerType.isBlue()

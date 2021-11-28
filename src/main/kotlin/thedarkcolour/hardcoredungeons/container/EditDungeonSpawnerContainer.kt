@@ -2,7 +2,7 @@ package thedarkcolour.hardcoredungeons.container
 
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.inventory.EquipmentSlotType
-import net.minecraft.item.ItemStack
+import net.minecraft.world.item.ItemStack
 import net.minecraft.item.SpawnEggItem
 import net.minecraftforge.items.IItemHandler
 import net.minecraftforge.items.ItemStackHandler

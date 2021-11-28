@@ -1,8 +1,8 @@
 package thedarkcolour.hardcoredungeons.tags
 
-import net.minecraft.item.Item
-import net.minecraft.tags.ITag
 import net.minecraft.tags.ItemTags
+import net.minecraft.tags.Tag
+import net.minecraft.world.item.Item
 import thedarkcolour.hardcoredungeons.HardcoreDungeons
 
 /**
@@ -22,7 +22,7 @@ object HItemTags {
     val GEMS_MALACHITE = tag("gems/malachite")
     val GEMS_RAINBOWSTONE = tag("gems/rainbowstone")
 
-    private fun tag(tag: String): ITag.INamedTag<Item> {
+    private fun tag(tag: String): Tag.Named<Item> {
         return ItemTags.bind(HardcoreDungeons.ID + ":" + tag)
     }
 }

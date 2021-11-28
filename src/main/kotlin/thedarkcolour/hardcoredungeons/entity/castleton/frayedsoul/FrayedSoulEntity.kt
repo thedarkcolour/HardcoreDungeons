@@ -1,23 +1,23 @@
 package thedarkcolour.hardcoredungeons.entity.castleton.frayedsoul
 
-import net.minecraft.entity.CreatureEntity
-import net.minecraft.entity.EntityType
-import net.minecraft.entity.ai.attributes.AttributeModifierMap
-import net.minecraft.entity.ai.attributes.Attributes
-import net.minecraft.entity.ai.goal.Goal
-import net.minecraft.entity.ai.goal.LookAtGoal
-import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal
-import net.minecraft.entity.player.PlayerEntity
-import net.minecraft.util.SoundEvent
-import net.minecraft.util.math.BlockPos
+import net.minecraft.core.BlockPos
+import net.minecraft.sounds.SoundEvent
+import net.minecraft.world.entity.EntityType
+import net.minecraft.world.entity.PathfinderMob
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier
+import net.minecraft.world.entity.ai.attributes.Attributes
+import net.minecraft.world.entity.ai.goal.Goal
+import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal
+import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal
+import net.minecraft.world.entity.player.Player
 import net.minecraft.world.level.Level
 import net.minecraftforge.common.ForgeMod
-import thedarkcolour.hardcoredungeons.block.HBlocks
+import thedarkcolour.hardcoredungeons.registry.HBlocks
 import thedarkcolour.hardcoredungeons.registry.HSounds
 
-class FrayedSoulEntity(type: EntityType<FrayedSoulEntity>, worldIn: World) : CreatureEntity(type, worldIn) {
+class FrayedSoulEntity(type: EntityType<FrayedSoulEntity>, worldIn: Level) : PathfinderMob(type, worldIn) {
     override fun registerGoals() {
-        goalSelector.addGoal(0, LookAtGoal(this, PlayerEntity::class.java, 40f, 1f))
+        goalSelector.addGoal(0, LookAtPlayerGoal(this, Player::class.java, 40f, 1f))
         goalSelector.addGoal(0, FindBlueLumshroomGoal(this))
         goalSelector.addGoal(2, WanderGoal(this))
         goalSelector.addGoal(3, ShootGoal(this))
@@ -38,7 +38,7 @@ class FrayedSoulEntity(type: EntityType<FrayedSoulEntity>, worldIn: World) : Cre
     }
 
     companion object {
-        val ATTRIBUTES: AttributeModifierMap.MutableAttribute = AttributeModifierMap.builder()
+        val ATTRIBUTES: AttributeSupplier.Builder = AttributeSupplier.builder()
             .add(Attributes.MAX_HEALTH, 20.0)
             .add(Attributes.KNOCKBACK_RESISTANCE, 0.2)
             .add(Attributes.MOVEMENT_SPEED)
@@ -69,16 +69,12 @@ class FrayedSoulEntity(type: EntityType<FrayedSoulEntity>, worldIn: World) : Cre
             }
         }
 
-        private fun FrayedSoulEntity.findBlockInRange(range: Int, predicate: (BlockPos, World) -> Boolean): BlockPos? {
-            val pos = blockPosition().offset(-range, -range, -range)
+        private inline fun FrayedSoulEntity.findBlockInRange(range: Int, predicate: (BlockPos, Level) -> Boolean): BlockPos? {
+            val pos = blockPosition()
 
-            for (x in 0 until (range shl 1) + 1) {
-                for (y in 0 until (range shl 1) + 1) {
-                    for (z in 0 until (range shl 1) + 1) {
-                        if (predicate(pos.offset(x, y, z), level)) {
-                            return pos.offset(x, y, z)
-                        }
-                    }
+            for (cursor in BlockPos.betweenClosed(pos.x - range, pos.y - range, pos.z - range, pos.x + range, pos.y + range, pos.z + range)) {
+                if (predicate(cursor, level)) {
+                    return cursor.immutable()
                 }
             }
             return null
@@ -111,7 +107,7 @@ class FrayedSoulEntity(type: EntityType<FrayedSoulEntity>, worldIn: World) : Cre
 
             if (target != null) {
                 val distance = entity.distanceToSqr(target)
-                val canSee = entity.sensing.canSee(target)
+                val canSee = entity.sensing.hasLineOfSight(target)
                 val hasSeen = seeTime > 0
 
                 if (hasSeen != canSee) {
@@ -141,7 +137,7 @@ class FrayedSoulEntity(type: EntityType<FrayedSoulEntity>, worldIn: World) : Cre
         }
     }
 
-    class WanderGoal(entity: FrayedSoulEntity) : WaterAvoidingRandomWalkingGoal(entity, 0.5) {
+    class WanderGoal(entity: FrayedSoulEntity) : WaterAvoidingRandomStrollGoal(entity, 0.5) {
         override fun canUse(): Boolean {
             return super.canUse() && mob.level.getBlockState(mob.blockPosition()).block != HBlocks.BLUE_LUMSHROOM.plant
         }

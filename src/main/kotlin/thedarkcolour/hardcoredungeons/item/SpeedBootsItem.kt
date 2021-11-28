@@ -8,7 +8,7 @@ import net.minecraft.entity.ai.attributes.Attributes
 import net.minecraft.inventory.EquipmentSlotType
 import net.minecraft.item.ArmorItem
 import net.minecraft.item.IArmorMaterial
-import net.minecraft.item.ItemStack
+import net.minecraft.world.item.ItemStack
 import java.util.*
 
 /**

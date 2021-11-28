@@ -6,7 +6,7 @@ import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.RenderType
 import net.minecraft.nbt.CompoundNBT
 import net.minecraft.nbt.NBTUtil
-import net.minecraft.util.math.BlockPos
+import net.minecraft.core.BlockPos
 import net.minecraft.util.math.BlockRayTraceResult
 import net.minecraft.util.math.shapes.VoxelShapes
 import net.minecraftforge.client.event.DrawHighlightEvent

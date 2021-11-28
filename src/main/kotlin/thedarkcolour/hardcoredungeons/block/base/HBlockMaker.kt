@@ -3,6 +3,8 @@ package thedarkcolour.hardcoredungeons.block.base
 import it.unimi.dsi.fastutil.objects.Object2FloatMap
 import it.unimi.dsi.fastutil.objects.Object2FloatOpenHashMap
 import net.minecraft.world.level.block.*
+import net.minecraft.world.level.block.grower.AbstractTreeGrower
+import net.minecraft.world.level.block.state.properties.WoodType
 import net.minecraft.world.level.material.Material
 import net.minecraft.world.level.material.MaterialColor
 import net.minecraft.world.phys.shapes.Shapes
@@ -19,13 +21,14 @@ import thedarkcolour.hardcoredungeons.data.modelgen.block.BlockModelType
 import thedarkcolour.hardcoredungeons.data.modelgen.item.ItemModelType
 import thedarkcolour.hardcoredungeons.registry.HBlocks
 import thedarkcolour.hardcoredungeons.registry.HBlocksOld
+import thedarkcolour.kotlinforforge.forge.ObjectHolderDelegate
 
 /**
  * Used in combos and anything else that's repeated
  *
  * @author TheDarkColour
  */
-object BlockMaker {
+object HBlockMaker {
 
     // Preset shapes
     val VASE_SHAPE: VoxelShape = Shapes.or(cube(4.0, 0.0, 4.0, 12.0, 1.0, 12.0), cube(3.0, 1.0, 3.0, 13.0, 9.0, 13.0), cube(4.0, 9.0, 4.0, 12.0, 10.0, 12.0), cube(6.0, 10.0, 6.0, 10.0, 11.0, 10.0), cube(5.0, 11.0, 5.0, 11.0, 13.0, 11.0))
@@ -117,7 +120,7 @@ object BlockMaker {
         return registerModelled(name, BlockModelType.CUBE_ALL) { LeavesBlock(HProperties.of(Material.LEAVES, MaterialColor.COLOR_LIGHT_BLUE).strength(0.2F).randomTicks().sound(SoundType.GRASS).noOcclusion().build()) }
     }
 
-    fun saplingCombo(name: String, tree: Tree): PottedPlantCombo {
+    fun saplingCombo(name: String, tree: AbstractTreeGrower): PottedPlantCombo {
         return PottedPlantCombo(name) { HSaplingBlock(tree, HProperties.of(Material.PLANT).sound(SoundType.GRASS).noCollission()) }
     }
 
@@ -126,7 +129,8 @@ object BlockMaker {
     }
 
     fun registerOre(name: String, level: Int, hardness: Float, resistance: Float, color: MaterialColor): ObjectHolderDelegate<HBlock> {
-        return registerCubeAll(name, HProperties.of(Material.STONE, color).strength(hardness, resistance).harvestLevel(level).requiresCorrectToolForDrops().harvestTool(ToolType.PICKAXE))
+        // todo fix harvest level etc.
+        return registerCubeAll(name, HProperties.of(Material.STONE, color).strength(hardness, resistance)/*.harvestLevel(level).harvestTool(ToolType.PICKAXE)*/.requiresCorrectToolForDrops())
     }
 
     fun gumdrop(name: String): PottedPlantCombo {

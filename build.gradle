@@ -107,12 +107,23 @@ repositories {
 // Check duplicate files
 //processResources.setDuplicatesStrategy(DuplicatesStrategy.WARN)
 
+configurations {
+    library
+    api.extendsFrom library
+}
+minecraft.runs.all {
+    lazyToken('minecraft_classpath') {
+        configurations.library.copyRecursive().resolve().collect { it.absolutePath }.join(File.pathSeparator)
+    }
+}
+
 dependencies {
     // Use the latest version of Minecraft Forge
     minecraft 'net.minecraftforge:forge:1.17.1-37.0.103'
 
     // Use the latest version of KotlinForForge
-    implementation('thedarkcolour:kotlinforforge:2.0.1')
+    implementation('thedarkcolour:kotlinforforge:2.2.0')
+    library('org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.6.0')
 /*
     // loot tables dsl
     implementation fg.deobf(project.dependencies.create(group: "com.theonlytails", name: "loottables", version: "0.2.14") {

@@ -1,29 +1,22 @@
 package thedarkcolour.hardcoredungeons.entity.castleton.voidrunner
 
-import net.minecraft.entity.CreatureEntity
-import net.minecraft.entity.EntityType
-import net.minecraft.entity.ai.attributes.AttributeModifierMap
-import net.minecraft.entity.ai.attributes.Attributes
-import net.minecraft.entity.ai.goal.Goal
-import net.minecraft.util.DamageSource
-import net.minecraft.util.SoundEvent
+import net.minecraft.sounds.SoundEvent
+import net.minecraft.world.damagesource.DamageSource
+import net.minecraft.world.entity.EntityType
+import net.minecraft.world.entity.PathfinderMob
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier
+import net.minecraft.world.entity.ai.attributes.Attributes
 import net.minecraft.world.level.Level
 import net.minecraftforge.common.ForgeMod
 import thedarkcolour.hardcoredungeons.registry.HSounds
 
-class VoidRunnerEntity(type: EntityType<VoidRunnerEntity>, worldIn: World) : CreatureEntity(type, worldIn) {
+class VoidRunnerEntity(type: EntityType<VoidRunnerEntity>, level: Level) : PathfinderMob(type, level) {
     override fun getHurtSound(source: DamageSource): SoundEvent {
         return HSounds.ENTITY_VOID_RUNNER_HIT
     }
 
-    class ChargeGoal(private val entity: VoidRunnerEntity) : Goal() {
-        override fun canUse(): Boolean {
-            TODO("not implemented")
-        }
-    }
-
     companion object {
-        val ATTRIBUTES: AttributeModifierMap.MutableAttribute = AttributeModifierMap.builder()
+        val ATTRIBUTES: AttributeSupplier.Builder = AttributeSupplier.builder()
             .add(Attributes.MAX_HEALTH, 20.0)
             .add(Attributes.KNOCKBACK_RESISTANCE, 0.2)
             .add(Attributes.MOVEMENT_SPEED)

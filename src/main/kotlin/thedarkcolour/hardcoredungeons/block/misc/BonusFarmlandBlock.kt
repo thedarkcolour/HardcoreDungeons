@@ -5,7 +5,7 @@ import it.unimi.dsi.fastutil.objects.Object2FloatMap
 import it.unimi.dsi.fastutil.objects.ObjectSet
 import it.unimi.dsi.fastutil.objects.ObjectSets
 import net.minecraft.block.*
-import net.minecraft.entity.Entity
+import net.minecraft.world.entity.Entity
 import net.minecraft.item.BlockItemUseContext
 import net.minecraft.pathfinding.PathType
 import net.minecraft.state.IntegerProperty
@@ -13,15 +13,14 @@ import net.minecraft.state.StateContainer
 import net.minecraft.state.properties.BlockStateProperties
 import net.minecraft.tags.FluidTags
 import net.minecraft.util.Direction
-import net.minecraft.util.math.BlockPos
+import net.minecraft.core.BlockPos
 import net.minecraft.util.math.shapes.ISelectionContext
 import net.minecraft.world.IBlockReader
 import net.minecraft.world.IWorld
 import net.minecraft.world.IWorldReader
-import net.minecraft.world.level.Level
 import net.minecraft.world.server.ServerWorld
 import net.minecraftforge.common.*
-import thedarkcolour.hardcoredungeons.block.base.BlockMaker
+import thedarkcolour.hardcoredungeons.block.base.HBlockMaker
 import thedarkcolour.hardcoredungeons.block.base.HBlock
 import thedarkcolour.hardcoredungeons.block.base.properties.HProperties
 import java.util.*
@@ -67,7 +66,7 @@ class BonusFarmlandBlock(
 
     override fun useShapeForLightOcclusion(state: BlockState) = true
 
-    override fun getShape(state: BlockState?, worldIn: IBlockReader?, pos: BlockPos?, ctx: ISelectionContext?) = BlockMaker.FARMLAND_SHAPE
+    override fun getShape(state: BlockState?, worldIn: IBlockReader?, pos: BlockPos?, ctx: ISelectionContext?) = HBlockMaker.FARMLAND_SHAPE
 
     override fun tick(state: BlockState, worldIn: ServerWorld, pos: BlockPos, rand: Random) {
         if (!state.canSurvive(worldIn, pos)) {

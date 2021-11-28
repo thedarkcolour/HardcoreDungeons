@@ -2,7 +2,7 @@ package thedarkcolour.hardcoredungeons.item.misc
 
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.Item
-import net.minecraft.item.ItemStack
+import net.minecraft.world.item.ItemStack
 import net.minecraft.potion.PotionUtils
 import net.minecraft.potion.Potions
 import net.minecraft.stats.Stats

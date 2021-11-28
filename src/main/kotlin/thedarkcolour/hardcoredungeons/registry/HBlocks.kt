@@ -9,7 +9,7 @@ import net.minecraft.world.level.material.MaterialColor
 import net.minecraft.world.level.material.PushReaction
 import net.minecraftforge.registries.ForgeRegistries
 import thedarkcolour.hardcoredungeons.block.HRegistry
-import thedarkcolour.hardcoredungeons.block.base.BlockMaker
+import thedarkcolour.hardcoredungeons.block.base.HBlockMaker
 import thedarkcolour.hardcoredungeons.block.base.HBlock
 import thedarkcolour.hardcoredungeons.block.base.ItemMaker
 import thedarkcolour.hardcoredungeons.block.base.properties.HProperties
@@ -51,12 +51,12 @@ object HBlocks : HRegistry<Block>(ForgeRegistries.BLOCKS) {
     val SHROOMY_STONE_BRICKS = StairsSlabWallCombo("shroomy_stone_bricks", HProperties.of(Material.STONE).strength(2.0F, 6.0F))
 
     /** Ore blocks */
-    val RAINBOWSTONE_ORE by BlockMaker.oreWithItem("rainbowstone_ore", 3, 3.0f, 3.0f, MaterialColor.COLOR_PURPLE)
-    val AURIGOLD_ORE by BlockMaker.oreWithItem("aurigold_ore", 3, 3.0f, 3.0f, MaterialColor.COLOR_YELLOW)
+    val RAINBOWSTONE_ORE by HBlockMaker.oreWithItem("rainbowstone_ore", 3, 3.0f, 3.0f, MaterialColor.COLOR_PURPLE)
+    val AURIGOLD_ORE by HBlockMaker.oreWithItem("aurigold_ore", 3, 3.0f, 3.0f, MaterialColor.COLOR_YELLOW)
 
     /** Gem blocks */
-    val MALACHITE_BLOCK by BlockMaker.cubeAllWithItem("malachite_block", HProperties.of(Material.METAL, MaterialColor.COLOR_GREEN).requiresCorrectToolForDrops().strength(5.0f, 6.0f))
-    val RAINBOWSTONE_BLOCK by BlockMaker.cubeAllWithItem("rainbowstone_block", HProperties.of(Material.METAL).requiresCorrectToolForDrops().strength(5.0f, 6.0f))
+    val MALACHITE_BLOCK by HBlockMaker.cubeAllWithItem("malachite_block", HProperties.of(Material.METAL, MaterialColor.COLOR_GREEN).requiresCorrectToolForDrops().strength(5.0f, 6.0f))
+    val RAINBOWSTONE_BLOCK by HBlockMaker.cubeAllWithItem("rainbowstone_block", HProperties.of(Material.METAL).requiresCorrectToolForDrops().strength(5.0f, 6.0f))
     val DIAMOND_CRYSTAL = CrystalCombo("diamond_crystal", MaterialColor.COLOR_LIGHT_BLUE)
     val MALACHITE_CRYSTAL = CrystalCombo("malachite_crystal", MaterialColor.COLOR_GREEN)
 
@@ -66,94 +66,94 @@ object HBlocks : HRegistry<Block>(ForgeRegistries.BLOCKS) {
     val COTTONMARSH_WOOD = WoodCombo("cottonmarsh", MaterialColor.TERRACOTTA_BROWN, MaterialColor.TERRACOTTA_BROWN, CottonmarshTree, HBlockTags.COTTONMARSH_LOGS, HItemTags.COTTONMARSH_LOGS) { props -> props.sound(SoundType.WOOD).strength(2.5f) }
 
     /** Chiseled block variants */
-    val CHISELED_DIAMOND_BLOCK by BlockMaker.cubeAllWithItem("chiseled_diamond_block", HProperties.copy(Blocks.DIAMOND_BLOCK))
+    val CHISELED_DIAMOND_BLOCK by HBlockMaker.cubeAllWithItem("chiseled_diamond_block", HProperties.copy(Blocks.DIAMOND_BLOCK))
     val OAK_PLANKS = VariantCombo(HProperties.copy(Blocks.OAK_PLANKS), "oak_planks", "crate", "braided", "short", "clean")
     val SPRUCE_PLANKS = VariantCombo(HProperties.copy(Blocks.SPRUCE_PLANKS), "spruce_planks", "large")
 
     /** Castleton materials */
     val CASTLETON_SOIL = SoilCombo("castleton_", true, HBlockTags.CASTLETON_GRASS_PLANTABLE, soilProps = HProperties.of(Material.DIRT, MaterialColor.COLOR_GRAY).strength(0.8f).sound(SoundType.GRAVEL), grassProps = HProperties.of(Material.GRASS, MaterialColor.COLOR_LIGHT_BLUE).randomTicks().strength(0.8f).sound(SoundType.GRASS)) // Soil, Grass, Loam
     val CASTLETON_STONE = PolishedStoneBrickCombo("castleton_stone", HProperties.of(Material.STONE, MaterialColor.COLOR_GRAY).strength(30.0f, 1200.0f)) // Stairs, Slab, Rock, Polished block/stairs/slab, Wall, Fence
-    val CRACKED_CASTLETON_BRICKS by BlockMaker.cubeAllWithItem("cracked_castleton_bricks", HProperties.of(Material.STONE, MaterialColor.COLOR_GRAY).strength(30.0f, 3.5f))
+    val CRACKED_CASTLETON_BRICKS by HBlockMaker.cubeAllWithItem("cracked_castleton_bricks", HProperties.of(Material.STONE, MaterialColor.COLOR_GRAY).strength(30.0f, 3.5f))
     val CHARGED_CASTLETON_BRICKS = StairsSlabWallFenceCombo("charged_castleton_bricks", HProperties.of(Material.STONE, MaterialColor.COLOR_GRAY).strength(35.0f, 1500.0f)) // No Polished
-    val RUNED_CASTLETON_STONE by BlockMaker.blockWithItem("runed_castleton_stone") { HBlock(HProperties.of(Material.STONE, MaterialColor.COLOR_LIGHT_BLUE).strength(8.0f, 400.0f)) }
+    val RUNED_CASTLETON_STONE by HBlockMaker.blockWithItem("runed_castleton_stone") { HBlock(HProperties.of(Material.STONE, MaterialColor.COLOR_LIGHT_BLUE).strength(8.0f, 400.0f)) }
     val CASTLETON_PORTAL = PortalCombo(HDimensions.CASTLETON_ID, HDimensions::CASTLETON_KEY,) // Portal frame should be a block supplier
-    val PURPLE_CASTLETON_LAMP by BlockMaker.blockWithItem("purple_castleton_lamp") { LampBlock(HProperties.copy(Blocks.REDSTONE_LAMP).strength(0.7f, 400.0f)) }
-    val LUMLIGHT_BOOKSHELF by BlockMaker.blockWithItem("lumlight_bookshelf") { HBlock(HProperties.of(Material.WOOD).sound(SoundType.WOOD).strength(2.4f, 100.0f).enchantmentPower(1.0f)) }
+    val PURPLE_CASTLETON_LAMP by HBlockMaker.blockWithItem("purple_castleton_lamp") { LampBlock(HProperties.copy(Blocks.REDSTONE_LAMP).strength(0.7f, 400.0f)) }
+    val LUMLIGHT_BOOKSHELF by HBlockMaker.blockWithItem("lumlight_bookshelf") { HBlock(HProperties.of(Material.WOOD).sound(SoundType.WOOD).strength(2.4f, 100.0f).enchantmentPower(1.0f)) }
 
     /** Castleton Props */
-    val RED_WINE_BOTTLE by BlockMaker.wineBottleWithItem("red_wine_bottle")
-    val WHITE_WINE_BOTTLE by BlockMaker.wineBottleWithItem("white_wine_bottle")
-    val WINE_BOTTLE by BlockMaker.wineBottleWithItem("wine_bottle")
+    val RED_WINE_BOTTLE by HBlockMaker.wineBottleWithItem("red_wine_bottle")
+    val WHITE_WINE_BOTTLE by HBlockMaker.wineBottleWithItem("white_wine_bottle")
+    val WINE_BOTTLE by HBlockMaker.wineBottleWithItem("wine_bottle")
     val CASTLETON_TORCH = CastletonTorchCombo()
-    val CASTLETON_LANTERN by BlockMaker.lanternWithItem("castleton_lantern", HProperties.copy(Blocks.LANTERN).strength(3.5f, 100.0f))
-    val LUMLIGHT_CAMPFIRE by BlockMaker.blockWithItem("lumlight_campfire", ItemModelType.SIMPLE_ITEM) { LumlightCampfireBlock(HProperties.of(Material.WOOD, MaterialColor.PODZOL).strength(2.0F).sound(SoundType.WOOD).lightLevel(15).randomTicks().noOcclusion()) }
-    val LOST_SKULL by BlockMaker.blockWithItem("lost_skull", ItemModelType.SIMPLE_ITEM) { HorizontalBlock(HProperties.of(Material.STONE).noOcclusion().sound(SoundType.STONE).shape(BlockMaker.LOST_SKULL_SHAPE).strength(1.5f)) }
-    val FRAYED_SKULL by BlockMaker.blockWithItem("frayed_skull", ItemModelType.SIMPLE_ITEM) { FrayedSkullBlock(HProperties.of(Material.STONE).noOcclusion().sound(SoundType.STONE).shape(BlockMaker.LOST_SKULL_SHAPE).strength(1.5f)) }
-    val CROWN by BlockMaker.blockWithItem("crown", ItemModelType.SIMPLE_ITEM) { HorizontalBlock(HProperties.of(Material.METAL).noOcclusion().sound(SoundType.METAL).strength(2.0f).shape(BlockMaker.CROWN_SHAPE)) }
-    val CHALICE by BlockMaker.blockWithItem("chalice", ItemModelType.SIMPLE_ITEM) { HBlock(HProperties.of(Material.METAL).noOcclusion().sound(SoundType.METAL).strength(3.0f).shape(BlockMaker.CHALICE_SHAPE)) }
-    val PLATE by BlockMaker.blockWithItem("plate", ItemModelType.SIMPLE_ITEM) { HBlock(HProperties.of(Material.GLASS).noOcclusion().sound(SoundType.GLASS).strength(1.5f).shape(BlockMaker.PLATE_SHAPE)) }
-    val CANDLE by BlockMaker.blockWithItem("candle") { HBlock(HProperties.of(Material.DECORATION).strength(1.1f).lightLevel(15).shape(BlockMaker.CANDLE_SHAPE)) }
+    val CASTLETON_LANTERN by HBlockMaker.lanternWithItem("castleton_lantern", HProperties.copy(Blocks.LANTERN).strength(3.5f, 100.0f))
+    val LUMLIGHT_CAMPFIRE by HBlockMaker.blockWithItem("lumlight_campfire", ItemModelType.SIMPLE_ITEM) { LumlightCampfireBlock(HProperties.of(Material.WOOD, MaterialColor.PODZOL).strength(2.0F).sound(SoundType.WOOD).lightLevel(15).randomTicks().noOcclusion()) }
+    val LOST_SKULL by HBlockMaker.blockWithItem("lost_skull", ItemModelType.SIMPLE_ITEM) { HorizontalBlock(HProperties.of(Material.STONE).noOcclusion().sound(SoundType.STONE).shape(HBlockMaker.LOST_SKULL_SHAPE).strength(1.5f)) }
+    val FRAYED_SKULL by HBlockMaker.blockWithItem("frayed_skull", ItemModelType.SIMPLE_ITEM) { FrayedSkullBlock(HProperties.of(Material.STONE).noOcclusion().sound(SoundType.STONE).shape(HBlockMaker.LOST_SKULL_SHAPE).strength(1.5f)) }
+    val CROWN by HBlockMaker.blockWithItem("crown", ItemModelType.SIMPLE_ITEM) { HorizontalBlock(HProperties.of(Material.METAL).noOcclusion().sound(SoundType.METAL).strength(2.0f).shape(HBlockMaker.CROWN_SHAPE)) }
+    val CHALICE by HBlockMaker.blockWithItem("chalice", ItemModelType.SIMPLE_ITEM) { HBlock(HProperties.of(Material.METAL).noOcclusion().sound(SoundType.METAL).strength(3.0f).shape(HBlockMaker.CHALICE_SHAPE)) }
+    val PLATE by HBlockMaker.blockWithItem("plate", ItemModelType.SIMPLE_ITEM) { HBlock(HProperties.of(Material.GLASS).noOcclusion().sound(SoundType.GLASS).strength(1.5f).shape(HBlockMaker.PLATE_SHAPE)) }
+    val CANDLE by HBlockMaker.blockWithItem("candle") { HBlock(HProperties.of(Material.DECORATION).strength(1.1f).lightLevel(15).shape(HBlockMaker.CANDLE_SHAPE)) }
 
     /** Rainbowland materials */
     val RAINBOW_SOIL = SoilCombo("rainbow_", false, HBlockTags.RAINBOW_GRASS_PLANTABLE, HProperties.of(Material.DIRT, MaterialColor.COLOR_PURPLE).strength(0.5f).sound(SoundType.GRAVEL), HProperties.of(Material.GRASS).randomTicks().strength(0.6f).sound(SoundType.GRASS))
     val RAINBOW_ROCK = PolishedStoneBrickCombo("rainbow_rock", HProperties.of(Material.STONE, MaterialColor.COLOR_PURPLE).strength(1.5f, 6.0f))
     val RAINBOW_FACTORY_BRICKS = StairsSlabWallFenceCombo("rainbow_factory_bricks", HProperties.of(Material.STONE, MaterialColor.COLOR_PURPLE).strength(1.5f, 6.0f))
     val RAINBOWLAND_PORTAL = PortalCombo(HDimensions.RAINBOWLAND_ID, HDimensions::RAINBOWLAND_KEY,)
-    val RAINBOW_GLASS by BlockMaker.blockWithItem("rainbow_glass") { RainbowGlassBlock(HProperties.of(Material.GLASS, MaterialColor.COLOR_PURPLE).sound(SoundType.GLASS).strength(0.3f, 100.0f).noOcclusion()) }
-    val RAINBOW_GLASS_PANE by BlockMaker.blockWithItem("rainbow_glass_pane") { RainbowGlassPaneBlock(HProperties.of(Material.GLASS, MaterialColor.COLOR_PURPLE).sound(SoundType.GLASS).strength(0.3f, 100.0f)) }
+    val RAINBOW_GLASS by HBlockMaker.blockWithItem("rainbow_glass") { RainbowGlassBlock(HProperties.of(Material.GLASS, MaterialColor.COLOR_PURPLE).sound(SoundType.GLASS).strength(0.3f, 100.0f).noOcclusion()) }
+    val RAINBOW_GLASS_PANE by HBlockMaker.blockWithItem("rainbow_glass_pane") { RainbowGlassPaneBlock(HProperties.of(Material.GLASS, MaterialColor.COLOR_PURPLE).sound(SoundType.GLASS).strength(0.3f, 100.0f)) }
 
     /** Rainbowland props */
-    val RAINBOW_FACTORY_FURNACE by BlockMaker.blockWithItem("rainbow_factory_furnace") { RainbowFactoryFurnaceBlock(HProperties.copy(
+    val RAINBOW_FACTORY_FURNACE by HBlockMaker.blockWithItem("rainbow_factory_furnace") { RainbowFactoryFurnaceBlock(HProperties.copy(
         RAINBOW_FACTORY_BRICKS.block).lightLevel { if (it.getValue(RainbowFactoryFurnaceBlock.LIT)) 15 else 0 }) } // Standalone
 
     /** Aubrum materials */
     val AURISOIL = SoilCombo("auri", true, HBlockTags.AURIGRASS_PLANTABLE, HProperties.of(Material.DIRT, MaterialColor.COLOR_GRAY).strength(0.4f).sound(SoundType.SAND), HProperties.of(Material.GRASS, MaterialColor.COLOR_YELLOW).randomTicks().strength(0.5f).sound(SoundType.SAND))
-    val AUBRUM_ROCK by BlockMaker.cubeAllWithItem("aubrum_rock", HProperties.of(Material.STONE, MaterialColor.COLOR_BLACK).strength(1.5f).sound(SoundType.STONE))
+    val AUBRUM_ROCK by HBlockMaker.cubeAllWithItem("aubrum_rock", HProperties.of(Material.STONE, MaterialColor.COLOR_BLACK).strength(1.5f).sound(SoundType.STONE))
     val AUBRUM_PORTAL = PortalCombo(HDimensions.AUBRUM_ID, HDimensions::AUBRUM_KEY)
 
     /** Aubrum props */
-    val DRUM by BlockMaker.blockWithItem("drum") { HBlock(HProperties.of(Material.METAL).strength(2.5f).sound(SoundType.METAL).shape(BlockMaker.DRUM_SHAPE)) }
-    val SCRAP_METAL by BlockMaker.cubeAllWithItem("scrap_metal", HProperties.of(Material.METAL, MaterialColor.COLOR_BROWN).strength(2.5f).harvestLevel(1).harvestTool(ToolType.PICKAXE).sound(HSounds.SCRAP_METAL))
+    val DRUM by HBlockMaker.blockWithItem("drum") { HBlock(HProperties.of(Material.METAL).strength(2.5f).sound(SoundType.METAL).shape(HBlockMaker.DRUM_SHAPE)) }
+    val SCRAP_METAL by HBlockMaker.cubeAllWithItem("scrap_metal", HProperties.of(Material.METAL, MaterialColor.COLOR_BROWN).strength(2.5f).harvestLevel(1).harvestTool(ToolType.PICKAXE).sound(HSounds.SCRAP_METAL))
 
     /** Candyland materials */
     val SUGARY_SOIL = SoilCombo("sugary_", false, HBlockTags.SUGARY_GRASS_PLANTABLE, HProperties.of(Material.DIRT, MaterialColor.SAND).sound(SoundType.GRAVEL), HProperties.of(Material.GRASS, MaterialColor.COLOR_PINK).sound(SoundType.GRASS))
-    val SUGAR_BLOCK by BlockMaker.cubeAllWithItem("sugar_block", HProperties.of(Material.SAND, MaterialColor.SNOW).sound(SoundType.SAND)) // Standalone
-    val CANDY_CANE_BLOCK by BlockMaker.rotatedPillarWithItem("candy_cane_block", HProperties.of(Material.WOOD).sound(SoundType.BASALT))
-    val BENT_CANDY_CANE_BLOCK by BlockMaker.rotatableBlockWithItem("bent_candy_cane_block", HProperties.of(Material.WOOD).sound(SoundType.BASALT))
+    val SUGAR_BLOCK by HBlockMaker.cubeAllWithItem("sugar_block", HProperties.of(Material.SAND, MaterialColor.SNOW).sound(SoundType.SAND)) // Standalone
+    val CANDY_CANE_BLOCK by HBlockMaker.rotatedPillarWithItem("candy_cane_block", HProperties.of(Material.WOOD).sound(SoundType.BASALT))
+    val BENT_CANDY_CANE_BLOCK by HBlockMaker.rotatableBlockWithItem("bent_candy_cane_block", HProperties.of(Material.WOOD).sound(SoundType.BASALT))
     val CHOCOLATE_BLOCK = StairsSlabCombo("chocolate_block", HProperties.of(Material.STONE, MaterialColor.COLOR_BROWN).sound(SoundType.BASALT))
     val CANDYLAND_PORTAL = PortalCombo(HDimensions.CANDYLAND_ID, HDimensions::CANDYLAND_KEY) { CHOCOLATE_BLOCK.block }
 
     /** Dungeon features */
-    val DUNGEON_CASTLETON_BRICKS by BlockMaker.unbreakableWithItem("dungeon_castleton_bricks", BlockModelType.CUBE_ALL, CASTLETON_STONE.brick::block) // Standalone? Adjust with needs later on
-    val DUNGEON_SPAWNER by BlockMaker.blockWithItem("dungeon_spawner") { DungeonSpawnerBlock(BlockBehaviour.Properties.copy(Blocks.BARRIER)) } // Standalone? Adjust with needs later on
-    val BLUE_CASTLETON_DUNGEON_LOCK by BlockMaker.blockWithItem("blue_castleton_dungeon_lock") { LockBlock(HItems::BLUE_CASTLETON_DUNGEON_KEY, { Blocks.OBSIDIAN }, HProperties.of(Material.STONE, MaterialColor.COLOR_BLACK)) } // Door lock combo to handle key
-    val SOOT by BlockMaker.withItem("soot", ItemModelType.BLOCK_ITEM, BlockMaker.registerModelled("soot", BlockModelType.SOOT) { SafeSootBlock(HProperties.of(Material.SAND).shape(BlockMaker.FARMLAND_SHAPE).speedFactor(0.4f).strength(40.0f, 3000.0f).noOcclusion()) })
-    val SOOT_TRAP by BlockMaker.withItem("soot_trap", ItemModelType.BLOCK_ITEM, BlockMaker.registerModelled("soot_trap", BlockModelType.SOOT, appearance = { SOOT }) { SootTrapBlock(HProperties.copy(
+    val DUNGEON_CASTLETON_BRICKS by HBlockMaker.unbreakableWithItem("dungeon_castleton_bricks", BlockModelType.CUBE_ALL, CASTLETON_STONE.brick::block) // Standalone? Adjust with needs later on
+    val DUNGEON_SPAWNER by HBlockMaker.blockWithItem("dungeon_spawner") { DungeonSpawnerBlock(BlockBehaviour.Properties.copy(Blocks.BARRIER)) } // Standalone? Adjust with needs later on
+    val BLUE_CASTLETON_DUNGEON_LOCK by HBlockMaker.blockWithItem("blue_castleton_dungeon_lock") { LockBlock(HItems::BLUE_CASTLETON_DUNGEON_KEY, { Blocks.OBSIDIAN }, HProperties.of(Material.STONE, MaterialColor.COLOR_BLACK)) } // Door lock combo to handle key
+    val SOOT by HBlockMaker.withItem("soot", ItemModelType.BLOCK_ITEM, HBlockMaker.registerModelled("soot", BlockModelType.SOOT) { SafeSootBlock(HProperties.of(Material.SAND).shape(HBlockMaker.FARMLAND_SHAPE).speedFactor(0.4f).strength(40.0f, 3000.0f).noOcclusion()) })
+    val SOOT_TRAP by HBlockMaker.withItem("soot_trap", ItemModelType.BLOCK_ITEM, HBlockMaker.registerModelled("soot_trap", BlockModelType.SOOT, appearance = { SOOT }) { SootTrapBlock(HProperties.copy(
         SOOT
     ).lootFrom { SOOT }) })
-    val SOOT_TRAP_CONTROLLER by BlockMaker.blockWithItem("soot_trap_controller") { SootTrapControllerBlock(HProperties.of(Material.DECORATION).strength(50.0f, 1200.0f).noDrops()) }
+    val SOOT_TRAP_CONTROLLER by HBlockMaker.blockWithItem("soot_trap_controller") { SootTrapControllerBlock(HProperties.of(Material.DECORATION).strength(50.0f, 1200.0f).noDrops()) }
 
     /** Vases */
-    val VASE by BlockMaker.vaseWithItem("vase", MaterialColor.COLOR_GRAY)
-    val SHROOMY_VASE by BlockMaker.vaseWithItem("shroomy_vase", MaterialColor.COLOR_GRAY)
-    val CASTLETON_VASE by BlockMaker.vaseWithItem("castleton_vase", MaterialColor.TERRACOTTA_BLUE)
-    val CASTLETON_TREASURE_VASE by BlockMaker.vaseWithItem("castleton_treasure_vase", MaterialColor.TERRACOTTA_BLUE)
+    val VASE by HBlockMaker.vaseWithItem("vase", MaterialColor.COLOR_GRAY)
+    val SHROOMY_VASE by HBlockMaker.vaseWithItem("shroomy_vase", MaterialColor.COLOR_GRAY)
+    val CASTLETON_VASE by HBlockMaker.vaseWithItem("castleton_vase", MaterialColor.TERRACOTTA_BLUE)
+    val CASTLETON_TREASURE_VASE by HBlockMaker.vaseWithItem("castleton_treasure_vase", MaterialColor.TERRACOTTA_BLUE)
 
     /** Maze Boss */
-    val MAZE_BUSH by BlockMaker.cubeAllWithItem("maze_bush") { MazeBushBlock(HProperties.of(Material.STONE, MaterialColor.PLANT).pushReaction(
+    val MAZE_BUSH by HBlockMaker.cubeAllWithItem("maze_bush") { MazeBushBlock(HProperties.of(Material.STONE, MaterialColor.PLANT).pushReaction(
         PushReaction.BLOCK).strength(50.0F, 1200.0F).sound(SoundType.GRASS)) }
-    val MAZE_BOSS_SPAWNER by BlockMaker.blockWithItem("maze_boss_spawner") { MazeBossSpawnerBlock(HProperties.of(Material.METAL).indestructible()) }
+    val MAZE_BOSS_SPAWNER by HBlockMaker.blockWithItem("maze_boss_spawner") { MazeBossSpawnerBlock(HProperties.of(Material.METAL).indestructible()) }
 
     /** Misc */
     val COMPRESSED_COBBLESTONE = CompressedCombo(Blocks::COBBLESTONE)
 
     /** Farmlands */
-    val ASHY_FARMLAND by BlockMaker.farmlandWithItem("ashy_farmland", Blocks::PODZOL, { Blocks.DIRT.defaultBlockState() }, HProperties.of(Material.DIRT, MaterialColor.COLOR_BROWN).sound(SoundType.GRAVEL).strength(0.6f)) { map ->
+    val ASHY_FARMLAND by HBlockMaker.farmlandWithItem("ashy_farmland", Blocks::PODZOL, { Blocks.DIRT.defaultBlockState() }, HProperties.of(Material.DIRT, MaterialColor.COLOR_BROWN).sound(SoundType.GRAVEL).strength(0.6f)) { map ->
         map.put(Blocks::PUMPKIN_STEM, 0.6f)
         map.put(Blocks::MELON_STEM, 0.6f)
     }
-    val SANDY_FARMLAND by BlockMaker.farmlandWithItem("sandy_farmland", Blocks::SAND, { Blocks.SAND.defaultBlockState() }, HProperties.of(Material.SAND, MaterialColor.SAND).sound(SoundType.SAND).strength(0.6f))
-    val RAINBOW_FARMLAND by BlockMaker.farmlandWithItem("rainbow_farmland", RAINBOW_SOIL::soil, { RAINBOW_SOIL.soil.defaultBlockState() }, HProperties.of(Material.DIRT, MaterialColor.COLOR_PURPLE).strength(0.5f).sound(SoundType.GRAVEL))
+    val SANDY_FARMLAND by HBlockMaker.farmlandWithItem("sandy_farmland", Blocks::SAND, { Blocks.SAND.defaultBlockState() }, HProperties.of(Material.SAND, MaterialColor.SAND).sound(SoundType.SAND).strength(0.6f))
+    val RAINBOW_FARMLAND by HBlockMaker.farmlandWithItem("rainbow_farmland", RAINBOW_SOIL::soil, { RAINBOW_SOIL.soil.defaultBlockState() }, HProperties.of(Material.DIRT, MaterialColor.COLOR_PURPLE).strength(0.5f).sound(SoundType.GRAVEL))
 
     /** Crops */
     val CHILI_PEPPER = CropsCombo("chili_pepper", ItemMaker.food(2, 0.2f, fastEat = true, alwaysEdible = true)) { ChiliPepperBlock(HProperties.of(Material.PLANT).sound(SoundType.GRASS).strength(1.0f, 0.0f).noCollission().randomTicks()) } //BlockMaker.createBlock("chili_pepper", ItemModelType.SIMPLE_ITEM) { ChiliPepperBlock(BlockBehaviour.Properties.of(Material.PLANT).sound(SoundType.GRASS).strength(1.0f, 0.0f).noCollission().randomTicks()) }
@@ -167,16 +167,16 @@ object HBlocks : HRegistry<Block>(ForgeRegistries.BLOCKS) {
         CASTLETON_SOIL.soil, CASTLETON_SOIL.grass).sound(SoundType.GRASS).lightLevel(10).noCollission()) }
     val BLUE_LUMSHROOM = PottedPlantCombo("blue_lumshroom") { MushroomBlock(PlantProperties.of(Material.PLANT).validGround(
         CASTLETON_SOIL.soil, CASTLETON_SOIL.grass).sound(SoundType.GRASS).lightLevel(4).noCollission()) }
-    val GREEN_GUMDROP = BlockMaker.gumdrop("green_gumdrop")
-    val MINI_GREEN_GUMDROP = BlockMaker.gumdrop("mini_green_gumdrop")
-    val PINK_GUMDROP = BlockMaker.gumdrop("pink_gumdrop")
-    val MINI_PINK_GUMDROP = BlockMaker.gumdrop("mini_pink_gumdrop")
-    val BLUE_GUMDROP = BlockMaker.gumdrop("blue_gumdrop")
-    val MINI_BLUE_GUMDROP = BlockMaker.gumdrop("mini_blue_gumdrop")
-    val PURPLE_GUMDROP = BlockMaker.gumdrop("purple_gumdrop")
-    val MINI_PURPLE_GUMDROP = BlockMaker.gumdrop("mini_purple_gumdrop")
-    val RED_GUMDROP = BlockMaker.gumdrop("red_gumdrop")
-    val MINI_RED_GUMDROP = BlockMaker.gumdrop("mini_red_gumdrop")
-    val YELLOW_GUMDROP = BlockMaker.gumdrop("yellow_gumdrop")
-    val MINI_YELLOW_GUMDROP = BlockMaker.gumdrop("mini_yellow_gumdrop")
+    val GREEN_GUMDROP = HBlockMaker.gumdrop("green_gumdrop")
+    val MINI_GREEN_GUMDROP = HBlockMaker.gumdrop("mini_green_gumdrop")
+    val PINK_GUMDROP = HBlockMaker.gumdrop("pink_gumdrop")
+    val MINI_PINK_GUMDROP = HBlockMaker.gumdrop("mini_pink_gumdrop")
+    val BLUE_GUMDROP = HBlockMaker.gumdrop("blue_gumdrop")
+    val MINI_BLUE_GUMDROP = HBlockMaker.gumdrop("mini_blue_gumdrop")
+    val PURPLE_GUMDROP = HBlockMaker.gumdrop("purple_gumdrop")
+    val MINI_PURPLE_GUMDROP = HBlockMaker.gumdrop("mini_purple_gumdrop")
+    val RED_GUMDROP = HBlockMaker.gumdrop("red_gumdrop")
+    val MINI_RED_GUMDROP = HBlockMaker.gumdrop("mini_red_gumdrop")
+    val YELLOW_GUMDROP = HBlockMaker.gumdrop("yellow_gumdrop")
+    val MINI_YELLOW_GUMDROP = HBlockMaker.gumdrop("mini_yellow_gumdrop")
 }

@@ -3,7 +3,7 @@ package thedarkcolour.hardcoredungeons.entity.overworld.mushroomarcher
 import net.minecraft.client.renderer.entity.EntityRendererManager
 import net.minecraft.client.renderer.entity.SkeletonRenderer
 import net.minecraft.entity.monster.AbstractSkeletonEntity
-import net.minecraft.util.ResourceLocation
+import net.minecraft.resources.ResourceLocation
 import thedarkcolour.hardcoredungeons.util.modLoc
 
 class MushroomArcherRenderer(manager: EntityRendererManager) : SkeletonRenderer(manager) {

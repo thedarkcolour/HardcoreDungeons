@@ -1,20 +1,19 @@
 package thedarkcolour.hardcoredungeons.particle
 
+import net.minecraft.client.multiplayer.ClientLevel
 import net.minecraft.client.particle.*
-import net.minecraft.client.particle.IParticleRenderType.PARTICLE_SHEET_TRANSLUCENT
+import net.minecraft.client.particle.ParticleRenderType.PARTICLE_SHEET_TRANSLUCENT
 import net.minecraft.client.renderer.LightTexture
-import net.minecraft.client.world.ClientWorld
-import net.minecraft.particles.BasicParticleType
-import net.minecraft.util.math.MathHelper
+import net.minecraft.core.particles.SimpleParticleType
+import net.minecraft.util.Mth
 import kotlin.math.max
 
 class SoulFrayParticle(
-    worldIn: ClientWorld,
+    worldIn: ClientLevel,
     x: Double, y: Double, z: Double,
     mX: Double, mY: Double, mZ: Double,
-    private val cloudSprite: IAnimatedSprite
-) :
-    SpriteTexturedParticle(worldIn, x, y, z, mX, mY, mZ) {
+    private val cloudSprite: SpriteSet
+) : TextureSheetParticle(worldIn, x, y, z, mX, mY, mZ) {
 
     init {
         xd *= 0.1f.toDouble()
@@ -34,12 +33,12 @@ class SoulFrayParticle(
         setSpriteFromAge(cloudSprite)
     }
 
-    override fun getRenderType(): IParticleRenderType {
+    override fun getRenderType(): ParticleRenderType {
         return PARTICLE_SHEET_TRANSLUCENT
     }
 
     override fun getQuadSize(partialTicks: Float): Float {
-        return quadSize * MathHelper.clamp((age + partialTicks) / lifetime * 32.0f, 0.0f, 1.0f)
+        return quadSize * Mth.clamp((age + partialTicks) / lifetime * 32.0f, 0.0f, 1.0f)
     }
 
     override fun tick() {
@@ -74,10 +73,10 @@ class SoulFrayParticle(
         return FULL_LIGHT
     }
 
-    class Factory(private val spriteSet: IAnimatedSprite) : IParticleFactory<BasicParticleType> {
+    class Factory(private val spriteSet: SpriteSet) : ParticleProvider<SimpleParticleType> {
         override fun createParticle(
-            typeIn: BasicParticleType,
-            worldIn: ClientWorld,
+            typeIn: SimpleParticleType,
+            worldIn: ClientLevel,
             x: Double, y: Double, z: Double,
             mX: Double, mY: Double, mZ: Double
         ): Particle {

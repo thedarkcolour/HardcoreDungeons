@@ -1,13 +1,13 @@
 package thedarkcolour.hardcoredungeons.item.debug
 
 import net.minecraft.item.Item
-import net.minecraft.item.ItemStack
+import net.minecraft.world.item.ItemStack
 import net.minecraft.item.ItemUseContext
 import net.minecraft.nbt.CompoundNBT
 import net.minecraft.nbt.ListNBT
 import net.minecraft.nbt.NBTUtil
 import net.minecraft.util.ActionResultType
-import net.minecraft.util.math.BlockPos
+import net.minecraft.core.BlockPos
 import net.minecraftforge.common.util.Constants
 import thedarkcolour.hardcoredungeons.block.structure.SootTrapControllerBlock
 import thedarkcolour.hardcoredungeons.tileentity.SootTrapControllerTileEntity

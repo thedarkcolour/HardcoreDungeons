@@ -2,8 +2,8 @@ package thedarkcolour.hardcoredungeons.client.color
 
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.client.Minecraft
-import net.minecraft.item.ItemStack
-import net.minecraft.util.math.BlockPos
+import net.minecraft.world.item.ItemStack
+import net.minecraft.core.BlockPos
 import net.minecraft.world.FoliageColors
 import net.minecraft.world.IBlockDisplayReader
 import java.awt.Color

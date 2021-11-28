@@ -1,17 +1,13 @@
 package thedarkcolour.hardcoredungeons.registry
 
 import net.minecraft.world.level.block.Block
-import net.minecraft.client.renderer.color.ItemColors
-import net.minecraft.inventory.EquipmentSlotType
-import net.minecraft.item.*
-import net.minecraft.item.Item.Properties
-import net.minecraft.item.crafting.Ingredient
-import net.minecraft.potion.PotionBrewing
+import net.minecraft.world.item.*
+import net.minecraft.world.item.Item.Properties
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn
+import net.minecraftforge.common.ForgeSpawnEggItem
 import net.minecraftforge.common.brewing.BrewingRecipeRegistry
 import net.minecraftforge.registries.IForgeRegistry
-import thedarkcolour.hardcoredungeons.block.HBlocks
 import thedarkcolour.hardcoredungeons.client.color.PotionColor
 import thedarkcolour.hardcoredungeons.client.color.RainbowColor
 import thedarkcolour.hardcoredungeons.data.modelgen.item.ItemModelType
@@ -57,7 +53,7 @@ object HItems {
     val SHELL = genericItem("shell")
     val VENISON = Item(Properties().tab(Group).food(Food.Builder().nutrition(3).saturationMod(0.2f).meat().build())).setRegistryKey("venison")
     val COOKED_VENISON = Item(Properties().tab(Group).food(Food.Builder().nutrition(7).saturationMod(0.9f).meat().build())).setRegistryKey("cooked_venison")
-    val DEER_SPAWN_EGG = SpawnEggItem(HEntities.DEER, 0x4c2922, 0x202020, Properties().tab(Group)).setRegistryKey("deer_spawn_egg")
+    val DEER_SPAWN_EGG = ForgeSpawnEggItem(HEntities::DEER, 0x4c2922, 0x202020, Properties().tab(Group)).setRegistryKey("deer_spawn_egg")
     val MALACHITE_SWORD = SwordItem(HItemTier.MALACHITE, 3, -2.4f, Properties().tab(Group).stacksTo(1)).setRegistryKey("malachite_sword")
     val MALACHITE_SHOVEL = ShovelItem(HItemTier.MALACHITE, 1.5f, -3.0f, Properties().tab(Group).stacksTo(1)).setRegistryKey("malachite_shovel")
     val MALACHITE_PICKAXE = MalachitePickaxeItem(HItemTier.MALACHITE, 1, -2.8f, Properties().tab(Group).stacksTo(1)).setRegistryKey("malachite_pickaxe")
@@ -78,10 +74,10 @@ object HItems {
     val CASTLETON_TORCH by HBlocks.CASTLETON_TORCH::litItem//= CastletonTorchItem(HBlocks.CASTLETON_TORCH, HBlocks.CASTLETON_WALL_TORCH, true, Properties().tab(Group)).setRegistryKey("castleton_torch")
     val BURNT_CASTLETON_TORCH by HBlocks.CASTLETON_TORCH::burntItem//= CastletonTorchItem(HBlocks.CASTLETON_TORCH, HBlocks.CASTLETON_WALL_TORCH, false, Properties().tab(Group)).setRegistryKey("burnt_castleton_torch")
     val LUMLIGHT_SIGN by HBlocks.LUMLIGHT_WOOD.sign::item//= SignItem(Properties().stacksTo(16).tab(Group), HBlocks.LUMLIGHT_SIGN, HBlocks.LUMLIGHT_WALL_SIGN).setRegistryKey("lumlight_sign")
-    val TOWER_HELMET = ArmorItem(HArmorMaterial.TOWER, EquipmentSlotType.HEAD, Properties().tab(Group).stacksTo(1)).setRegistryKey("tower_helmet")
-    val TOWER_CHESTPLATE = ArmorItem(HArmorMaterial.TOWER, EquipmentSlotType.CHEST, Properties().tab(Group).stacksTo(1)).setRegistryKey("tower_chestplate")
-    val TOWER_LEGGINGS = ArmorItem(HArmorMaterial.TOWER, EquipmentSlotType.LEGS, Properties().tab(Group).stacksTo(1)).setRegistryKey("tower_leggings")
-    val TOWER_BOOTS = ArmorItem(HArmorMaterial.TOWER, EquipmentSlotType.FEET, Properties().tab(Group).stacksTo(1)).setRegistryKey("tower_boots")
+    val TOWER_HELMET = ArmorItem(HArmorMaterial.Tower, EquipmentSlotType.HEAD, Properties().tab(Group).stacksTo(1)).setRegistryKey("tower_helmet")
+    val TOWER_CHESTPLATE = ArmorItem(HArmorMaterial.Tower, EquipmentSlotType.CHEST, Properties().tab(Group).stacksTo(1)).setRegistryKey("tower_chestplate")
+    val TOWER_LEGGINGS = ArmorItem(HArmorMaterial.Tower, EquipmentSlotType.LEGS, Properties().tab(Group).stacksTo(1)).setRegistryKey("tower_leggings")
+    val TOWER_BOOTS = ArmorItem(HArmorMaterial.Tower, EquipmentSlotType.FEET, Properties().tab(Group).stacksTo(1)).setRegistryKey("tower_boots")
     val CASTLETON_STAFF = StaffItem(Properties().tab(Group).stacksTo(1).rarity(Rarity.UNCOMMON)).setRegistryKey("castleton_staff")
     val WILD_BERROOK by HBlocks.WILD_BERROOK::item//= BlockItem(HBlocks.WILD_BERROOK, Properties().tab(Group).food(ItemMisc.WILD_BERROOK)).setRegistryKey("wild_berrook")
     val BLUE_CASTLETON_DUNGEON_KEY = Item(Properties().tab(Group).stacksTo(1).rarity(Rarity.RARE)).setRegistryKey("blue_castleton_dungeon_key")

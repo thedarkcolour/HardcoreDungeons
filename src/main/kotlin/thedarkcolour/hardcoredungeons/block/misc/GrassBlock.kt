@@ -7,7 +7,7 @@ import net.minecraft.block.SnowBlock
 import net.minecraft.tags.FluidTags
 import net.minecraft.tags.ITag
 import net.minecraft.util.Direction
-import net.minecraft.util.math.BlockPos
+import net.minecraft.core.BlockPos
 import net.minecraft.world.IBlockReader
 import net.minecraft.world.IWorld
 import net.minecraft.world.lighting.LightEngine

@@ -1,15 +1,14 @@
 package thedarkcolour.hardcoredungeons.entity
 
 import com.google.common.collect.ImmutableSet
-import net.minecraft.world.level.block.Block
-import net.minecraft.entity.Entity
-import net.minecraft.entity.EntityClassification
-import net.minecraft.entity.EntitySize
-import net.minecraft.entity.EntityType
-import net.minecraft.entity.ai.attributes.AttributeModifierMap
-import net.minecraft.util.ResourceLocation
+import net.minecraft.world.entity.Entity
+import net.minecraft.world.entity.EntityDimensions
+import net.minecraft.world.entity.EntityType
+import net.minecraft.world.entity.MobCategory
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier
 import net.minecraft.world.level.Level
-import net.minecraftforge.fml.network.FMLPlayMessages
+import net.minecraft.world.level.block.Block
+import net.minecraftforge.fmllegacy.network.FMLPlayMessages
 import java.util.function.BiFunction
 import java.util.function.Predicate
 import java.util.function.ToIntFunction
@@ -21,19 +20,18 @@ import java.util.function.ToIntFunction
  */
 @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 class HEntityType<T>(
-    factory: IFactory<T>,
-    classification: EntityClassification,
-    id: ResourceLocation,
+    factory: EntityFactory<T>,
+    classification: MobCategory,
     serializable: Boolean = false,
     canSummon: Boolean = true,
     immuneToFire: Boolean = false,
     spawnNaturally: Boolean = true,
     specialSpawns: ImmutableSet<Block> = ImmutableSet.of(),
-    size: EntitySize = EntitySize.scalable(0.6F, 1.8F),
+    size: EntityDimensions = EntityDimensions.scalable(0.6F, 1.8F),
     velocityUpdateSpecial: Predicate<EntityType<*>> = DEFAULT_VELOCITY,
     trackingRangeSpecial: ToIntFunction<EntityType<*>> = ToIntFunction { 5 },
     updateIntervalSpecial: ToIntFunction<EntityType<*>> = ToIntFunction { 3 },
-    clientFactorySpecial: BiFunction<FMLPlayMessages.SpawnEntity, World, T>? = null,
+    clientFactorySpecial: BiFunction<FMLPlayMessages.SpawnEntity, Level, T>? = null,
 ) : EntityType<T>(
     factory,
     classification,
@@ -50,16 +48,8 @@ class HEntityType<T>(
     updateIntervalSpecial,
     clientFactorySpecial
 ) where T : HEntityType.HEntity, T : Entity {
-    init {
-        registryName = id
-    }
-
-    operator fun invoke(worldIn: World): T {
-        return create(worldIn)!!
-    }
-
     interface HEntity {
-        fun getAttributes(): AttributeModifierMap.MutableAttribute
+        fun getAttributes(): AttributeSupplier.Builder
     }
 
     companion object {

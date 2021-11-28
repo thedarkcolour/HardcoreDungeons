@@ -1,11 +1,11 @@
 package thedarkcolour.hardcoredungeons.util
 
-import net.minecraft.entity.Entity
-import net.minecraft.item.ItemStack
-import net.minecraft.nbt.NBTUtil
-import net.minecraft.network.datasync.DataParameter
-import net.minecraft.util.ResourceLocation
-import net.minecraft.util.math.BlockPos
+import net.minecraft.resources.ResourceLocation
+import net.minecraft.core.BlockPos
+import net.minecraft.nbt.NbtUtils
+import net.minecraft.network.syncher.EntityDataAccessor
+import net.minecraft.world.entity.Entity
+import net.minecraft.world.item.ItemStack
 import thedarkcolour.hardcoredungeons.HardcoreDungeons
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
@@ -13,7 +13,7 @@ import kotlin.reflect.KProperty
 /**
  * Property delegate to a property in the `dataManager` of an `Entity`.
  */
-fun <T> dataParameterDelegate(parameter: DataParameter<T>): ReadWriteProperty<Entity, T> {
+fun <T> dataParameterDelegate(parameter: EntityDataAccessor<T>): ReadWriteProperty<Entity, T> {
     return object : ReadWriteProperty<Entity, T> {
         override fun getValue(thisRef: Entity, property: KProperty<*>): T {
             return thisRef.entityData[parameter]
@@ -41,12 +41,12 @@ fun toDegrees(radians: Float): Float {
 
 class BlockPosNBTDelegate(private val tagName: String) : ReadWriteProperty<ItemStack, BlockPos?> {
     override fun getValue(thisRef: ItemStack, property: KProperty<*>): BlockPos? {
-        return thisRef.getTagElement(tagName)?.let(NBTUtil::readBlockPos)
+        return thisRef.getTagElement(tagName)?.let(NbtUtils::readBlockPos)
     }
 
     override fun setValue(thisRef: ItemStack, property: KProperty<*>, value: BlockPos?) {
         if (value != null) {
-            thisRef.addTagElement(tagName,  NBTUtil.writeBlockPos(value))
+            thisRef.addTagElement(tagName,  NbtUtils.writeBlockPos(value))
         } else {
             thisRef.removeTagKey(tagName)
         }

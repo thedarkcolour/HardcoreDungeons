@@ -7,7 +7,7 @@ import net.minecraft.data.AdvancementProvider
 import net.minecraft.data.DataGenerator
 import net.minecraft.data.DirectoryCache
 import net.minecraft.data.IDataProvider
-import net.minecraft.util.ResourceLocation
+import net.minecraft.resources.ResourceLocation
 import org.apache.logging.log4j.LogManager
 import thedarkcolour.hardcoredungeons.data.advancements.AdvancementGroup
 import thedarkcolour.hardcoredungeons.data.advancements.OverworldAdvancements

@@ -7,7 +7,6 @@ import net.minecraft.block.material.Material
 import net.minecraft.block.material.MaterialColor
 import net.minecraft.block.trees.Tree
 import net.minecraft.data.IFinishedRecipe
-import net.minecraft.item.AxeItem
 import net.minecraft.item.Item
 import net.minecraft.state.properties.BlockStateProperties
 import net.minecraft.tags.BlockTags
@@ -16,8 +15,7 @@ import net.minecraft.util.Direction
 import net.minecraft.world.item.AxeItem
 import net.minecraftforge.common.Tags
 import thedarkcolour.hardcoredungeons.HardcoreDungeons
-import thedarkcolour.hardcoredungeons.block.HBlocks
-import thedarkcolour.hardcoredungeons.block.base.BlockMaker
+import thedarkcolour.hardcoredungeons.block.base.HBlockMaker
 import thedarkcolour.hardcoredungeons.block.base.ItemMaker
 import thedarkcolour.hardcoredungeons.block.base.properties.HProperties
 import thedarkcolour.hardcoredungeons.data.BlockTagGenerator
@@ -51,26 +49,26 @@ class WoodCombo(
     val type: WoodType = WoodType.create(HardcoreDungeons.ID + ":" + wood)
 
     // Planks, Slab, Stairs
-    val planks by BlockMaker.cubeAllWithItem(wood + "_planks", BlockMaker.props(Material.WOOD, topCol, applyProperties))
-    val slab by BlockMaker.slabWithItem(wood + "_slab", ::planks, BlockMaker.props(Material.WOOD, topCol, applyProperties))
-    val stairs by BlockMaker.stairsWithItem(wood + "_stairs", ::planks, BlockMaker.props(Material.WOOD, topCol, applyProperties))
+    val planks by HBlockMaker.cubeAllWithItem(wood + "_planks", HBlockMaker.props(Material.WOOD, topCol, applyProperties))
+    val slab by HBlockMaker.slabWithItem(wood + "_slab", ::planks, HBlockMaker.props(Material.WOOD, topCol, applyProperties))
+    val stairs by HBlockMaker.stairsWithItem(wood + "_stairs", ::planks, HBlockMaker.props(Material.WOOD, topCol, applyProperties))
 
     // Log, Stripped Log, Wood, Stripped Wood, Leaves
-    val log by BlockMaker.rotatedPillarWithItem(wood + "_log", HProperties.of(Material.WOOD) { state -> if (state.getValue(BlockStateProperties.AXIS) == Direction.Axis.Y) topCol else barkCol }.also(applyProperties))
-    val wood by BlockMaker.rotatedPillarWithItem(wood + "_wood", BlockMaker.props(Material.WOOD, barkCol, applyProperties))
-    val strippedLog by BlockMaker.rotatedPillarWithItem("stripped_" + wood + "_log", BlockMaker.props(Material.WOOD, topCol, applyProperties))
-    val strippedWood by BlockMaker.rotatedPillarWithItem("stripped_" + wood + "_wood", BlockMaker.props(Material.WOOD, topCol, applyProperties))
-    val leaves by BlockMaker.leavesBlock(wood + "_leaves")
+    val log by HBlockMaker.rotatedPillarWithItem(wood + "_log", HProperties.of(Material.WOOD) { state -> if (state.getValue(BlockStateProperties.AXIS) == Direction.Axis.Y) topCol else barkCol }.also(applyProperties))
+    val wood by HBlockMaker.rotatedPillarWithItem(wood + "_wood", HBlockMaker.props(Material.WOOD, barkCol, applyProperties))
+    val strippedLog by HBlockMaker.rotatedPillarWithItem("stripped_" + wood + "_log", HBlockMaker.props(Material.WOOD, topCol, applyProperties))
+    val strippedWood by HBlockMaker.rotatedPillarWithItem("stripped_" + wood + "_wood", HBlockMaker.props(Material.WOOD, topCol, applyProperties))
+    val leaves by HBlockMaker.leavesBlock(wood + "_leaves")
 
     // Fence, Fence Gate, Pressure Plate, Button, Trapdoor, Door
-    val fence by BlockMaker.registerFence(wood + "_fence", BlockMaker.props(Material.WOOD, topCol, applyProperties))
-    val fenceGate by BlockMaker.registerFenceGate(wood + "_fence_gate", BlockMaker.props(Material.WOOD, topCol, applyProperties))
-    val pressurePlate by BlockMaker.registerPressurePlate(wood + "_pressure_plate", PressurePlateBlock.Sensitivity.EVERYTHING, BlockMaker.props(Material.WOOD, topCol, applyProperties))
-    val button by BlockMaker.registerWoodButton(wood + "_button", BlockMaker.props(Material.WOOD, topCol, applyProperties))
-    val trapdoor by BlockMaker.registerTrapdoor(wood + "_trapdoor", BlockMaker.props(Material.WOOD, topCol, applyProperties))
-    val door by BlockMaker.registerDoor(wood + "_door", BlockMaker.props(Material.WOOD, topCol, applyProperties))
+    val fence by HBlockMaker.registerFence(wood + "_fence", HBlockMaker.props(Material.WOOD, topCol, applyProperties))
+    val fenceGate by HBlockMaker.registerFenceGate(wood + "_fence_gate", HBlockMaker.props(Material.WOOD, topCol, applyProperties))
+    val pressurePlate by HBlockMaker.registerPressurePlate(wood + "_pressure_plate", PressurePlateBlock.Sensitivity.EVERYTHING, HBlockMaker.props(Material.WOOD, topCol, applyProperties))
+    val button by HBlockMaker.registerWoodButton(wood + "_button", HBlockMaker.props(Material.WOOD, topCol, applyProperties))
+    val trapdoor by HBlockMaker.registerTrapdoor(wood + "_trapdoor", HBlockMaker.props(Material.WOOD, topCol, applyProperties))
+    val door by HBlockMaker.registerDoor(wood + "_door", HBlockMaker.props(Material.WOOD, topCol, applyProperties))
 
-    val sapling = BlockMaker.saplingCombo(wood + "_sapling", tree)
+    val sapling = HBlockMaker.saplingCombo(wood + "_sapling", tree)
 
     // Sign
     val sign = SignCombo(wood, type, topCol, applyProperties)

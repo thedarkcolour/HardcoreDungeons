@@ -4,7 +4,7 @@ import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.passive.CowEntity
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.Item
-import net.minecraft.item.ItemStack
+import net.minecraft.world.item.ItemStack
 import net.minecraft.util.ActionResultType
 import net.minecraft.util.Hand
 import thedarkcolour.hardcoredungeons.registry.HItems

@@ -1,14 +1,14 @@
 package thedarkcolour.hardcoredungeons.registry
 
-import net.minecraft.world.gen.surfacebuilders.SurfaceBuilder
-import net.minecraftforge.registries.IForgeRegistry
+import net.minecraftforge.registries.DeferredRegister
+import net.minecraftforge.registries.ForgeRegistries
+import thedarkcolour.hardcoredungeons.HardcoreDungeons
 import thedarkcolour.hardcoredungeons.surfacebuilder.ThickForestSurfaceBuilder
+import thedarkcolour.kotlinforforge.forge.registerObject
 
 @Suppress("HasPlatformType", "MemberVisibilityCanBePrivate")
 object HSurfaceBuilders {
-    val THICK_FOREST = ThickForestSurfaceBuilder().setRegistryKey("thick_forest")
+    val SURFACE_BUILDERS = DeferredRegister.create(ForgeRegistries.SURFACE_BUILDERS, HardcoreDungeons.ID)
 
-    fun registerSurfaceBuilders(surfaces: IForgeRegistry<SurfaceBuilder<*>>) {
-        surfaces.register(THICK_FOREST)
-    }
+    val THICK_FOREST by SURFACE_BUILDERS.registerObject("thick_forest", ::ThickForestSurfaceBuilder)
 }

@@ -9,7 +9,7 @@ import net.minecraft.state.properties.BlockStateProperties.HORIZONTAL_FACING
 import net.minecraft.util.ActionResultType
 import net.minecraft.util.Direction
 import net.minecraft.util.Hand
-import net.minecraft.util.math.BlockPos
+import net.minecraft.core.BlockPos
 import net.minecraft.util.math.BlockRayTraceResult
 import net.minecraft.world.level.Level
 import thedarkcolour.hardcoredungeons.block.decoration.HorizontalBlock

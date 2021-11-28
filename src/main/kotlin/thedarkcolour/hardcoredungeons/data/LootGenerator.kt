@@ -9,7 +9,7 @@ import net.minecraft.data.DirectoryCache
 import net.minecraft.data.IDataProvider
 import net.minecraft.data.LootTableProvider
 import net.minecraft.enchantment.Enchantments
-import net.minecraft.entity.EntityType
+import net.minecraft.world.entity.EntityType
 import net.minecraft.item.Items
 import net.minecraft.loot.*
 import net.minecraft.loot.conditions.BlockStateProperty
@@ -24,7 +24,7 @@ import net.minecraft.state.properties.DoubleBlockHalf
 import net.minecraft.state.properties.SlabType
 import net.minecraft.util.IItemProvider
 import net.minecraft.util.IStringSerializable
-import net.minecraft.util.ResourceLocation
+import net.minecraft.resources.ResourceLocation
 import net.minecraftforge.registries.ForgeRegistries
 import org.apache.logging.log4j.LogManager
 import thedarkcolour.hardcoredungeons.HardcoreDungeons

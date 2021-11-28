@@ -1,20 +1,20 @@
 package thedarkcolour.hardcoredungeons.entity.projectile.magic
 
-import net.minecraft.entity.EntityType
-import net.minecraft.entity.IRendersAsItem
-import net.minecraft.item.ItemStack
+import net.minecraft.world.entity.EntityType
+import net.minecraft.world.item.ItemStack
 import net.minecraft.item.Items
-import net.minecraft.util.DamageSource
-import net.minecraft.util.math.EntityRayTraceResult
-import net.minecraft.util.math.RayTraceResult
+import net.minecraft.world.damagesource.DamageSource
+import net.minecraft.world.entity.projectile.ItemSupplier
 import net.minecraft.world.level.Level
+import net.minecraft.world.phys.EntityHitResult
+import net.minecraft.world.phys.HitResult
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn
 import thedarkcolour.hardcoredungeons.entity.projectile.ProjectileEntity
 import thedarkcolour.hardcoredungeons.registry.HParticles
 
-@OnlyIn(value = Dist.CLIENT, _interface = IRendersAsItem::class)
-class MagicBoltEntity(type: EntityType<out ProjectileEntity>, worldIn: World) : ProjectileEntity(type, worldIn), IRendersAsItem {
+@OnlyIn(value = Dist.CLIENT, _interface = ItemSupplier::class)
+class MagicBoltEntity(type: EntityType<out ProjectileEntity>, level: Level) : ProjectileEntity(type, level), ItemSupplier {
 
     /**
      * Called to update the entity's position/logic.
@@ -39,20 +39,20 @@ class MagicBoltEntity(type: EntityType<out ProjectileEntity>, worldIn: World) : 
     /**
      * Called when this EntityFireball hits a block or entity.
      */
-    override fun onHit(result: RayTraceResult) {
+    override fun onHit(result: HitResult) {
         super.onHit(result)
         if (!level.isClientSide) {
             val shooter = shootingEntity
 
-            if (result is EntityRayTraceResult && result.entity != shooter) {
+            if (result is EntityHitResult && result.entity != shooter) {
                 val entity = result.entity
                 val flag = entity.hurt(DamageSource.MAGIC, 7.0f)
 
                 if (flag && shooter != null) {
                     doEnchantDamageEffects(shooter, entity)
                 }
-            } else if (result.type == RayTraceResult.Type.BLOCK) {
-                remove()
+            } else if (result.type == HitResult.Type.BLOCK) {
+                remove(RemovalReason.DISCARDED)
 
                 val d0 = random.nextGaussian() * 0.02
                 val d1 = random.nextGaussian() * 0.02

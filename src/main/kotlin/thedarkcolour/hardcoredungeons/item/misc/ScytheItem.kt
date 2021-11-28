@@ -13,11 +13,11 @@ import net.minecraft.entity.item.ArmorStandEntity
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.inventory.EquipmentSlotType
 import net.minecraft.item.IItemTier
-import net.minecraft.item.ItemStack
+import net.minecraft.world.item.ItemStack
 import net.minecraft.item.TieredItem
 import net.minecraft.util.DamageSource
 import net.minecraft.util.SoundEvents
-import net.minecraft.util.math.BlockPos
+import net.minecraft.core.BlockPos
 import net.minecraft.util.math.MathHelper
 import net.minecraft.world.level.Level
 import thedarkcolour.hardcoredungeons.util.toDegrees

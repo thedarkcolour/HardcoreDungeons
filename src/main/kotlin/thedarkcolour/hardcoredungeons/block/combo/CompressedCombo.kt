@@ -3,14 +3,14 @@ package thedarkcolour.hardcoredungeons.block.combo
 import net.minecraft.world.level.block.Block
 import net.minecraft.client.util.ITooltipFlag
 import net.minecraft.data.IFinishedRecipe
-import net.minecraft.item.ItemStack
+import net.minecraft.world.item.ItemStack
 import net.minecraft.util.text.ITextComponent
 import net.minecraft.util.text.StringTextComponent
 import net.minecraft.util.text.Style
 import net.minecraft.util.text.TextFormatting
 import net.minecraft.world.IBlockReader
 import net.minecraftforge.common.Tags
-import thedarkcolour.hardcoredungeons.block.base.BlockMaker
+import thedarkcolour.hardcoredungeons.block.base.HBlockMaker
 import thedarkcolour.hardcoredungeons.block.base.HBlock
 import thedarkcolour.hardcoredungeons.block.base.properties.HProperties
 import thedarkcolour.hardcoredungeons.data.RecipeGenerator
@@ -28,7 +28,7 @@ class CompressedCombo(val block: () -> Block, private val properties: HPropertie
 
     init {
         for (i in 0..7) {
-            variants.add(BlockMaker.cubeAllWithItem(getCompressedName(i)) {
+            variants.add(HBlockMaker.cubeAllWithItem(getCompressedName(i)) {
                 Variant(i + 1, properties ?: HProperties.copy(block()))
             })
         }

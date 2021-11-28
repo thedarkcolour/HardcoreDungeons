@@ -5,7 +5,7 @@ import net.minecraft.client.renderer.entity.IEntityRenderer
 import net.minecraft.client.renderer.entity.layers.AbstractEyesLayer
 import net.minecraft.client.renderer.entity.model.EntityModel
 import net.minecraft.entity.LivingEntity
-import net.minecraft.util.ResourceLocation
+import net.minecraft.resources.ResourceLocation
 
 /**
  * Fullbright entity renderer that renders using [eyesTexture] for the texture.

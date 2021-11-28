@@ -6,11 +6,11 @@ import net.minecraft.block.TorchBlock
 import net.minecraft.block.WallTorchBlock
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.BlockItemUseContext
-import net.minecraft.item.ItemStack
+import net.minecraft.world.item.ItemStack
 import net.minecraft.particles.ParticleTypes
 import net.minecraft.state.BooleanProperty
 import net.minecraft.state.StateContainer
-import net.minecraft.util.math.BlockPos
+import net.minecraft.core.BlockPos
 import net.minecraft.util.math.RayTraceResult
 import net.minecraft.world.IBlockReader
 import net.minecraft.world.level.Level

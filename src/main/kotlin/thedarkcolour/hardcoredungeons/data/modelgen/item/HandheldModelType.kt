@@ -1,7 +1,7 @@
 package thedarkcolour.hardcoredungeons.data.modelgen.item
 
 import net.minecraft.item.Item
-import net.minecraft.util.ResourceLocation
+import net.minecraft.resources.ResourceLocation
 import net.minecraftforge.client.model.generators.ModelFile
 import thedarkcolour.hardcoredungeons.data.ModelGenerator
 

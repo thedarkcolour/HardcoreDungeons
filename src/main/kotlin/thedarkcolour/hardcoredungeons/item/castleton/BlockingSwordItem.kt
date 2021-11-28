@@ -1,7 +1,7 @@
 package thedarkcolour.hardcoredungeons.item.castleton
 
 import net.minecraft.entity.player.PlayerEntity
-import net.minecraft.item.ItemStack
+import net.minecraft.world.item.ItemStack
 import net.minecraft.item.ItemTier
 import net.minecraft.item.SwordItem
 import net.minecraft.item.UseAction

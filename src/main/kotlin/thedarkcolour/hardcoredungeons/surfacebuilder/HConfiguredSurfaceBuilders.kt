@@ -1,13 +1,13 @@
 package thedarkcolour.hardcoredungeons.surfacebuilder
 
+import net.minecraft.core.Registry
+import net.minecraft.data.BuiltinRegistries
+import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.level.block.state.BlockState
-import net.minecraft.util.ResourceLocation
-import net.minecraft.util.registry.Registry
-import net.minecraft.util.registry.WorldGenRegistries
-import net.minecraft.world.gen.surfacebuilders.ConfiguredSurfaceBuilder
-import net.minecraft.world.gen.surfacebuilders.ISurfaceBuilderConfig
-import net.minecraft.world.gen.surfacebuilders.SurfaceBuilder
-import net.minecraft.world.gen.surfacebuilders.SurfaceBuilderConfig
+import net.minecraft.world.level.levelgen.surfacebuilders.ConfiguredSurfaceBuilder
+import net.minecraft.world.level.levelgen.surfacebuilders.SurfaceBuilder
+import net.minecraft.world.level.levelgen.surfacebuilders.SurfaceBuilderBaseConfiguration
+import net.minecraft.world.level.levelgen.surfacebuilders.SurfaceBuilderConfiguration
 import thedarkcolour.hardcoredungeons.HardcoreDungeons
 import thedarkcolour.hardcoredungeons.registry.HBlocks
 
@@ -26,11 +26,11 @@ object HConfiguredSurfaceBuilders {
         register("sugary_surface", SUGARY_SURFACE)
     }
 
-    private fun defaultCfg(top: BlockState, soil: BlockState, underwater: BlockState): ConfiguredSurfaceBuilder<SurfaceBuilderConfig> {
-        return SurfaceBuilder.DEFAULT.configured(SurfaceBuilderConfig(top, soil, underwater))
+    private fun defaultCfg(top: BlockState, soil: BlockState, underwater: BlockState): ConfiguredSurfaceBuilder<SurfaceBuilderBaseConfiguration> {
+        return SurfaceBuilder.DEFAULT.configured(SurfaceBuilderBaseConfiguration(top, soil, underwater))
     }
 
-    private fun <C : ISurfaceBuilderConfig> register(name: String, config: ConfiguredSurfaceBuilder<C>): ConfiguredSurfaceBuilder<C> {
-        return Registry.register(WorldGenRegistries.CONFIGURED_SURFACE_BUILDER, ResourceLocation(HardcoreDungeons.ID, name), config)
+    private fun <C : SurfaceBuilderConfiguration> register(name: String, config: ConfiguredSurfaceBuilder<C>): ConfiguredSurfaceBuilder<C> {
+        return Registry.register(BuiltinRegistries.CONFIGURED_SURFACE_BUILDER, ResourceLocation(HardcoreDungeons.ID, name), config)
     }
 }

@@ -1,10 +1,11 @@
 package thedarkcolour.hardcoredungeons.surfacebuilder
 
 import net.minecraft.world.level.block.state.BlockState
-import net.minecraft.world.biome.Biome
+import net.minecraft.world.level.biome.Biome
 import net.minecraft.world.chunk.IChunk
 import net.minecraft.world.gen.surfacebuilders.SurfaceBuilder
 import net.minecraft.world.gen.surfacebuilders.SurfaceBuilderConfig
+import net.minecraft.world.level.levelgen.surfacebuilders.SurfaceBuilder
 import java.util.*
 
 class ThickForestSurfaceBuilder : SurfaceBuilder<SurfaceBuilderConfig>(SurfaceBuilderConfig.CODEC) {

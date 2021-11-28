@@ -1,27 +1,23 @@
 package thedarkcolour.hardcoredungeons.registry
 
-import net.minecraft.client.Minecraft
-import net.minecraft.client.renderer.entity.SpriteRenderer
-import net.minecraft.entity.Entity
-import net.minecraft.entity.EntityClassification
-import net.minecraft.entity.EntitySize
-import net.minecraft.entity.EntityType
-import net.minecraft.entity.EntityType.Builder
-import net.minecraft.util.ResourceLocation
+import net.minecraft.client.renderer.entity.ThrownItemRenderer
+import net.minecraft.resources.ResourceLocation
+import net.minecraft.world.entity.Entity
+import net.minecraft.world.entity.EntityDimensions
+import net.minecraft.world.entity.EntityType
+import net.minecraft.world.entity.EntityType.Builder
+import net.minecraft.world.entity.MobCategory
 import net.minecraftforge.client.event.EntityRenderersEvent
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent
-import net.minecraftforge.fml.client.registry.ClientRegistry
-import net.minecraftforge.fml.client.registry.RenderingRegistry
 import net.minecraftforge.fmlclient.registry.ClientRegistry
-import net.minecraftforge.registries.IForgeRegistry
+import net.minecraftforge.registries.DeferredRegister
+import net.minecraftforge.registries.ForgeRegistries
 import thedarkcolour.hardcoredungeons.client.renderer.entity.DeerRenderer
 import thedarkcolour.hardcoredungeons.client.renderer.entity.FrayedSoulRenderer
 import thedarkcolour.hardcoredungeons.client.renderer.entity.KnightlyJuggernautRenderer
 import thedarkcolour.hardcoredungeons.client.renderer.entity.VoidRunnerRenderer
 import thedarkcolour.hardcoredungeons.entity.HEntityType
 import thedarkcolour.hardcoredungeons.entity.castleton.frayedsoul.FrayedSoulEntity
-import thedarkcolour.hardcoredungeons.entity.castleton.infinity.BlackStarEntity
-import thedarkcolour.hardcoredungeons.entity.castleton.infinity.InfinityEntity
 import thedarkcolour.hardcoredungeons.entity.castleton.knightlyjuggernaut.KnightlyJuggernautEntity
 import thedarkcolour.hardcoredungeons.entity.castleton.voidrunner.VoidRunnerEntity
 import thedarkcolour.hardcoredungeons.entity.overworld.deer.CastletonDeerEntity
@@ -33,61 +29,48 @@ import thedarkcolour.hardcoredungeons.entity.overworld.mushroomarcher.MushroomAr
 import thedarkcolour.hardcoredungeons.entity.projectile.bullet.SmallBulletEntity
 import thedarkcolour.hardcoredungeons.entity.projectile.magic.MagicBoltEntity
 import thedarkcolour.hardcoredungeons.util.modLoc
+import thedarkcolour.kotlinforforge.forge.registerObject
 
 @Suppress("MemberVisibilityCanBePrivate")
 object HEntities {
-    val INFINITY = Builder
-        .of(::InfinityEntity, EntityClassification.MISC)
-        .fireImmune()
-        .build(modLoc("infinity"))
+    val ENTITY_TYPES = DeferredRegister.create(ForgeRegistries.ENTITIES, "entity_types")
 
-    // you ever walk into a bush and burn to death? well this guy walked into a bush and burned to death.
     val FRAYED_SOUL = Builder
-        .of(::FrayedSoulEntity, EntityClassification.MONSTER)
+        .of(::FrayedSoulEntity, MobCategory.MONSTER)
         .build(modLoc("frayed_soul"))
     val VOID_RUNNER = Builder
-        .of(::VoidRunnerEntity, EntityClassification.MONSTER)
+        .of(::VoidRunnerEntity, MobCategory.MONSTER)
         .build(modLoc("void_runner"))
     val CASTLETON_DEER = Builder
-        .of(::CastletonDeerEntity, EntityClassification.CREATURE)
+        .of(::CastletonDeerEntity, MobCategory.CREATURE)
         .build(modLoc("castleton_deer"))
     val DEER = Builder
-        .of(::DeerEntity, EntityClassification.CREATURE)
+        .of(::DeerEntity, MobCategory.CREATURE)
         .build(modLoc("deer"))
     val KNIGHTLY_JUGGERNAUT = Builder
-        .of(::KnightlyJuggernautEntity, EntityClassification.CREATURE)
+        .of(::KnightlyJuggernautEntity, MobCategory.CREATURE)
         .build(modLoc("knightly_juggernaut"))
     val MAZE_BOSS = Builder
-        .of(::MazeBossEntity, EntityClassification.MONSTER)
+        .of(::MazeBossEntity, MobCategory.MONSTER)
         .build(modLoc("maze_boss"))
     val MUSHROOM_ARCHER = Builder
-        .of(::MushroomArcherEntity, EntityClassification.MONSTER)
+        .of(::MushroomArcherEntity, MobCategory.MONSTER)
         .build(modLoc("mushroom_archer"))
 
-    //val RAINBOWLAND_SHEEP = Builder
-    //    .create(::RainbowlandSheepEntity, EntityClassification.CREATURE)
-    //    .build(modLoc("rainbowland_sheep"))
-
     // projectile
-    val SMALL_BULLET = HEntityType(
-        factory = ::SmallBulletEntity,
-        classification = EntityClassification.MISC,
-        velocityUpdateSpecial = { true },
-        size = EntitySize.scalable(0.2f, 0.2f),
-        id = modLoc("small_bullet")
-    )
-    val MAGIC_BOLT = HEntityType(
+    val SMALL_BULLET by ENTITY_TYPES.registerObject("small_bullet") {
+        HEntityType(
+            factory = ::SmallBulletEntity,
+            classification = MobCategory.MISC,
+            velocityUpdateSpecial = { true },
+            size = EntityDimensions.scalable(0.2f, 0.2f)
+        )
+    }
+    val MAGIC_BOLT by ENTITY_TYPES.registerObject("magic_bolt") {HEntityType(
         factory = ::MagicBoltEntity,
-        classification = EntityClassification.MISC,
-        velocityUpdateSpecial = { true },
-        id = modLoc("magic_bolt")
-    )
-    val BLACK_STAR = HEntityType(
-        factory = ::BlackStarEntity,
-        classification = EntityClassification.MISC,
-        velocityUpdateSpecial = { true },
-        id = modLoc("black_star")
-    )
+        classification = MobCategory.MISC,
+        velocityUpdateSpecial = { true }
+    )}
 
     val BLUE_EYES_SHADER = modLoc("shaders/post/blue_eyes.json")
 
@@ -98,46 +81,26 @@ object HEntities {
         return type
     }
 
-    fun registerEntities(entities: IForgeRegistry<EntityType<*>>) {
-        entities.register(DEER)
-        entities.register(MAZE_BOSS)
-        entities.register(MUSHROOM_ARCHER)
-
-        entities.register(FRAYED_SOUL)
-        entities.register(VOID_RUNNER)
-        entities.register(CASTLETON_DEER)
-        entities.register(KNIGHTLY_JUGGERNAUT)
-
-        //entities.register(RAINBOWLAND_SHEEP)
-
-        entities.register(SMALL_BULLET)
-        entities.register(MAGIC_BOLT)
-    }
-
     fun registerEntityAttributes(event: EntityAttributeCreationEvent) {
         event.put(FRAYED_SOUL, FrayedSoulEntity.ATTRIBUTES.build())
         event.put(VOID_RUNNER, VoidRunnerEntity.ATTRIBUTES.build())
         event.put(CASTLETON_DEER, DeerEntity.DEFAULT_ATTRIBUTES.build())
         event.put(DEER, DeerEntity.DEFAULT_ATTRIBUTES.build())
         event.put(KNIGHTLY_JUGGERNAUT, KnightlyJuggernautEntity.ATTRIBUTES.build())
-        //event.put(RAINBOWLAND_SHEEP, RainbowlandSheepEntity.ATTRIBUTES.build())
-        event.put(INFINITY, InfinityEntity.ATTRIBUTES.build())
         event.put(MAZE_BOSS, MazeBossEntity.ATTRIBUTES.build())
         event.put(MUSHROOM_ARCHER, MushroomArcherEntity.ATTRIBUTES.build())
     }
 
     fun registerEntityRenderers(event: EntityRenderersEvent.RegisterRenderers) {
         event.registerEntityRenderer(MAZE_BOSS, ::MazeBossRenderer)
-        ClientRegistry.registerEntityRenderingHandler()
-        ClientRegistry.registerEntityRenderingHandler(MUSHROOM_ARCHER, ::MushroomArcherRenderer)
-        ClientRegistry.registerEntityRenderingHandler(DEER, ::DeerRenderer)
-        ClientRegistry.registerEntityRenderingHandler(FRAYED_SOUL, ::FrayedSoulRenderer)
-        ClientRegistry.registerEntityRenderingHandler(VOID_RUNNER, ::VoidRunnerRenderer)
-        //ClientRegistry.registerEntityRenderingHandler(RAINBOWLAND_SHEEP, ::SheepRenderer)
-        ClientRegistry.registerEntityRenderingHandler(CASTLETON_DEER, ::DeerRenderer)
-        ClientRegistry.registerEntityRenderingHandler(KNIGHTLY_JUGGERNAUT, ::KnightlyJuggernautRenderer)
-        ClientRegistry.registerEntityRenderingHandler(SMALL_BULLET) { SpriteRenderer(it, Minecraft.getInstance().itemRenderer) }
-        ClientRegistry.registerEntityRenderingHandler(MAGIC_BOLT) { SpriteRenderer(it, Minecraft.getInstance().itemRenderer) }
+        event.registerEntityRenderer(MUSHROOM_ARCHER, ::MushroomArcherRenderer)
+        event.registerEntityRenderer(DEER, ::DeerRenderer)
+        event.registerEntityRenderer(FRAYED_SOUL, ::FrayedSoulRenderer)
+        event.registerEntityRenderer(VOID_RUNNER, ::VoidRunnerRenderer)
+        event.registerEntityRenderer(CASTLETON_DEER, ::DeerRenderer)
+        event.registerEntityRenderer(KNIGHTLY_JUGGERNAUT, ::KnightlyJuggernautRenderer)
+        event.registerEntityRenderer(SMALL_BULLET, ::ThrownItemRenderer)
+        event.registerEntityRenderer(MAGIC_BOLT) { ctx -> ThrownItemRenderer(ctx, 1.0f, true) }
     }
 
     fun registerEntityShaders() {

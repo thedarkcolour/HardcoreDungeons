@@ -2,7 +2,7 @@ package thedarkcolour.hardcoredungeons.block.plant.aubrum
 
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.particles.ParticleTypes
-import net.minecraft.util.math.BlockPos
+import net.minecraft.core.BlockPos
 import net.minecraft.world.level.Level
 import thedarkcolour.hardcoredungeons.block.plant.FlowerBlock
 import thedarkcolour.hardcoredungeons.block.plant.PlantProperties

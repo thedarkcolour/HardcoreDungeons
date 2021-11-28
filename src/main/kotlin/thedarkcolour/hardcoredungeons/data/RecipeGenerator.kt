@@ -6,6 +6,8 @@ import net.minecraft.advancements.criterion.ItemPredicate
 import net.minecraft.advancements.criterion.MinMaxBounds
 import net.minecraft.block.*
 import net.minecraft.data.*
+import net.minecraft.data.recipes.FinishedRecipe
+import net.minecraft.data.recipes.RecipeProvider
 import net.minecraft.item.Item
 import net.minecraft.item.Items
 import net.minecraft.item.crafting.IRecipeSerializer
@@ -13,11 +15,12 @@ import net.minecraft.item.crafting.Ingredient
 import net.minecraft.tags.ITag
 import net.minecraft.tags.ItemTags
 import net.minecraft.util.IItemProvider
-import net.minecraft.util.ResourceLocation
+import net.minecraft.resources.ResourceLocation
 import net.minecraftforge.common.Tags
 import net.minecraftforge.registries.IForgeRegistryEntry
 import thedarkcolour.hardcoredungeons.block.HBlocks
 import thedarkcolour.hardcoredungeons.compat.getBiomesOPlentyCompat
+import thedarkcolour.hardcoredungeons.registry.HBlocks
 import thedarkcolour.hardcoredungeons.registry.HItems
 import thedarkcolour.hardcoredungeons.tags.HItemTags
 import thedarkcolour.hardcoredungeons.util.modLoc
@@ -30,7 +33,7 @@ class RecipeGenerator(generatorIn: DataGenerator) : RecipeProvider(generatorIn) 
      *
      * Uses several extension functions declared later on in the file.
      */
-    override fun buildShapelessRecipes(consumer: Consumer<IFinishedRecipe>) {
+    override fun buildCraftingRecipes(consumer: Consumer<FinishedRecipe>) {
         // lumlight blocks
         HBlocks.LUMLIGHT_WOOD.addRecipes(consumer)
         HBlocks.AURI_WOOD.addRecipes(consumer)

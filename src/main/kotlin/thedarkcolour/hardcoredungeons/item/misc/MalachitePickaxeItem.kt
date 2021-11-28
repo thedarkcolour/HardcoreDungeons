@@ -1,30 +1,30 @@
 package thedarkcolour.hardcoredungeons.item.misc
 
-import net.minecraft.world.level.block.state.BlockState
-import net.minecraft.entity.LivingEntity
-import net.minecraft.item.IItemTier
-import net.minecraft.item.ItemStack
-import net.minecraft.item.PickaxeItem
-import net.minecraft.potion.EffectInstance
-import net.minecraft.potion.Effects
-import net.minecraft.util.math.BlockPos
+import net.minecraft.core.BlockPos
+import net.minecraft.world.effect.MobEffectInstance
+import net.minecraft.world.effect.MobEffects
+import net.minecraft.world.entity.LivingEntity
+import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.PickaxeItem
+import net.minecraft.world.item.Tier
 import net.minecraft.world.level.Level
+import net.minecraft.world.level.block.state.BlockState
 import net.minecraftforge.common.util.Constants
 
 // hopefully we can make a speedy pickaxe with this
 // this was inspired from an idea i had today about doing a vanilla playthrough
-// but then i realized how fucking boring it would be if i just sat there with a diamond pickaxe
+// but then i realized how boring it would be if i just sat there with a diamond pickaxe
 // being a god or whatever
 // so i decided we need more epic pickaxes
 class MalachitePickaxeItem(
-    tier: IItemTier,
+    tier: Tier,
     attackDamageIn: Int,
     attackSpeedIn: Float,
     properties: Properties,
 ) : PickaxeItem(tier, attackDamageIn, attackSpeedIn, properties) {
     override fun mineBlock(
         stack: ItemStack,
-        worldIn: World,
+        worldIn: Level,
         state: BlockState,
         pos: BlockPos,
         entityLiving: LivingEntity,
@@ -33,22 +33,12 @@ class MalachitePickaxeItem(
 
         if (boost >= 5) {
             setBoost(stack, 0)
-            entityLiving.addEffect(EffectInstance(Effects.DIG_SPEED, 100, 1, false, false))
+            entityLiving.addEffect(MobEffectInstance(MobEffects.DIG_SPEED, 100, 1, false, false))
         } else {
             setBoost(stack, boost)
         }
 
         return super.mineBlock(stack, worldIn, state, pos, entityLiving)
-    }
-
-    // hopefully reset the boost timer
-    // might not work cause its probably clientside
-    // CLIENTSIDE ONLY
-    override fun shouldCauseReequipAnimation(oldStack: ItemStack, newStack: ItemStack, slotChanged: Boolean): Boolean {
-        if (oldStack != newStack) {
-            setBoost(oldStack, 0)
-        }
-        return super.shouldCauseReequipAnimation(oldStack, newStack, slotChanged)
     }
 
     // boost mining speed

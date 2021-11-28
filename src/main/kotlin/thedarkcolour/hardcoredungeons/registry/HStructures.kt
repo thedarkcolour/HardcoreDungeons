@@ -1,7 +1,7 @@
 package thedarkcolour.hardcoredungeons.registry
 
 import com.google.common.collect.ImmutableMap
-import net.minecraft.util.ResourceLocation
+import net.minecraft.resources.ResourceLocation
 import net.minecraft.util.math.vector.Vector3i
 import net.minecraft.world.gen.feature.IFeatureConfig
 import net.minecraft.world.gen.feature.structure.IStructurePieceType
@@ -11,12 +11,14 @@ import net.minecraft.world.gen.settings.StructureSeparationSettings
 import net.minecraft.world.server.ServerWorld
 import net.minecraftforge.event.world.WorldEvent
 import net.minecraftforge.registries.IForgeRegistry
+import team.rusty.util.worldgen.structure.SimpleStructureRegistry
 import thedarkcolour.hardcoredungeons.HardcoreDungeons
-import thedarkcolour.hardcoredungeons.structure.SimpleStructure
 import java.util.*
 
 @Suppress("MemberVisibilityCanBePrivate", "UNCHECKED_CAST")
 object HStructures {
+    val REGISTRY = SimpleStructureRegistry(HardcoreDungeons.ID)
+
     val RAINBOW_FACTORY_PIECE_0 = ResourceLocation(HardcoreDungeons.ID, "rainbow_factory_slice_0")
     val RAINBOW_FACTORY_PIECE_1 = ResourceLocation(HardcoreDungeons.ID, "rainbow_factory_slice_1")
 

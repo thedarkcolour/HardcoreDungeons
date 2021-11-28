@@ -4,7 +4,7 @@ import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.util.registry.Registry
 import net.minecraft.util.registry.WorldGenRegistries
-import net.minecraft.world.biome.BiomeGenerationSettings
+import net.minecraft.world.level.biome.BiomeGenerationSettings
 import net.minecraft.world.gen.GenerationStage
 import net.minecraft.world.gen.Heightmap
 import net.minecraft.world.gen.blockplacer.SimpleBlockPlacer

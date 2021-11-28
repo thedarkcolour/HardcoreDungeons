@@ -1,21 +1,24 @@
 package thedarkcolour.hardcoredungeons.entity.projectile
 
-import net.minecraft.entity.EntityType
+import com.mojang.math.Vector3d
+import net.minecraft.world.entity.EntityType
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.ai.attributes.AttributeModifierMap
-import net.minecraft.entity.projectile.DamagingProjectileEntity
 import net.minecraft.network.IPacket
 import net.minecraft.util.math.RayTraceResult
 import net.minecraft.util.math.vector.Vector3d
+import net.minecraft.world.entity.LivingEntity
+import net.minecraft.world.entity.projectile.AbstractHurtingProjectile
 import net.minecraft.world.level.Level
+import net.minecraft.world.phys.HitResult
 import net.minecraftforge.fml.network.NetworkHooks
 import thedarkcolour.hardcoredungeons.entity.HEntityType
 import kotlin.math.sqrt
 
 abstract class ProjectileEntity(
     type: EntityType<out ProjectileEntity>,
-    worldIn: World,
-) : DamagingProjectileEntity(type, worldIn), HEntityType.HEntity {
+    level: Level,
+) : AbstractHurtingProjectile(type, level), HEntityType.HEntity {
 
     var shootingEntity: LivingEntity?
         get() = getOwner() as LivingEntity?
@@ -38,7 +41,7 @@ abstract class ProjectileEntity(
         level.addFreshEntity(this)
     }
 
-    override fun onHit(result: RayTraceResult) {
+    override fun onHit(result: HitResult) {
         super.onHit(result)
     }
 

@@ -1,19 +1,21 @@
 package thedarkcolour.hardcoredungeons.item.overworld
 
-import net.minecraft.client.renderer.entity.model.BipedModel
-import net.minecraft.entity.Entity
-import net.minecraft.entity.LivingEntity
-import net.minecraft.inventory.EquipmentSlotType
-import net.minecraft.item.ArmorItem
-import net.minecraft.item.ItemStack
+import net.minecraft.client.model.HumanoidModel
+import net.minecraft.world.entity.Entity
+import net.minecraft.world.entity.EquipmentSlot
+import net.minecraft.world.entity.LivingEntity
+import net.minecraft.world.item.ArmorItem
+import net.minecraft.world.item.ItemStack
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn
+import net.minecraftforge.client.IItemRenderProperties
 import thedarkcolour.hardcoredungeons.HardcoreDungeons
 import thedarkcolour.hardcoredungeons.client.model.armor.MushroomArmorModel
 import thedarkcolour.hardcoredungeons.item.HArmorMaterial
 import thedarkcolour.kotlinforforge.forge.runWhenOn
+import java.util.function.Consumer
 
-class MushroomArmorItem(slot: EquipmentSlotType, properties: Properties) : ArmorItem(HArmorMaterial.SHROOMY, slot, properties) {
+class MushroomArmorItem(slot: EquipmentSlot, properties: Properties) : ArmorItem(HArmorMaterial.Shroomy, slot, properties) {
     @OnlyIn(Dist.CLIENT)
     private var model: Any? = null
 
@@ -23,12 +25,17 @@ class MushroomArmorItem(slot: EquipmentSlotType, properties: Properties) : Armor
         }
     }
 
-    @OnlyIn(Dist.CLIENT)
-    override fun <A : BipedModel<*>> getArmorModel(entityLiving: LivingEntity?, itemStack: ItemStack?, armorSlot: EquipmentSlotType?, _default: A): A {
-        return model as A
+    override fun initializeClient(consumer: Consumer<IItemRenderProperties>) {
+        consumer.accept(object : IItemRenderProperties {
+            // Rule of thumb
+            // Always leave params nullable to avoid NPEs for unused parameters
+            override fun <A : HumanoidModel<*>?> getArmorModel(entityLiving: LivingEntity?, itemStack: ItemStack?, armorSlot: EquipmentSlot?, _default: A): A {
+                return model as A
+            }
+        })
     }
 
-    override fun getArmorTexture(stack: ItemStack?, entity: Entity?, slot: EquipmentSlotType?, type: String?): String {
+    override fun getArmorTexture(stack: ItemStack?, entity: Entity?, slot: EquipmentSlot?, type: String?): String {
         return HardcoreDungeons.ID + ":textures/models/armor/mushroom_armor.png"
     }
 }

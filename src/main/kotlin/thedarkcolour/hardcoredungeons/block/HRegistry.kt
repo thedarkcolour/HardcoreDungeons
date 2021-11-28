@@ -7,8 +7,8 @@ import net.minecraftforge.registries.IForgeRegistry
 import net.minecraftforge.registries.IForgeRegistryEntry
 import thedarkcolour.hardcoredungeons.HardcoreDungeons
 import thedarkcolour.kotlinforforge.forge.MOD_BUS
+import thedarkcolour.kotlinforforge.forge.ObjectHolderDelegate
 import thedarkcolour.kotlinforforge.forge.registerObject
-import kotlin.properties.ReadOnlyProperty
 
 open class HRegistry<T : IForgeRegistryEntry<T>>(forgeRegistry: IForgeRegistry<T>) {
     private val queue = ArrayDeque<() -> Unit>()
@@ -25,7 +25,7 @@ open class HRegistry<T : IForgeRegistryEntry<T>>(forgeRegistry: IForgeRegistry<T
         queue.add(function)
     }
 
-    fun <V : T> register(name: String, supplier: () -> V): ReadOnlyProperty<Any, T> {
+    fun <V : T> register(name: String, supplier: () -> V): ObjectHolderDelegate<V> {
         return registry.registerObject(name, supplier)
     }
 

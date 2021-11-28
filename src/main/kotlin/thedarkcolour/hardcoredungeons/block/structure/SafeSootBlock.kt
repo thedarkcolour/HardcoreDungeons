@@ -7,7 +7,7 @@ import net.minecraft.tags.BlockTags
 import net.minecraft.util.Direction
 import net.minecraft.util.SoundCategory
 import net.minecraft.util.SoundEvents
-import net.minecraft.util.math.BlockPos
+import net.minecraft.core.BlockPos
 import net.minecraft.world.IBlockReader
 import net.minecraft.world.level.Level
 import net.minecraft.world.server.ServerWorld
