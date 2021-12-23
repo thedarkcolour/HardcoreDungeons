@@ -9,10 +9,11 @@ import net.minecraft.world.ISeedReader
 import net.minecraft.world.gen.ChunkGenerator
 import net.minecraft.world.gen.feature.Feature
 import net.minecraft.world.gen.feature.NoFeatureConfig
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration
 import thedarkcolour.hardcoredungeons.block.HBlocks
 import java.util.*
 
-class CandyCaneFeature(codec: Codec<NoFeatureConfig>) : Feature<NoFeatureConfig>(codec) {
+class CandyCaneFeature(codec: Codec<NoneFeatureConfiguration>) : Feature<NoneFeatureConfiguration>(codec) {
     override fun place(
         worldIn: ISeedReader,
         generator: ChunkGenerator,

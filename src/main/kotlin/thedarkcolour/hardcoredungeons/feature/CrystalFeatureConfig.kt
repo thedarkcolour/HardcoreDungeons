@@ -2,13 +2,14 @@ package thedarkcolour.hardcoredungeons.feature
 
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
-import net.minecraft.world.level.block.state.BlockState
-import net.minecraft.world.gen.blockstateprovider.BlockStateProvider
 import net.minecraft.world.gen.blockstateprovider.SimpleBlockStateProvider
-import net.minecraft.world.gen.feature.IFeatureConfig
+import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration
+import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider
+import net.minecraft.world.level.levelgen.feature.stateproviders.SimpleStateProvider
 
-class CrystalFeatureConfig(val crystalProvider: BlockStateProvider, val chance: Float) : IFeatureConfig {
-    constructor(state: BlockState, chance: Float): this(SimpleBlockStateProvider(state), chance)
+class CrystalFeatureConfig(val crystalProvider: BlockStateProvider, val chance: Float) : FeatureConfiguration {
+    constructor(state: BlockState, chance: Float): this(SimpleStateProvider(state), chance)
 
     companion object {
         val CODEC: Codec<CrystalFeatureConfig> = RecordCodecBuilder.create { builder ->

@@ -7,15 +7,15 @@ import net.minecraft.core.BlockPos
 import net.minecraft.world.ISeedReader
 import net.minecraft.world.gen.ChunkGenerator
 import net.minecraft.world.gen.feature.Feature
+import net.minecraft.world.level.LevelAccessor
+import net.minecraft.world.level.chunk.ChunkGenerator
+import net.minecraft.world.level.levelgen.feature.Feature
+import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext
 import java.util.*
 
 class CrystalFeature(codec: Codec<CrystalFeatureConfig>) : Feature<CrystalFeatureConfig>(codec) {
     override fun place(
-        reader: ISeedReader,
-        generator: ChunkGenerator,
-        rand: Random,
-        pos: BlockPos,
-        config: CrystalFeatureConfig,
+        ctx: FeaturePlaceContext<CrystalFeatureConfig>
     ): Boolean {
         val mutable = pos.mutable().move(Direction.UP, 40)
 
