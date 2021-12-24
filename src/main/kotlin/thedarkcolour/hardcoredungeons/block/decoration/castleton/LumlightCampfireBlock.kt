@@ -6,7 +6,7 @@ import net.minecraft.util.SoundCategory
 import net.minecraft.util.SoundEvents
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
-import thedarkcolour.hardcoredungeons.block.HBlocks
+import thedarkcolour.hardcoredungeons.registry.HBlocks
 import thedarkcolour.hardcoredungeons.block.base.properties.HProperties
 import thedarkcolour.hardcoredungeons.registry.HParticles
 import java.util.*

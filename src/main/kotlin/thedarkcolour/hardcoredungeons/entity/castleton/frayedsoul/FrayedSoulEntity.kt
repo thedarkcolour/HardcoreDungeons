@@ -12,7 +12,7 @@ import net.minecraft.util.SoundEvent
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 import net.minecraftforge.common.ForgeMod
-import thedarkcolour.hardcoredungeons.block.HBlocks
+import thedarkcolour.hardcoredungeons.registry.HBlocks
 import thedarkcolour.hardcoredungeons.registry.HSounds
 
 class FrayedSoulEntity(type: EntityType<FrayedSoulEntity>, worldIn: World) : CreatureEntity(type, worldIn) {

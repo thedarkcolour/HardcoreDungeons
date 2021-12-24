@@ -3,7 +3,7 @@ package thedarkcolour.hardcoredungeons.item
 import net.minecraft.item.ItemGroup
 import net.minecraft.item.ItemStack
 import thedarkcolour.hardcoredungeons.HardcoreDungeons
-import thedarkcolour.hardcoredungeons.block.HBlocks
+import thedarkcolour.hardcoredungeons.registry.HBlocks
 import thedarkcolour.hardcoredungeons.util.modLoc
 
 object Group : ItemGroup(HardcoreDungeons.ID) {

@@ -6,7 +6,7 @@ import net.minecraft.world.ISeedReader
 import net.minecraft.world.gen.ChunkGenerator
 import net.minecraft.world.gen.feature.Feature
 import net.minecraft.world.gen.feature.NoFeatureConfig
-import thedarkcolour.hardcoredungeons.block.HBlocks
+import thedarkcolour.hardcoredungeons.registry.HBlocks
 import java.util.*
 
 class ChocolateBarFeature(codec: Codec<NoFeatureConfig>) : Feature<NoFeatureConfig>(codec) {

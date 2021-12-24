@@ -15,7 +15,7 @@ import net.minecraft.tags.ITag
 import net.minecraft.util.Direction
 import net.minecraftforge.common.Tags
 import thedarkcolour.hardcoredungeons.HardcoreDungeons
-import thedarkcolour.hardcoredungeons.block.HBlocks
+import thedarkcolour.hardcoredungeons.registry.HBlocks
 import thedarkcolour.hardcoredungeons.block.base.BlockMaker
 import thedarkcolour.hardcoredungeons.block.base.ItemMaker
 import thedarkcolour.hardcoredungeons.block.base.properties.HProperties

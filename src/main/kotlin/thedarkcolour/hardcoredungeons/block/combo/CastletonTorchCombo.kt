@@ -5,7 +5,7 @@ import net.minecraft.block.material.Material
 import net.minecraft.client.renderer.RenderType
 import net.minecraft.client.renderer.RenderTypeLookup
 import net.minecraft.item.Item
-import thedarkcolour.hardcoredungeons.block.HBlocks
+import thedarkcolour.hardcoredungeons.registry.HBlocks
 import thedarkcolour.hardcoredungeons.block.base.ItemMaker
 import thedarkcolour.hardcoredungeons.block.base.properties.HProperties
 import thedarkcolour.hardcoredungeons.block.decoration.castleton.CastletonTorchBlock

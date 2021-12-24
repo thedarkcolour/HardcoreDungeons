@@ -7,7 +7,7 @@ import net.minecraft.item.Item
 import net.minecraft.item.SignItem
 import net.minecraft.tags.BlockTags
 import net.minecraft.tileentity.TileEntityType
-import thedarkcolour.hardcoredungeons.block.HBlocks
+import thedarkcolour.hardcoredungeons.registry.HBlocks
 import thedarkcolour.hardcoredungeons.block.base.BlockMaker
 import thedarkcolour.hardcoredungeons.block.base.ItemMaker
 import thedarkcolour.hardcoredungeons.block.base.properties.HProperties

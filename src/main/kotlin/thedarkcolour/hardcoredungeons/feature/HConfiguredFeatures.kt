@@ -18,7 +18,7 @@ import net.minecraft.world.gen.placement.DepthAverageConfig
 import net.minecraft.world.gen.placement.Placement
 import net.minecraft.world.gen.trunkplacer.StraightTrunkPlacer
 import net.minecraftforge.common.world.BiomeGenerationSettingsBuilder
-import thedarkcolour.hardcoredungeons.block.HBlocks
+import thedarkcolour.hardcoredungeons.registry.HBlocks
 import thedarkcolour.hardcoredungeons.block.combo.WoodCombo
 import thedarkcolour.hardcoredungeons.registry.HFeatures
 import thedarkcolour.hardcoredungeons.structure.HConfiguredStructures

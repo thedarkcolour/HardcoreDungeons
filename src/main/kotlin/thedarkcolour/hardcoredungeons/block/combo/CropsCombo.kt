@@ -3,7 +3,7 @@ package thedarkcolour.hardcoredungeons.block.combo
 import net.minecraft.block.Block
 import net.minecraft.item.Food
 import net.minecraft.tags.BlockTags
-import thedarkcolour.hardcoredungeons.block.HBlocks
+import thedarkcolour.hardcoredungeons.registry.HBlocks
 import thedarkcolour.hardcoredungeons.block.base.ItemMaker
 import thedarkcolour.hardcoredungeons.data.BlockTagGenerator
 

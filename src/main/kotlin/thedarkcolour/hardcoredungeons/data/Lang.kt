@@ -6,7 +6,7 @@ import net.minecraft.item.Item
 import net.minecraft.util.text.TranslationTextComponent
 import net.minecraftforge.common.data.LanguageProvider
 import thedarkcolour.hardcoredungeons.HardcoreDungeons
-import thedarkcolour.hardcoredungeons.block.HBlocks
+import thedarkcolour.hardcoredungeons.registry.HBlocks
 import thedarkcolour.hardcoredungeons.block.combo.CompressedCombo
 import thedarkcolour.hardcoredungeons.registry.HEnchantments
 import thedarkcolour.hardcoredungeons.registry.HItems

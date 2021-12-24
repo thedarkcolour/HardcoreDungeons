@@ -4,7 +4,7 @@ import net.minecraft.block.Block
 import net.minecraft.tileentity.TileEntity
 import net.minecraft.tileentity.TileEntityType
 import net.minecraftforge.registries.ForgeRegistries
-import thedarkcolour.hardcoredungeons.block.HBlocks
+import thedarkcolour.hardcoredungeons.registry.HBlocks
 import thedarkcolour.hardcoredungeons.block.HRegistry
 import thedarkcolour.hardcoredungeons.tileentity.DungeonSpawnerTileEntity
 import thedarkcolour.hardcoredungeons.tileentity.MazeBossSpawnerTileEntity

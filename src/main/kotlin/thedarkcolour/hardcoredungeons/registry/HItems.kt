@@ -11,7 +11,7 @@ import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn
 import net.minecraftforge.common.brewing.BrewingRecipeRegistry
 import net.minecraftforge.registries.IForgeRegistry
-import thedarkcolour.hardcoredungeons.block.HBlocks
+import thedarkcolour.hardcoredungeons.registry.HBlocks
 import thedarkcolour.hardcoredungeons.client.color.PotionColor
 import thedarkcolour.hardcoredungeons.client.color.RainbowColor
 import thedarkcolour.hardcoredungeons.data.modelgen.item.ItemModelType

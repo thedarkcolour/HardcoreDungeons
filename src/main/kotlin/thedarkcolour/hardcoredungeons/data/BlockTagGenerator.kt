@@ -7,7 +7,7 @@ import net.minecraft.tags.ITag
 import net.minecraftforge.common.Tags.Blocks
 import net.minecraftforge.common.data.ExistingFileHelper
 import thedarkcolour.hardcoredungeons.HardcoreDungeons
-import thedarkcolour.hardcoredungeons.block.HBlocks
+import thedarkcolour.hardcoredungeons.registry.HBlocks
 import thedarkcolour.hardcoredungeons.tags.HBlockTags
 
 /**

@@ -16,7 +16,7 @@ import net.minecraft.util.IItemProvider
 import net.minecraft.util.ResourceLocation
 import net.minecraftforge.common.Tags
 import net.minecraftforge.registries.IForgeRegistryEntry
-import thedarkcolour.hardcoredungeons.block.HBlocks
+import thedarkcolour.hardcoredungeons.registry.HBlocks
 import thedarkcolour.hardcoredungeons.compat.getBiomesOPlentyCompat
 import thedarkcolour.hardcoredungeons.registry.HItems
 import thedarkcolour.hardcoredungeons.tags.HItemTags

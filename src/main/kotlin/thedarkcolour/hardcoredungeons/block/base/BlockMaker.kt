@@ -14,7 +14,7 @@ import net.minecraft.util.math.shapes.VoxelShape
 import net.minecraft.util.math.shapes.VoxelShapes
 import net.minecraft.world.World
 import net.minecraftforge.common.ToolType
-import thedarkcolour.hardcoredungeons.block.HBlocks
+import thedarkcolour.hardcoredungeons.registry.HBlocks
 import thedarkcolour.hardcoredungeons.block.base.properties.HProperties
 import thedarkcolour.hardcoredungeons.block.combo.PottedPlantCombo
 import thedarkcolour.hardcoredungeons.block.decoration.RotatableBlock

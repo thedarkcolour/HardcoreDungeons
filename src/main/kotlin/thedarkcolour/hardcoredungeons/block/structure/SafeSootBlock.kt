@@ -11,7 +11,7 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.world.IBlockReader
 import net.minecraft.world.World
 import net.minecraft.world.server.ServerWorld
-import thedarkcolour.hardcoredungeons.block.HBlocks
+import thedarkcolour.hardcoredungeons.registry.HBlocks
 import thedarkcolour.hardcoredungeons.block.base.HBlock
 import thedarkcolour.hardcoredungeons.block.base.properties.HProperties
 import java.util.*

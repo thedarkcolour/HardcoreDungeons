@@ -8,7 +8,7 @@ import net.minecraftforge.client.event.ColorHandlerEvent
 import net.minecraftforge.client.event.ModelBakeEvent
 import net.minecraftforge.client.event.ParticleFactoryRegisterEvent
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent
-import thedarkcolour.hardcoredungeons.block.HBlocks
+import thedarkcolour.hardcoredungeons.registry.HBlocks
 import thedarkcolour.hardcoredungeons.client.color.RainbowColor
 import thedarkcolour.hardcoredungeons.client.dimension.AubrumEffects
 import thedarkcolour.hardcoredungeons.client.dimension.CastletonEffects
