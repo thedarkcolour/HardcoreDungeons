@@ -1,7 +1,6 @@
 package thedarkcolour.hardcoredungeons.data
 
 import com.google.gson.GsonBuilder
-import com.theonlytails.loottables.*
 import net.minecraft.advancements.criterion.*
 import net.minecraft.block.*
 import net.minecraft.data.DataGenerator
@@ -10,14 +9,25 @@ import net.minecraft.data.IDataProvider
 import net.minecraft.data.LootTableProvider
 import net.minecraft.enchantment.Enchantments
 import net.minecraft.entity.EntityType
+import net.minecraft.item.ItemStack
 import net.minecraft.item.Items
 import net.minecraft.loot.*
-import net.minecraft.loot.conditions.BlockStateProperty
-import net.minecraft.loot.conditions.EntityHasProperty
-import net.minecraft.loot.conditions.MatchTool
-import net.minecraft.loot.conditions.SurvivesExplosion
-import net.minecraft.loot.functions.ApplyBonus
-import net.minecraft.loot.functions.SetCount
+import net.minecraft.loot.AlternativesLootEntry.alternatives
+import net.minecraft.loot.BinomialRange.binomial
+import net.minecraft.loot.ConstantRange.exactly
+import net.minecraft.loot.LootPool.lootPool
+import net.minecraft.loot.LootTable.lootTable
+import net.minecraft.loot.RandomValueRange.between
+import net.minecraft.loot.conditions.*
+import net.minecraft.loot.conditions.EntityHasProperty.hasProperties
+import net.minecraft.loot.conditions.MatchTool.toolMatches
+import net.minecraft.loot.conditions.RandomChance.randomChance
+import net.minecraft.loot.conditions.RandomChanceWithLooting.randomChanceAndLootingBoost
+import net.minecraft.loot.functions.*
+import net.minecraft.loot.functions.ExplosionDecay.explosionDecay
+import net.minecraft.loot.functions.LootingEnchantBonus.lootingMultiplier
+import net.minecraft.loot.functions.SetCount.setCount
+import net.minecraft.loot.functions.Smelt.smelted
 import net.minecraft.state.Property
 import net.minecraft.state.properties.BlockStateProperties
 import net.minecraft.state.properties.DoubleBlockHalf
@@ -36,33 +46,20 @@ import thedarkcolour.hardcoredungeons.registry.HItems
 class LootGenerator(private val generator: DataGenerator) : LootTableProvider(generator) {
     private val entityTables = hashMapOf<EntityType<*>, LootTable.Builder>()
     private val blockTables = hashMapOf<Block, LootTable.Builder>()
-    //private val tables = hashMapOf<ResourceLocation, LootTable>()
 
     private fun addEntityLoot() {
-        entity(HEntities.DEER) {
-            pool {
-                itemEntry(HItems.DEER_ANTLER)
-                condition { randomChanceWithLooting(0.075f, 0.02f) }
-            }
-            pool {
-                itemEntry(HItems.VENISON) {
-                    function(
-                        setRandomCount(1.0f, 3.0f),
-                        furnaceSmelt { condition { EntityHasProperty.hasProperties(LootContext.EntityTarget.THIS, ON_FIRE) } },
-                        looting(randomRangeValue(0.0f, 1.0f))
-                    )
-                }
-
-            }
-        }/*
-        entityTables[HEntities.DEER] = LootTable.builder()
-            .withPool(LootPool.builder().rolls(ConstantRange.of(1))
-                .add(item(HItems.DEER_ANTLER)/*.acceptCondition(EntityHasProperty.builder(LootContext.EntityTarget.THIS, IS_STAG))*/)
-                .acceptCondition(RandomChanceWithLooting.builder(0.075f, 0.02f))
+        entityTables[HEntities.DEER] = lootTable()
+            .withPool(lootPool().setRolls(exactly(1))
+                .add(item(HItems.DEER_ANTLER))
+                .`when`(randomChanceAndLootingBoost(0.075f, 0.02f))
             )
-            .withPool(LootPool.builder().rolls(ConstantRange.of(1))
-                .add(item(HItems.VENISON).acceptFunction(SetCount.builder(RandomValueRange.of(1.0f, 3.0f))).acceptFunction(Smelt.func_215953_b().acceptCondition(EntityHasProperty.builder(LootContext.EntityTarget.THIS, ON_FIRE))).acceptFunction(LootingEnchantBonus.builder(RandomValueRange.of(0.0F, 1.0F))))
-            )*/
+            .withPool(lootPool().setRolls(exactly(1))
+                .add(item(HItems.VENISON)
+                    .apply(setCount(between(1.0f, 3.0f)))
+                    .apply(smelted()
+                        .`when`(hasProperties(LootContext.EntityTarget.THIS, ON_FIRE))).apply(lootingMultiplier(between(0.0F, 1.0F))
+                    ))
+            )
     }
 
     private fun addBlockLoot() {
@@ -85,22 +82,15 @@ class LootGenerator(private val generator: DataGenerator) : LootTableProvider(ge
         // Add custom loot tables here!
         //
 
-        block(HBlocks.CASTLETON_VASE) {
-            pool {
-                itemEntry(HItems.BULLET, weight = 5).setCountRandom(3.0f, 7.0f)//.setCountRandom(3.0f, 7.0f)
-                itemEntry(Items.ARROW, weight = 5).setCountRandom(2.0f, 6.0f)
-                itemEntry(Items.MUSHROOM_STEW, weight = 3)
-                itemEntry(HItems.CASTLE_GEM, weight = 1)
-            }
-        }
+        addLoot(HBlocks.CASTLETON_VASE, lootTable().withPool(lootPool()
+            .add(item(HItems.BULLET).setWeight(5).setCountRandom(3.0f, 7.0f))
+            .add(item(Items.ARROW).setWeight(5).setCountRandom(2.0f, 6.0f))
+            .add(item(Items.MUSHROOM_STEW).setWeight(3))
+            .add(item(HItems.CASTLE_GEM).setWeight(1))
+        ))
 
-        block(HBlocks.CASTLETON_TREASURE_VASE) {
-            pool {
-                itemEntry(HItems.CASTLE_GEM).setCountBinomial(6, 0.6f)
-            }
-        }
-
-        addLoot(HBlocks.CASTLETON_TREASURE_VASE, LootTable.lootTable().withPool(LootPool.lootPool()
+        addLoot(HBlocks.CASTLETON_TREASURE_VASE, lootTable().withPool(
+            lootPool()
             .add(item(HItems.CASTLE_GEM).setCountBinomial(6, 0.6f).setWeight(10))
             .add(item(HItems.CHILI_PEPPER).setCountBinomial(3, 0.7f).setWeight(5))
         ))
@@ -132,43 +122,20 @@ class LootGenerator(private val generator: DataGenerator) : LootTableProvider(ge
     }
 
     private fun pristineLootTable() {
-        block(Blocks.DIAMOND_ORE) {
-            pool {
-                alternativesEntry(
-                    itemEntry(Items.DIAMOND_ORE, addToPool = false) {
-                        condition(hasSilkTouch)
-                    },
-                    itemEntry(HItems.PRISTINE_DIAMOND, addToPool = false) {
-                        condition(
-                            randomChance(0.4f),
-                            matchTool(itemHasEnchantment(enchantAtLeast(HEnchantments.PROSPECTING, 1)))
-                        )
-                        function(
-                            oreBonusCount(Enchantments.BLOCK_FORTUNE),
-                            explosionDecay()
-                        )
-                    },
-                    itemEntry(Items.DIAMOND, addToPool = false) {
-                        function(
-                            oreBonusCount(Enchantments.BLOCK_FORTUNE),
-                            explosionDecay()
-                        )
-                    }
-                )
-            }
-        }
-    }
-
-    fun block(block: Block, body: LootTable.Builder.() -> LootTable.Builder) {
-        blockTables[block] = lootTableBuilder(LootParameterSets.BLOCK, body)
-    }
-
-    fun entity(block: EntityType<*>, body: LootTable.Builder.() -> LootTable.Builder) {
-        entityTables[block] = lootTableBuilder(LootParameterSets.ENTITY, body)
+        // todo make Prospecting into global loot modifier
+        addLoot(Blocks.DIAMOND_ORE, lootTable()
+            .withPool(lootPool().add(alternatives(
+                item(Items.DIAMOND_ORE).`when`(SILK_TOUCH),
+                item(HItems.PRISTINE_DIAMOND).`when`(randomChance(0.4f)).`when`(PROSPECTING),
+                item(Items.DIAMOND).apply(FORTUNE).apply(explosionDecay())
+            ))))
     }
 
     private fun singlePool(block: Block, poolFunction: LootPool.Builder.() -> Unit) {
-        blockTables[block] = lootTableBuilder(LootParameterSets.BLOCK) { pool(body = poolFunction) }
+        val pool = lootPool()
+        poolFunction(pool)
+
+        addLoot(block, lootTable().withPool(pool))
     }
 
     private fun dropSelf(block: Block) {
@@ -176,7 +143,7 @@ class LootGenerator(private val generator: DataGenerator) : LootTableProvider(ge
         if (block.lootTable == LootTables.EMPTY) return
 
         singlePool(block) {
-            itemEntry(block) { condition { com.theonlytails.loottables.survivesExplosion() } }
+            item(block).`when`(SurvivesExplosion.survivesExplosion())
         }
     }
 
@@ -192,39 +159,18 @@ class LootGenerator(private val generator: DataGenerator) : LootTableProvider(ge
         singlePool(block) { add(item(block)).survivesExplosion().setCount(2).`when`(propertyCondition(block, SlabBlock.TYPE, SlabType.DOUBLE)) }
     }
 
-    private fun slabLoot(block: Block) {
-        lootTable(LootParameterSets.BLOCK) {
-            pool {
-                itemEntry(block) {
-                    function(::explosionDecay)
-                    function {
-                        setConstantCount(2) {
-                            condition {
-                                blockStateProperty(block) {
-                                    setProperties(stateProperties {
-                                        hasProperty(BlockStateProperties.SLAB_TYPE, SlabType.DOUBLE)
-                                    })
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-
     private fun dropDoor(block: Block) {
         singlePool(block) { add(item(block).survivesExplosion().`when`(propertyCondition(block, BlockStateProperties.DOUBLE_BLOCK_HALF, DoubleBlockHalf.LOWER))) }
         //blockTables[block] = LootTable.builder().withPool(LootPool.builder().rolls(ConstantRange.of(1)).add(ItemLootEntry.builder(block.asItem()).acceptCondition(BlockStateProperty.builder(block).fromProperties(StatePropertiesPredicate.Builder.newBuilder().withProp(BlockStateProperties.DOUBLE_BLOCK_HALF, DoubleBlockHalf.LOWER)))).survivesExplosion())
     }
 
     private fun dropPottedPlant(block: FlowerPotBlock) {
-        blockTables[block] = LootTable.lootTable().withPool(constPool().add(item(Items.FLOWER_POT)).survivesExplosion()).withPool(constPool().add(item(block.content)).survivesExplosion())
+        blockTables[block] = lootTable().withPool(constPool().add(item(Items.FLOWER_POT)).survivesExplosion()).withPool(constPool().add(item(block.content)).survivesExplosion())
     }
 
     // rolls constant 1
     private fun constPool(): LootPool.Builder {
-        return LootPool.lootPool().setRolls(ConstantRange.exactly(1))
+        return lootPool().setRolls(exactly(1))
     }
 
     private fun <T> propertyCondition(block: Block, property: Property<T>, value: T): BlockStateProperty.Builder where T : IStringSerializable, T : Comparable<T> {
@@ -237,14 +183,6 @@ class LootGenerator(private val generator: DataGenerator) : LootTableProvider(ge
 
     private fun <T> ILootConditionConsumer<T>.survivesExplosion(): T {
         return `when`(SurvivesExplosion.survivesExplosion())
-    }
-
-    private fun LootPool.Builder.setCount(count: Int): LootPool.Builder {
-        return apply(SetCount.setCount(ConstantRange.exactly(count)))
-    }
-
-    private fun StandaloneLootEntry.Builder<*>.setCountBinomial(amount: Int, chance: Float): StandaloneLootEntry.Builder<*> {
-        return function { setBinomialCount(amount, chance) }//acceptFunction(SetCount.builder(BinomialRange.of(n, p)))
     }
 
     fun addLoot(block: Block, loot: LootTable.Builder) {
@@ -287,8 +225,8 @@ class LootGenerator(private val generator: DataGenerator) : LootTableProvider(ge
 
     companion object {
         // block conditions
-        private val SILK_TOUCH = MatchTool.toolMatches(ItemPredicate.Builder.item().hasEnchantment(EnchantmentPredicate(Enchantments.SILK_TOUCH, MinMaxBounds.IntBound.atLeast(1))))
-        private val PROSPECTING = MatchTool.toolMatches(ItemPredicate.Builder.item().hasEnchantment(EnchantmentPredicate(HEnchantments.PROSPECTING, MinMaxBounds.IntBound.atLeast(1))))
+        private val SILK_TOUCH = toolMatches(ItemPredicate.Builder.item().hasEnchantment(EnchantmentPredicate(Enchantments.SILK_TOUCH, MinMaxBounds.IntBound.atLeast(1))))
+        private val PROSPECTING = toolMatches(ItemPredicate.Builder.item().hasEnchantment(EnchantmentPredicate(HEnchantments.PROSPECTING, MinMaxBounds.IntBound.atLeast(1))))
         // entity conditions
         private val ON_FIRE = EntityPredicate.Builder.entity().flags(EntityFlagsPredicate.Builder.flags().setOnFire(true).build())
 
@@ -298,8 +236,5 @@ class LootGenerator(private val generator: DataGenerator) : LootTableProvider(ge
         // internal stuff
         private val GSON = GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create()
         private val LOGGER = LogManager.getLogger()
-        fun StandaloneLootEntry.Builder<*>.setCountRandom(min: Float, max: Float): StandaloneLootEntry.Builder<*> {
-            return function { setRandomCount(min, max) }
-        }
     }
 }

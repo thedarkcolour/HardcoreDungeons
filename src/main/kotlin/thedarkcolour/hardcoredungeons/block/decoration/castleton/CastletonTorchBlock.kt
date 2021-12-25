@@ -19,7 +19,7 @@ import thedarkcolour.hardcoredungeons.registry.HItems
 import thedarkcolour.hardcoredungeons.registry.HParticles
 import java.util.*
 
-class CastletonTorchBlock(properties: HProperties) : TorchBlock(properties.build(), HParticles.CASTLETON_TORCH_FLAME) {
+class CastletonTorchBlock(properties: HProperties) : TorchBlock(properties.build(), null) { // Particle is not registered yet
     init {
         registerDefaultState(stateDefinition.any().setValue(LIT, false))
     }
@@ -53,7 +53,7 @@ class CastletonTorchBlock(properties: HProperties) : TorchBlock(properties.build
         return if (state.getValue(LIT)) ItemStack(HItems.CASTLETON_TORCH) else ItemStack(HItems.BURNT_CASTLETON_TORCH)
     }
 
-    class Wall(properties: HProperties) : WallTorchBlock(properties.build(), HParticles.CASTLETON_TORCH_FLAME) {
+    class Wall(properties: HProperties) : WallTorchBlock(properties.build(), null) {
         override fun getStateForPlacement(context: BlockItemUseContext): BlockState? {
             return super.getStateForPlacement(context)?.setValue(LIT, context.itemInHand.item == HItems.CASTLETON_TORCH)
         }

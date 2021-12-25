@@ -18,13 +18,13 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent
 import net.minecraftforge.event.world.BlockEvent
 import net.minecraftforge.eventbus.api.Event
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent
-import thedarkcolour.hardcoredungeons.registry.HBlocks
 import thedarkcolour.hardcoredungeons.block.misc.BonusFarmlandBlock
 import thedarkcolour.hardcoredungeons.block.portal.HPortalBlock
 import thedarkcolour.hardcoredungeons.capability.HPlayer
 import thedarkcolour.hardcoredungeons.capability.PlayerHelper
 import thedarkcolour.hardcoredungeons.config.HConfig
 import thedarkcolour.hardcoredungeons.feature.HConfiguredFeatures
+import thedarkcolour.hardcoredungeons.registry.HBlocks
 import thedarkcolour.hardcoredungeons.structure.HConfiguredStructures
 import thedarkcolour.hardcoredungeons.surfacebuilder.HConfiguredSurfaceBuilders
 import thedarkcolour.hardcoredungeons.tileentity.DungeonSpawnerTileEntity
@@ -127,9 +127,11 @@ object EventHandler {
         HPlayer.registerCapability()
 
         // World generation
-        HConfiguredFeatures.registerConfiguredFeatures()
-        HConfiguredSurfaceBuilders.registerConfiguredSurfaceBuilders()
-        HConfiguredStructures.registerConfiguredStructures()
+        event.enqueueWork {
+            HConfiguredFeatures.registerConfiguredFeatures()
+            HConfiguredSurfaceBuilders.registerConfiguredSurfaceBuilders()
+            HConfiguredStructures.registerConfiguredStructures()
+        }
     }
 
     private fun attachCapability(event: AttachCapabilitiesEvent<Entity>) {

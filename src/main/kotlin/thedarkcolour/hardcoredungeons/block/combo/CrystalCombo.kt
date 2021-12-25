@@ -6,7 +6,7 @@ import net.minecraft.loot.LootTable
 import thedarkcolour.hardcoredungeons.block.base.BlockMaker
 import thedarkcolour.hardcoredungeons.block.base.ItemMaker
 import thedarkcolour.hardcoredungeons.data.LootGenerator
-import thedarkcolour.hardcoredungeons.data.LootGenerator.Companion.setCountRandom
+import thedarkcolour.hardcoredungeons.data.setCountRandom
 import thedarkcolour.hardcoredungeons.registry.HItems
 
 class CrystalCombo(name: String, color: MaterialColor) : ICombo {

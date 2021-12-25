@@ -24,12 +24,11 @@ open class HRegistry<T : IForgeRegistryEntry<T>>(forgeRegistry: IForgeRegistry<T
         queue.add(function)
     }
 
-    fun <V : T> register(name: String, supplier: () -> V): ObjectHolderDelegate<V> {
-        //HardcoreDungeons.LOGGER.debug("Registered object \"$name\" to registry ${registry.registry.registryName}")
+    open fun <V : T> register(name: String, supplier: () -> V): ObjectHolderDelegate<V> {
         return registry.registerObject(name, supplier)
     }
 
-    private fun postRegistry(event: RegistryEvent.Register<Block>) {
+    protected fun postRegistry(event: RegistryEvent.Register<Block>) {
         while (queue.isNotEmpty()) {
             queue.removeFirst().invoke()
         }

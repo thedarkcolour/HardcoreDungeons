@@ -28,8 +28,8 @@ class KnightlyJuggernautModel : AgeableModel<KnightlyJuggernautEntity>(false, 24
     private val bodyParts: List<ModelRenderer>
 
     init {
-        texHeight = 128
-        texWidth = 64
+        texWidth = 128
+        texHeight = 64
 
         chest = ModelRenderer(this)
         chest.setPos(1.0f, 25.0f, 0.0f)
