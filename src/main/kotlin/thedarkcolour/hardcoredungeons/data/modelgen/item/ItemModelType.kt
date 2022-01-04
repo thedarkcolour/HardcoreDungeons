@@ -15,7 +15,7 @@ abstract class ItemModelType : ModelType<() -> Item>() {
             try {
                 process(item(), gen)
             } catch (e: Exception) {
-                e.printStackTrace()
+                println("Error generating ${item().registryName}: " + e.message)
                 continue
             }
         }

@@ -25,6 +25,6 @@ class SpeedBootsItem(material: IArmorMaterial, props: Properties) : ArmorItem(ma
         slot: EquipmentSlotType?,
         stack: ItemStack?
     ): Multimap<Attribute, AttributeModifier> {
-        return defaultModifiers
+        return if (slot == EquipmentSlotType.FEET) defaultModifiers else ImmutableMultimap.of()
     }
 }

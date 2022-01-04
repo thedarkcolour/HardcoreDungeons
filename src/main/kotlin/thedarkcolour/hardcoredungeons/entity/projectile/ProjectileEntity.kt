@@ -1,10 +1,12 @@
 package thedarkcolour.hardcoredungeons.entity.projectile
 
+import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityType
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.ai.attributes.AttributeModifierMap
 import net.minecraft.entity.projectile.DamagingProjectileEntity
 import net.minecraft.network.IPacket
+import net.minecraft.util.math.EntityRayTraceResult
 import net.minecraft.util.math.RayTraceResult
 import net.minecraft.util.math.vector.Vector3d
 import net.minecraft.world.World
@@ -29,8 +31,8 @@ abstract class ProjectileEntity(
         moveTo(x, y, z, yRot, xRot)
         setPos(x, y, z)
         val d0 = sqrt(mX * mX + mY * mY + mZ * mZ)
-        zPower = mX / d0 * 0.1
-        zPower = mY / d0 * 0.1
+        xPower = mX / d0 * 0.1
+        yPower = mY / d0 * 0.1
         zPower = mZ / d0 * 0.1
 
         shootingEntity = shooter
@@ -38,8 +40,18 @@ abstract class ProjectileEntity(
         level.addFreshEntity(this)
     }
 
-    override fun onHit(result: RayTraceResult) {
+    final override fun onHit(result: RayTraceResult) {
         super.onHit(result)
+    }
+
+    override fun onHitEntity(result: EntityRayTraceResult) {
+        if (result.entity != shootingEntity) {
+            onHitTarget(result, shootingEntity, result.entity)
+        }
+    }
+
+    protected open fun onHitTarget(result: EntityRayTraceResult, shooter: LivingEntity?, target: Entity) {
+
     }
 
     override fun getAttributes(): AttributeModifierMap.MutableAttribute {

@@ -2,14 +2,14 @@ package thedarkcolour.hardcoredungeons.client.renderer.entity
 
 import com.mojang.blaze3d.matrix.MatrixStack
 import net.minecraft.client.renderer.entity.EntityRendererManager
-import net.minecraft.client.renderer.entity.MobRenderer
 import thedarkcolour.hardcoredungeons.client.model.entity.FrayedSoulModel
 import thedarkcolour.hardcoredungeons.client.renderer.entity.layers.FullbrightLayer
+import thedarkcolour.hardcoredungeons.entity.ReloadableRenderer
 import thedarkcolour.hardcoredungeons.entity.castleton.frayedsoul.FrayedSoulEntity
 import thedarkcolour.hardcoredungeons.util.modLoc
 import kotlin.math.sin
 
-class FrayedSoulRenderer(manager: EntityRendererManager) : MobRenderer<FrayedSoulEntity, FrayedSoulModel>(manager, FrayedSoulModel(), 0.4f) {
+class FrayedSoulRenderer(manager: EntityRendererManager) : ReloadableRenderer<FrayedSoulEntity, FrayedSoulModel>(manager, ::FrayedSoulModel, 0.4f) {
     init {
         addLayer(FullbrightLayer(this, modLoc("textures/entity/frayed_soul/frayed_soul_eyes.png")))
     }

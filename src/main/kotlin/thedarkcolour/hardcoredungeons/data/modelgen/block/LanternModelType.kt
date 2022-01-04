@@ -14,7 +14,7 @@ class LanternModelType : BlockModelType<LanternBlock>() {
         val sitting = gen.blockModel(path)
             .parent(gen.mcModel("block/template_lantern"))
             .texture("lantern", texture)
-        val hanging = gen.blockModel(path)
+        val hanging = gen.blockModel(path + "_hanging")
             .parent(gen.mcModel("block/template_hanging_lantern"))
             .texture("lantern", texture)
 

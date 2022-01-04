@@ -35,7 +35,12 @@ class LockBlock(private val key: IItemProvider, private val keyspace: () -> Bloc
                 val positions = arrayListOf(pos)
                 val keyspace = keyspace()
 
-                collectAdjacentBlocks(worldIn, pos, keyspace, positions, 144)
+                try {
+                    collectAdjacentBlocks(worldIn, pos, keyspace, positions, 144)
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    return ActionResultType.FAIL
+                }
 
                 for (position in positions) {
                     worldIn.destroyBlock(position, false)
@@ -47,17 +52,21 @@ class LockBlock(private val key: IItemProvider, private val keyspace: () -> Bloc
     }
 
     private fun collectAdjacentBlocks(worldIn: World, from: BlockPos, target: Block, list: MutableList<BlockPos>, limit: Int) {
-        for (direction in Direction.values()) {
-            val p = from.relative(direction)
+        val toCheck = arrayListOf(from)
 
-            if (list.size >= limit) {
-                return
-            }
+        for (pos in toCheck) {
+            for (direction in Direction.values()) {
+                val p = pos.relative(direction)
 
-            if (worldIn.getBlockState(p).block == target && !list.contains(p)) {
-                list.add(p)
+                if (list.size >= limit) {
+                    return
+                }
 
-                collectAdjacentBlocks(worldIn, p, target, list, limit)
+                if (worldIn.getBlockState(p).block == target && !list.contains(p)) {
+                    list.add(p)
+                    toCheck.add(p)
+                    //collectAdjacentBlocks(worldIn, p, target, list, limit)
+                }
             }
         }
     }

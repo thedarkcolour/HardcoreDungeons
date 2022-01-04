@@ -9,9 +9,9 @@ import net.minecraft.item.crafting.Ingredient
 import net.minecraft.potion.PotionBrewing
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn
+import net.minecraftforge.common.ForgeSpawnEggItem
 import net.minecraftforge.common.brewing.BrewingRecipeRegistry
 import net.minecraftforge.registries.IForgeRegistry
-import thedarkcolour.hardcoredungeons.registry.HBlocks
 import thedarkcolour.hardcoredungeons.client.color.PotionColor
 import thedarkcolour.hardcoredungeons.client.color.RainbowColor
 import thedarkcolour.hardcoredungeons.data.modelgen.item.ItemModelType
@@ -57,24 +57,24 @@ object HItems {
     val SHELL = genericItem("shell")
     val VENISON = Item(Properties().tab(Group).food(Food.Builder().nutrition(3).saturationMod(0.2f).meat().build())).setRegistryKey("venison")
     val COOKED_VENISON = Item(Properties().tab(Group).food(Food.Builder().nutrition(7).saturationMod(0.9f).meat().build())).setRegistryKey("cooked_venison")
-    val DEER_SPAWN_EGG = SpawnEggItem(HEntities.DEER, 0x4c2922, 0x202020, Properties().tab(Group)).setRegistryKey("deer_spawn_egg")
+    val DEER_SPAWN_EGG = ForgeSpawnEggItem(HEntities::DEER, 0x4c2922, 0x202020, Properties().tab(Group)).setRegistryKey("deer_spawn_egg")
     val MALACHITE_SWORD = SwordItem(HItemTier.MALACHITE, 3, -2.4f, Properties().tab(Group).stacksTo(1)).setRegistryKey("malachite_sword")
     val MALACHITE_SHOVEL = ShovelItem(HItemTier.MALACHITE, 1.5f, -3.0f, Properties().tab(Group).stacksTo(1)).setRegistryKey("malachite_shovel")
     val MALACHITE_PICKAXE = MalachitePickaxeItem(HItemTier.MALACHITE, 1, -2.8f, Properties().tab(Group).stacksTo(1)).setRegistryKey("malachite_pickaxe")
     val MALACHITE_AXE = AxeItem(HItemTier.MALACHITE, 5.0f, -3.0f, Properties().tab(Group).stacksTo(1)).setRegistryKey("malachite_axe")
     val MALACHITE_HOE = HoeItem(HItemTier.MALACHITE, -3, 0.0f, Properties().tab(Group).stacksTo(1)).setRegistryKey("malachite_hoe")
     val MALACHITE_SCYTHE = ScytheItem(HItemTier.MALACHITE, 3, 0.0f, Properties().tab(Group).stacksTo(1)).setRegistryKey("malachite_scythe")
-    val MUSHROOM_ARCHER_SPAWN_EGG = SpawnEggItem(HEntities.MUSHROOM_ARCHER, 0x434142, 0x2984a3, Properties().tab(Group)).setRegistryKey("knightly_juggernaut_spawn_egg")
+    val MUSHROOM_ARCHER_SPAWN_EGG = ForgeSpawnEggItem(HEntities::MUSHROOM_ARCHER, 0x434142, 0x2984a3, Properties().tab(Group)).setRegistryKey("knightly_juggernaut_spawn_egg")
 
     // Castleton items
     val CASTLETON_SWORD = SwordItem(ItemTier.GOLD, 9, -2.4f, Properties().tab(Group).stacksTo(1).rarity(Rarity.RARE)).setRegistryKey("castleton_sword")
     val VALABLADE = SwordItem(ItemTier.GOLD, 7, -2.4f, Properties().tab(Group).stacksTo(1).rarity(Rarity.EPIC)).setRegistryKey("valablade")
     val GILDED_VALABLADE = SwordItem(ItemTier.GOLD, 10, -2.4f, Properties().tab(Group).stacksTo(1).rarity(Rarity.UNCOMMON)).setRegistryKey("gilded_valablade")
     val CASTLE_GEM = Item(Properties().tab(Group)).setRegistryKey("castle_gem")
-    val FRAYED_SOUL_SPAWN_EGG = SpawnEggItem(HEntities.FRAYED_SOUL, 0x434142, 0x2984a3, Properties().tab(Group)).setRegistryKey("frayed_soul_spawn_egg")
-    val VOID_RUNNER_SPAWN_EGG = SpawnEggItem(HEntities.VOID_RUNNER, 0x000000, 0x00c8ff, Properties().tab(Group)).setRegistryKey("void_runner_spawn_egg")
-    val CASTLETON_DEER_SPAWN_EGG = SpawnEggItem(HEntities.CASTLETON_DEER, 0x434142, 0x2984a3, Properties().tab(Group)).setRegistryKey("castleton_deer_spawn_egg")
-    val KNIGHTLY_JUGGERNAUT_SPAWN_EGG = SpawnEggItem(HEntities.KNIGHTLY_JUGGERNAUT, 0x434142, 0x2984a3, Properties().tab(Group)).setRegistryKey("knightly_juggernaut_spawn_egg")
+    val FRAYED_SOUL_SPAWN_EGG = ForgeSpawnEggItem(HEntities::FRAYED_SOUL, 0x434142, 0x2984a3, Properties().tab(Group)).setRegistryKey("frayed_soul_spawn_egg")
+    val VOID_RUNNER_SPAWN_EGG = ForgeSpawnEggItem(HEntities::VOID_RUNNER, 0x000000, 0x00c8ff, Properties().tab(Group)).setRegistryKey("void_runner_spawn_egg")
+    val CASTLETON_DEER_SPAWN_EGG = ForgeSpawnEggItem(HEntities::CASTLETON_DEER, 0x434142, 0x2984a3, Properties().tab(Group)).setRegistryKey("castleton_deer_spawn_egg")
+    val KNIGHTLY_JUGGERNAUT_SPAWN_EGG = ForgeSpawnEggItem(HEntities::KNIGHTLY_JUGGERNAUT, 0x434142, 0x2984a3, Properties().tab(Group)).setRegistryKey("knightly_juggernaut_spawn_egg")
     val CASTLETON_TORCH by HBlocks.CASTLETON_TORCH::litItem//= CastletonTorchItem(HBlocks.CASTLETON_TORCH, HBlocks.CASTLETON_WALL_TORCH, true, Properties().tab(Group)).setRegistryKey("castleton_torch")
     val BURNT_CASTLETON_TORCH by HBlocks.CASTLETON_TORCH::burntItem//= CastletonTorchItem(HBlocks.CASTLETON_TORCH, HBlocks.CASTLETON_WALL_TORCH, false, Properties().tab(Group)).setRegistryKey("burnt_castleton_torch")
     val LUMLIGHT_SIGN by HBlocks.LUMLIGHT_WOOD.sign::item//= SignItem(Properties().stacksTo(16).tab(Group), HBlocks.LUMLIGHT_SIGN, HBlocks.LUMLIGHT_WALL_SIGN).setRegistryKey("lumlight_sign")

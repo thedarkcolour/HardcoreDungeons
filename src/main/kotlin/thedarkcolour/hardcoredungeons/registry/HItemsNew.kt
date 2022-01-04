@@ -3,7 +3,6 @@ package thedarkcolour.hardcoredungeons.registry
 import net.minecraft.item.Item
 import net.minecraft.item.Rarity
 import net.minecraftforge.registries.ForgeRegistries
-import thedarkcolour.hardcoredungeons.block.HRegistry
 import thedarkcolour.hardcoredungeons.block.base.ItemMaker
 import thedarkcolour.hardcoredungeons.item.Group
 import thedarkcolour.hardcoredungeons.item.HArmorMaterial

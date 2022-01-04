@@ -21,12 +21,12 @@ class StaffItem(properties: Properties) : Item(properties) {
         return ActionResult.consume(stack)
     }
 
-    override fun finishUsingItem(stack: ItemStack, worldIn: World, playerIn: LivingEntity): ItemStack {
+    override fun finishUsingItem(stack: ItemStack, worldIn: World, entity: LivingEntity): ItemStack {
         if (!worldIn.isClientSide) {
-            val vec = playerIn.lookAngle
+            val vec = entity.getViewVector(1.0f)
             val magic = MagicBoltEntity(HEntities.MAGIC_BOLT, worldIn)
 
-            magic.shoot(playerIn, playerIn.x, playerIn.eyeY - 0.1, playerIn.z, vec.x, vec.y, vec.z)
+            magic.shoot(entity, entity.x, entity.eyeY - 0.1, entity.z, vec.x, vec.y, vec.z)
         }
 
         return stack

@@ -69,7 +69,7 @@ open class GunItem(
                 bullet.setSecondsOnFire(10)
             }
 
-            bullet.shoot(entity, entity.z, entity.eyeY - 0.1, entity.z, vec.x, vec.y, vec.z)
+            bullet.shoot(entity, entity.x, entity.eyeY - 0.1, entity.z, vec.x, vec.y, vec.z)
         }
 
         if (!(entity is PlayerEntity && entity.isCreative)) {

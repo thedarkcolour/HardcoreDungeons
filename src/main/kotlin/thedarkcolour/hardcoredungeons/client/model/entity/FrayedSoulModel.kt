@@ -9,17 +9,18 @@ import thedarkcolour.hardcoredungeons.util.toRadians
 
 class FrayedSoulModel : EntityModel<FrayedSoulEntity>() {
     private val frayedSoulHead: ModelRenderer
-    //private val ninetyDegrees = toRadians()
 
     init {
         texHeight = 32
         texWidth = 32
 
         frayedSoulHead = ModelRenderer(this)
-        frayedSoulHead.setPos(0.0f, 24.0f, 0.0f)
-        frayedSoulHead.addBox(-3.55f, -25.0f, -4.0f, 8.0f, 6.0f, 8.0f, 0.0f, false)
+        frayedSoulHead.setPos(0.0f, 20.0f, 0.0f)
+        // Head
+        frayedSoulHead.addBox(-4.0f, -4.0f, -4.0f, 8.0f, 6.0f, 8.0f, 0.0f, false)
+        // Jaw
         frayedSoulHead.texOffs(0, 14)
-        frayedSoulHead.addBox(-3.55f, -19.0f, -2.0f, 6.0f, 2.0f, 4.0f, 0.0f, false)
+        frayedSoulHead.addBox(-2.0f, 2.0f, -4.0f, 4.0f, 2.0f, 6.0f, 0.0f, false)
     }
 
     override fun renderToBuffer(stack: MatrixStack, builder: IVertexBuilder, packedLight: Int, overlay: Int, r: Float, g: Float, b: Float, a: Float) {
@@ -30,8 +31,7 @@ class FrayedSoulModel : EntityModel<FrayedSoulEntity>() {
         entityIn: FrayedSoulEntity, limbSwing: Float, limbSwingAmount: Float,
         ageInTicks: Float, netHeadYaw: Float, headPitch: Float
     ) {
-        frayedSoulHead.setPos(0.0f, 24.0f, 0.0f)
-        frayedSoulHead.zRot = toRadians(headPitch)// + ninetyDegrees
-        frayedSoulHead.yRot = toRadians(netHeadYaw - 90.0f)// + ninetyDegrees
+        frayedSoulHead.yRot = toRadians(netHeadYaw)
+        frayedSoulHead.xRot = toRadians(headPitch)
     }
 }

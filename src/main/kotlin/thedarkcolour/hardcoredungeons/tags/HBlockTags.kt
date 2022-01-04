@@ -6,7 +6,7 @@ import net.minecraft.tags.ITag
 import thedarkcolour.hardcoredungeons.HardcoreDungeons
 
 /**
- * Contains references to block tags in Hardcore Dungeons.
+ * Block tags in Hardcore Dungeons.
  *
  * @author TheDarkColour
  */
@@ -17,7 +17,6 @@ object HBlockTags {
 
     val GLASS_RAINBOW = tag("glass/rainbow")
     val GLASS_PANES_RAINBOW = tag("glass_panes/rainbow")
-    //val FENCES_BRICK = tag("fences/brick")
 
     val CASTLETON_GRASS_PLANTABLE = tag("castleton_grass_plantable")
     val RAINBOW_GRASS_PLANTABLE = tag("rainbow_grass_plantable")

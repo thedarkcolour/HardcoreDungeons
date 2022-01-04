@@ -6,6 +6,8 @@ import thedarkcolour.hardcoredungeons.block.base.BlockMaker
 import thedarkcolour.hardcoredungeons.block.base.ItemMaker
 import thedarkcolour.hardcoredungeons.block.base.properties.HProperties
 import thedarkcolour.hardcoredungeons.data.BlockTagGenerator
+import thedarkcolour.hardcoredungeons.data.RecipeGenerator
+import thedarkcolour.hardcoredungeons.data.RecipeGenerator.Companion.shaped
 import thedarkcolour.hardcoredungeons.data.modelgen.item.ItemModelType
 import java.util.function.Consumer
 
@@ -24,6 +26,14 @@ class StairsSlabWallFenceCombo(name: String, properties: HProperties) : StairsSl
     }
 
     override fun addRecipes(consumer: Consumer<IFinishedRecipe>) {
+        super.addRecipes(consumer)
 
+        consumer.shaped(fence, 6) { builder ->
+            builder.pattern("xix")
+            builder.pattern("xix")
+            builder.define('x', block)
+            builder.define('i', slab)
+            builder.unlockedBy("has_item", RecipeGenerator.has(block))
+        }
     }
 }

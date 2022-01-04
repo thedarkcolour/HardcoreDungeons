@@ -16,36 +16,44 @@ import net.minecraftforge.common.IPlantable
 import net.minecraftforge.common.Tags
 import java.util.*
 
-class GrassBlock(
+class HGrassBlock(
     private val soil: () -> BlockState,
     private val nocturnal: Boolean,
     private val plantableTag: ITag<Block>,
     properties: Properties
 ) : Block(properties) {
     override fun tick(state: BlockState, world: ServerWorld, pos: BlockPos, random: Random) {
-        val abovePos = pos.above()
+        val soil = soil()
 
-        if (!canSurvive(world.getBlockState(abovePos), world, abovePos)) {
+        if (!canSurvive(state, world, pos)) {
             if (world.isAreaLoaded(pos, 3)) {
-                world.setBlockAndUpdate(pos, soil())
+                world.setBlockAndUpdate(pos, soil)
             }
         } else {
-            if (world.getLightEmission(abovePos) >= 9 || (nocturnal && world.canSeeSkyFromBelowWater(pos))) {
+            if (nocturnal || world.getMaxLocalRawBrightness(pos.above()) >= 9) {
                 for (i in 0..3) {
-                    val randomPos = abovePos.offset(random.nextInt(3) - 1, random.nextInt(5) - 3, random.nextInt(3) - 1)
-                    if (world.getBlockState(randomPos) == soil() && canSpread(state, world, abovePos)) {
-                        world.setBlockAndUpdate(randomPos, defaultBlockState())
+                    val randomPos = pos.offset(random.nextInt(3) - 1, random.nextInt(5) - 3, random.nextInt(3) - 1)
+
+                    if (world.getBlockState(randomPos) == soil) {
+                        if (canSpread(state, world, randomPos)) {
+                            world.setBlockAndUpdate(randomPos, defaultBlockState())
+                        }
                     }
                 }
             }
         }
     }
 
-    private fun canSurvive(state: BlockState, world: ServerWorld, abovePos: BlockPos): Boolean {
-        return if (state.block == Blocks.SNOW && state.getValue(SnowBlock.LAYERS) == 1) {
+    private fun canSurvive(state: BlockState, world: ServerWorld, pos: BlockPos): Boolean {
+        val abovePos = pos.above()
+        val aboveState = world.getBlockState(abovePos)
+
+        return if (state.`is`(Blocks.SNOW) && state.getValue(SnowBlock.LAYERS) == 1) {
             true
+        } else if (aboveState.fluidState.amount == 8) {
+            false
         } else {
-            val i = LightEngine.getLightBlockInto(world, state, abovePos, state, abovePos, Direction.UP, state.getLightBlock(world, abovePos))
+            val i = LightEngine.getLightBlockInto(world, state, pos, aboveState, abovePos, Direction.UP, aboveState.getLightBlock(world, abovePos))
             i < world.maxLightLevel
         }
     }

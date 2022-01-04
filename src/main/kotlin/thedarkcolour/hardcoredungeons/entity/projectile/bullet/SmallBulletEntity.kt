@@ -1,12 +1,13 @@
 package thedarkcolour.hardcoredungeons.entity.projectile.bullet
 
+import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityType
 import net.minecraft.entity.IRendersAsItem
 import net.minecraft.entity.LivingEntity
 import net.minecraft.item.ItemStack
 import net.minecraft.util.IndirectEntityDamageSource
+import net.minecraft.util.math.BlockRayTraceResult
 import net.minecraft.util.math.EntityRayTraceResult
-import net.minecraft.util.math.RayTraceResult
 import net.minecraft.world.World
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn
@@ -49,31 +50,27 @@ class SmallBulletEntity(type: EntityType<out ProjectileEntity>, worldIn: World) 
         damage = gun.bulletDamage
     }
 
-    /**
-     * Called when this EntityFireball hits a block or entity.
-     */
-    override fun onHit(result: RayTraceResult) {
-        super.onHit(result)
+    override fun onHitTarget(result: EntityRayTraceResult, shooter: LivingEntity?, target: Entity) {
+        super.onHitTarget(result, shooter, target)
 
         if (!level.isClientSide) {
-            if (result.type == RayTraceResult.Type.ENTITY) {
-                val shooter = shootingEntity
-                val entity = (result as EntityRayTraceResult).entity
-                val flag = entity.hurt(IndirectEntityDamageSource("arrow", shooter, this), damage)
+            // todo custom damage source + lang
+            if (target.hurt(IndirectEntityDamageSource("arrow", shooter, this), damage) && shooter != null) {
+                doEnchantDamageEffects(shooter, entity)
+            }
 
-                if (remainingFireTicks > 0) {
-                    entity.setSecondsOnFire(remainingFireTicks)
-                }
+            if (remainingFireTicks > 0) {
+                target.setSecondsOnFire(remainingFireTicks)
+            }
 
-                if (flag && shooter != null) {
-                    doEnchantDamageEffects(shooter, entity)
-                }
-                remove()
-            } else if (result.type == RayTraceResult.Type.BLOCK) {
-                // todo ricochet
-                remove()
-                return
-/*
+            remove()
+        }
+    }
+
+    override fun onHitBlock(p_230299_1_: BlockRayTraceResult) {
+        super.onHitBlock(p_230299_1_)
+        remove()
+        /* todo ricochet
 
                 // bounce off of the surface and weaken damage
                 damage *= 0.8f
@@ -81,8 +78,6 @@ class SmallBulletEntity(type: EntityType<out ProjectileEntity>, worldIn: World) 
                 accelerationX = invertMotion(accelerationX)
                 accelerationX = invertMotion(accelerationX)
                 accelerationX = invertMotion(accelerationX) */
-            }
-        }
     }
 
     private fun invertMotion(motion: Double): Double {

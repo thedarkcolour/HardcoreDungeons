@@ -1,4 +1,4 @@
-package thedarkcolour.hardcoredungeons.block
+package thedarkcolour.hardcoredungeons.registry
 
 import net.minecraft.block.Block
 import net.minecraftforge.event.RegistryEvent
@@ -28,7 +28,7 @@ open class HRegistry<T : IForgeRegistryEntry<T>>(forgeRegistry: IForgeRegistry<T
         return registry.registerObject(name, supplier)
     }
 
-    protected fun postRegistry(event: RegistryEvent.Register<Block>) {
+    private fun postRegistry(event: RegistryEvent.Register<Block>) {
         while (queue.isNotEmpty()) {
             queue.removeFirst().invoke()
         }

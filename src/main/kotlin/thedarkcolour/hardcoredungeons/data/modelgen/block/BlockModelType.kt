@@ -16,7 +16,7 @@ abstract class BlockModelType<B : Block> : ModelType<B>() {
             try {
                 process(block(), appearance(), gen)
             } catch (e: Exception) {
-                e.printStackTrace()
+                println("Error generating ${block().registryName}: " + e.message)
                 continue
             }
         }
@@ -39,6 +39,7 @@ abstract class BlockModelType<B : Block> : ModelType<B>() {
         val STAIRS = StairsModelType()
         val WALL = WallModelType()
         val FENCE = FenceModelType()
+        val FENCE_GATE = FenceGateModelType()
         val BUTTON = ButtonModelType()
         val ROTATED_PILLAR = PillarModelType()
         val DOOR = DoorModelType()

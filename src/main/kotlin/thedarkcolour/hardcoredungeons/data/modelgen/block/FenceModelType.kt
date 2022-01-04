@@ -5,6 +5,7 @@ import net.minecraft.block.FenceBlock
 import net.minecraft.block.material.Material
 import thedarkcolour.hardcoredungeons.data.ModelGenerator
 
+// todo simplify
 class FenceModelType : BlockModelType<FenceBlock>() {
     /**
      * Generate a model for block [block].

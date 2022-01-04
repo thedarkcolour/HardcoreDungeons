@@ -15,7 +15,6 @@ import net.minecraft.tags.ITag
 import net.minecraft.util.Direction
 import net.minecraftforge.common.Tags
 import thedarkcolour.hardcoredungeons.HardcoreDungeons
-import thedarkcolour.hardcoredungeons.registry.HBlocks
 import thedarkcolour.hardcoredungeons.block.base.BlockMaker
 import thedarkcolour.hardcoredungeons.block.base.ItemMaker
 import thedarkcolour.hardcoredungeons.block.base.properties.HProperties
@@ -26,7 +25,9 @@ import thedarkcolour.hardcoredungeons.data.RecipeGenerator.Companion.shaped
 import thedarkcolour.hardcoredungeons.data.RecipeGenerator.Companion.shapeless
 import thedarkcolour.hardcoredungeons.data.RecipeGenerator.Companion.slab
 import thedarkcolour.hardcoredungeons.data.RecipeGenerator.Companion.stairs
+import thedarkcolour.hardcoredungeons.data.RecipeGenerator.Companion.twoByTwo
 import thedarkcolour.hardcoredungeons.data.modelgen.item.ItemModelType
+import thedarkcolour.hardcoredungeons.registry.HBlocks
 import thedarkcolour.hardcoredungeons.tags.HItemTags
 import java.util.function.Consumer
 
@@ -61,9 +62,9 @@ class WoodCombo(
     val leaves by BlockMaker.leavesBlock(wood + "_leaves")
 
     // Fence, Fence Gate, Pressure Plate, Button, Trapdoor, Door
-    val fence by BlockMaker.registerFence(wood + "_fence", BlockMaker.props(Material.WOOD, topCol, applyProperties))
-    val fenceGate by BlockMaker.registerFenceGate(wood + "_fence_gate", BlockMaker.props(Material.WOOD, topCol, applyProperties))
-    val pressurePlate by BlockMaker.registerPressurePlate(wood + "_pressure_plate", PressurePlateBlock.Sensitivity.EVERYTHING, BlockMaker.props(Material.WOOD, topCol, applyProperties))
+    val fence by BlockMaker.registerFence(wood + "_fence", BlockMaker.props(Material.WOOD, topCol, applyProperties), ::planks)
+    val fenceGate by BlockMaker.registerFenceGate(wood + "_fence_gate", BlockMaker.props(Material.WOOD, topCol, applyProperties), ::planks)
+    val pressurePlate by BlockMaker.registerPressurePlate(wood + "_pressure_plate", PressurePlateBlock.Sensitivity.EVERYTHING, BlockMaker.props(Material.WOOD, topCol, applyProperties), ::planks)
     val button by BlockMaker.registerWoodButton(wood + "_button", BlockMaker.props(Material.WOOD, topCol, applyProperties))
     val trapdoor by BlockMaker.registerTrapdoor(wood + "_trapdoor", BlockMaker.props(Material.WOOD, topCol, applyProperties))
     val door by BlockMaker.registerDoor(wood + "_door", BlockMaker.props(Material.WOOD, topCol, applyProperties))
@@ -108,10 +109,10 @@ class WoodCombo(
         gen.tag(BlockTags.WOODEN_FENCES).add(fence)
         gen.tag(BlockTags.WOODEN_PRESSURE_PLATES).add(pressurePlate)
         gen.tag(BlockTags.WOODEN_TRAPDOORS).add(trapdoor)
-        gen.tag(BlockTags.DOORS).add(door)
         gen.tag(BlockTags.LOGS_THAT_BURN).addTag(blockTag)
         gen.tag(BlockTags.LEAVES).add(leaves)
         gen.tag(BlockTags.FENCE_GATES).add(fenceGate)
+        gen.tag(BlockTags.SAPLINGS).add(sapling.plant)
 
         sign.addTags(gen)
     }
@@ -154,13 +155,8 @@ class WoodCombo(
             builder.define('i', Tags.Items.RODS_WOODEN)
             builder.unlockedBy("has_planks", RecipeGenerator.has(planks))
         }
-        consumer.shaped(wood, 3) { builder ->
-            builder.pattern("xx")
-            builder.pattern("xx")
-            builder.define('x', log)
-            builder.group("bark")
-            builder.unlockedBy("has_log", RecipeGenerator.has(log))
-        }
+        consumer.twoByTwo(wood, 3, log, group = "bark", trigger = "has_log")
+        consumer.twoByTwo(strippedWood, 3, strippedLog, group = "bark", trigger = "has_log")
         consumer.shaped(trapdoor, 2) { builder ->
             builder.define('x', planks)
             builder.pattern("xxx")

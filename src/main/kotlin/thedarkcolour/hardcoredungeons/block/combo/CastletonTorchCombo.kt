@@ -5,13 +5,15 @@ import net.minecraft.block.material.Material
 import net.minecraft.client.renderer.RenderType
 import net.minecraft.client.renderer.RenderTypeLookup
 import net.minecraft.item.Item
-import thedarkcolour.hardcoredungeons.registry.HBlocks
+import net.minecraft.tags.BlockTags
 import thedarkcolour.hardcoredungeons.block.base.ItemMaker
 import thedarkcolour.hardcoredungeons.block.base.properties.HProperties
 import thedarkcolour.hardcoredungeons.block.decoration.castleton.CastletonTorchBlock
+import thedarkcolour.hardcoredungeons.data.BlockTagGenerator
 import thedarkcolour.hardcoredungeons.data.modelgen.item.ItemModelType
 import thedarkcolour.hardcoredungeons.item.Group
 import thedarkcolour.hardcoredungeons.item.castleton.CastletonTorchItem
+import thedarkcolour.hardcoredungeons.registry.HBlocks
 
 /**
  * @param name The prefix ex. "soul_fire". "_torch" and "_wall_torch" are applied as name suffixes.
@@ -30,5 +32,9 @@ class CastletonTorchCombo : ICombo {
     override fun setRenderLayers() {
         RenderTypeLookup.setRenderLayer(standing, RenderType.cutout())
         RenderTypeLookup.setRenderLayer(wall, RenderType.cutout())
+    }
+
+    override fun addTags(gen: BlockTagGenerator) {
+        gen.tag(BlockTags.WALL_POST_OVERRIDE).add(standing)
     }
 }

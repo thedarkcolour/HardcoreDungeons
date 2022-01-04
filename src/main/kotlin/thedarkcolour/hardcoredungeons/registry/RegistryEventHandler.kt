@@ -1,7 +1,6 @@
 package thedarkcolour.hardcoredungeons.registry
 
 import net.minecraft.enchantment.Enchantment
-import net.minecraft.entity.EntityType
 import net.minecraft.item.Item
 import net.minecraft.potion.Effect
 import net.minecraft.util.SoundEvent
@@ -31,6 +30,7 @@ object RegistryEventHandler {
         //RegistryFixer.init()
 
         HBlocks.init()
+        HEntities.init()
         HItemsNew.init()
         HBiomes.init()
         HTileEntities.init()
@@ -39,7 +39,6 @@ object RegistryEventHandler {
         MOD_BUS.addGenericListener(::registerDataSerializers)
         //MOD_BUS.addGenericListener(::registerEffects)
         MOD_BUS.addGenericListener(::registerEnchantments)
-        MOD_BUS.addGenericListener(::registerEntities)
         MOD_BUS.addGenericListener(::registerFeatures)
         MOD_BUS.addGenericListener(::registerStructures)
         MOD_BUS.addGenericListener(::registerItems)
@@ -65,8 +64,6 @@ object RegistryEventHandler {
     private fun registerEffects(event: Register<Effect>) = HEffects.registerEffects(event.registry)
 
     private fun registerEnchantments(event: Register<Enchantment>) = HEnchantments.registerEnchantments(event.registry)
-
-    private fun registerEntities(event: Register<EntityType<*>>) = HEntities.registerEntities(event.registry)
 
     private fun registerFeatures(event: Register<Feature<*>>) = HFeatures.registerFeatures(event.registry)
 

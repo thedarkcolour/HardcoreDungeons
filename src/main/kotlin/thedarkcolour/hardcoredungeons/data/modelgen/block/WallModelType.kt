@@ -30,24 +30,19 @@ class WallModelType : BlockModelType<Block>() {
         // Path of the wall ("cobblestone_wall")
         val path = block.registryName!!.path
 
-        // The actual block of this wall (cobblestone, granite)
-        var texture = path.removeSuffix("_wall")
-        // Corrects "castleton_brick" to "castleton_bricks"
-        if (texture.endsWith("brick")) texture += "s"
-
-        // texture path
-        val textureLoc = gen.textureLoc(texture)
+        // The actual texture of this wall (cobblestone, granite)
+        val textureLoc = gen.textureLoc(appearance.registryName!!.path)
 
         // The wall post model
-        val post = gen.blockModel(path + "_post")
+        gen.blockModel(path + "_post")
             .parent(gen.mcBlock("template_wall_post"))
             .texture("wall", textureLoc)
 
         // Low & Tall wall models
-        val low = gen.blockModel(path + "_side")
+        gen.blockModel(path + "_side")
             .parent(gen.mcBlock("template_wall_side"))
             .texture("wall", textureLoc)
-        val tall = gen.blockModel(path + "_side_tall")
+        gen.blockModel(path + "_side_tall")
             .parent(gen.mcBlock("template_wall_side_tall"))
             .texture("wall", textureLoc)
 

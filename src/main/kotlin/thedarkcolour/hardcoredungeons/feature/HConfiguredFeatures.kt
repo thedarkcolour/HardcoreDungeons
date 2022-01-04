@@ -18,8 +18,8 @@ import net.minecraft.world.gen.placement.DepthAverageConfig
 import net.minecraft.world.gen.placement.Placement
 import net.minecraft.world.gen.trunkplacer.StraightTrunkPlacer
 import net.minecraftforge.common.world.BiomeGenerationSettingsBuilder
-import thedarkcolour.hardcoredungeons.registry.HBlocks
 import thedarkcolour.hardcoredungeons.block.combo.WoodCombo
+import thedarkcolour.hardcoredungeons.registry.HBlocks
 import thedarkcolour.hardcoredungeons.registry.HFeatures
 import thedarkcolour.hardcoredungeons.structure.HConfiguredStructures
 import thedarkcolour.hardcoredungeons.util.modLoc
@@ -35,7 +35,7 @@ object HConfiguredFeatures {
     val LUMLIGHT_TREE = oakStyleTree(HBlocks.LUMLIGHT_WOOD)
 
     val LUMLIGHT_SHRUBS = Feature.TREE.configured(BaseTreeFeatureConfig.Builder(SimpleBlockStateProvider(HBlocks.LUMLIGHT_WOOD.log.defaultBlockState()), SimpleBlockStateProvider(HBlocks.LUMLIGHT_WOOD.leaves.defaultBlockState()), BushFoliagePlacer(FeatureSpread.fixed(2), FeatureSpread.fixed(1), 2), StraightTrunkPlacer(1, 0, 0), TwoLayerFeature(0, 0, 0)).heightmap(Heightmap.Type.MOTION_BLOCKING_NO_LEAVES).build()).decorated(Features.Placements.HEIGHTMAP_SQUARE).decorated(Placement.COUNT_EXTRA.configured(AtSurfaceWithExtraConfig(6, 0.3f, 2)))
-    val SPARSE_LUMLIGHT_TREES = Feature.TREE.configured(BaseTreeFeatureConfig.Builder(SimpleBlockStateProvider(HBlocks.LUMLIGHT_WOOD.log.defaultBlockState()), SimpleBlockStateProvider(HBlocks.LUMLIGHT_WOOD.leaves.defaultBlockState()), FancyFoliagePlacer(FeatureSpread.fixed(2), FeatureSpread.fixed(4), 4), StraightTrunkPlacer(4, 4, 7), TwoLayerFeature(0, 0, 0)).build()).decorated(Placement.COUNT_EXTRA.configured(AtSurfaceWithExtraConfig(6, 0.3f, 2)))
+    val SPARSE_LUMLIGHT_TREES = Feature.TREE.configured(BaseTreeFeatureConfig.Builder(SimpleBlockStateProvider(HBlocks.LUMLIGHT_WOOD.log.defaultBlockState()), SimpleBlockStateProvider(HBlocks.LUMLIGHT_WOOD.leaves.defaultBlockState()), FancyFoliagePlacer(FeatureSpread.fixed(2), FeatureSpread.fixed(4), 4), StraightTrunkPlacer(4, 4, 7), TwoLayerFeature(0, 0, 0)).build()).decorated(Features.Placements.HEIGHTMAP_SQUARE).decorated(Placement.COUNT_EXTRA.configured(AtSurfaceWithExtraConfig(6, 0.3f, 2)))
     val PATCH_PURPLE_LUMSHROOM = Feature.RANDOM_PATCH.configured(flowerPatchConfig(HBlocks.PURPLE_LUMSHROOM.plant)).decorated(Features.Placements.HEIGHTMAP_DOUBLE_SQUARE).chance(12)
 
     // Rainbowland

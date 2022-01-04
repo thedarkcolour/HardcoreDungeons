@@ -20,7 +20,7 @@ class KnightlyJuggernautEntity(type: EntityType<KnightlyJuggernautEntity>, world
             .add(Attributes.MAX_HEALTH, 80.0)
             .add(Attributes.KNOCKBACK_RESISTANCE, 0.5)
             .add(Attributes.MOVEMENT_SPEED)
-            .add(Attributes.ARMOR)
+            .add(Attributes.ARMOR, 6.0)
             .add(Attributes.ARMOR_TOUGHNESS)
             .add(ForgeMod.SWIM_SPEED.get())
             .add(ForgeMod.NAMETAG_DISTANCE.get())

@@ -5,6 +5,7 @@ import net.minecraft.entity.EntityType
 import net.minecraft.entity.ai.attributes.AttributeModifierMap
 import net.minecraft.entity.ai.attributes.Attributes
 import net.minecraft.entity.ai.goal.Goal
+import net.minecraft.entity.ai.goal.HurtByTargetGoal
 import net.minecraft.entity.ai.goal.LookAtGoal
 import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal
 import net.minecraft.entity.player.PlayerEntity
@@ -12,25 +13,18 @@ import net.minecraft.util.SoundEvent
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 import net.minecraftforge.common.ForgeMod
+import thedarkcolour.hardcoredungeons.entity.projectile.magic.MagicBoltEntity
 import thedarkcolour.hardcoredungeons.registry.HBlocks
+import thedarkcolour.hardcoredungeons.registry.HEntities
 import thedarkcolour.hardcoredungeons.registry.HSounds
 
 class FrayedSoulEntity(type: EntityType<FrayedSoulEntity>, worldIn: World) : CreatureEntity(type, worldIn) {
     override fun registerGoals() {
-        goalSelector.addGoal(0, LookAtGoal(this, PlayerEntity::class.java, 40f, 1f))
         goalSelector.addGoal(0, FindBlueLumshroomGoal(this))
+        goalSelector.addGoal(1, LookAtGoal(this, PlayerEntity::class.java, 40f, 1f))
         goalSelector.addGoal(2, WanderGoal(this))
-        goalSelector.addGoal(3, ShootGoal(this))
-    }
-
-    // todo GlobalEntityTypeAttributes.put
-    /*override fun registerAttributes() {
-        super.registerAttributes()
-        getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).baseValue = 0.24
-    }*/
-
-    override fun defineSynchedData() {
-        super.defineSynchedData()
+        targetSelector.addGoal(1, HurtByTargetGoal(this))
+        targetSelector.addGoal(3, ShootGoal(this))
     }
 
     override fun getAmbientSound(): SoundEvent {
@@ -54,21 +48,19 @@ class FrayedSoulEntity(type: EntityType<FrayedSoulEntity>, worldIn: World) : Cre
     class FindBlueLumshroomGoal(private val entity: FrayedSoulEntity) : Goal() {
         override fun canUse(): Boolean {
             return entity.level.getBlockState(entity.blockPosition()).block != HBlocks.BLUE_LUMSHROOM.plant
-                    && entity.position().x != 0.5 && entity.position().z != 0.5
         }
 
         override fun start() {
-            if (entity.tickCount % 60 == 0) {
-                val destination = entity.findBlockInRange(5) { pos, world ->
-                    world.getBlockState(pos).block == HBlocks.BLUE_LUMSHROOM.plant
-                }
+            val destination = entity.findBlockInRange(5) { pos, world ->
+                world.getBlockState(pos).block == HBlocks.BLUE_LUMSHROOM.plant
+            }
 
-                if (destination != null) {
-                    entity.navigation.moveTo(destination.x + 0.5, destination.y.toDouble(), destination.z + 0.5, 0.4)
-                }
+            if (destination != null) {
+                entity.navigation.moveTo(destination.x + 0.5, destination.y.toDouble(), destination.z + 0.5, 0.4)
             }
         }
 
+        // Note: three for loops is faster than BlockPos.betweenClosed
         private fun FrayedSoulEntity.findBlockInRange(range: Int, predicate: (BlockPos, World) -> Boolean): BlockPos? {
             val pos = blockPosition().offset(-range, -range, -range)
 
@@ -81,6 +73,7 @@ class FrayedSoulEntity(type: EntityType<FrayedSoulEntity>, worldIn: World) : Cre
                     }
                 }
             }
+
             return null
         }
     }
@@ -94,7 +87,7 @@ class FrayedSoulEntity(type: EntityType<FrayedSoulEntity>, worldIn: World) : Cre
         }
 
         override fun canContinueToUse(): Boolean {
-            return canUse() || !entity.navigation.isDone
+            return canUse() /*|| !entity.navigation.isDone*/
         }
 
         override fun start() {
@@ -135,7 +128,9 @@ class FrayedSoulEntity(type: EntityType<FrayedSoulEntity>, worldIn: World) : Cre
                 // strafing stuff
 
                 if (entity.tickCount % 20 == 0) {
-                    //entity.shoot(target)
+                    val vec = entity.getViewVector(1.0f)
+                    val magic = MagicBoltEntity(HEntities.MAGIC_BOLT, entity.level)
+                    magic.shoot(entity, entity.x, entity.eyeY - 0.1, entity.z, vec.x, vec.y, vec.z)
                 }
             }
         }

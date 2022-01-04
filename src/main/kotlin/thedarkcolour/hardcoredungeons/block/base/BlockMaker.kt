@@ -14,7 +14,7 @@ import net.minecraft.util.math.shapes.VoxelShape
 import net.minecraft.util.math.shapes.VoxelShapes
 import net.minecraft.world.World
 import net.minecraftforge.common.ToolType
-import thedarkcolour.hardcoredungeons.registry.HBlocks
+import net.minecraftforge.fml.DatagenModLoader
 import thedarkcolour.hardcoredungeons.block.base.properties.HProperties
 import thedarkcolour.hardcoredungeons.block.combo.PottedPlantCombo
 import thedarkcolour.hardcoredungeons.block.decoration.RotatableBlock
@@ -25,6 +25,7 @@ import thedarkcolour.hardcoredungeons.block.plant.PlantProperties
 import thedarkcolour.hardcoredungeons.block.portal.HPortalBlock
 import thedarkcolour.hardcoredungeons.data.modelgen.block.BlockModelType
 import thedarkcolour.hardcoredungeons.data.modelgen.item.ItemModelType
+import thedarkcolour.hardcoredungeons.registry.HBlocks
 import thedarkcolour.hardcoredungeons.registry.HBlocksOld
 import thedarkcolour.kotlinforforge.forge.ObjectHolderDelegate
 
@@ -56,7 +57,8 @@ object BlockMaker {
 
     fun <T : M, M : Block> registerModelled(name: String, type: BlockModelType<M>, appearance: (() -> Block)? = null, supplier: () -> T): ObjectHolderDelegate<T> {
         val obj = HBlocks.register(name, supplier)
-        HBlocks.onceRegistered { type.add(obj, appearance ?: obj) }
+        if (DatagenModLoader.isRunningDataGen()) // don't bother filling lists outside data gen
+            HBlocks.onceRegistered { type.add(obj, appearance ?: obj) }
         return obj
     }
 
@@ -76,20 +78,20 @@ object BlockMaker {
         return registerModelled(name, BlockModelType.STAIRS, full) { StairsBlock(full()::defaultBlockState, props.build()) }
     }
 
-    fun registerFence(name: String, props: HProperties): ObjectHolderDelegate<FenceBlock> {
-        return registerModelled(name, BlockModelType.FENCE) { FenceBlock(props.build()) }
+    fun registerFence(name: String, props: HProperties, appearance: (() -> Block)? = null): ObjectHolderDelegate<FenceBlock> {
+        return registerModelled(name, BlockModelType.FENCE, appearance) { FenceBlock(props.build()) }
     }
 
-    fun registerFenceGate(name: String, props: HProperties): ObjectHolderDelegate<FenceGateBlock> {
-        return HBlocks.register(name) { FenceGateBlock(props.build()) }
+    fun registerFenceGate(name: String, props: HProperties, appearance: (() -> Block)? = null): ObjectHolderDelegate<FenceGateBlock> {
+        return registerModelled(name, BlockModelType.FENCE_GATE, appearance) { FenceGateBlock(props.build()) }
     }
 
-    fun registerPressurePlate(name: String, sensitivity: PressurePlateBlock.Sensitivity, props: HProperties): ObjectHolderDelegate<PressurePlateBlock> {
-        return registerModelled(name, BlockModelType.PRESSURE_PLATE) { PressurePlateBlock(sensitivity, props.build().noCollission()) }
+    fun registerPressurePlate(name: String, sensitivity: PressurePlateBlock.Sensitivity, props: HProperties, appearance: (() -> Block)? = null): ObjectHolderDelegate<PressurePlateBlock> {
+        return registerModelled(name, BlockModelType.PRESSURE_PLATE, appearance) { PressurePlateBlock(sensitivity, props.build().noCollission()) }
     }
 
-    fun registerWoodButton(name: String, props: HProperties): ObjectHolderDelegate<WoodButtonBlock> {
-        return registerModelled(name, BlockModelType.BUTTON) { WoodButtonBlock(props.build().noCollission()) }
+    fun registerWoodButton(name: String, props: HProperties, appearance: (() -> Block)? = null): ObjectHolderDelegate<WoodButtonBlock> {
+        return registerModelled(name, BlockModelType.BUTTON, appearance) { WoodButtonBlock(props.build().noCollission()) }
     }
 
     fun registerTrapdoor(name: String, props: HProperties): ObjectHolderDelegate<TrapDoorBlock> {
@@ -217,12 +219,11 @@ object BlockMaker {
     fun farmlandWithItem(
         name: String,
         from: () -> Block,
-        soil: () -> BlockState = Blocks.DIRT::defaultBlockState,
+        soil: () -> BlockState,
         props: HProperties,
         boostMap: (Object2FloatMap<() -> Block>) -> Unit = { }
     ): ObjectHolderDelegate<BonusFarmlandBlock> {
-        val farmland = withItem(name, ItemModelType.BLOCK_ITEM, registerModelled(name, BlockModelType.FARMLAND) { BonusFarmlandBlock(soil, Util.make(
-            Object2FloatOpenHashMap(), boostMap), props) })
+        val farmland = withItem(name, ItemModelType.BLOCK_ITEM, registerModelled(name, BlockModelType.FARMLAND) { BonusFarmlandBlock(soil, Util.make(Object2FloatOpenHashMap(), boostMap), props) })
         HBlocks.onceRegistered { HBlocksOld.registerHoeInteraction(from(), farmland().defaultBlockState()) }
         return farmland
     }

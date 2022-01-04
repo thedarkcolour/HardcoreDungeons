@@ -6,7 +6,7 @@ import net.minecraft.tags.ItemTags
 import thedarkcolour.hardcoredungeons.HardcoreDungeons
 
 /**
- * Contains references to item tags in Hardcore Dungeons.
+ * Item tags in Hardcore Dungeons.
  *
  * @author TheDarkColour
  */

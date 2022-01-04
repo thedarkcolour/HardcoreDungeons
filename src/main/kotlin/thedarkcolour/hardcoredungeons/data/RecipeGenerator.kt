@@ -16,8 +16,8 @@ import net.minecraft.util.IItemProvider
 import net.minecraft.util.ResourceLocation
 import net.minecraftforge.common.Tags
 import net.minecraftforge.registries.IForgeRegistryEntry
-import thedarkcolour.hardcoredungeons.registry.HBlocks
 import thedarkcolour.hardcoredungeons.compat.getBiomesOPlentyCompat
+import thedarkcolour.hardcoredungeons.registry.HBlocks
 import thedarkcolour.hardcoredungeons.registry.HItems
 import thedarkcolour.hardcoredungeons.tags.HItemTags
 import thedarkcolour.hardcoredungeons.util.modLoc
@@ -35,7 +35,6 @@ class RecipeGenerator(generatorIn: DataGenerator) : RecipeProvider(generatorIn) 
         HBlocks.LUMLIGHT_WOOD.addRecipes(consumer)
         HBlocks.AURI_WOOD.addRecipes(consumer)
         HBlocks.COTTONMARSH_WOOD.addRecipes(consumer)
-
 
         // shroomy cobblestone + stone brick
         consumer.shapeless(HBlocks.SHROOMY_COBBLESTONE.block, 1) { builder ->
@@ -115,88 +114,6 @@ class RecipeGenerator(generatorIn: DataGenerator) : RecipeProvider(generatorIn) 
         consumer.smeltingRecipe(HItems.VENISON, HItems.COOKED_VENISON, 0.35f, smokingRecipe = true, campfireRecipe = true)
         consumer.smeltingRecipe(HBlocks.RAINBOWSTONE_ORE, HItems.RAINBOWSTONE_GEM, 0.85f, blastingRecipe = true)
         //consumer.campfireRecipe(HItems.VENISON, HItems.COOKED_VENISON, 0.35f)
-
-
-        // convert slabs to full block
-        consumer.slabs2Full(Blocks.OAK_SLAB, Blocks.OAK_PLANKS, "planks")
-        consumer.slabs2Full(Blocks.SPRUCE_SLAB, Blocks.SPRUCE_PLANKS, "planks")
-        consumer.slabs2Full(Blocks.BIRCH_SLAB, Blocks.BIRCH_PLANKS, "planks")
-        consumer.slabs2Full(Blocks.JUNGLE_SLAB, Blocks.JUNGLE_PLANKS, "planks")
-        consumer.slabs2Full(Blocks.ACACIA_SLAB, Blocks.ACACIA_PLANKS, "planks")
-        consumer.slabs2Full(Blocks.DARK_OAK_SLAB, Blocks.DARK_OAK_PLANKS, "planks")
-        consumer.slabs2Full(Blocks.CRIMSON_SLAB, Blocks.CRIMSON_PLANKS, "planks")
-        consumer.slabs2Full(Blocks.WARPED_SLAB, Blocks.WARPED_PLANKS, "planks")
-        consumer.slabs2Full(Blocks.STONE_SLAB, Blocks.STONE)
-        consumer.slabs2Full(Blocks.SMOOTH_STONE_SLAB, Blocks.SMOOTH_STONE)
-        consumer.slabs2Full(Blocks.CUT_SANDSTONE_SLAB, Blocks.CUT_SANDSTONE)
-        consumer.slabs2Full(Blocks.COBBLESTONE_SLAB, Blocks.COBBLESTONE)
-        consumer.slabs2Full(Blocks.BRICK_SLAB, Blocks.BRICKS)
-        consumer.slabs2Full(Blocks.CUT_RED_SANDSTONE_SLAB, Blocks.CUT_RED_SANDSTONE)
-        consumer.slabs2Full(Blocks.PURPUR_SLAB, Blocks.PURPUR_BLOCK)
-        consumer.slabs2Full(Blocks.PRISMARINE_SLAB, Blocks.PRISMARINE)
-        consumer.slabs2Full(Blocks.PRISMARINE_BRICK_SLAB, Blocks.PRISMARINE_BRICKS)
-        consumer.slabs2Full(Blocks.DARK_PRISMARINE_SLAB, Blocks.DARK_PRISMARINE)
-        consumer.slabs2Full(Blocks.POLISHED_GRANITE_SLAB, Blocks.POLISHED_GRANITE)
-        consumer.slabs2Full(Blocks.SMOOTH_RED_SANDSTONE_SLAB, Blocks.SMOOTH_RED_SANDSTONE)
-        consumer.slabs2Full(Blocks.MOSSY_STONE_BRICK_SLAB, Blocks.MOSSY_STONE_BRICKS)
-        consumer.slabs2Full(Blocks.POLISHED_DIORITE_SLAB, Blocks.POLISHED_DIORITE)
-        consumer.slabs2Full(Blocks.MOSSY_COBBLESTONE_SLAB, Blocks.MOSSY_COBBLESTONE)
-        consumer.slabs2Full(Blocks.END_STONE_BRICK_SLAB, Blocks.END_STONE_BRICKS)
-        consumer.slabs2Full(Blocks.SMOOTH_SANDSTONE_SLAB, Blocks.SMOOTH_SANDSTONE)
-        consumer.slabs2Full(Blocks.SMOOTH_QUARTZ_SLAB, Blocks.SMOOTH_QUARTZ)
-        consumer.slabs2Full(Blocks.GRANITE_SLAB, Blocks.GRANITE)
-        consumer.slabs2Full(Blocks.ANDESITE_SLAB, Blocks.ANDESITE)
-        consumer.slabs2Full(Blocks.RED_NETHER_BRICK_SLAB, Blocks.RED_NETHER_BRICKS)
-        consumer.slabs2Full(Blocks.POLISHED_ANDESITE_SLAB, Blocks.POLISHED_ANDESITE)
-        consumer.slabs2Full(Blocks.DIORITE_SLAB, Blocks.DIORITE)
-        consumer.slabs2Full(Blocks.BLACKSTONE_SLAB, Blocks.BLACKSTONE)
-        consumer.slabs2Full(Blocks.POLISHED_BLACKSTONE_BRICK_SLAB, Blocks.POLISHED_BLACKSTONE_BRICKS)
-        // can't do these because of chiseled blocks
-        // consumer.slabs2Full(Blocks.NETHER_BRICK_SLAB, Blocks.NETHER_BRICKS)
-        // consumer.slabs2Full(Blocks.QUARTZ_SLAB, Blocks.QUARTZ_BLOCK)
-        // consumer.slabs2Full(Blocks.POLISHED_BLACKSTONE_SLAB, Blocks.POLISHED_BLACKSTONE)
-        // consumer.slabs2Full(Blocks.STONE_BRICK_SLAB, Blocks.STONE_BRICKS)
-        // consumer.slabs2Full(Blocks.SANDSTONE_SLAB, Blocks.SANDSTONE)
-        // consumer.slabs2Full(Blocks.RED_SANDSTONE_SLAB, Blocks.RED_SANDSTONE)
-
-
-        // convert stairs to full block
-        consumer.stairs2Full(Blocks.OAK_STAIRS, Blocks.OAK_PLANKS, "planks")
-        consumer.stairs2Full(Blocks.SPRUCE_STAIRS, Blocks.SPRUCE_PLANKS, "planks")
-        consumer.stairs2Full(Blocks.BIRCH_STAIRS, Blocks.BIRCH_PLANKS, "planks")
-        consumer.stairs2Full(Blocks.JUNGLE_STAIRS, Blocks.JUNGLE_PLANKS, "planks")
-        consumer.stairs2Full(Blocks.ACACIA_STAIRS, Blocks.ACACIA_PLANKS, "planks")
-        consumer.stairs2Full(Blocks.DARK_OAK_STAIRS, Blocks.DARK_OAK_PLANKS, "planks")
-        consumer.stairs2Full(Blocks.CRIMSON_STAIRS, Blocks.CRIMSON_PLANKS, "planks")
-        consumer.stairs2Full(Blocks.WARPED_STAIRS, Blocks.WARPED_PLANKS, "planks")
-        consumer.stairs2Full(Blocks.STONE_STAIRS, Blocks.STONE)
-        consumer.stairs2Full(Blocks.SANDSTONE_STAIRS, Blocks.SANDSTONE)
-        consumer.stairs2Full(Blocks.COBBLESTONE_STAIRS, Blocks.COBBLESTONE)
-        consumer.stairs2Full(Blocks.BRICK_STAIRS, Blocks.BRICKS)
-        consumer.stairs2Full(Blocks.STONE_BRICK_STAIRS, Blocks.STONE_BRICKS)
-        consumer.stairs2Full(Blocks.NETHER_BRICK_STAIRS, Blocks.NETHER_BRICKS)
-        consumer.stairs2Full(Blocks.RED_SANDSTONE_STAIRS, Blocks.RED_SANDSTONE)
-        consumer.stairs2Full(Blocks.PURPUR_STAIRS, Blocks.PURPUR_BLOCK)
-        consumer.stairs2Full(Blocks.PRISMARINE_STAIRS, Blocks.PRISMARINE)
-        consumer.stairs2Full(Blocks.PRISMARINE_BRICK_STAIRS, Blocks.PRISMARINE_BRICKS)
-        consumer.stairs2Full(Blocks.DARK_PRISMARINE_STAIRS, Blocks.DARK_PRISMARINE)
-        consumer.stairs2Full(Blocks.POLISHED_GRANITE_STAIRS, Blocks.POLISHED_GRANITE)
-        consumer.stairs2Full(Blocks.SMOOTH_RED_SANDSTONE_STAIRS, Blocks.SMOOTH_RED_SANDSTONE)
-        consumer.stairs2Full(Blocks.MOSSY_STONE_BRICK_STAIRS, Blocks.MOSSY_STONE_BRICKS)
-        consumer.stairs2Full(Blocks.POLISHED_DIORITE_STAIRS, Blocks.POLISHED_DIORITE)
-        consumer.stairs2Full(Blocks.MOSSY_COBBLESTONE_STAIRS, Blocks.MOSSY_COBBLESTONE)
-        consumer.stairs2Full(Blocks.END_STONE_BRICK_STAIRS, Blocks.END_STONE_BRICKS)
-        consumer.stairs2Full(Blocks.SMOOTH_SANDSTONE_STAIRS, Blocks.SMOOTH_SANDSTONE)
-        consumer.stairs2Full(Blocks.SMOOTH_QUARTZ_STAIRS, Blocks.SMOOTH_QUARTZ)
-        consumer.stairs2Full(Blocks.GRANITE_STAIRS, Blocks.GRANITE)
-        consumer.stairs2Full(Blocks.ANDESITE_STAIRS, Blocks.ANDESITE)
-        consumer.stairs2Full(Blocks.RED_NETHER_BRICK_STAIRS, Blocks.RED_NETHER_BRICKS)
-        consumer.stairs2Full(Blocks.POLISHED_ANDESITE_STAIRS, Blocks.POLISHED_ANDESITE)
-        consumer.stairs2Full(Blocks.DIORITE_STAIRS, Blocks.DIORITE)
-        consumer.stairs2Full(Blocks.BLACKSTONE_STAIRS, Blocks.BLACKSTONE)
-        consumer.stairs2Full(Blocks.POLISHED_BLACKSTONE_BRICK_STAIRS, Blocks.POLISHED_BLACKSTONE_BRICKS)
-        consumer.stairs2Full(Blocks.POLISHED_BLACKSTONE_STAIRS, Blocks.POLISHED_BLACKSTONE)
-
 
         // compressed (storage) block recipes
         HBlocks.COMPRESSED_COBBLESTONE.addRecipes(consumer)
@@ -340,7 +257,7 @@ class RecipeGenerator(generatorIn: DataGenerator) : RecipeProvider(generatorIn) 
              outputCount: Int = 1,
          ) = SingleItemRecipeBuilder.stonecutting(Ingredient.of(input), output, outputCount)
              .unlocks("has_item", has(input))
-             .save(this, path(output.asItem()) + "_from_" + path(input.asItem()))
+             .save(this, path(output.asItem()) + "_from_" + path(input.asItem()) + "_stonecutting")
 
          private fun Consumer<IFinishedRecipe>.pickaxe(
              result: IItemProvider,
@@ -411,10 +328,10 @@ class RecipeGenerator(generatorIn: DataGenerator) : RecipeProvider(generatorIn) 
              result: IItemProvider,
              resultCount: Int,
              id: ResourceLocation = result.asItem().registryName!!,
-             requiress: (ShapelessRecipeBuilder) -> Unit,
+             addIngredients: (ShapelessRecipeBuilder) -> Unit,
          ) {
              val builder = ShapelessRecipeBuilder(result, resultCount)
-             requiress(builder)
+             addIngredients(builder)
 
              builder.save(this, id)
          }
@@ -423,10 +340,10 @@ class RecipeGenerator(generatorIn: DataGenerator) : RecipeProvider(generatorIn) 
              result: IItemProvider,
              resultCount: Int,
              id: ResourceLocation = result.asItem().registryName!!,
-             requiress: (ShapedRecipeBuilder) -> Unit,
+             addIngredients: (ShapedRecipeBuilder) -> Unit,
          ) {
              val builder = ShapedRecipeBuilder(result, resultCount)
-             requiress(builder)
+             addIngredients(builder)
 
              builder.save(this, id)
          }
@@ -450,7 +367,7 @@ class RecipeGenerator(generatorIn: DataGenerator) : RecipeProvider(generatorIn) 
          fun Consumer<IFinishedRecipe>.stairs(
              stairs: StairsBlock,
              block: Block,
-             group: String? = null
+             group: String? = null,
          ) {
              shaped(stairs, 4) { builder ->
                  builder.define('#', block)
@@ -463,9 +380,7 @@ class RecipeGenerator(generatorIn: DataGenerator) : RecipeProvider(generatorIn) 
          }
 
          fun Consumer<IFinishedRecipe>.stairs2Full(stairs: Block, block: Block, group: String? = null) {
-             shaped(block, 3,
-                 modLoc(path(block) + "_from_stairs")
-             ) { builder ->
+             shaped(block, 3, modLoc(path(block) + "_from_stairs")) { builder ->
                  builder.define('#', stairs)
                  if (group != null) builder.group(group)
                  builder.lines("##", "##")
@@ -473,14 +388,28 @@ class RecipeGenerator(generatorIn: DataGenerator) : RecipeProvider(generatorIn) 
              }
          }
 
-         private fun Consumer<IFinishedRecipe>.wall(
-             wall: WallBlock,
-             block: Block
-         ) {
+         private fun Consumer<IFinishedRecipe>.wall(wall: WallBlock, block: Block) {
              shaped(wall, 6) { builder ->
                  builder.define('#', block)
                  builder.lines("###", "###")
                  builder.unlockedBy("has_block", has(block))
+             }
+         }
+
+         fun Consumer<IFinishedRecipe>.twoByTwo(
+             result: IItemProvider,
+             resultCount: Int,
+             from: IItemProvider,
+             id: ResourceLocation = result.asItem().registryName!!,
+             group: String? = null,
+             trigger: String
+         ) {
+             shaped(result, resultCount, id) { builder ->
+                 builder.pattern("xx")
+                 builder.pattern("xx")
+                 builder.define('x', from)
+                 if (group != null) builder.group(group)
+                 builder.unlockedBy(trigger, has(from))
              }
          }
      }

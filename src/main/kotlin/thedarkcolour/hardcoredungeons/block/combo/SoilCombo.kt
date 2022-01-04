@@ -5,7 +5,7 @@ import net.minecraft.tags.ITag
 import net.minecraftforge.common.Tags
 import thedarkcolour.hardcoredungeons.block.base.BlockMaker
 import thedarkcolour.hardcoredungeons.block.base.properties.HProperties
-import thedarkcolour.hardcoredungeons.block.misc.GrassBlock
+import thedarkcolour.hardcoredungeons.block.misc.HGrassBlock
 import thedarkcolour.hardcoredungeons.data.BlockTagGenerator
 import thedarkcolour.hardcoredungeons.data.LootGenerator
 
@@ -19,7 +19,7 @@ class SoilCombo(prefix: String, nocturnal: Boolean, tag: ITag<Block>, soilProps:
     val soil by BlockMaker.cubeAllWithItem(prefix + "soil", soilProps)
     val loam by BlockMaker.cubeAllWithItem(prefix + "loam", soilProps)
     val grass by BlockMaker.blockWithItem(prefix + "grass_block") {
-        GrassBlock({ soil.defaultBlockState() }, nocturnal, tag, grassProps.build())
+        HGrassBlock({ soil.defaultBlockState() }, nocturnal, tag, grassProps.build())
     }
 
     override fun addTags(gen: BlockTagGenerator) {

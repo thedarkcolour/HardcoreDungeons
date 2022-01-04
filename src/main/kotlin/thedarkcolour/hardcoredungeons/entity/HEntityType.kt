@@ -14,7 +14,7 @@ import java.util.function.BiFunction
 import java.util.function.Predicate
 import java.util.function.ToIntFunction
 
-/**
+/** todo replace with function that doesn't break mohist
  * Special EntityType
  * 
  * @author TheDarkColour

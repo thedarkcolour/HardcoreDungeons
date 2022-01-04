@@ -8,16 +8,12 @@ import net.minecraftforge.client.event.ColorHandlerEvent
 import net.minecraftforge.client.event.ModelBakeEvent
 import net.minecraftforge.client.event.ParticleFactoryRegisterEvent
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent
-import thedarkcolour.hardcoredungeons.registry.HBlocks
 import thedarkcolour.hardcoredungeons.client.color.RainbowColor
 import thedarkcolour.hardcoredungeons.client.dimension.AubrumEffects
 import thedarkcolour.hardcoredungeons.client.dimension.CastletonEffects
 import thedarkcolour.hardcoredungeons.client.model.block.FullbrightBakedModel
 import thedarkcolour.hardcoredungeons.client.renderer.GreenWandRender
-import thedarkcolour.hardcoredungeons.registry.HDimensions
-import thedarkcolour.hardcoredungeons.registry.HEntities
-import thedarkcolour.hardcoredungeons.registry.HItems
-import thedarkcolour.hardcoredungeons.registry.HParticles
+import thedarkcolour.hardcoredungeons.registry.*
 import thedarkcolour.hardcoredungeons.util.modLoc
 import thedarkcolour.kotlinforforge.forge.FORGE_BUS
 import thedarkcolour.kotlinforforge.forge.MOD_BUS
@@ -44,7 +40,7 @@ object ClientHandler {
         //FORGE_BUS.addListener(::postRender)
     }
 
-    // apparently RenderTypeLookup is not thread safe so we enqueue for later
+    // RenderTypeLookup is not (?) thread safe so enqueue on main thread
     private fun clientSetup(event: FMLClientSetupEvent) {
         event.enqueueWork(::setRenderTypes)
         HEntities.registerEntityRenderers()
@@ -56,25 +52,15 @@ object ClientHandler {
         DimensionRenderInfo.EFFECTS[HDimensions.AUBRUM_ID] = AubrumEffects
 
         Atlases.addWoodType(HBlocks.LUMLIGHT_WOOD.type)
-
-        //ClientRegistry.registerKeyBinding(HKeys.TOGGLE_HCD_OVERLAY)
+        Atlases.addWoodType(HBlocks.AURI_WOOD.type)
+        Atlases.addWoodType(HBlocks.COTTONMARSH_WOOD.type)
     }
-
-    /*
-    private fun postRender(event: TickEvent.RenderTickEvent) {
-        val mc = Minecraft.getInstance()
-        val player = mc.player
-
-        if (event.phase == TickEvent.Phase.END && !mc.gameSettings.hideGUI && player != null && !player.isSpectator) {
-
-        }
-    }*/
 
     private fun registerBakedModels(event: ModelBakeEvent) {
         val registry = event.modelRegistry as MutableMap
 
-        FullbrightBakedModel.addFullBrightEffects(registry, HBlocks.CROWN/*HBlocks.CROWN*/, setOf(modLoc("block/crown_fullbright")))
-        FullbrightBakedModel.addFullBrightEffects(registry, HBlocks.RUNED_CASTLETON_STONE/*HBlocks.RUNED_CASTLETON_STONE*/, setOf(modLoc("block/runed_castleton_stone_fullbright")))
+        FullbrightBakedModel.addFullBrightEffects(registry, HBlocks.CROWN, setOf(modLoc("block/crown_fullbright")))
+        FullbrightBakedModel.addFullBrightEffects(registry, HBlocks.RUNED_CASTLETON_STONE, setOf(modLoc("block/runed_castleton_stone_fullbright")))
     }
 
     private fun registerBlockColors(event: ColorHandlerEvent.Block) {
@@ -107,11 +93,15 @@ object ClientHandler {
         RenderTypeLookup.setRenderLayer(HBlocks.MALACHITE_CRYSTAL.crystal, RenderType.cutout())
 
         HBlocks.LUMLIGHT_WOOD.setRenderLayers()
-        HBlocks.PURPLE_LUMSHROOM.setRenderLayers()
-        HBlocks.BLUE_LUMSHROOM.setRenderLayers()
-        HBlocks.LUMLIGHT_WOOD.setRenderLayers()
+        HBlocks.AURI_WOOD.setRenderLayers()
+        HBlocks.COTTONMARSH_WOOD.setRenderLayers()
+
         HBlocks.FLAME_ROSE.setRenderLayers()
         HBlocks.GOLDEN_TULIP.setRenderLayers()
+
+        HBlocks.PURPLE_LUMSHROOM.setRenderLayers()
+        HBlocks.BLUE_LUMSHROOM.setRenderLayers()
+
         HBlocks.GREEN_GUMDROP.setRenderLayers()
         HBlocks.MINI_GREEN_GUMDROP.setRenderLayers()
         HBlocks.PINK_GUMDROP.setRenderLayers()

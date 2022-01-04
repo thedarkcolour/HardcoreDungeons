@@ -8,9 +8,9 @@ import net.minecraft.block.material.Material
 import net.minecraft.block.material.MaterialColor
 import net.minecraft.block.material.PushReaction
 import net.minecraft.potion.Effects
+import net.minecraft.tileentity.TileEntityType
 import net.minecraftforge.common.ToolType
 import net.minecraftforge.registries.ForgeRegistries
-import thedarkcolour.hardcoredungeons.block.HRegistry
 import thedarkcolour.hardcoredungeons.block.base.BlockMaker
 import thedarkcolour.hardcoredungeons.block.base.HBlock
 import thedarkcolour.hardcoredungeons.block.base.ItemMaker
@@ -68,6 +68,7 @@ object HBlocks : HRegistry<Block>(ForgeRegistries.BLOCKS) {
     val COTTONMARSH_WOOD = WoodCombo("cottonmarsh", MaterialColor.TERRACOTTA_BROWN, MaterialColor.TERRACOTTA_BROWN, CottonmarshTree, HBlockTags.COTTONMARSH_LOGS, HItemTags.COTTONMARSH_LOGS) { props -> props.sound(SoundType.WOOD).strength(2.5f) }
 
     /** Chiseled block variants */
+    // todo remove
     val CHISELED_DIAMOND_BLOCK by BlockMaker.cubeAllWithItem("chiseled_diamond_block", HProperties.copy(Blocks.DIAMOND_BLOCK))
     val OAK_PLANKS = VariantCombo(HProperties.copy(Blocks.OAK_PLANKS), "oak_planks", "crate", "braided", "short", "clean")
     val SPRUCE_PLANKS = VariantCombo(HProperties.copy(Blocks.SPRUCE_PLANKS), "spruce_planks", "large")
@@ -77,6 +78,7 @@ object HBlocks : HRegistry<Block>(ForgeRegistries.BLOCKS) {
     val CASTLETON_STONE = PolishedStoneBrickCombo("castleton_stone", HProperties.of(Material.STONE, MaterialColor.COLOR_GRAY).strength(30.0f, 1200.0f)) // Stairs, Slab, Rock, Polished block/stairs/slab, Wall, Fence
     val CRACKED_CASTLETON_BRICKS by BlockMaker.cubeAllWithItem("cracked_castleton_bricks", HProperties.of(Material.STONE, MaterialColor.COLOR_GRAY).strength(30.0f, 3.5f))
     val CHARGED_CASTLETON_BRICKS = StairsSlabWallFenceCombo("charged_castleton_bricks", HProperties.of(Material.STONE, MaterialColor.COLOR_GRAY).strength(35.0f, 1500.0f)) // No Polished
+    // todo remove
     val RUNED_CASTLETON_STONE by BlockMaker.blockWithItem("runed_castleton_stone") { HBlock(HProperties.of(Material.STONE, MaterialColor.COLOR_LIGHT_BLUE).strength(8.0f, 400.0f)) }
     val CASTLETON_PORTAL = PortalCombo(HDimensions.CASTLETON_ID, HDimensions::CASTLETON_KEY,) // Portal frame should be a block supplier
     val PURPLE_CASTLETON_LAMP by BlockMaker.blockWithItem("purple_castleton_lamp") { LampBlock(HProperties.copy(Blocks.REDSTONE_LAMP).strength(0.7f, 400.0f)) }
@@ -122,17 +124,17 @@ object HBlocks : HRegistry<Block>(ForgeRegistries.BLOCKS) {
     val SUGAR_BLOCK by BlockMaker.cubeAllWithItem("sugar_block", HProperties.of(Material.SAND, MaterialColor.SNOW).sound(SoundType.SAND)) // Standalone
     val CANDY_CANE_BLOCK by BlockMaker.rotatedPillarWithItem("candy_cane_block", HProperties.of(Material.WOOD).sound(SoundType.BASALT))
     val BENT_CANDY_CANE_BLOCK by BlockMaker.rotatableBlockWithItem("bent_candy_cane_block", HProperties.of(Material.WOOD).sound(SoundType.BASALT))
-    val CHOCOLATE_BLOCK = StairsSlabCombo("chocolate_block", HProperties.of(Material.STONE, MaterialColor.COLOR_BROWN).sound(SoundType.BASALT))
+    val CHOCOLATE_BLOCK = StairsSlabWallCombo("chocolate_block", HProperties.of(Material.STONE, MaterialColor.COLOR_BROWN).sound(SoundType.BASALT))
     val CANDYLAND_PORTAL = PortalCombo(HDimensions.CANDYLAND_ID, HDimensions::CANDYLAND_KEY) { CHOCOLATE_BLOCK.block }
+    // todo custom material
+    val GUMDROP_BLOCK = VariantCombo(HProperties.of(Material.CLAY).sound(SoundType.SLIME_BLOCK), "gumdrop_block", "green", "pink", "blue", "purple", "red", "yellow")
 
     /** Dungeon features */
     val DUNGEON_CASTLETON_BRICKS by BlockMaker.unbreakableWithItem("dungeon_castleton_bricks", BlockModelType.CUBE_ALL, CASTLETON_STONE.brick::block) // Standalone? Adjust with needs later on
     val DUNGEON_SPAWNER by BlockMaker.blockWithItem("dungeon_spawner") { DungeonSpawnerBlock(AbstractBlock.Properties.copy(Blocks.BARRIER)) } // Standalone? Adjust with needs later on
     val BLUE_CASTLETON_DUNGEON_LOCK by BlockMaker.blockWithItem("blue_castleton_dungeon_lock") { LockBlock(HItems::BLUE_CASTLETON_DUNGEON_KEY, { Blocks.OBSIDIAN }, HProperties.of(Material.STONE, MaterialColor.COLOR_BLACK)) } // Door lock combo to handle key
     val SOOT by BlockMaker.withItem("soot", ItemModelType.BLOCK_ITEM, BlockMaker.registerModelled("soot", BlockModelType.SOOT) { SafeSootBlock(HProperties.of(Material.SAND).shape(BlockMaker.FARMLAND_SHAPE).speedFactor(0.4f).strength(40.0f, 3000.0f).harvestTool(ToolType.SHOVEL).noOcclusion()) })
-    val SOOT_TRAP by BlockMaker.withItem("soot_trap", ItemModelType.BLOCK_ITEM, BlockMaker.registerModelled("soot_trap", BlockModelType.SOOT, appearance = { SOOT }) { SootTrapBlock(HProperties.copy(
-        SOOT
-    ).lootFrom { SOOT }) })
+    val SOOT_TRAP by BlockMaker.withItem("soot_trap", ItemModelType.BLOCK_ITEM, BlockMaker.registerModelled("soot_trap", BlockModelType.SOOT, appearance = { SOOT }) { SootTrapBlock(HProperties.copy(SOOT).lootFrom { SOOT }) })
     val SOOT_TRAP_CONTROLLER by BlockMaker.blockWithItem("soot_trap_controller") { SootTrapControllerBlock(HProperties.of(Material.DECORATION).strength(50.0f, 1200.0f).noDrops()) }
 
     /** Vases */
@@ -180,4 +182,10 @@ object HBlocks : HRegistry<Block>(ForgeRegistries.BLOCKS) {
     val MINI_RED_GUMDROP = BlockMaker.gumdrop("mini_red_gumdrop")
     val YELLOW_GUMDROP = BlockMaker.gumdrop("yellow_gumdrop")
     val MINI_YELLOW_GUMDROP = BlockMaker.gumdrop("mini_yellow_gumdrop")
+
+    init {
+        onceRegistered {
+            HBlocksOld.addValidBlocks(TileEntityType.CAMPFIRE, LUMLIGHT_CAMPFIRE)
+        }
+    }
 }

@@ -13,6 +13,9 @@ class CubeAllModelType : BlockModelType<Block>() {
     }
 
     private fun simpleBlock(gen: ModelGenerator, block: Block, appearance: Block) {
-        gen.getVariantBuilder(block).partialState().addModels(ConfiguredModel(gen.models().cubeAll(gen.name(block), gen.blockTexture(appearance))))
+        // Put this first so errors don't leave empty variant builders
+        val cubeAll = gen.models().cubeAll(gen.name(block), gen.blockTexture(appearance))
+
+        gen.getVariantBuilder(block).partialState().addModels(ConfiguredModel(cubeAll))
     }
 }

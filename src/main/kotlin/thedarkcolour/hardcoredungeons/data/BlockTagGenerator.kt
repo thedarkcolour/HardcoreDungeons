@@ -3,6 +3,7 @@ package thedarkcolour.hardcoredungeons.data
 import net.minecraft.block.Block
 import net.minecraft.data.BlockTagsProvider
 import net.minecraft.data.DataGenerator
+import net.minecraft.tags.BlockTags
 import net.minecraft.tags.ITag
 import net.minecraftforge.common.Tags.Blocks
 import net.minecraftforge.common.data.ExistingFileHelper
@@ -20,6 +21,8 @@ class BlockTagGenerator(gen: DataGenerator, helper: ExistingFileHelper) : BlockT
      * Register tags for each block.
      */
     override fun addTags() {
+
+        tags()
 
         // hcd tags
         HBlocks.LUMLIGHT_WOOD.addTags(this)
@@ -78,10 +81,6 @@ class BlockTagGenerator(gen: DataGenerator, helper: ExistingFileHelper) : BlockT
         tag(Blocks.FENCES_WOODEN).add(HBlocksNew.LUMLIGHT_FENCE)
         tag(Blocks.FENCE_GATES).add(HBlocksNew.LUMLIGHT_FENCE_GATE)
         tag(Blocks.FENCE_GATES_WOODEN).add(HBlocksNew.LUMLIGHT_FENCE_GATE)*/
-        HBlocks.CASTLETON_SOIL.addTags(this)
-        HBlocks.RAINBOW_SOIL.addTags(this)
-        HBlocks.AURISOIL.addTags(this)
-        HBlocks.SUGARY_SOIL.addTags(this)
 
         tag(Blocks.GLASS).addTag(HBlockTags.GLASS_RAINBOW)
         tag(Blocks.GLASS_PANES).addTag(HBlockTags.GLASS_PANES_RAINBOW) // the chaotic glass
@@ -117,6 +116,60 @@ class BlockTagGenerator(gen: DataGenerator, helper: ExistingFileHelper) : BlockT
         tag(Blocks.GLASS_PANES_PINK).addTag(HBlockTags.GLASS_PANES_RAINBOW)
         tag(Blocks.GLASS_PANES_PURPLE).addTag(HBlockTags.GLASS_PANES_RAINBOW)
         tag(Blocks.GLASS_PANES_RED).addTag(HBlockTags.GLASS_PANES_RAINBOW)
+    }
+
+    private fun tags() {
+        /** Overworld materials */
+        HBlocks.SHROOMY_COBBLESTONE.addTags(this)
+        HBlocks.SHROOMY_STONE_BRICKS.addTags(this)
+
+        /** Ore blocks */
+        tag(Blocks.ORES).add(HBlocks.RAINBOWSTONE_ORE, HBlocks.AURIGOLD_ORE)
+
+        /** Gem blocks */
+        tag(Blocks.STORAGE_BLOCKS).add(HBlocks.MALACHITE_BLOCK, HBlocks.RAINBOWSTONE_BLOCK)
+        tag(BlockTags.BEACON_BASE_BLOCKS).add(HBlocks.MALACHITE_BLOCK, HBlocks.RAINBOWSTONE_BLOCK)
+
+        /** Wood */
+        HBlocks.LUMLIGHT_WOOD.addTags(this)
+        HBlocks.AURI_WOOD.addTags(this)
+        HBlocks.COTTONMARSH_WOOD.addTags(this)
+
+        /** Chiseled block variants */
+        // idk what to do for chiseled diamond block
+        HBlocks.OAK_PLANKS.addTag(this, BlockTags.PLANKS)
+        HBlocks.SPRUCE_PLANKS.addTag(this, BlockTags.PLANKS)
+
+        /** Castleton materials */
+        HBlocks.CASTLETON_SOIL.addTags(this)
+        HBlocks.CASTLETON_STONE.addTags(this)
+        HBlocks.CHARGED_CASTLETON_BRICKS.addTags(this)
+        HBlocks.CASTLETON_PORTAL.addTags(this)
+
+        /** Castleton Props */
+        tag(BlockTags.CAMPFIRES).add(HBlocks.LUMLIGHT_CAMPFIRE)
+        HBlocks.CASTLETON_TORCH.addTags(this)
+
+        /** Rainbowland materials */
+        HBlocks.RAINBOW_SOIL.addTags(this)
+        HBlocks.RAINBOW_ROCK.addTags(this)
+        HBlocks.RAINBOW_FACTORY_BRICKS.addTags(this)
+        HBlocks.RAINBOWLAND_PORTAL.addTags(this)
+
+        /** Aubrum materials */
+        HBlocks.AURISOIL.addTags(this)
+        HBlocks.AUBRUM_PORTAL.addTags(this)
+
+        /** Candyland materials */
+        HBlocks.SUGARY_SOIL.addTags(this)
+        tag(Blocks.STORAGE_BLOCKS).add(HBlocks.SUGAR_BLOCK, HBlocks.CHOCOLATE_BLOCK.block)
+        HBlocks.CHOCOLATE_BLOCK.addTags(this)
+        HBlocks.CANDYLAND_PORTAL.addTags(this)
+
+        /** Crops */
+        HBlocks.CHILI_PEPPER.addTags(this)
+        tag(BlockTags.CROPS).add(HBlocks.GOLDEN_CARROTS)
+        HBlocks.WILD_BERROOK.addTags(this)
     }
 
     public override fun tag(tag: ITag.INamedTag<Block>): Builder<Block> {
