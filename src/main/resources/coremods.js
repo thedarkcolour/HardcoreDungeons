@@ -11,6 +11,42 @@ var ASMAPI = Java.type('net.minecraftforge.coremod.api.ASMAPI');
 
 function initializeCoreMod() {
     return {
+        'CastletonLight': {
+            'target': {
+                'type': 'METHOD',
+                'class': 'net.minecraft.client.renderer.LightTexture',
+                'methodName': 'func_205106_a',
+                'methodDesc': '(F)V'
+            },
+            'transformer': function (method) {
+                var insnList = method.instructions;
+
+                for (var i = 0; i < insnList.size(); ++i) {
+                    var setInsn = insnList.get(i);
+
+                    if (setInsn instanceof MethodInsnNode) {
+                        if (setInsn.name.equals(ASMAPI.mapMethod('func_195905_a'))) {
+                            var next = setInsn.getNext();
+
+                            var toAdd = ASMAPI.listOf(
+                                new VarInsnNode(Opcodes.ALOAD, 9),
+                                new VarInsnNode(Opcodes.FLOAD, 13),
+                                new MethodInsnNode(Opcodes.INVOKESTATIC, "thedarkcolour/hardcoredungeons/asm/ClientASMHooks", "modifyLightTexture", "(Lnet/minecraft/util/math/vector/Vector3f;F)V", false)
+                            );
+
+                            insnList.insertBefore(next, toAdd);
+
+                            return method;
+                        }
+                    }
+                }
+
+                return method;
+            }
+        }
+
+
+        /*
         'BiomeLayerCoremod': {
             'target': {
                 'type': 'METHOD',
@@ -42,7 +78,7 @@ function initializeCoreMod() {
                 }
                 return method;
             }
-        },/*
+        },*//*
         'ShoreLayerCoremod': {
             'target': {
                 'type': 'METHOD',
@@ -74,7 +110,7 @@ function initializeCoreMod() {
                 }
                 return method;
             }
-        },*/
+        },*//*
         'LayerUtilCoremod': {
             'target': {
                 'type': 'METHOD',
@@ -108,36 +144,8 @@ function initializeCoreMod() {
 
                 return method;
             }
-        },/*
-        'WhiteLight': {
-            'target': {
-                'type': 'METHOD',
-                'class': 'net.minecraft.client.renderer.LightTexture',
-                'methodName': 'func_205106_a',
-                'methodDesc': '(F)V'
-            },
-            'transformer': function (method) {
-                var insnList = method.instructions;
-
-                for (var i = 0; i < insnList.size(); ++i) {
-                    var setInsn = insnList.get(i + 2);
-
-                    if (setInsn instanceof MethodInsnNode) {
-                        if (setInsn.name.equals(ASMAPI.mapMethod('func_195905_a'))) {
-                            var insn = insnList.get(i);
-                            var insn1 = insnList.get(i + 1);
-
-                            insnList.set(insn, new VarInsnNode(Opcodes.FLOAD, 13));
-                            insnList.set(insn1, new VarInsnNode(Opcodes.FLOAD, 13));
-
-                            return method;
-                        }
-                    }
-                }
-
-                return method;
-            }
-        }*/
+        },*/
+        /*,
         'FragileCurse': {
             'target': {
                 'type': 'METHOD',
@@ -148,6 +156,6 @@ function initializeCoreMod() {
             'transformer': function (method) {
                 return method;
             }
-        }
+        }*/
     }
 }
