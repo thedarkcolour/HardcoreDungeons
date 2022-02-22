@@ -12,28 +12,28 @@ class PillarModelType : BlockModelType<Block>() {
         pillar(block, appearance, gen)
     }
 
-    fun pillar(pillar: Block, side: Block, gen: ModelGenerator) {
-        gen.blockItemModel(pillar)
+    private fun pillar(block: Block, side: Block, gen: ModelGenerator) {
+        gen.blockItemModel(block)
 
-        val path = pillar.registryName!!.path
-        val texture = gen.textureLoc(path.replace("wood", "log"))
-        val file = ModelFile.UncheckedModelFile(texture)
+        val path = block.registryName!!.path
+        val sideTexture = gen.textureLoc(path.replace("wood", "log"))
+        val file = ModelFile.UncheckedModelFile(gen.textureLoc(path))
         val x = ConfiguredModel.builder().rotationX(90).rotationY(90).modelFile(file).buildLast()
         val y = ConfiguredModel.builder().modelFile(file).buildLast()
         val z = ConfiguredModel.builder().rotationX(90).modelFile(file).buildLast()
 
         val model = gen.blockModel(path)
             .parent(gen.mcModel("block/cube_column"))
-            .texture("side", texture)
+            .texture("side", sideTexture)
 
         // Create a new texture or reuse an existing one
         when {
-            path.endsWith("wood") -> model.texture("end", texture)
-            pillar == side -> model.texture("end", gen.textureLoc(pillar, suffix = "_end"))
-            else -> model.texture("end", gen.textureLoc(side))
+            path.endsWith("wood") -> model.texture("end", sideTexture) // for wood blocks
+            block == side -> model.texture("end", gen.textureLoc(block, suffix = "_end")) // for normal logs
+            else -> model.texture("end", gen.textureLoc(side)) // is this even used?
         }
 
-        gen.getVariantBuilder(pillar)
+        gen.getVariantBuilder(block)
             .partialState()
             .with(BlockStateProperties.AXIS, Direction.Axis.X)
             .addModels(x)

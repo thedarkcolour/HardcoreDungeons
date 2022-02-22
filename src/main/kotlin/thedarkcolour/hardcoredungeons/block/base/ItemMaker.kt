@@ -4,15 +4,23 @@ import net.minecraft.block.Block
 import net.minecraft.item.BlockItem
 import net.minecraft.item.Food
 import net.minecraft.item.Item
-import thedarkcolour.hardcoredungeons.registry.HItemsNew
 import thedarkcolour.hardcoredungeons.data.modelgen.item.ItemModelType
 import thedarkcolour.hardcoredungeons.item.Group
+import thedarkcolour.hardcoredungeons.registry.HItemsNew
 import thedarkcolour.kotlinforforge.forge.ObjectHolderDelegate
 
 // todo write comments
 object ItemMaker {
     fun <T : Item> handheld(name: String, supplier: () -> T): ObjectHolderDelegate<T> {
         return registerModelled(name, ItemModelType.HANDHELD_ITEM, supplier)
+    }
+
+    fun <T : Item> rotatedHandheld(name: String, supplier: () -> T): ObjectHolderDelegate<T> {
+        return registerModelled(name, ItemModelType.ROTATED_HANDHELD_ITEM, supplier)
+    }
+
+    fun <T : Item> rotatedGun(name: String, supplier: () -> T): ObjectHolderDelegate<T> {
+        return registerModelled(name, ItemModelType.ROTATED_GUN_ITEM, supplier)
     }
 
     fun <T : Item> simple(name: String, supplier: () -> T): ObjectHolderDelegate<T> {

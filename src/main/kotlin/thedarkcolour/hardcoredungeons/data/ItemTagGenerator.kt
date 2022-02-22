@@ -9,21 +9,21 @@ import net.minecraft.tags.ITag
 import net.minecraftforge.common.Tags
 import net.minecraftforge.common.data.ExistingFileHelper
 import thedarkcolour.hardcoredungeons.HardcoreDungeons
+import thedarkcolour.hardcoredungeons.block.combo.DataTags
+import thedarkcolour.hardcoredungeons.registry.HBlocks
 import thedarkcolour.hardcoredungeons.registry.HItems
-import thedarkcolour.hardcoredungeons.tags.HBlockTags
 import thedarkcolour.hardcoredungeons.tags.HItemTags
 
 class ItemTagGenerator(gen: DataGenerator, blockTags: BlockTagsProvider, helper: ExistingFileHelper) : ItemTagsProvider(gen, blockTags, HardcoreDungeons.ID, helper) {
     override fun addTags() {
-        // hcd tags
-        copy(HBlockTags.LUMLIGHT_LOGS, HItemTags.LUMLIGHT_LOGS)
-        copy(HBlockTags.AURI_LOGS, HItemTags.AURI_LOGS)
-        copy(HBlockTags.COTTONMARSH_LOGS, HItemTags.COTTONMARSH_LOGS)
+        BlockTagGenerator.tags(DataTags.Items(this))
+
+        tag(HItemTags.LUMSHROOM).add(HBlocks.PURPLE_LUMSHROOM.plant.asItem(), HBlocks.BLUE_LUMSHROOM.plant.asItem())
 
         tag(HItemTags.AMMUNITION_GENERIC).add(HItems.BULLET, HItems.SHELL, HItems.INCENDIARY_BULLET)
         tag(HItemTags.AMMUNITION_SMALL).add(HItems.BULLET, HItems.INCENDIARY_BULLET)
         tag(HItemTags.AMMUNITION_INCENDIARY).add(HItems.INCENDIARY_BULLET)
-        tag(HItemTags.GEMS_MALACHITE).add(HItems.MALACHITE_CRYSTAL)
+        tag(HItemTags.GEMS_MALACHITE).add(HBlocks.MALACHITE_CRYSTAL.item)
         tag(HItemTags.GEMS_RAINBOWSTONE).add(HItems.RAINBOWSTONE_GEM)
         //getBuilder(HBlockTags.GLASS_RAINBOW).add(HBlocks.RAINBOW_GLASS)
         //getBuilder(HBlockTags.GLASS_PANES_RAINBOW).add(HBlocks.RAINBOW_GLASS_PANE)
@@ -36,16 +36,12 @@ class ItemTagGenerator(gen: DataGenerator, blockTags: BlockTagsProvider, helper:
         //tag(Tags.Items.GLASS_PANES).add(HItemTags.GLASS_PANES_RAINBOW)
         //tag(Tags.Items.MUSHROOMS).add(HItems.BLUE_LUMSHROOM, HItems.PURPLE_LUMSHROOM)
         tag(Tags.Items.GEMS_DIAMOND).add(HItems.PRISTINE_DIAMOND)
-        tag(Tags.Items.GEMS).add(HItems.MALACHITE_CRYSTAL)
+        tag(Tags.Items.GEMS).add(HBlocks.MALACHITE_CRYSTAL.item)
     }
 
-    public override fun copy(from: ITag.INamedTag<Block>, to: ITag.INamedTag<Item>) {
-        super.copy(from, to)
-    }
+    // Override to make public
+    public override fun copy(from: ITag.INamedTag<Block>, to: ITag.INamedTag<Item>) = super.copy(from, to)
+    public override fun tag(tag: ITag.INamedTag<Item>): Builder<Item> = super.tag(tag)
 
-    public override fun tag(tag: ITag.INamedTag<Item>): Builder<Item> {
-        return super.tag(tag)
-    }
-
-    override fun getName() = "HCD Block Tags"
+    override fun getName() = "Hardcore Dungeons Item Tags"
 }

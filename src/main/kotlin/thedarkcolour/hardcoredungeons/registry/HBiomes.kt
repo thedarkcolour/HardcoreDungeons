@@ -6,9 +6,9 @@ import net.minecraft.util.registry.Registry
 import net.minecraftforge.event.world.BiomeLoadingEvent
 import team.rusty.util.worldgen.biome.AbstractBiomeRegistry
 import thedarkcolour.hardcoredungeons.HardcoreDungeons
-import thedarkcolour.hardcoredungeons.biome.*
+import thedarkcolour.hardcoredungeons.worldgen.biome.*
 import thedarkcolour.hardcoredungeons.config.HConfig
-import thedarkcolour.hardcoredungeons.feature.HConfiguredFeatures
+import thedarkcolour.hardcoredungeons.worldgen.feature.HConfiguredFeatures
 import thedarkcolour.kotlinforforge.forge.MOD_BUS
 
 /**

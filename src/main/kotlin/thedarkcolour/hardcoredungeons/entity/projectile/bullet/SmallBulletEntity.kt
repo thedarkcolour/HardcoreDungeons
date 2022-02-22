@@ -5,20 +5,24 @@ import net.minecraft.entity.EntityType
 import net.minecraft.entity.IRendersAsItem
 import net.minecraft.entity.LivingEntity
 import net.minecraft.item.ItemStack
+import net.minecraft.nbt.CompoundNBT
+import net.minecraft.network.PacketBuffer
 import net.minecraft.util.IndirectEntityDamageSource
 import net.minecraft.util.math.BlockRayTraceResult
 import net.minecraft.util.math.EntityRayTraceResult
 import net.minecraft.world.World
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn
+import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData
 import thedarkcolour.hardcoredungeons.entity.projectile.ProjectileEntity
 import thedarkcolour.hardcoredungeons.item.misc.GunItem
 import thedarkcolour.hardcoredungeons.registry.HItems
 
 @OnlyIn(value = Dist.CLIENT, _interface = IRendersAsItem::class)
-class SmallBulletEntity(type: EntityType<out ProjectileEntity>, worldIn: World) : ProjectileEntity(type, worldIn), IRendersAsItem {
+class SmallBulletEntity(type: EntityType<out ProjectileEntity>, worldIn: World) : ProjectileEntity(type, worldIn), IRendersAsItem, IEntityAdditionalSpawnData {
     private var drop = 0.0f
     private var damage = 0.0f
+    private var ammoType = 0
 
     /**
      * Called to update the entity's position/logic.
@@ -33,8 +37,23 @@ class SmallBulletEntity(type: EntityType<out ProjectileEntity>, worldIn: World) 
         }
     }
 
-    override fun shoot(shooter: LivingEntity, x: Double, y: Double, z: Double, mX: Double, mY: Double, mZ: Double) {
+    @Deprecated(level = DeprecationLevel.ERROR, message = "Add ammoType argument")
+    override fun shoot(
+        shooter: LivingEntity,
+        x: Double, y: Double, z: Double,
+        mX: Double, mY: Double, mZ: Double,
+    ) {
+        throw IllegalStateException("Don't call this")
+    }
+
+    fun shoot(
+        shooter: LivingEntity, ammoType: Int,
+        x: Double, y: Double, z: Double,
+        mX: Double, mY: Double, mZ: Double,
+    ) {
         val gun = shooter.useItem.item
+
+        this.ammoType = ammoType
 
         if (gun is GunItem) {
             applyProperties(gun)
@@ -59,8 +78,8 @@ class SmallBulletEntity(type: EntityType<out ProjectileEntity>, worldIn: World) 
                 doEnchantDamageEffects(shooter, entity)
             }
 
-            if (remainingFireTicks > 0) {
-                target.setSecondsOnFire(remainingFireTicks)
+            if (ammoType == INCENDIARY_BULLET) {
+                target.setSecondsOnFire(10)
             }
 
             remove()
@@ -70,25 +89,40 @@ class SmallBulletEntity(type: EntityType<out ProjectileEntity>, worldIn: World) 
     override fun onHitBlock(p_230299_1_: BlockRayTraceResult) {
         super.onHitBlock(p_230299_1_)
         remove()
-        /* todo ricochet
-
-                // bounce off of the surface and weaken damage
-                damage *= 0.8f
-
-                accelerationX = invertMotion(accelerationX)
-                accelerationX = invertMotion(accelerationX)
-                accelerationX = invertMotion(accelerationX) */
     }
 
-    private fun invertMotion(motion: Double): Double {
-        return -1.0 / motion
+    override fun readAdditionalSaveData(nbt: CompoundNBT) {
+        super.readAdditionalSaveData(nbt)
+
+        ammoType = nbt.getInt("AmmoType")
+    }
+
+    override fun addAdditionalSaveData(nbt: CompoundNBT) {
+        super.addAdditionalSaveData(nbt)
+
+        nbt.putInt("AmmoType", ammoType)
+    }
+
+    override fun writeSpawnData(buffer: PacketBuffer) {
+        buffer.writeVarInt(ammoType)
+    }
+
+    override fun readSpawnData(buffer: PacketBuffer) {
+        ammoType = buffer.readVarInt()
     }
 
     override fun getItem(): ItemStack {
-        return ICON
+        return when (ammoType) {
+            INCENDIARY_BULLET -> INCENDIARY_BULLET_ICON
+            else -> BULLET_ICON
+        }
     }
 
     companion object {
-        private val ICON = ItemStack(HItems.BULLET)
+        private val BULLET_ICON = ItemStack(HItems.BULLET)
+        private val INCENDIARY_BULLET_ICON = ItemStack(HItems.INCENDIARY_BULLET)
+
+        const val BULLET = 0
+        const val INCENDIARY_BULLET = 1
     }
 }

@@ -22,7 +22,7 @@ class FillWandItem(properties: Properties) : AbstractFillingWandItem(properties)
             if (playerIn?.isShiftKeyDown == true) {
                 val state = worldIn.getBlockState(pos)
                 stack.addTagElement("FillBlock", NBTUtil.writeBlockState(state))
-                playerIn?.displayClientMessage(StringTextComponent("Set block to $state"), true)
+                playerIn.displayClientMessage(StringTextComponent("Set block to $state"), true)
             } else {
                 if (!hasStartPos(stack)) {
                     saveStartPosition(stack, pos, playerIn)

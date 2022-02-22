@@ -14,8 +14,7 @@ import thedarkcolour.hardcoredungeons.item.HArmorMaterial
 import thedarkcolour.kotlinforforge.forge.runWhenOn
 
 class MushroomArmorItem(slot: EquipmentSlotType, properties: Properties) : ArmorItem(HArmorMaterial.SHROOMY, slot, properties) {
-    @OnlyIn(Dist.CLIENT)
-    private var model: Any? = null
+    private lateinit var model: Any
 
     init {
         runWhenOn(Dist.CLIENT) {

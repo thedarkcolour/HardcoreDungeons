@@ -3,6 +3,7 @@ package thedarkcolour.hardcoredungeons.client.model.entity
 import net.minecraft.client.renderer.entity.model.AgeableModel
 import net.minecraft.client.renderer.model.ModelRenderer
 import thedarkcolour.hardcoredungeons.entity.castleton.knightlyjuggernaut.KnightlyJuggernautEntity
+import thedarkcolour.hardcoredungeons.util.toRadians
 import kotlin.math.abs
 
 /**
@@ -32,91 +33,85 @@ class KnightlyJuggernautModel : AgeableModel<KnightlyJuggernautEntity>(false, 24
         texHeight = 64
 
         chest = ModelRenderer(this)
-        chest.setPos(1.0f, 25.0f, 0.0f)
-        chest.texOffs(0, 49).addBox(-4.5f, -18.0f, -5.0f, 7.0f, 5.0f, 10.0f, 0.0f, false)
-        chest.texOffs(0, 0).addBox(-5.0f, -23.0f, -8.0f, 8.0f, 5.0f, 16.0f, 0.0f, false)
-        chest.texOffs(34, 30).addBox(-6.0f, -37.0f, -10.0f, 10.0f, 14.0f, 20.0f, 0.0f, false)
+        chest.setPos(0.0f, 24.0f, 0.0f)
+        chest.texOffs(0, 52).addBox(-5.0f, -17.0f, -3.5f, 10.0f, 5.0f, 7.0f, 0.0f, false)
+        chest.texOffs(0, 0).addBox(-8.0f, -22.0f, -4.0f, 16.0f, 5.0f, 8.0f, 0.0f, false)
+        chest.texOffs(34, 40).addBox(-10.0f, -36.0f, -5.0f, 20.0f, 14.0f, 10.0f, 0.0f, false)
 
         legRight = ModelRenderer(this)
-        legRight.setPos(0.0f, 18.0f, 2.5f)
-        legRight.texOffs(74, 33).addBox(-2.0f, -6.0f, -1.0f, 5.0f, 12.0f, 5.0f, 0.0f, false)
+        legRight.setPos(-2.5f, 12.0f, 0.5f)
+        legRight.texOffs(44, 23).addBox(-4.0f, 0.0f, -2.5f, 5.0f, 12.0f, 5.0f, 0.0f, true)
 
         legLeft = ModelRenderer(this)
-        legLeft.setPos(1.0f, 18.0f, -2.5f)
-        legLeft.texOffs(74, 33).addBox(-3.0f, -6.0f, -4.0f, 5.0f, 12.0f, 5.0f, 0.0f, false)
-
-        armLeft = ModelRenderer(this)
-        armLeft.setPos(0.0f, -5.0f, -10.0f)
-        armLeft.texOffs(100, 22).addBox(-3.5f, -6.0f, -7.0f, 7.0f, 35.0f, 7.0f, 0.0f, false)
-
-        shoulderLeft = ModelRenderer(this)
-        shoulderLeft.setPos(0.0f, 4.75f, 3.25f)
-        armLeft.addChild(shoulderLeft)
-        setRotationAngle(shoulderLeft, 0.6109f, 0.0f, 0.0f)
-        shoulderLeft.texOffs(0, 21).addBox(-5.5f, -18.5798f, -5.3671f, 11.0f, 11.0f, 11.0f, 0.0f, false)
-
-        spikeX = ModelRenderer(this)
-        spikeX.setPos(2.0f, -9.0f, 0.0f)
-        shoulderLeft.addChild(spikeX)
-        spikeX.texOffs(0, 26).addBox(-9.5f, -5.5798f, -1.3671f, 2.0f, 3.0f, 3.0f, 0.0f, false)
-        spikeX.texOffs(0, 26).addBox(3.5f, -5.5798f, -1.3671f, 2.0f, 3.0f, 3.0f, 0.0f, false)
-
-        spikeY = ModelRenderer(this)
-        spikeY.setPos(10.0f, -7.0f, 0.0f)
-        shoulderLeft.addChild(spikeY)
-        setRotationAngle(spikeY, 0.0f, 0.0f, 1.5708f)
-        spikeY.texOffs(0, 26).addBox(-13.3298f, 8.5f, -1.3671f, 2.0f, 3.0f, 3.0f, 0.0f, false)
-
-        spikeZ = ModelRenderer(this)
-        spikeZ.setPos(0.0f, -3.25f, -6.75f)
-        shoulderLeft.addChild(spikeZ)
-        setRotationAngle(spikeZ, 0.0f, -1.5708f, 0.0f)
-        spikeZ.texOffs(0, 26).addBox(-0.6171f, -11.3298f, -1.5f, 2.0f, 3.0f, 3.0f, 0.0f, false)
-        spikeZ.texOffs(0, 26).addBox(12.3829f, -11.3298f, -1.5f, 2.0f, 3.0f, 3.0f, 0.0f, false)
+        legLeft.setPos(2.5f, 12.0f, 0.5f)
+        legLeft.texOffs(44, 23).addBox(-1.0f, 0.0f, -2.5f, 5.0f, 12.0f, 5.0f, 0.0f, false)
 
         head = ModelRenderer(this)
-        head.setPos(-5.0f, -5.0f, 0.0f)
-        head.texOffs(48, 0).addBox(-4.0f, -15.0f, -4.0f, 8.0f, 10.0f, 8.0f, 0.0f, false)
-        head.texOffs(32, 7).addBox(-7.0f, -10.0f, -1.5f, 3.0f, 6.0f, 3.0f, 0.0f, false)
-        head.texOffs(92, 0).addBox(-4.5f, -15.5f, -4.5f, 9.0f, 7.0f, 9.0f, 0.0f, false)
+        head.setPos(0.0f, -12.0f, -5.0f)
+        head.texOffs(48, 0).addBox(-4.0F, -8.0F, -4.0F, 8.0F, 10.0F, 8.0F, 0.0F, false)
+        head.texOffs(64, 31).addBox(-1.5F, -3.0F, -7.0F, 3.0F, 6.0F, 3.0F, 0.0F, false)
+        head.texOffs(92, 0).addBox(-4.5F, -8.5F, -4.5F, 9.0F, 7.0F, 9.0F, 0.0F, false)
 
         armRight = ModelRenderer(this)
-        armRight.setPos(0.0f, -5.0f, 10.0f)
-        armRight.texOffs(100, 22).addBox(-3.5f, -6.0f, 0.0f, 7.0f, 35.0f, 7.0f, 0.0f, false)
+        armRight.setPos(10.0f, -5.0f, 0.0f)
+        armRight.texOffs(100, 22).addBox(-27.0f, -6.0f, -3.5f, 7.0f, 35.0f, 7.0f, 0.0f, false)
 
         shoulderRight = ModelRenderer(this)
-        shoulderRight.setPos(0.0f, 4.75f, -3.25f)
+        shoulderRight.setPos(-11.25f, -14.75f, 0.0f)
         armRight.addChild(shoulderRight)
-        setRotationAngle(shoulderRight, -0.6109f, 0.0f, 0.0f)
-        shoulderRight.texOffs(0, 21).addBox(-5.5f, -18.5798f, -5.6329f, 11.0f, 11.0f, 11.0f, 0.0f, false)
+        shoulderRight.setRotationAngle(0.0f, 0.0f, -0.6109f)
+        shoulderRight.texOffs(0, 21).addBox(-21.0f, -5.75f, -5.5f, 11.0f, 11.0f, 11.0f, 0.0f, false)
 
         spikeX2 = ModelRenderer(this)
-        spikeX2.setPos(2.0f, -9.0f, 0.0f)
+        spikeX2.setPos(4.0f, 4.0f, 10.75f)
         shoulderRight.addChild(spikeX2)
-        spikeX2.texOffs(0, 26).addBox(-9.5f, -5.5798f, -1.6329f, 2.0f, 3.0f, 3.0f, 0.0f, false)
-        spikeX2.texOffs(0, 26).addBox(3.5f, -5.5798f, -1.6329f, 2.0f, 3.0f, 3.0f, 0.0f, false)
+        spikeX2.texOffs(0, 26).addBox(-14.0F, -5.75F, -12.25F, 2.0F, 3.0F, 3.0F, 0.0F, false)
+        spikeX2.texOffs(0, 26).addBox(-27.0F, -5.75F, -12.25F, 2.0F, 3.0F, 3.0F, 0.0F, false)
 
         spikeY2 = ModelRenderer(this)
-        spikeY2.setPos(10.0f, -7.0f, 0.0f)
+        spikeY2.setPos(10.0f, 6.0f, 6.75f)
         shoulderRight.addChild(spikeY2)
-        setRotationAngle(spikeY2, 0.0f, 0.0f, 1.5708f)
-        spikeY2.texOffs(0, 26).addBox(-13.3298f, 8.5f, -1.6329f, 2.0f, 3.0f, 3.0f, 0.0f, false)
+        spikeY2.setRotationAngle(0.0f, 0.0f, 1.5708f)
+        spikeY2.texOffs(0, 26).addBox(-13.75f, 24.0f, -8.25f, 2.0f, 3.0f, 3.0f, 0.0f, false)
 
         spikeZ2 = ModelRenderer(this)
-        spikeZ2.setPos(0.0f, -3.25f, 6.75f)
+        spikeZ2.setPos(0.0f, 9.75f, 13.5f)
         shoulderRight.addChild(spikeZ2)
-        setRotationAngle(spikeZ2, 0.0f, 1.5708f, 0.0f)
-        spikeZ2.texOffs(0, 26).addBox(-0.6171f, -11.3298f, -1.5f, 2.0f, 3.0f, 3.0f, 0.0f, false)
-        spikeZ2.texOffs(0, 26).addBox(12.3829f, -11.3298f, -1.5f, 2.0f, 3.0f, 3.0f, 0.0f, false)
+        spikeZ2.setRotationAngle(0.0f, 1.5708f, 0.0f)
+        spikeZ2.texOffs(0, 26).addBox(6.0F, -11.5F, -17.0F, 2.0F, 3.0F, 3.0F, 0.0F, false)
+        spikeZ2.texOffs(0, 26).addBox(19.0F, -11.5F, -17.0F, 2.0F, 3.0F, 3.0F, 0.0F, false)
+
+        armLeft = ModelRenderer(this)
+        armLeft.setPos(-10.0f, -5.0f, 0.0f)
+        armLeft.texOffs(100, 22).addBox(20.0f, -6.0f, -3.5f, 7.0f, 35.0f, 7.0f, 0.0f, true)
+
+        shoulderLeft = ModelRenderer(this)
+        shoulderLeft.setPos(11.25f, -14.75f, 0.0f)
+        armLeft.addChild(shoulderLeft)
+        shoulderLeft.setRotationAngle(0.0f, 0.0f, 0.6109f)
+        shoulderLeft.texOffs(0, 21).addBox(10.0f, -5.75f, -5.5f, 11.0f, 11.0f, 11.0f, 0.0f, true)
+
+        spikeX = ModelRenderer(this)
+        spikeX.setPos(-4.0f, 4.0f, 10.75f)
+        shoulderLeft.addChild(spikeX)
+        spikeX.texOffs(0, 26).addBox(12.0F, -5.75F, -12.25F, 2.0F, 3.0F, 3.0F, 0.0F, true)
+        spikeX.texOffs(0, 26).addBox(25.0F, -5.75F, -12.25F, 2.0F, 3.0F, 3.0F, 0.0F, true)
+
+        spikeY = ModelRenderer(this)
+        spikeY.setPos(-10.0f, 6.0f, 6.75f)
+        shoulderLeft.addChild(spikeY)
+        spikeY.setRotationAngle(0.0f, 0.0f, -1.5708f)
+        spikeY.texOffs(0, 26).addBox(11.75f, 24.0f, -8.25f, 2.0f, 3.0f, 3.0f, 0.0f, true)
+
+        spikeZ = ModelRenderer(this)
+        spikeZ.setPos(0.0f, 9.75f, 13.5f)
+        shoulderLeft.addChild(spikeZ)
+        spikeZ.setRotationAngle(0.0f, -1.5708f, 0.0f)
+        spikeZ.texOffs(0, 26).addBox(-8.0F, -11.5F, -17.0F, 2.0F, 3.0F, 3.0F, 0.0F, true)
+        spikeZ.texOffs(0, 26).addBox(-21.0F, -11.5F, -17.0F, 2.0F, 3.0F, 3.0F, 0.0F, true)
 
         headParts = listOf(head)
         bodyParts = listOf(chest, legLeft, legRight, armLeft, armRight)
-    }
-
-    private fun setRotationAngle(model: ModelRenderer, x: Float, y: Float, z: Float) {
-        model.xRot = x
-        model.yRot = y
-        model.zRot = z
     }
 
     override fun setupAnim(
@@ -127,12 +122,16 @@ class KnightlyJuggernautModel : AgeableModel<KnightlyJuggernautEntity>(false, 24
         netHeadYaw: Float,
         headPitch: Float,
     ) {
-        head.yRot = netHeadYaw * (Math.PI.toFloat() / 180f)
-        head.xRot = headPitch * (Math.PI.toFloat() / 180f)
-        legLeft.zRot = -1.5f * triangleWave(limbSwing) * limbSwingAmount
+        head.xRot = toRadians(headPitch)
+        head.yRot = toRadians(netHeadYaw)
+
+        legLeft.xRot = -1.5f * triangleWave(limbSwing) * limbSwingAmount
         legLeft.yRot = 0.0f
-        legRight.zRot = 1.5f * triangleWave(limbSwing) * limbSwingAmount
+        legRight.xRot = 1.5f * triangleWave(limbSwing) * limbSwingAmount
         legRight.yRot = 0.0f
+
+        armLeft.xRot = 1.5f * triangleWave(limbSwing) * -limbSwingAmount
+        armRight.xRot = 1.5f * triangleWave(limbSwing) * limbSwingAmount
     }
 
     private fun triangleWave(limbSwing: Float): Float {

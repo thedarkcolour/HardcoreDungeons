@@ -3,10 +3,10 @@ package thedarkcolour.hardcoredungeons.registry
 import net.minecraft.world.gen.feature.Feature
 import net.minecraft.world.gen.feature.NoFeatureConfig
 import net.minecraftforge.registries.IForgeRegistry
-import thedarkcolour.hardcoredungeons.feature.CandyCaneFeature
-import thedarkcolour.hardcoredungeons.feature.ChocolateBarFeature
-import thedarkcolour.hardcoredungeons.feature.CrystalFeature
-import thedarkcolour.hardcoredungeons.feature.CrystalFeatureConfig
+import thedarkcolour.hardcoredungeons.worldgen.feature.CandyCaneFeature
+import thedarkcolour.hardcoredungeons.worldgen.feature.ChocolateBarFeature
+import thedarkcolour.hardcoredungeons.worldgen.feature.CrystalFeature
+import thedarkcolour.hardcoredungeons.worldgen.feature.CrystalFeatureConfig
 
 // @formatter:off
 @Suppress("MemberVisibilityCanBePrivate", "HasPlatformType")

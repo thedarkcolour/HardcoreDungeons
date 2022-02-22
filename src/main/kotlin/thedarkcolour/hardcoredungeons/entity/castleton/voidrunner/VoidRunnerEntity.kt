@@ -16,6 +16,10 @@ class VoidRunnerEntity(type: EntityType<VoidRunnerEntity>, worldIn: World) : Cre
         return HSounds.ENTITY_VOID_RUNNER_HIT
     }
 
+    override fun registerGoals() {
+
+    }
+
     class ChargeGoal(private val entity: VoidRunnerEntity) : Goal() {
         override fun canUse(): Boolean {
             TODO("not implemented")

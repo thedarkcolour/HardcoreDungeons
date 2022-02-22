@@ -3,13 +3,16 @@ package thedarkcolour.hardcoredungeons.data
 import net.minecraft.data.DataGenerator
 import net.minecraft.enchantment.Enchantment
 import net.minecraft.item.Item
+import net.minecraft.util.IItemProvider
 import net.minecraft.util.text.TranslationTextComponent
 import net.minecraftforge.common.data.LanguageProvider
 import thedarkcolour.hardcoredungeons.HardcoreDungeons
-import thedarkcolour.hardcoredungeons.registry.HBlocks
 import thedarkcolour.hardcoredungeons.block.combo.CompressedCombo
+import thedarkcolour.hardcoredungeons.block.combo.StairsSlabWallCombo
+import thedarkcolour.hardcoredungeons.registry.HBlocks
 import thedarkcolour.hardcoredungeons.registry.HEnchantments
 import thedarkcolour.hardcoredungeons.registry.HItems
+import thedarkcolour.hardcoredungeons.registry.HItemsNew
 
 /**
  * Language data provider for Hardcore Dungeons.
@@ -101,9 +104,11 @@ abstract class Lang(gen: DataGenerator, locale: String) : LanguageProvider(gen, 
             add(HBlocks.LUMLIGHT_BOOKSHELF, "Lumlight Bookshelf")
             add(HBlocks.CANDLE, "Candle")
             add(HBlocks.RUNED_CASTLETON_STONE, "Runed Castleton Stone")
+            add(HBlocks.BLUE_CASTLETON_DUNGEON_LOCK, "Blue Castleton Dungeon Lock")
             add(HBlocks.DIAMOND_CRYSTAL.crystal, "Diamond Crystal")
             add(HBlocks.CHISELED_DIAMOND_BLOCK, "Chiseled Diamond Block")
             add(HBlocks.MALACHITE_BLOCK, "Malachite Block")
+            add(HBlocks.SPRUCE_PLANKS.variants[0](), "Large Spruce Planks")
             add(HBlocks.MALACHITE_CRYSTAL.crystal, "Malachite Crystal")
 
             add(HBlocks.RAINBOW_SOIL.soil, "Rainbow Soil")
@@ -188,8 +193,8 @@ abstract class Lang(gen: DataGenerator, locale: String) : LanguageProvider(gen, 
             add(HBlocks.MINI_RED_GUMDROP.plant, "Mini Red Gumdrop")
             add(HBlocks.YELLOW_GUMDROP.plant, "Yellow Gumdrop")
             add(HBlocks.MINI_YELLOW_GUMDROP.plant, "Mini Yellow Gumdrop")
-            add(HItems.SHROOMY_SWORD, "Shroomy Sword")
-            add(HItems.MINI_PISTOL, "Mini Pistol")
+            add(HItemsNew.SHROOMY_SWORD, "Shroomy Sword")
+            add(HItemsNew.MINI_PISTOL, "Mini Pistol")
 
             add(HItems.SYRINGE, "Syringe")
             add("item.hardcoredungeons.potion_syringe.effect.empty", "Uncraftable Syringe")
@@ -220,9 +225,9 @@ abstract class Lang(gen: DataGenerator, locale: String) : LanguageProvider(gen, 
             add(HItems.COOKED_VENISON, "Cooked Venison")
             add(HItems.DEER_SPAWN_EGG, "Deer Spawn Egg")
 
-            add(HItems.CASTLETON_SWORD, "Castleton Sword")
-            add(HItems.VALABLADE, "Valablade")
-            add(HItems.GILDED_VALABLADE, "Gilded Valablade")
+            add(HItemsNew.CASTLETON_SWORD, "Castleton Sword")
+            add(HItemsNew.VALABLADE, "Valablade")
+            add(HItemsNew.GILDED_VALABLADE, "Gilded Valablade")
             add(HItems.CASTLE_GEM, "Castle Gem")
             add(HItems.FRAYED_SOUL_SPAWN_EGG, "Frayed Soul Spawn Egg")
             add(HItems.VOID_RUNNER_SPAWN_EGG, "Void Runner Spawn Egg")
@@ -230,16 +235,16 @@ abstract class Lang(gen: DataGenerator, locale: String) : LanguageProvider(gen, 
             add(HItems.KNIGHTLY_JUGGERNAUT_SPAWN_EGG, "Knightly Juggernaut Spawn Egg")
             add(HBlocks.CASTLETON_TORCH.litItem, "Castleton Torch")
             add(HBlocks.CASTLETON_TORCH.burntItem, "Burnt Castleton Torch")
-            add(HItems.LUMLIGHT_SIGN, "Lumlight Sign")
+            add(HBlocks.LUMLIGHT_WOOD.sign, "Lumlight Sign")
             add(HItems.TOWER_HELMET, "Tower Helmet")
             add(HItems.TOWER_CHESTPLATE, "Tower Chestplate")
             add(HItems.TOWER_LEGGINGS, "Tower Leggings")
             add(HItems.TOWER_BOOTS, "Tower Boots")
-            add(HItems.CASTLETON_STAFF, "Castleton Staff")
-            add(HItems.WILD_BERROOK, "Wild Berrook")
+            add(HItemsNew.CASTLETON_STAFF, "Castleton Staff")
+            add(HBlocks.WILD_BERROOK, "Wild Berrook")
             add(HItems.MUSHROOM_CAP, "Mushroom Cap")
             add(HItems.MUSHROOM_CHESTPLATE, "Mushroom Chestplate")
-            add(HItems.MALACHITE_SWORD, "Malachite Sword")
+            add(HItemsNew.MALACHITE_SWORD, "Malachite Sword")
             add(HItems.MALACHITE_SHOVEL, "Malachite Shovel")
             add(HItems.MALACHITE_PICKAXE, "Malachite Pickaxe")
             add(HItems.MALACHITE_AXE, "Malachite Axe")
@@ -249,19 +254,19 @@ abstract class Lang(gen: DataGenerator, locale: String) : LanguageProvider(gen, 
             add(HItems.RAINBOWSTONE_HOE, "Rainbowstone Hoe")
             add(HItems.RAINBOWSTONE_PICKAXE, "Rainbowstone Pickaxe")
             add(HItems.RAINBOWSTONE_SHOVEL, "Rainbowstone Shovel")
-            add(HItems.RAINBOWSTONE_SWORD, "Rainbowstone Sword")
+            add(HItemsNew.RAINBOWSTONE_SWORD, "Rainbowstone Sword")
             add(HItems.RAINBOWSTONE_GEM, "Rainbowstone Gem")
 
-            add(HItems.AUBRI_MINI_PISTOL, "Aubri Mini Pistol")
-            add(HItems.AUBRI_RIFLE, "Aubri Rifle")
+            add(HItemsNew.AUBRI_MINI_PISTOL, "Aubri Mini Pistol")
+            add(HItemsNew.AUBRI_RIFLE, "Aubri Rifle")
             add(HItems.AURIGOLD, "Aurigold")
             add(HItems.AURIGOLD_PENDANT, "Aurigold Pendant")
             add(HItems.AURILO_STAFF, "Aurilo Staff")
 
-            add(HItems.CANDY_CANE_SWORD, "Candy Cane Sword")
+            add(HItemsNew.CANDY_CANE_SWORD, "Candy Cane Sword")
             add(HItems.CANDY_CANE, "Candy Cane")
 
-            add(HItems.CHILI_PEPPER, "Chili Pepper")
+            add(HBlocks.CHILI_PEPPER, "Chili Pepper")
             add(HItems.BULLET, "Bullet")
             add(HItems.INCENDIARY_BULLET, "Incendiary Bullet")
             add(HItems.SHELL, "Shell")
@@ -274,7 +279,7 @@ abstract class Lang(gen: DataGenerator, locale: String) : LanguageProvider(gen, 
             add("item.hardcoredungeons.wand.clear", "Cleared blocks from")
             add("item.hardcoredungeons.wand.fill", "Filled blocks from")
             add("lang.hardcoredungeons.to", "to")
-            addLore(HItems.SHROOMY_SWORD, "Has a chance to inflict poison on the target.")
+            addLore(HItemsNew.SHROOMY_SWORD, "Has a chance to inflict poison on the target.")
 
             addEnchantment(HEnchantments.PROSPECTING, "Prospecting", "Certain minerals have a chance to drop \"pristine\" variants instead.")
             addEnchantment(HEnchantments.WITHERING, "Withering", "Causes additional wither damage when used to attack a mob.")
@@ -289,6 +294,12 @@ abstract class Lang(gen: DataGenerator, locale: String) : LanguageProvider(gen, 
             for (i in 0..7) {
                 add(variants[i](), compression[i] + blockName)
             }
+        }
+
+        fun addCombo(combo: StairsSlabWallCombo, block: String) {
+            add(combo.block, block)
+            add(combo.slab, "Losa de " + block.lowercase())
+            add(combo.stairs, "Escaleras de " + block.lowercase())
         }
     }
 
@@ -308,12 +319,8 @@ abstract class Lang(gen: DataGenerator, locale: String) : LanguageProvider(gen, 
             add(HBlocks.GOLDEN_TULIP.plant, "Tulipán de oro")
             add(HBlocks.CASTLETON_SOIL.soil, "Tierra de Castleton")
             add(HBlocks.CASTLETON_SOIL.grass, "Pasto de Castleton")
-            //add(HBlocksNew.SHROOMY_COBBLESTONE, "Shroomy Cobblestone")
-            //add(HBlocksNew.SHROOMY_COBBLESTONE_SLAB, "Shroomy Cobblestone Slab")
-            //add(HBlocksNew.SHROOMY_COBBLESTONE_STAIRS, "Shroomy Cobblestone Stairs")
-            add(HBlocks.SHROOMY_STONE_BRICKS.block, "Ladrillos de piedra hongosa")
-            //add(HBlocksNew.SHROOMY_STONE_BRICK_SLAB, "Shroomy Stone Brick Slab")
-            //add(HBlocksNew.SHROOMY_STONE_BRICK_STAIRS, "Shroomy Stone Brick Stairs")
+            addCombo(HBlocks.SHROOMY_COBBLESTONE, "Piedra hongosa labrada")
+            addCombo(HBlocks.SHROOMY_STONE_BRICKS, "Ladrillos de piedra hongosa")
             add(HBlocks.LUMLIGHT_WOOD.leaves, "Hojas de lumlight")
             add(HBlocks.PURPLE_CASTLETON_LAMP, "Lámpara púrpura de Castleton")
             //add(HBlocksNew.COTTONMARSH_LEAVES, "Cottonmarsh Leaves")
@@ -331,6 +338,12 @@ abstract class Lang(gen: DataGenerator, locale: String) : LanguageProvider(gen, 
             add("item.hardcoredungeons.wand.fill", "Llenó bloques de")
             add("lang.hardcoredungeons.to", "a")
         }
+
+        fun addCombo(combo: StairsSlabWallCombo, block: String) {
+            add(combo.block, block)
+            add(combo.slab, "Losa de " + block.lowercase())
+            add(combo.stairs, "Escaleras de " + block.lowercase())
+        }
     }
 
     /**
@@ -338,6 +351,10 @@ abstract class Lang(gen: DataGenerator, locale: String) : LanguageProvider(gen, 
      */
     protected fun addLore(item: Item, translation: String) {
         add(item.descriptionId + ".lore", translation)
+    }
+
+    protected fun add(item: IItemProvider, translation: String) {
+        add(item.asItem(), translation)
     }
 
     protected fun addEnchantment(enchantment: Enchantment, name: String, desc: String) {

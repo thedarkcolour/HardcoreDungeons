@@ -1,14 +1,13 @@
 package thedarkcolour.hardcoredungeons.client.model.armor
 
 import net.minecraft.client.renderer.entity.model.BipedModel
-import net.minecraft.client.renderer.model.ModelRenderer
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.item.ArmorStandEntity
-import net.minecraft.inventory.EquipmentSlotType
 import thedarkcolour.hardcoredungeons.util.PI
 
 // Thanks to Botania
-open class ArmorModel(val slot: EquipmentSlotType) : BipedModel<LivingEntity>(1.0f) {
+open class ArmorModel : BipedModel<LivingEntity>(1.0f) {
+    @Suppress("DuplicatedCode")
     override fun setupAnim(
         entityIn: LivingEntity,
         limbSwing: Float,
@@ -43,12 +42,6 @@ open class ArmorModel(val slot: EquipmentSlotType) : BipedModel<LivingEntity>(1.
         rightLeg.zRot = ONE_DEGREES * entityIn.rightLegPose.z
         rightLeg.setPos(-1.9f, 11.0f, 0.0f)
         hat.copyFrom(head)
-    }
-
-    protected fun setRotateAngle(modelRenderer: ModelRenderer, x: Float, y: Float, z: Float) {
-        modelRenderer.xRot = x
-        modelRenderer.yRot = y
-        modelRenderer.zRot = z
     }
 
     companion object {

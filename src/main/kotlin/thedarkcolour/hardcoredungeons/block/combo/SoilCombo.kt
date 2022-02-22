@@ -6,7 +6,6 @@ import net.minecraftforge.common.Tags
 import thedarkcolour.hardcoredungeons.block.base.BlockMaker
 import thedarkcolour.hardcoredungeons.block.base.properties.HProperties
 import thedarkcolour.hardcoredungeons.block.misc.HGrassBlock
-import thedarkcolour.hardcoredungeons.data.BlockTagGenerator
 import thedarkcolour.hardcoredungeons.data.LootGenerator
 
 /**
@@ -22,9 +21,8 @@ class SoilCombo(prefix: String, nocturnal: Boolean, tag: ITag<Block>, soilProps:
         HGrassBlock({ soil.defaultBlockState() }, nocturnal, tag, grassProps.build())
     }
 
-    override fun addTags(gen: BlockTagGenerator) {
-        // todo add more tags
-        gen.tag(Tags.Blocks.DIRT).add(soil, grass)
+    override fun addTags(tags: DataTags) {
+        tags.block(Tags.Blocks.DIRT, soil, grass)
     }
 
     override fun addLoot(gen: LootGenerator) {

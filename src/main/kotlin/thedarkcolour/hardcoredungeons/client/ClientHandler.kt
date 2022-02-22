@@ -6,7 +6,6 @@ import net.minecraft.client.renderer.RenderTypeLookup
 import net.minecraft.client.world.DimensionRenderInfo
 import net.minecraftforge.client.event.ColorHandlerEvent
 import net.minecraftforge.client.event.ModelBakeEvent
-import net.minecraftforge.client.event.ParticleFactoryRegisterEvent
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent
 import thedarkcolour.hardcoredungeons.client.color.RainbowColor
 import thedarkcolour.hardcoredungeons.client.dimension.AubrumEffects
@@ -29,7 +28,7 @@ object ClientHandler {
      */
     fun registerEvents() {
         MOD_BUS.addListener(::clientSetup)
-        MOD_BUS.addListener(::registerParticleFactories)
+        MOD_BUS.addListener(HParticles::registerParticleFactories)
         MOD_BUS.addListener(::registerBlockColors)
         MOD_BUS.addListener(::registerItemColors)
         MOD_BUS.addListener(::registerBakedModels)
@@ -115,8 +114,6 @@ object ClientHandler {
         HBlocks.YELLOW_GUMDROP.setRenderLayers()
         HBlocks.MINI_YELLOW_GUMDROP.setRenderLayers()
     }
-
-    private fun registerParticleFactories(event: ParticleFactoryRegisterEvent) = HParticles.registerParticleFactories()
 
     private fun registerItemColors(event: ColorHandlerEvent.Item) = HItems.setItemColors(event.itemColors)
 }

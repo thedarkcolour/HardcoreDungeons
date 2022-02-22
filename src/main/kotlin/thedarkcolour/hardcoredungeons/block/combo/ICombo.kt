@@ -8,8 +8,15 @@ import java.util.function.Consumer
 
 interface ICombo {
     fun addLoot(gen: LootGenerator) {}
-    fun addTags(gen: BlockTagGenerator) {}
-    fun addTags(gen: ItemTagGenerator) {}
     fun addRecipes(consumer: Consumer<IFinishedRecipe>) {}
     fun setRenderLayers() {}
+    fun addTags(tags: DataTags) {}
+
+    fun addTags(gen: BlockTagGenerator) {
+        addTags(DataTags.Blocks(gen))
+    }
+
+    fun addTags(gen: ItemTagGenerator) {
+        addTags(DataTags.Items(gen))
+    }
 }

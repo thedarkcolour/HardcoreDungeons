@@ -43,24 +43,26 @@ object GreenWandRender {
         val item = mc.player?.mainHandItem ?: return
 
         if (item.item is GreenWandItem) {
-            val controllerPos = (mc.hitResult as BlockRayTraceResult).blockPos
-            val tile = mc.level?.getBlockEntity(controllerPos)
+            if (mc.hitResult is BlockRayTraceResult) {
+                val controllerPos = (mc.hitResult as BlockRayTraceResult).blockPos
+                val tile = mc.level?.getBlockEntity(controllerPos)
 
-            if (tile is SootTrapControllerTileEntity) {
-                val pos = mc.gameRenderer.mainCamera.position
-                val partialTicks = event.partialTicks
-                val stack = event.matrix
-                val builder = mc.renderBuffers().bufferSource().getBuffer(RenderType.lines())
-                val x = pos.x
-                val y = pos.y
-                val z = pos.z
+                if (tile is SootTrapControllerTileEntity) {
+                    val pos = mc.gameRenderer.mainCamera.position
+                    val partialTicks = event.partialTicks
+                    val stack = event.matrix
+                    val builder = mc.renderBuffers().bufferSource().getBuffer(RenderType.lines())
+                    val x = pos.x
+                    val y = pos.y
+                    val z = pos.z
 
-                event.isCanceled = true
+                    event.isCanceled = true
 
-                drawRainbowOutline(partialTicks, stack, builder, x, y, z, controllerPos)
+                    drawRainbowOutline(partialTicks, stack, builder, x, y, z, controllerPos)
 
-                for (pos in tile.paths) {
-                    drawRainbowOutline(partialTicks, stack, builder, x, y, z, pos)
+                    for (pos in tile.paths) {
+                        drawRainbowOutline(partialTicks, stack, builder, x, y, z, pos)
+                    }
                 }
             }
         }

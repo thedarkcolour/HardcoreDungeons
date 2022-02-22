@@ -1,17 +1,19 @@
-##Incense
+## Incense
+* Different colored incense placed in a circle around an altar
 
-##Mending Cloth
+## Mending Cloth
 * Unique armor pieces can be repaired with mending cloth.
 
-##Infinity Boss
-* Boss that appears in a closed chamber with no guards
-* Should have damage zones that the player must navigate through to avoid losing HP
-* Constant damage to encourage health potions
+## Masks
+* Masks that could be worn as helmets and look really cool
 
-##Fragile Curse
+## Fragile Curse
 * Opposite of Unbreaking
 
-##New Data + Registry
+## Structure tips
+* Remove parkour from structure
+
+## New Data + Registry
 * Only combos should handle data gen
 * A combo should serve to simplify the registration of multiple similar blocks
 * A combo should handle ALL data generation so that they can be declared and used with ease
@@ -19,17 +21,26 @@
 * Combos should not be used with a single block. A function in BlockMaker should be used to achieve this instead.
 * Explicit functions should be declared in cases that don't need a combo but still need data generation
 
-##Pack A Punch style machine
+## Pack A Punch style machine
 * Late game weapons should require a special machine to upgrade
 
-##Different Totems
+## Different Totems
 * Unique artifacts with passive effects.
 * These totems should take some grind to get.
 
-##Dark Knight Boss
+## Dark Knight Boss
 * King of Castleton
 * Slightly taller than player
 * Godblade or something idk
 * Charges the player and has several attacks
 * Wave attack, sends shockwaves that the player can jump over
 * Dark orb attack that follows you throughout the fight
+
+## Chocolate fields biome
+* Chocolate covered sugary soil
+* Fudge ponds where chocolate frogs will spawn, they drop trading card??
+
+## HCD Modpack
+* Change ore generation to be more plentiful to reduce mining
+* Backpacks that carry specific types of items (ores)
+* Find some way to increase limit of chunk difficulty so that mob spawns during the night are more varied

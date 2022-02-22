@@ -16,7 +16,10 @@ class FrayedSoulRenderer(manager: EntityRendererManager) : ReloadableRenderer<Fr
 
     override fun getTextureLocation(entity: FrayedSoulEntity) = TEXTURE
 
-    override fun setupRotations(entity: FrayedSoulEntity, stack: MatrixStack, ageInTicks: Float, rotationYaw: Float, partialTicks: Float) {
+    override fun setupRotations(
+        entity: FrayedSoulEntity, stack: MatrixStack, ageInTicks: Float,
+        rotationYaw: Float, partialTicks: Float
+    ) {
         super.setupRotations(entity, stack, ageInTicks, rotationYaw, partialTicks)
         stack.translate(0.0, sin((entity.tickCount.toDouble() + partialTicks) / 12) / 6, 0.0)
     }

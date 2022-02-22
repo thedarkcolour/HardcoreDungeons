@@ -1,0 +1,19 @@
+{
+    "parent": "hardcoredungeons:item/handheld_rotated",
+    "display": {
+        "thirdperson_righthand": {
+            "rotation": [0, -90, 15],
+            "translation": [0, 1, -2.5],
+            "scale": [0.85, 0.85, 0.85]
+        },
+        "thirdperson_lefthand": {
+            "rotation": [0, 90, -15],
+            "translation": [0, 1, -2.5],
+            "scale": [0.85, 0.85, 0.85]
+        },
+        "head": {
+            "rotation": [0, -90, 0],
+            "translation": [0, 8.25, 0]
+        }
+    }
+}

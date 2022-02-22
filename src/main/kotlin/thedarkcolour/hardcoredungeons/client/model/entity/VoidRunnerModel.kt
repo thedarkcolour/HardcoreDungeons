@@ -5,6 +5,7 @@ import com.mojang.blaze3d.vertex.IVertexBuilder
 import net.minecraft.client.renderer.entity.model.EntityModel
 import net.minecraft.client.renderer.model.ModelRenderer
 import thedarkcolour.hardcoredungeons.entity.castleton.voidrunner.VoidRunnerEntity
+import thedarkcolour.hardcoredungeons.util.toRadians
 
 class VoidRunnerModel : EntityModel<VoidRunnerEntity>() {
     private val head: ModelRenderer
@@ -62,7 +63,10 @@ class VoidRunnerModel : EntityModel<VoidRunnerEntity>() {
     override fun setupAnim(
         entityIn: VoidRunnerEntity, limbSwing: Float, limbSwingAmount: Float,
         ageInTicks: Float, netHeadYaw: Float, headPitch: Float
-    ) {}
+    ) {
+        head.yRot = toRadians(netHeadYaw)
+        head.xRot = toRadians(headPitch)
+    }
 
     override fun renderToBuffer(
         matrixStackIn: MatrixStack, bufferIn: IVertexBuilder, packedLightIn: Int,

@@ -5,6 +5,7 @@ import net.minecraft.entity.LivingEntity
 import net.minecraft.item.Item
 import net.minecraft.item.Items
 import thedarkcolour.hardcoredungeons.registry.HItems
+import thedarkcolour.hardcoredungeons.registry.HItemsNew
 
 object HElementRegistry {
     val ENTITY_ELEMENTS = hashMapOf<EntityType<out LivingEntity>, HElement>()
@@ -23,7 +24,7 @@ object HElementRegistry {
         addElement(HItems.MALACHITE_HOE, HElement.EARTH)
         addElement(HItems.MALACHITE_PICKAXE, HElement.EARTH)
         addElement(HItems.MALACHITE_SHOVEL, HElement.EARTH)
-        addElement(HItems.MALACHITE_SWORD, HElement.EARTH)
+        addElement(HItemsNew.MALACHITE_SWORD, HElement.EARTH)
     }
 
     fun addElement(type: EntityType<out LivingEntity>, element: HElement) {}

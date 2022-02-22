@@ -20,10 +20,7 @@ object HStructures {
     val RAINBOW_FACTORY_PIECE_0 = ResourceLocation(HardcoreDungeons.ID, "rainbow_factory_slice_0")
     val RAINBOW_FACTORY_PIECE_1 = ResourceLocation(HardcoreDungeons.ID, "rainbow_factory_slice_1")
 
-    val SIMPLE_STRUCTURE_PIECE: IStructurePieceType = IStructurePieceType.setPieceId(
-        SimpleStructure::Piece,
-        "hardcoredungeons:simple_structure_piece"
-    )
+    val SIMPLE_STRUCTURE_PIECE: IStructurePieceType = IStructurePieceType.setPieceId(SimpleStructure::Piece, "hardcoredungeons:simple_structure_piece")
 
     val LUMLIGHT_CABIN = structure(
         SimpleStructure.single("lumlight_cabin"),

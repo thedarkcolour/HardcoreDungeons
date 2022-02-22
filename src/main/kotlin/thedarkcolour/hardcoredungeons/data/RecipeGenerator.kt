@@ -19,6 +19,7 @@ import net.minecraftforge.registries.IForgeRegistryEntry
 import thedarkcolour.hardcoredungeons.compat.getBiomesOPlentyCompat
 import thedarkcolour.hardcoredungeons.registry.HBlocks
 import thedarkcolour.hardcoredungeons.registry.HItems
+import thedarkcolour.hardcoredungeons.registry.HItemsNew
 import thedarkcolour.hardcoredungeons.tags.HItemTags
 import thedarkcolour.hardcoredungeons.util.modLoc
 import java.util.function.Consumer
@@ -35,6 +36,16 @@ class RecipeGenerator(generatorIn: DataGenerator) : RecipeProvider(generatorIn) 
         HBlocks.LUMLIGHT_WOOD.addRecipes(consumer)
         HBlocks.AURI_WOOD.addRecipes(consumer)
         HBlocks.COTTONMARSH_WOOD.addRecipes(consumer)
+
+        consumer.shaped(HBlocks.LUMLIGHT_CAMPFIRE, 1) { builder ->
+            builder.pattern(" s ")
+            builder.pattern("sms")
+            builder.pattern("lll")
+            builder.define('s', Tags.Items.RODS_WOODEN)
+            builder.define('m', HItemTags.LUMSHROOM)
+            builder.define('l', HItemTags.LUMLIGHT_LOGS)
+            builder.unlockedBy("has_item", has(HBlocks.LUMLIGHT_WOOD.log))
+        }
 
         // shroomy cobblestone + stone brick
         consumer.shapeless(HBlocks.SHROOMY_COBBLESTONE.block, 1) { builder ->
@@ -82,11 +93,11 @@ class RecipeGenerator(generatorIn: DataGenerator) : RecipeProvider(generatorIn) 
 
 
         // tools
-        consumer.sword(HItems.MALACHITE_SWORD, HItems.MALACHITE_CRYSTAL)
-        consumer.shovel(HItems.MALACHITE_SHOVEL, HItems.MALACHITE_CRYSTAL)
-        consumer.pickaxe(HItems.MALACHITE_PICKAXE, HItems.MALACHITE_CRYSTAL)
-        consumer.axe(HItems.MALACHITE_AXE, HItems.MALACHITE_CRYSTAL)
-        consumer.hoe(HItems.MALACHITE_HOE, HItems.MALACHITE_CRYSTAL)
+        consumer.sword(HItemsNew.MALACHITE_SWORD, HBlocks.MALACHITE_CRYSTAL.item)
+        consumer.shovel(HItems.MALACHITE_SHOVEL, HBlocks.MALACHITE_CRYSTAL.item)
+        consumer.pickaxe(HItems.MALACHITE_PICKAXE, HBlocks.MALACHITE_CRYSTAL.item)
+        consumer.axe(HItems.MALACHITE_AXE, HBlocks.MALACHITE_CRYSTAL.item)
+        consumer.hoe(HItems.MALACHITE_HOE, HBlocks.MALACHITE_CRYSTAL.item)
 
         consumer.sword(HItems.RAINBOWSTONE_SWORD, HItems.RAINBOWSTONE_GEM)
         consumer.shovel(HItems.RAINBOWSTONE_SHOVEL, HItems.RAINBOWSTONE_GEM)
@@ -122,7 +133,7 @@ class RecipeGenerator(generatorIn: DataGenerator) : RecipeProvider(generatorIn) 
         consumer.slab(HBlocks.CHOCOLATE_BLOCK.slab, HBlocks.CHOCOLATE_BLOCK.block)
         consumer.stairs(HBlocks.CHOCOLATE_BLOCK.stairs, HBlocks.CHOCOLATE_BLOCK.block)
 
-        consumer.storage(HBlocks.MALACHITE_BLOCK, HItems.MALACHITE_CRYSTAL, HItemTags.GEMS_MALACHITE)
+        consumer.storage(HBlocks.MALACHITE_BLOCK, HBlocks.MALACHITE_CRYSTAL.item, HItemTags.GEMS_MALACHITE)
         consumer.storage(HBlocks.RAINBOWSTONE_BLOCK, HItems.RAINBOWSTONE_GEM)
 
         getBiomesOPlentyCompat()?.genRecipes(consumer)
@@ -375,23 +386,13 @@ class RecipeGenerator(generatorIn: DataGenerator) : RecipeProvider(generatorIn) 
                  builder.lines("#  ", "## ", "###")
                  builder.unlockedBy("has_block", has(block))
              }
-
-             stairs2Full(stairs, block) // convert back into full block
          }
 
-         fun Consumer<IFinishedRecipe>.stairs2Full(stairs: Block, block: Block, group: String? = null) {
-             shaped(block, 3, modLoc(path(block) + "_from_stairs")) { builder ->
-                 builder.define('#', stairs)
-                 if (group != null) builder.group(group)
-                 builder.lines("##", "##")
-                 builder.unlockedBy("has_block", has(block))
-             }
-         }
-
-         private fun Consumer<IFinishedRecipe>.wall(wall: WallBlock, block: Block) {
+         fun Consumer<IFinishedRecipe>.wall(wall: WallBlock, block: Block) {
              shaped(wall, 6) { builder ->
                  builder.define('#', block)
-                 builder.lines("###", "###")
+                 builder.pattern("###")
+                 builder.pattern("###")
                  builder.unlockedBy("has_block", has(block))
              }
          }
@@ -400,9 +401,9 @@ class RecipeGenerator(generatorIn: DataGenerator) : RecipeProvider(generatorIn) 
              result: IItemProvider,
              resultCount: Int,
              from: IItemProvider,
+             trigger: String,
              id: ResourceLocation = result.asItem().registryName!!,
              group: String? = null,
-             trigger: String
          ) {
              shaped(result, resultCount, id) { builder ->
                  builder.pattern("xx")

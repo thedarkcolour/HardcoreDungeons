@@ -2,7 +2,7 @@ package thedarkcolour.hardcoredungeons.registry
 
 import net.minecraft.world.gen.surfacebuilders.SurfaceBuilder
 import net.minecraftforge.registries.IForgeRegistry
-import thedarkcolour.hardcoredungeons.surfacebuilder.ThickForestSurfaceBuilder
+import thedarkcolour.hardcoredungeons.worldgen.surfacebuilder.ThickForestSurfaceBuilder
 
 @Suppress("HasPlatformType", "MemberVisibilityCanBePrivate")
 object HSurfaceBuilders {

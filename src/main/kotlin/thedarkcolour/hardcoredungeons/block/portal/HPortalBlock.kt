@@ -20,7 +20,11 @@ import net.minecraft.world.World
 import thedarkcolour.hardcoredungeons.block.base.properties.HProperties
 import thedarkcolour.hardcoredungeons.capability.PlayerHelper
 
-class HPortalBlock(private val dimensionKey: () -> RegistryKey<World>, private val frameState: () -> BlockState, properties: HProperties) : Block(properties.build()) {
+class HPortalBlock(
+    private val dimensionKey: () -> RegistryKey<World>,
+    private val frameState: () -> BlockState, // todo use a tag here
+    properties: HProperties
+) : Block(properties.build()) {
     init {
         registerDefaultState(stateDefinition.any().setValue(AXIS, Axis.X))
     }
@@ -69,7 +73,7 @@ class HPortalBlock(private val dimensionKey: () -> RegistryKey<World>, private v
             PlayerHelper.setPortalCooldown(entityIn, 30)
             // cache effects because teleport clears them for some reason
             val effects = ArrayList(entityIn.activeEffects)
-            entityIn.teleportTo(destination, entityIn.blockPosition().x.toDouble(), portalOffset, entityIn.blockPosition().z.toDouble(), entityIn.yRot, entityIn.xRot)
+            entityIn.teleportTo(destination, entityIn.position().x, portalOffset, entityIn.position().z, entityIn.yRot, entityIn.xRot)
             // add all the effects back
             for (effect in effects) {
                 entityIn.addEffect(effect)

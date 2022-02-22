@@ -4,6 +4,7 @@ import net.minecraft.client.Minecraft
 import net.minecraft.client.particle.FlameParticle
 import net.minecraft.client.particle.LavaParticle
 import net.minecraft.particles.BasicParticleType
+import net.minecraftforge.client.event.ParticleFactoryRegisterEvent
 import net.minecraftforge.registries.ForgeRegistries
 import thedarkcolour.hardcoredungeons.HardcoreDungeons
 import thedarkcolour.hardcoredungeons.particle.SoulFrayParticle
@@ -19,7 +20,7 @@ object HParticles {
     val CASTLETON_TORCH_FLAME by PARTICLE_TYPES.registerObject("castleton_torch_flame") { BasicParticleType(false) }
     val CASTLETON_CAMPFIRE_POP by PARTICLE_TYPES.registerObject("castleton_campfire_pop") { BasicParticleType(false) }
 
-    fun registerParticleFactories() {
+    fun registerParticleFactories(event: ParticleFactoryRegisterEvent) {
         val manager = Minecraft.getInstance().particleEngine
 
         manager.register(SOUL_FRAY, SoulFrayParticle::Factory)

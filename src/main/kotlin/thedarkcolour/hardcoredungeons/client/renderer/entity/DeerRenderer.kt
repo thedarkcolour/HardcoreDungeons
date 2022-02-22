@@ -16,7 +16,7 @@ import thedarkcolour.hardcoredungeons.util.modLoc
 class DeerRenderer(manager: EntityRendererManager) : ReloadableRenderer<DeerEntity, DoeModel>(manager, null, 0.4f) {
     private var doe = DoeModel()
     private var stag = StagModel()
-    private var alpha = null
+    private var alpha = StagModel() // todo alpha model
 
     init {
         addLayer(DeerFullbrightLayer(this))
@@ -29,9 +29,9 @@ class DeerRenderer(manager: EntityRendererManager) : ReloadableRenderer<DeerEnti
         model = if (entity.isTheDarkColour()) {
             stag
         } else when {
-            entity.deerType.isStag() -> stag
-            entity.deerType.isDoe() -> doe
-            entity.deerType.isAlpha() -> alpha
+            entity.deerType.isStag -> stag
+            entity.deerType.isDoe -> doe
+            entity.deerType.isAlpha -> alpha
             else -> doe
         }
         super.render(entity, entityYaw, partialTicks, stack, buffer, light)
@@ -45,11 +45,11 @@ class DeerRenderer(manager: EntityRendererManager) : ReloadableRenderer<DeerEnti
         return when (entity.deerType) {
             DeerType.FOREST_STAG, DeerType.FOREST_DOE -> FOREST_STAG
 
-            DeerType.BLUE_EYED_DOE -> BLUE_EYED_FEMALE
+            DeerType.BLUE_EYED_DOE -> BLUE_EYED_DOE
             DeerType.BLUE_EYED_STAG -> BLUE_EYED_STAG
             DeerType.BLUE_SPOTTED_STAG -> BLUE_SPOTTED_STAG
             DeerType.PURPLE_SPOTTED_STAG -> PURPLE_SPOTTED_STAG
-            else -> BLUE_EYED_FEMALE
+            else -> BLUE_EYED_DOE
         }
     }
 
@@ -60,9 +60,9 @@ class DeerRenderer(manager: EntityRendererManager) : ReloadableRenderer<DeerEnti
 
         return when (entity.deerType) {
             DeerType.BLUE_EYED_STAG -> BLUE_EYED_STAG_OVERLAY
-            DeerType.BLUE_EYED_DOE -> BLUE_EYED_FEMALE_OVERLAY
+            DeerType.BLUE_EYED_DOE -> BLUE_EYED_DOE_OVERLAY
             DeerType.BLUE_SPOTTED_STAG -> BLUE_SPOTTED_STAG_OVERLAY
-            //DeerPattern.BLUE_SPOTTED_DOE -> BLUE_SPOTTED_DOE_OVERLAY
+            DeerType.BLUE_SPOTTED_DOE -> BLUE_SPOTTED_STAG_OVERLAY
             DeerType.PURPLE_SPOTTED_STAG -> PURPLE_SPOTTED_STAG_OVERLAY
             else -> null
         }
@@ -71,18 +71,17 @@ class DeerRenderer(manager: EntityRendererManager) : ReloadableRenderer<DeerEnti
     override fun reload() {
         doe = DoeModel()
         stag = StagModel()
-        alpha = null
+        alpha = StagModel() // todo alpha model
     }
 
     companion object {
         private val FOREST_STAG = modLoc("textures/entity/deer/overworld/forest_stag.png")
-        private val BLUE_EYED_FEMALE = modLoc("textures/entity/deer/castleton/blue_eyed_female.png")
-        private val BLUE_EYED_FEMALE_OVERLAY = RenderType.eyes(modLoc("textures/entity/deer/castleton/blue_eyed_female_overlay.png"))
+        private val BLUE_EYED_DOE = modLoc("textures/entity/deer/castleton/blue_eyed_doe.png")
+        private val BLUE_EYED_DOE_OVERLAY = RenderType.eyes(modLoc("textures/entity/deer/castleton/blue_eyed_doe_overlay.png"))
         private val BLUE_EYED_STAG = modLoc("textures/entity/deer/castleton/blue_eyed_stag.png")
         private val BLUE_EYED_STAG_OVERLAY = RenderType.eyes(modLoc("textures/entity/deer/castleton/blue_eyed_stag_overlay.png"))
         private val BLUE_SPOTTED_STAG = modLoc("textures/entity/deer/castleton/spotted_stag.png")
         private val BLUE_SPOTTED_STAG_OVERLAY = RenderType.eyes(modLoc("textures/entity/deer/castleton/blue_spotted_stag_overlay.png"))
-        //private val BLUE_SPOTTED_DOE_OVERLAY = RenderType.getEyes(modLoc("textures/entity/deer/castleton/blue_spotted_stag_overlay.png"))
         private val PURPLE_SPOTTED_STAG = modLoc("textures/entity/deer/castleton/spotted_stag.png")
         private val PURPLE_SPOTTED_STAG_OVERLAY = RenderType.eyes(modLoc("textures/entity/deer/castleton/purple_spotted_stag_overlay.png"))
         private val THEDARKCOLOUR = modLoc("textures/entity/deer/thedarkcolour.png")

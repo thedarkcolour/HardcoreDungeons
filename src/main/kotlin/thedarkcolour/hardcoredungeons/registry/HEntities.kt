@@ -35,16 +35,12 @@ import java.util.function.BiFunction
 object HEntities : HRegistry<EntityType<*>>(ForgeRegistries.ENTITIES) {
     // you ever walk into a bush and burn to death? well this guy walked into a bush and burned to death.
     val FRAYED_SOUL by type("frayed_soul", ::FrayedSoulEntity, EntityClassification.MONSTER, size = EntitySize.scalable(0.4f, 0.4f))
-    val VOID_RUNNER by type("void_runner", ::VoidRunnerEntity, EntityClassification.MONSTER)
-    val CASTLETON_DEER by type("castleton_deer", ::CastletonDeerEntity, EntityClassification.CREATURE)
+    val VOID_RUNNER by type("void_runner", ::VoidRunnerEntity, EntityClassification.MONSTER, size = EntitySize.scalable(0.5f, 0.8f))
+    val CASTLETON_DEER by type("castleton_deer", ::CastletonDeerEntity, EntityClassification.CREATURE, size = EntitySize.scalable(0.8f, 1.8f))
     val DEER by type("deer", ::DeerEntity, EntityClassification.CREATURE)
-    val KNIGHTLY_JUGGERNAUT by type("knightly_juggernaut", ::KnightlyJuggernautEntity, EntityClassification.CREATURE)
+    val KNIGHTLY_JUGGERNAUT by type("knightly_juggernaut", ::KnightlyJuggernautEntity, EntityClassification.CREATURE, size = EntitySize.scalable(1.5f, 2.7f))
     val MAZE_BOSS by type("maze_boss", ::MazeBossEntity, EntityClassification.MONSTER)
     val MUSHROOM_ARCHER by type("mushroom_archer", ::MushroomArcherEntity, EntityClassification.MONSTER)
-
-    //val RAINBOWLAND_SHEEP = Builder
-    //    .create(::RainbowlandSheepEntity, EntityClassification.CREATURE)
-    //    .build(modLoc("rainbowland_sheep"))
 
     // projectile
     val SMALL_BULLET by type("small_bullet", ::SmallBulletEntity, EntityClassification.MISC, size = EntitySize.scalable(0.2f, 0.2f), velocityUpdates = true)
@@ -94,11 +90,7 @@ object HEntities : HRegistry<EntityType<*>>(ForgeRegistries.ENTITIES) {
         id: String,
         factory: EntityType.IFactory<T>,
         classification: EntityClassification,
-        //serializable: Boolean = true,
-        //canSummon: Boolean = true,
         fireImmune: Boolean = false,
-        //spawnNaturally: Boolean = true,
-        //specialSpawns: ImmutableSet<Block> = ImmutableSet.of(),
         size: EntitySize? = null,
         velocityUpdates: Boolean = false,
         trackingRange: Int = 5,

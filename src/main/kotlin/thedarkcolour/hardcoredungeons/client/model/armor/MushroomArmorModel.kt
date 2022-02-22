@@ -4,7 +4,7 @@ import net.minecraft.client.renderer.model.ModelRenderer
 import net.minecraft.inventory.EquipmentSlotType
 
 // Made in BlockBench
-class MushroomArmorModel(slot: EquipmentSlotType) : ArmorModel(slot) {
+class MushroomArmorModel(slot: EquipmentSlotType) : ArmorModel() {
     private val helmet: ModelRenderer
     private val leftShoulder: ModelRenderer
     private val rightShoulder: ModelRenderer

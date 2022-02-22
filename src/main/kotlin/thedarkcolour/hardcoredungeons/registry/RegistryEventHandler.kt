@@ -30,6 +30,7 @@ object RegistryEventHandler {
         //RegistryFixer.init()
 
         HBlocks.init()
+        HPaintings.init()
         HEntities.init()
         HItemsNew.init()
         HBiomes.init()

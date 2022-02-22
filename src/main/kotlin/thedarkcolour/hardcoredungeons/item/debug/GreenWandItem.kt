@@ -1,5 +1,7 @@
 package thedarkcolour.hardcoredungeons.item.debug
 
+import net.minecraft.entity.LivingEntity
+import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 import net.minecraft.item.ItemUseContext
@@ -7,12 +9,30 @@ import net.minecraft.nbt.CompoundNBT
 import net.minecraft.nbt.ListNBT
 import net.minecraft.nbt.NBTUtil
 import net.minecraft.util.ActionResultType
+import net.minecraft.util.Hand
 import net.minecraft.util.math.BlockPos
+import net.minecraft.util.text.ITextComponent
+import net.minecraft.util.text.StringTextComponent
 import net.minecraftforge.common.util.Constants
 import thedarkcolour.hardcoredungeons.block.structure.SootTrapControllerBlock
+import thedarkcolour.hardcoredungeons.entity.overworld.deer.DeerEntity
 import thedarkcolour.hardcoredungeons.tileentity.SootTrapControllerTileEntity
 
 class GreenWandItem(properties: Properties) : Item(properties) {
+    override fun interactLivingEntity(
+        stack: ItemStack,
+        player: PlayerEntity,
+        target: LivingEntity,
+        hand: Hand
+    ): ActionResultType {
+
+        if (target is DeerEntity) {
+            player.displayClientMessage(StringTextComponent("DeerType: " + target.deerType), true)
+        }
+
+        return ActionResultType.sidedSuccess(player.level.isClientSide)
+    }
+
     override fun useOn(ctx: ItemUseContext): ActionResultType {
         val level = ctx.level
         val pos = ctx.clickedPos
@@ -24,6 +44,8 @@ class GreenWandItem(properties: Properties) : Item(properties) {
                 getPaths(stack.orCreateTag)?.clear()
                 setMode(stack, SOOT_TRAP)
                 setControlPos(stack, pos)
+
+                ctx.player?.displayClientMessage(StringTextComponent("Create a path"), true)
             }
         } else if (getMode(stack) == SOOT_TRAP) {
             var paths = getPaths(stack.orCreateTag)
@@ -38,6 +60,8 @@ class GreenWandItem(properties: Properties) : Item(properties) {
                         for (posNbt in paths) {
                             tile.paths.add(NBTUtil.readBlockPos(posNbt as CompoundNBT))
                         }
+
+                        ctx.player?.displayClientMessage(StringTextComponent("Saved path"), true)
 
                         setMode(stack, NONE)
                     }
@@ -58,6 +82,11 @@ class GreenWandItem(properties: Properties) : Item(properties) {
         }
 
         return ActionResultType.PASS
+    }
+
+    // todo display wand mode in tooltip
+    override fun getDescription(): ITextComponent {
+        return super.getDescription()
     }
 
     companion object {

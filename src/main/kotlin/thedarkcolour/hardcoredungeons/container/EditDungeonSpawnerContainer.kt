@@ -29,6 +29,7 @@ class EditDungeonSpawnerContainer(type: HContainerType<*>, id: Int, playerIn: Pl
 
             override fun getMaxStackSize() = 1
 
+            // what is this for??
             override fun onQuickCraft(oldStackIn: ItemStack, newStackIn: ItemStack) {
                 super.onQuickCraft(oldStackIn, newStackIn)
             }
@@ -36,7 +37,7 @@ class EditDungeonSpawnerContainer(type: HContainerType<*>, id: Int, playerIn: Pl
     }
 
     override fun stillValid(playerIn: PlayerEntity): Boolean {
-        TODO("not implemented")
+        return true // creative only screen so this shouldn't matter
     }
 
     class ArmorSlot(

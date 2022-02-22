@@ -46,9 +46,9 @@ open class ScytheItem(
 
             // if the sweep should play
             // mostly from PlayerEntity for SwordItem with a few tweaks
-            if (f2 > 0.7f && !playerIn.isSprinting && (playerIn.walkDist - playerIn.walkDistO < playerIn.speed)) {
+            if (f2 > 0.05f && !playerIn.isSprinting && (playerIn.walkDist - playerIn.walkDistO < playerIn.speed)) {
                 for (living in playerIn.level.getEntitiesOfClass(LivingEntity::class.java, target.boundingBox.inflate(1.5, 0.25, 1.5))) {
-                    if (living != playerIn && /*living != target && */!playerIn.isAlliedTo(living) && (living !is ArmorStandEntity || !living.isMarker) && playerIn.distanceToSqr(living) < 9.0) {
+                    if (living != playerIn && living != target && !playerIn.isAlliedTo(living) && (living !is ArmorStandEntity || !living.isMarker) && playerIn.distanceToSqr(living) < 9.0) {
                         living.knockback(0.4f, MathHelper.sin(toDegrees(playerIn.yRot)).toDouble(), (-MathHelper.cos(toDegrees(playerIn.yRot))).toDouble())
                         living.hurt(DamageSource.playerAttack(playerIn), (1.0f + EnchantmentHelper.getSweepingDamageRatio(playerIn) * playerIn.getAttributeValue(Attributes.ATTACK_DAMAGE).toFloat()))
                     }

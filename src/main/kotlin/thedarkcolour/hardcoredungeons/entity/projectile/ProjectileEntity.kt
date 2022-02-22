@@ -24,10 +24,22 @@ abstract class ProjectileEntity(
         set(shooter) = setOwner(shooter)
 
     fun shoot(shooter: LivingEntity, pos: Vector3d, acceleration: Vector3d) {
-        this.shoot(shooter, pos.x, pos.y, pos.z, acceleration.x, acceleration.y, acceleration.z)
+        this.shoot(
+            shooter,
+            pos.x,
+            pos.y,
+            pos.z,
+            acceleration.x,
+            acceleration.y,
+            acceleration.z
+        )
     }
 
-    open fun shoot(shooter: LivingEntity, x: Double, y: Double, z: Double, mX: Double, mY: Double, mZ: Double) {
+    open fun shoot(
+        shooter: LivingEntity, x: Double,
+        y: Double, z: Double, mX: Double,
+        mY: Double, mZ: Double
+    ) {
         moveTo(x, y, z, yRot, xRot)
         setPos(x, y, z)
         val d0 = sqrt(mX * mX + mY * mY + mZ * mZ)

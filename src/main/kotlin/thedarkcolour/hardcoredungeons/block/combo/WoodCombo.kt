@@ -12,14 +12,13 @@ import net.minecraft.item.Item
 import net.minecraft.state.properties.BlockStateProperties
 import net.minecraft.tags.BlockTags
 import net.minecraft.tags.ITag
+import net.minecraft.tags.ItemTags
 import net.minecraft.util.Direction
 import net.minecraftforge.common.Tags
 import thedarkcolour.hardcoredungeons.HardcoreDungeons
 import thedarkcolour.hardcoredungeons.block.base.BlockMaker
 import thedarkcolour.hardcoredungeons.block.base.ItemMaker
 import thedarkcolour.hardcoredungeons.block.base.properties.HProperties
-import thedarkcolour.hardcoredungeons.data.BlockTagGenerator
-import thedarkcolour.hardcoredungeons.data.ItemTagGenerator
 import thedarkcolour.hardcoredungeons.data.RecipeGenerator
 import thedarkcolour.hardcoredungeons.data.RecipeGenerator.Companion.shaped
 import thedarkcolour.hardcoredungeons.data.RecipeGenerator.Companion.shapeless
@@ -99,26 +98,25 @@ class WoodCombo(
         AxeItem.STRIPABLES[target] = result
     }
 
-    override fun addTags(gen: BlockTagGenerator) {
-        gen.tag(blockTag).add(log, strippedLog, wood, strippedWood)
-        gen.tag(BlockTags.PLANKS).add(planks)
-        gen.tag(BlockTags.WOODEN_BUTTONS).add(button)
-        gen.tag(BlockTags.WOODEN_DOORS).add(door)
-        gen.tag(BlockTags.WOODEN_STAIRS).add(stairs)
-        gen.tag(BlockTags.WOODEN_SLABS).add(slab)
-        gen.tag(BlockTags.WOODEN_FENCES).add(fence)
-        gen.tag(BlockTags.WOODEN_PRESSURE_PLATES).add(pressurePlate)
-        gen.tag(BlockTags.WOODEN_TRAPDOORS).add(trapdoor)
-        gen.tag(BlockTags.LOGS_THAT_BURN).addTag(blockTag)
-        gen.tag(BlockTags.LEAVES).add(leaves)
-        gen.tag(BlockTags.FENCE_GATES).add(fenceGate)
-        gen.tag(BlockTags.SAPLINGS).add(sapling.plant)
+    override fun addTags(tags: DataTags) {
+        tags.block(blockTag, log, strippedLog, wood, strippedWood)
+        tags.item(itemTag, log, strippedLog, wood, strippedWood)
 
-        sign.addTags(gen)
-    }
+        tags.block(BlockTags.PLANKS, ItemTags.PLANKS, planks)
+        tags.block(BlockTags.WOODEN_BUTTONS, ItemTags.WOODEN_BUTTONS, button)
+        tags.block(BlockTags.WOODEN_DOORS, ItemTags.WOODEN_DOORS, door)
+        tags.block(BlockTags.WOODEN_STAIRS, ItemTags.WOODEN_STAIRS, stairs)
+        tags.block(BlockTags.WOODEN_SLABS, ItemTags.WOODEN_SLABS, slab)
+        tags.block(BlockTags.WOODEN_FENCES, ItemTags.WOODEN_FENCES, fence)
+        tags.block(BlockTags.WOODEN_PRESSURE_PLATES, ItemTags.WOODEN_PRESSURE_PLATES, pressurePlate)
+        tags.block(BlockTags.WOODEN_TRAPDOORS, ItemTags.WOODEN_TRAPDOORS, trapdoor)
+        tags.tag(BlockTags.LOGS_THAT_BURN, ItemTags.LOGS_THAT_BURN, blockTag, itemTag)
+        tags.block(BlockTags.LEAVES, ItemTags.LEAVES, leaves)
+        tags.block(BlockTags.FENCES, Tags.Items.FENCES, fence)
+        tags.block(BlockTags.FENCE_GATES, Tags.Items.FENCE_GATES, fenceGate)
+        tags.block(BlockTags.SAPLINGS, ItemTags.SAPLINGS, sapling.plant)
 
-    override fun addTags(gen: ItemTagGenerator) {
-        gen.copy(blockTag, itemTag)
+        sign.addTags(tags)
     }
 
     override fun addRecipes(consumer: Consumer<IFinishedRecipe>) {

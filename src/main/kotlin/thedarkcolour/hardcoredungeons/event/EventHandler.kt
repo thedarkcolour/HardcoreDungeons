@@ -23,10 +23,10 @@ import thedarkcolour.hardcoredungeons.block.portal.HPortalBlock
 import thedarkcolour.hardcoredungeons.capability.HPlayer
 import thedarkcolour.hardcoredungeons.capability.PlayerHelper
 import thedarkcolour.hardcoredungeons.config.HConfig
-import thedarkcolour.hardcoredungeons.feature.HConfiguredFeatures
+import thedarkcolour.hardcoredungeons.worldgen.feature.HConfiguredFeatures
 import thedarkcolour.hardcoredungeons.registry.HBlocks
-import thedarkcolour.hardcoredungeons.structure.HConfiguredStructures
-import thedarkcolour.hardcoredungeons.surfacebuilder.HConfiguredSurfaceBuilders
+import thedarkcolour.hardcoredungeons.worldgen.structure.HConfiguredStructures
+import thedarkcolour.hardcoredungeons.worldgen.surfacebuilder.HConfiguredSurfaceBuilders
 import thedarkcolour.hardcoredungeons.tileentity.DungeonSpawnerTileEntity
 import thedarkcolour.kotlinforforge.forge.FORGE_BUS
 import thedarkcolour.kotlinforforge.forge.MOD_BUS

@@ -127,5 +127,10 @@ open class DeerEntity(type: EntityType<out AnimalEntity>, worldIn: World) : Anim
             .add(ForgeMod.ENTITY_GRAVITY.get())
             .add(Attributes.FOLLOW_RANGE, 16.0)
             .add(Attributes.ATTACK_KNOCKBACK)
+            .add(Attributes.ATTACK_DAMAGE, 2.0)
     }
+
+    // If a doe is attacked, it should alert any stags nearby
+    // If there are no stags nearby or a stag is attacked, then the doe retaliates
+    inner class PanicGoal {}
 }

@@ -2,10 +2,10 @@ package thedarkcolour.hardcoredungeons.block.combo
 
 import net.minecraft.data.IFinishedRecipe
 import net.minecraft.tags.BlockTags
+import net.minecraftforge.common.Tags
 import thedarkcolour.hardcoredungeons.block.base.BlockMaker
 import thedarkcolour.hardcoredungeons.block.base.ItemMaker
 import thedarkcolour.hardcoredungeons.block.base.properties.HProperties
-import thedarkcolour.hardcoredungeons.data.BlockTagGenerator
 import thedarkcolour.hardcoredungeons.data.RecipeGenerator
 import thedarkcolour.hardcoredungeons.data.RecipeGenerator.Companion.shaped
 import thedarkcolour.hardcoredungeons.data.modelgen.item.ItemModelType
@@ -19,10 +19,10 @@ class StairsSlabWallFenceCombo(name: String, properties: HProperties) : StairsSl
         ItemMaker.blockItem(BlockMaker.getComboName(name) + "_fence", ItemModelType.WALL_FENCE_ITEM, ::fence)
     }
 
-    override fun addTags(gen: BlockTagGenerator) {
-        super.addTags(gen)
+    override fun addTags(tags: DataTags) {
+        super.addTags(tags)
 
-        gen.tag(BlockTags.FENCES).add(fence)
+        tags.block(BlockTags.FENCES, Tags.Items.FENCES, fence)
     }
 
     override fun addRecipes(consumer: Consumer<IFinishedRecipe>) {

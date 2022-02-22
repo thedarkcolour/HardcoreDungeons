@@ -12,4 +12,6 @@ enum class HElement(val strongAgainst: Int) {
     WIND(2);
 
     fun effectiveAgainst(other: HElement): Boolean = strongAgainst == other.ordinal
+
+    fun weakAgainst(other: HElement): Boolean = other.strongAgainst == ordinal
 }

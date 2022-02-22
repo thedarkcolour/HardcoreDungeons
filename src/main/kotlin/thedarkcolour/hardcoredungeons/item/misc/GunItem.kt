@@ -64,12 +64,13 @@ open class GunItem(
 
             // change to match fire type????
             val bullet = SmallBulletEntity(HEntities.SMALL_BULLET, worldIn)
+            var ammoType = SmallBulletEntity.BULLET
 
             if (ammo.item.`is`(HItemTags.AMMUNITION_INCENDIARY)) {
-                bullet.setSecondsOnFire(10)
+                ammoType = SmallBulletEntity.INCENDIARY_BULLET
             }
 
-            bullet.shoot(entity, entity.x, entity.eyeY - 0.1, entity.z, vec.x, vec.y, vec.z)
+            bullet.shoot(entity, ammoType, entity.x, entity.eyeY - 0.1, entity.z, vec.x, vec.y, vec.z)
         }
 
         if (!(entity is PlayerEntity && entity.isCreative)) {

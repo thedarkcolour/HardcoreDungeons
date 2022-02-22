@@ -31,6 +31,7 @@ class DungeonSpawnerTileEntity(tileEntityTypeIn: TileEntityType<*> = HTileEntiti
 
     override fun load(state: BlockState, nbt: CompoundNBT) {
         super.load(state, nbt)
+
         spawnDelay = nbt.getShort("Delay").toInt()
         potentialSpawns.clear()
         if (nbt.contains("SpawnPotentials", 9)) {
@@ -40,6 +41,8 @@ class DungeonSpawnerTileEntity(tileEntityTypeIn: TileEntityType<*> = HTileEntiti
                 potentialSpawns.add(WeightedSpawnerEntity(list.getCompound(i)))
             }
         }
+
+        remainingKills = nbt.getInt("RemainingKills")
 
         if (nbt.contains("SpawnData", 10)) {
             setNextSpawnData(WeightedSpawnerEntity(1, nbt.getCompound("SpawnData")))
@@ -144,9 +147,9 @@ class DungeonSpawnerTileEntity(tileEntityTypeIn: TileEntityType<*> = HTileEntiti
                     val rand = level.random
                     val j = positions.size
 
-                    val posX = if (j >= 1) positions.getDouble(0)  else pos.x + (rand.nextDouble() - rand.nextDouble()) * spawnRange + 0.5
-                    val posY = if (j >= 2) positions.getDouble(1)  else pos.y - rand.nextInt(3) - 1.0
-                    val posZ = if (j >= 3) positions.getDouble(2)  else pos.z + (rand.nextDouble() - rand.nextDouble()) * spawnRange + 0.5
+                    val posX = if (j >= 1) positions.getDouble(0) else pos.x + (rand.nextDouble() - rand.nextDouble()) * spawnRange + 0.5
+                    val posY = if (j >= 2) positions.getDouble(1) else pos.y + rand.nextInt(3) - 1.0
+                    val posZ = if (j >= 3) positions.getDouble(2) else pos.z + (rand.nextDouble() - rand.nextDouble()) * spawnRange + 0.5
 
                     if (level.noCollision(optional.get().getAABB(posX, posY, posZ))) {
                         if (EntitySpawnPlacementRegistry.checkSpawnRules(optional.get(), level, SpawnReason.SPAWNER, BlockPos(posX, posY, posZ), rand)) {

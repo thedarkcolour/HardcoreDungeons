@@ -14,6 +14,7 @@ object HBlockTags {
     val LUMLIGHT_LOGS = tag("lumlight_logs")
     val COTTONMARSH_LOGS = tag("cottonmarsh_logs")
     val AURI_LOGS = tag("auri_logs")
+    val LUMSHROOM = tag("lumshroom")
 
     val GLASS_RAINBOW = tag("glass/rainbow")
     val GLASS_PANES_RAINBOW = tag("glass_panes/rainbow")

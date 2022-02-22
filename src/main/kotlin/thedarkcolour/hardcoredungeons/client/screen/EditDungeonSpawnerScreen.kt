@@ -1,5 +1,5 @@
 package thedarkcolour.hardcoredungeons.client.screen
-/*
+
 
 import com.mojang.blaze3d.matrix.MatrixStack
 import net.minecraft.client.gui.screen.inventory.ContainerScreen
@@ -20,11 +20,19 @@ class EditDungeonSpawnerScreen(screenContainer: EditDungeonSpawnerContainer?, in
         })
     }
 
-    override fun renderBg(matrixStack: MatrixStack, partialTicks: Float, x: Int, y: Int) {
-        TODO("not implemented")
+    override fun renderBg(stack: MatrixStack, partialTicks: Float, x: Int, y: Int) {
+        // render background texture
+    }
+
+    override fun render(stack: MatrixStack, x: Int, y: Int, partialTicks: Float) {
+        super.render(stack, x, y, partialTicks)
+    }
+
+    override fun mouseClicked(mouseX: Double, mouseY: Double, button: Int): Boolean {
+        return super.mouseClicked(mouseX, mouseY, button)
     }
 
     companion object {
         val SAVE_TEXT = StringTextComponent("Save changes")
     }
-}*/
+}

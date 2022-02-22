@@ -15,6 +15,7 @@ object HItemTags {
     val LUMLIGHT_LOGS = tag("lumlight_logs")
     val AURI_LOGS = tag("auri_logs")
     val COTTONMARSH_LOGS = tag("cottonmarsh_logs")
+    val LUMSHROOM = tag("lumshroom")
 
     val AMMUNITION_GENERIC = tag("ammunition/generic")
     val AMMUNITION_SMALL = tag("ammunition/small")

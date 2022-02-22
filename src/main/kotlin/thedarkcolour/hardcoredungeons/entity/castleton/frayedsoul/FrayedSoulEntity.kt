@@ -61,7 +61,7 @@ class FrayedSoulEntity(type: EntityType<FrayedSoulEntity>, worldIn: World) : Cre
         }
 
         // Note: three for loops is faster than BlockPos.betweenClosed
-        private fun FrayedSoulEntity.findBlockInRange(range: Int, predicate: (BlockPos, World) -> Boolean): BlockPos? {
+        private inline fun FrayedSoulEntity.findBlockInRange(range: Int, predicate: (BlockPos, World) -> Boolean): BlockPos? {
             val pos = blockPosition().offset(-range, -range, -range)
 
             for (x in 0 until (range shl 1) + 1) {

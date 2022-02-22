@@ -5,9 +5,11 @@ import net.minecraft.data.BlockTagsProvider
 import net.minecraft.data.DataGenerator
 import net.minecraft.tags.BlockTags
 import net.minecraft.tags.ITag
+import net.minecraft.tags.ItemTags
 import net.minecraftforge.common.Tags.Blocks
 import net.minecraftforge.common.data.ExistingFileHelper
 import thedarkcolour.hardcoredungeons.HardcoreDungeons
+import thedarkcolour.hardcoredungeons.block.combo.DataTags
 import thedarkcolour.hardcoredungeons.registry.HBlocks
 import thedarkcolour.hardcoredungeons.tags.HBlockTags
 
@@ -21,33 +23,27 @@ class BlockTagGenerator(gen: DataGenerator, helper: ExistingFileHelper) : BlockT
      * Register tags for each block.
      */
     override fun addTags() {
-
-        tags()
-
-        // hcd tags
-        HBlocks.LUMLIGHT_WOOD.addTags(this)
-        HBlocks.COTTONMARSH_WOOD.addTags(this)
-        HBlocks.AURI_WOOD.addTags(this)
+        tags(DataTags.Blocks(this))
 
         tag(HBlockTags.GLASS_RAINBOW).add(HBlocks.RAINBOW_GLASS)
         tag(HBlockTags.GLASS_PANES_RAINBOW).add(HBlocks.RAINBOW_GLASS_PANE)
-        HBlocks.CASTLETON_STONE.addTags(this)
-        HBlocks.CHARGED_CASTLETON_BRICKS.addTags(this)
-        HBlocks.RAINBOW_ROCK.addTags(this)
-        HBlocks.RAINBOW_FACTORY_BRICKS.addTags(this)
-        //tag(HBlockTags.FENCES_BRICK).add(, HBlocksNew.CHARGED_CASTLETON_BRICK_FENCE, HBlocksNew.RAINBOW_BRICK_FENCE, HBlocksNew.RAINBOW_FACTORY_BRICK_FENCE)
+
         tag(HBlockTags.CASTLETON_GRASS_PLANTABLE).add(HBlocks.LUMLIGHT_WOOD.sapling.plant, HBlocks.BLUE_LUMSHROOM.plant, HBlocks.PURPLE_LUMSHROOM.plant)
         tag(HBlockTags.RAINBOW_GRASS_PLANTABLE).add(HBlocks.LUMLIGHT_WOOD.sapling.plant)
         tag(HBlockTags.AURIGRASS_PLANTABLE).add(HBlocks.FLAME_ROSE.plant, HBlocks.GOLDEN_TULIP.plant)
         tag(HBlockTags.SUGARY_GRASS_PLANTABLE).add(HBlocks.GREEN_GUMDROP.plant, HBlocks.MINI_GREEN_GUMDROP.plant, HBlocks.PINK_GUMDROP.plant, HBlocks.MINI_PINK_GUMDROP.plant, HBlocks.BLUE_GUMDROP.plant, HBlocks.MINI_BLUE_GUMDROP.plant, HBlocks.PURPLE_GUMDROP.plant, HBlocks.MINI_PURPLE_GUMDROP.plant, HBlocks.RED_GUMDROP.plant, HBlocks.MINI_RED_GUMDROP.plant, HBlocks.YELLOW_GUMDROP.plant, HBlocks.MINI_YELLOW_GUMDROP.plant)
 
-        HBlocks.CHILI_PEPPER.addTags(this)
-        HBlocks.WILD_BERROOK.addTags(this)
+        /** Ore blocks */
+        tag(Blocks.ORES).add(HBlocks.RAINBOWSTONE_ORE, HBlocks.AURIGOLD_ORE)
 
-        HBlocks.AUBRUM_PORTAL.addTags(this)
-        HBlocks.CANDYLAND_PORTAL.addTags(this)
-        HBlocks.CASTLETON_PORTAL.addTags(this)
-        HBlocks.RAINBOWLAND_PORTAL.addTags(this)
+        /** Blocks */
+        tag(Blocks.STORAGE_BLOCKS).add(HBlocks.MALACHITE_BLOCK, HBlocks.RAINBOWSTONE_BLOCK, HBlocks.SUGAR_BLOCK, HBlocks.CHOCOLATE_BLOCK.block)
+        tag(BlockTags.BEACON_BASE_BLOCKS).add(HBlocks.MALACHITE_BLOCK, HBlocks.RAINBOWSTONE_BLOCK)
+
+        tag(BlockTags.CAMPFIRES).add(HBlocks.LUMLIGHT_CAMPFIRE)
+
+        tag(BlockTags.CROPS).add(HBlocks.GOLDEN_CARROTS)
+        tag(HBlockTags.LUMSHROOM).add(HBlocks.PURPLE_LUMSHROOM.plant, HBlocks.BLUE_LUMSHROOM.plant)
 
         // vanilla tags
         /*tag(BlockTags.WALLS).add(HBlocksNew.SHROOMY_COBBLESTONE_WALL, HBlocksNew.SHROOMY_STONE_BRICK_WALL, HBlocksNew.CASTLETON_BRICK_WALL, HBlocksNew.CHARGED_CASTLETON_BRICK_WALL, HBlocksNew.RAINBOW_BRICK_WALL, HBlocksNew.RAINBOW_FACTORY_BRICK_WALL)
@@ -100,7 +96,6 @@ class BlockTagGenerator(gen: DataGenerator, helper: ExistingFileHelper) : BlockT
         tag(Blocks.GLASS_RED).addTag(HBlockTags.GLASS_RAINBOW)
         tag(Blocks.GLASS_WHITE).addTag(HBlockTags.GLASS_RAINBOW)
         tag(Blocks.GLASS_YELLOW).addTag(HBlockTags.GLASS_RAINBOW)
-        tag(Blocks.GLASS_PANES).addTag(HBlockTags.GLASS_PANES_RAINBOW)
         tag(Blocks.GLASS_PANES_BLACK).addTag(HBlockTags.GLASS_PANES_RAINBOW)
         tag(Blocks.GLASS_PANES_BLUE).addTag(HBlockTags.GLASS_PANES_RAINBOW)
         tag(Blocks.GLASS_PANES_BROWN).addTag(HBlockTags.GLASS_PANES_RAINBOW)
@@ -118,65 +113,56 @@ class BlockTagGenerator(gen: DataGenerator, helper: ExistingFileHelper) : BlockT
         tag(Blocks.GLASS_PANES_RED).addTag(HBlockTags.GLASS_PANES_RAINBOW)
     }
 
-    private fun tags() {
-        /** Overworld materials */
-        HBlocks.SHROOMY_COBBLESTONE.addTags(this)
-        HBlocks.SHROOMY_STONE_BRICKS.addTags(this)
-
-        /** Ore blocks */
-        tag(Blocks.ORES).add(HBlocks.RAINBOWSTONE_ORE, HBlocks.AURIGOLD_ORE)
-
-        /** Gem blocks */
-        tag(Blocks.STORAGE_BLOCKS).add(HBlocks.MALACHITE_BLOCK, HBlocks.RAINBOWSTONE_BLOCK)
-        tag(BlockTags.BEACON_BASE_BLOCKS).add(HBlocks.MALACHITE_BLOCK, HBlocks.RAINBOWSTONE_BLOCK)
-
-        /** Wood */
-        HBlocks.LUMLIGHT_WOOD.addTags(this)
-        HBlocks.AURI_WOOD.addTags(this)
-        HBlocks.COTTONMARSH_WOOD.addTags(this)
-
-        /** Chiseled block variants */
-        // idk what to do for chiseled diamond block
-        HBlocks.OAK_PLANKS.addTag(this, BlockTags.PLANKS)
-        HBlocks.SPRUCE_PLANKS.addTag(this, BlockTags.PLANKS)
-
-        /** Castleton materials */
-        HBlocks.CASTLETON_SOIL.addTags(this)
-        HBlocks.CASTLETON_STONE.addTags(this)
-        HBlocks.CHARGED_CASTLETON_BRICKS.addTags(this)
-        HBlocks.CASTLETON_PORTAL.addTags(this)
-
-        /** Castleton Props */
-        tag(BlockTags.CAMPFIRES).add(HBlocks.LUMLIGHT_CAMPFIRE)
-        HBlocks.CASTLETON_TORCH.addTags(this)
-
-        /** Rainbowland materials */
-        HBlocks.RAINBOW_SOIL.addTags(this)
-        HBlocks.RAINBOW_ROCK.addTags(this)
-        HBlocks.RAINBOW_FACTORY_BRICKS.addTags(this)
-        HBlocks.RAINBOWLAND_PORTAL.addTags(this)
-
-        /** Aubrum materials */
-        HBlocks.AURISOIL.addTags(this)
-        HBlocks.AUBRUM_PORTAL.addTags(this)
-
-        /** Candyland materials */
-        HBlocks.SUGARY_SOIL.addTags(this)
-        tag(Blocks.STORAGE_BLOCKS).add(HBlocks.SUGAR_BLOCK, HBlocks.CHOCOLATE_BLOCK.block)
-        HBlocks.CHOCOLATE_BLOCK.addTags(this)
-        HBlocks.CANDYLAND_PORTAL.addTags(this)
-
-        /** Crops */
-        HBlocks.CHILI_PEPPER.addTags(this)
-        tag(BlockTags.CROPS).add(HBlocks.GOLDEN_CARROTS)
-        HBlocks.WILD_BERROOK.addTags(this)
-    }
-
     public override fun tag(tag: ITag.INamedTag<Block>): Builder<Block> {
         return super.tag(tag)
     }
 
     override fun getName(): String {
         return "Hardcore Dungeons Block Tags"
+    }
+
+    companion object {
+        fun tags(tags: DataTags) {
+            /** Overworld materials */
+            HBlocks.SHROOMY_COBBLESTONE.addTags(tags)
+            HBlocks.SHROOMY_STONE_BRICKS.addTags(tags)
+
+            /** Wood */
+            HBlocks.LUMLIGHT_WOOD.addTags(tags)
+            HBlocks.AURI_WOOD.addTags(tags)
+            HBlocks.COTTONMARSH_WOOD.addTags(tags)
+
+            /** Chiseled block variants */
+            HBlocks.OAK_PLANKS.addTag(tags, BlockTags.PLANKS, ItemTags.PLANKS)
+            HBlocks.SPRUCE_PLANKS.addTag(tags, BlockTags.PLANKS, ItemTags.PLANKS)
+
+            /** Castleton materials */
+            HBlocks.CASTLETON_SOIL.addTags(tags)
+            HBlocks.CASTLETON_STONE.addTags(tags)
+            HBlocks.CHARGED_CASTLETON_BRICKS.addTags(tags)
+            HBlocks.CASTLETON_PORTAL.addTags(tags)
+
+            /** Castleton Props */
+            HBlocks.CASTLETON_TORCH.addTags(tags)
+
+            /** Rainbowland materials */
+            HBlocks.RAINBOW_SOIL.addTags(tags)
+            HBlocks.RAINBOW_ROCK.addTags(tags)
+            HBlocks.RAINBOW_FACTORY_BRICKS.addTags(tags)
+            HBlocks.RAINBOWLAND_PORTAL.addTags(tags)
+
+            /** Aubrum materials */
+            HBlocks.AURISOIL.addTags(tags)
+            HBlocks.AUBRUM_PORTAL.addTags(tags)
+
+            /** Candyland materials */
+            HBlocks.SUGARY_SOIL.addTags(tags)
+            HBlocks.CHOCOLATE_BLOCK.addTags(tags)
+            HBlocks.CANDYLAND_PORTAL.addTags(tags)
+
+            /** Crops */
+            HBlocks.CHILI_PEPPER.addTags(tags)
+            HBlocks.WILD_BERROOK.addTags(tags)
+        }
     }
 }

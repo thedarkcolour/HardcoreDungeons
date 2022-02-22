@@ -3,7 +3,6 @@ package thedarkcolour.hardcoredungeons.compat.biomesoplenty
 import biomesoplenty.api.block.BOPBlocks
 import net.minecraft.data.IFinishedRecipe
 import thedarkcolour.hardcoredungeons.data.RecipeGenerator.Companion.slabs2Full
-import thedarkcolour.hardcoredungeons.data.RecipeGenerator.Companion.stairs2Full
 import java.util.function.Consumer
 
 object BiomesOPlentyCompat {
@@ -52,7 +51,6 @@ object BiomesOPlentyCompat {
 
         for (i in planks.indices) {
             consumer.slabs2Full(plankSlabs[i], planks[i])
-            consumer.stairs2Full(plankStairs[i], planks[i])
         }
     }
 }

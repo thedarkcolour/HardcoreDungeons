@@ -9,21 +9,20 @@ import net.minecraft.data.IDataProvider
 import net.minecraft.data.LootTableProvider
 import net.minecraft.enchantment.Enchantments
 import net.minecraft.entity.EntityType
-import net.minecraft.item.ItemStack
 import net.minecraft.item.Items
 import net.minecraft.loot.*
 import net.minecraft.loot.AlternativesLootEntry.alternatives
-import net.minecraft.loot.BinomialRange.binomial
 import net.minecraft.loot.ConstantRange.exactly
 import net.minecraft.loot.LootPool.lootPool
 import net.minecraft.loot.LootTable.lootTable
 import net.minecraft.loot.RandomValueRange.between
-import net.minecraft.loot.conditions.*
+import net.minecraft.loot.conditions.BlockStateProperty
 import net.minecraft.loot.conditions.EntityHasProperty.hasProperties
 import net.minecraft.loot.conditions.MatchTool.toolMatches
 import net.minecraft.loot.conditions.RandomChance.randomChance
 import net.minecraft.loot.conditions.RandomChanceWithLooting.randomChanceAndLootingBoost
-import net.minecraft.loot.functions.*
+import net.minecraft.loot.conditions.SurvivesExplosion
+import net.minecraft.loot.functions.ApplyBonus
 import net.minecraft.loot.functions.ExplosionDecay.explosionDecay
 import net.minecraft.loot.functions.LootingEnchantBonus.lootingMultiplier
 import net.minecraft.loot.functions.SetCount.setCount
@@ -92,7 +91,7 @@ class LootGenerator(private val generator: DataGenerator) : LootTableProvider(ge
         addLoot(HBlocks.CASTLETON_TREASURE_VASE, lootTable().withPool(
             lootPool()
             .add(item(HItems.CASTLE_GEM).setCountBinomial(6, 0.6f).setWeight(10))
-            .add(item(HItems.CHILI_PEPPER).setCountBinomial(3, 0.7f).setWeight(5))
+            .add(item(HBlocks.CHILI_PEPPER.item).setCountBinomial(3, 0.7f).setWeight(5))
         ))
         HBlocks.MALACHITE_CRYSTAL.addLoot(this)
         HBlocks.DIAMOND_CRYSTAL.addLoot(this)
@@ -139,19 +138,18 @@ class LootGenerator(private val generator: DataGenerator) : LootTableProvider(ge
     }
 
     private fun dropSelf(block: Block) {
-        // Do not redefine the empty loot table
-        if (block.lootTable == LootTables.EMPTY) return
-
         singlePool(block) {
-            item(block).`when`(SurvivesExplosion.survivesExplosion())
+            add(item(block).`when`(SurvivesExplosion.survivesExplosion()))
         }
     }
 
     fun dropSilk(block: Block, normal: LootEntry.Builder<*>?, silk: LootEntry.Builder<*>) {
-        val entry = silk.`when`(SILK_TOUCH)
+        var entry = silk.`when`(SILK_TOUCH)
+
         if (normal != null) {
-            entry.otherwise(normal)
+            entry = entry.otherwise(normal.`when`(SurvivesExplosion.survivesExplosion()))
         }
+
         singlePool(block) { add(entry) }
     }
 
@@ -202,6 +200,9 @@ class LootGenerator(private val generator: DataGenerator) : LootTableProvider(ge
         for (entry in entityTables) {
             namespacedTables[entry.key.defaultLootTable] = entry.value.setParamSet(LootParameterSets.ENTITY).build()
         }
+
+        // Do not redefine the empty loot table
+        namespacedTables.remove(ResourceLocation("minecraft:empty"))
 
         writeLootTables(namespacedTables, cache)
     }
