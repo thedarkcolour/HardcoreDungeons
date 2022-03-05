@@ -15,6 +15,6 @@ object ItemMisc {
     val CUM_CHALICE: Food = Food.Builder().nutrition(4).saturationMod(0.8f).build()
 
     // rarity
-    val LEGENDARY: Rarity = Rarity.create("HARDCOREDUNGEONS\$LEGENDARY", TextFormatting.RED)
-    val MYTHIC: Rarity = Rarity.create("HARDCOREDUNGEONS\$MYTHIC", TextFormatting.GREEN)
+    val LEGENDARY: Rarity = Rarity.create("HARDCOREDUNGEONS_LEGENDARY", TextFormatting.RED)
+    val MYTHIC: Rarity = Rarity.create("HARDCOREDUNGEONS_MYTHIC", TextFormatting.GREEN)
 }
