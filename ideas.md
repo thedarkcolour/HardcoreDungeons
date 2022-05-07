@@ -1,14 +1,24 @@
 ## Incense
 * Different colored incense placed in a circle around an altar
 
-## Mending Cloth
-* Unique armor pieces can be repaired with mending cloth.
+## Lumlight Cabin
+* Push down by one block so it is inset into the land
+
+## Giant Castle
+* Use more variety of blocks to make it look more finished
+
+## Castleton Farmland
+* Grow lumshrooms into Magic Lumshrooms for use in magical recipes
+
+##~~Mending Cloth~~
+* ~~Unique armor pieces can be repaired with mending cloth.~~
+* This idea isn't original + makes repairing weapons annoying
 
 ## Masks
 * Masks that could be worn as helmets and look really cool
 
 ## Fragile Curse
-* Opposite of Unbreaking
+* Opposite of Unbreaking (might be too difficult to add)
 
 ## Structure tips
 * Remove parkour from structure

@@ -22,12 +22,13 @@ import net.minecraft.world.gen.trunkplacer.StraightTrunkPlacer
 import net.minecraftforge.common.world.BiomeGenerationSettingsBuilder
 import thedarkcolour.hardcoredungeons.block.combo.WoodCombo
 import thedarkcolour.hardcoredungeons.registry.HBlocks
+import thedarkcolour.hardcoredungeons.registry.HCarvers
 import thedarkcolour.hardcoredungeons.registry.HFeatures
 import thedarkcolour.hardcoredungeons.util.modLoc
 import thedarkcolour.hardcoredungeons.worldgen.structure.HConfiguredStructures
 
 @Suppress("HasPlatformType", "MemberVisibilityCanBePrivate")
-object HConfiguredFeatures {
+object HWorldGen {
     // Overworld Biomes
     val SHROOMY_BOULDER = Feature.FOREST_ROCK.configured(BlockStateFeatureConfig(HBlocks.SHROOMY_COBBLESTONE.block.defaultBlockState())).decorated(Features.Placements.HEIGHTMAP_DOUBLE_SQUARE.countRandom(5))
     val OAK_SHRUBS = Feature.TREE.configured(BaseTreeFeatureConfig.Builder(SimpleBlockStateProvider(Blocks.OAK_LOG.defaultBlockState()), SimpleBlockStateProvider(Blocks.OAK_LEAVES.defaultBlockState()), BushFoliagePlacer(FeatureSpread.fixed(2), FeatureSpread.fixed(1), 2), StraightTrunkPlacer(1, 0, 0), TwoLayerFeature(0, 0, 0)).heightmap(Heightmap.Type.MOTION_BLOCKING_NO_LEAVES).build()).decorated(Features.Placements.HEIGHTMAP_SQUARE).decorated(Placement.COUNT_EXTRA.configured(AtSurfaceWithExtraConfig(6, 0.3f, 2)))
@@ -40,6 +41,8 @@ object HConfiguredFeatures {
     val LUMLIGHT_SHRUBS = Feature.TREE.configured(BaseTreeFeatureConfig.Builder(SimpleBlockStateProvider(HBlocks.LUMLIGHT_WOOD.log.defaultBlockState()), SimpleBlockStateProvider(HBlocks.LUMLIGHT_WOOD.leaves.defaultBlockState()), BushFoliagePlacer(FeatureSpread.fixed(2), FeatureSpread.fixed(1), 2), StraightTrunkPlacer(1, 0, 0), TwoLayerFeature(0, 0, 0)).heightmap(Heightmap.Type.MOTION_BLOCKING_NO_LEAVES).build()).decorated(Features.Placements.HEIGHTMAP_SQUARE).decorated(Placement.COUNT_EXTRA.configured(AtSurfaceWithExtraConfig(6, 0.3f, 2)))
     val SPARSE_LUMLIGHT_TREES = Feature.TREE.configured(BaseTreeFeatureConfig.Builder(SimpleBlockStateProvider(HBlocks.LUMLIGHT_WOOD.log.defaultBlockState()), SimpleBlockStateProvider(HBlocks.LUMLIGHT_WOOD.leaves.defaultBlockState()), FancyFoliagePlacer(FeatureSpread.fixed(2), FeatureSpread.fixed(4), 4), StraightTrunkPlacer(4, 4, 7), TwoLayerFeature(0, 0, 0)).build()).decorated(Features.Placements.HEIGHTMAP_SQUARE).decorated(Placement.COUNT_EXTRA.configured(AtSurfaceWithExtraConfig(6, 0.3f, 2)))
     val PATCH_PURPLE_LUMSHROOM = Feature.RANDOM_PATCH.configured(flowerPatchConfig(HBlocks.PURPLE_LUMSHROOM.plant)).decorated(Features.Placements.HEIGHTMAP_DOUBLE_SQUARE).chance(12)
+    val CASTLETON_CAVE = HCarvers.CASTLETON_CAVE.configured(ProbabilityConfig(0.14285715F))
+    val CASTLETON_CANYON = HCarvers.CASTLETON_CANYON.configured(ProbabilityConfig(0.02F))
 
     // Rainbowland
     val RAINBOWSTONE_ORE = Feature.ORE.configured(OreFeatureConfig(BlockMatchRuleTest(HBlocks.RAINBOW_ROCK.stone.block), HBlocks.RAINBOWSTONE_ORE.defaultBlockState(), 3)).decorated(Placement.DEPTH_AVERAGE.configured(DepthAverageConfig(16, 12)))
@@ -82,17 +85,10 @@ object HConfiguredFeatures {
         )
     }
 
-    /*fun a() {
-        val a = Feature.TREE.configured(
-            BaseTreeFeatureConfig.Builder(
-                SimpleBlockStateProvider(HBlocks.LUMLIGHT_WOOD.log.defaultBlockState()),
-                SimpleBlockStateProvider(HBlocks.LUMLIGHT_WOOD.leaves.defaultBlockState()),
-                FancyFoliagePlacer(FeatureSpread.fixed(2), FeatureSpread.fixed(4), 4),
-                StraightTrunkPlacer(4, 4, 7),
-                TwoLayerFeature(0, 0, 0)
-            ).heightmap(Heightmap.Type.MOTION_BLOCKING).build()
-        )
-    }*/
+    fun addCastletonCarvers(biome: BiomeGenerationSettings.Builder) {
+        biome.addCarver(GenerationStage.Carving.AIR, CASTLETON_CAVE)
+        biome.addCarver(GenerationStage.Carving.AIR, CASTLETON_CANYON)
+    }
 
     fun addShroomyBoulders(biome: BiomeGenerationSettings.Builder) {
         biome.addFeature(GenerationStage.Decoration.LOCAL_MODIFICATIONS, SHROOMY_BOULDER)
@@ -105,18 +101,10 @@ object HConfiguredFeatures {
     fun withPurpleLumshrooms(biome: BiomeGenerationSettings.Builder) {
         biome.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, PATCH_PURPLE_LUMSHROOM)
     }
-/*
-    fun addLumlightTrees(biome: Biome) {
-        biome.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, LUMLIGHT_TREE_FEATURE.func_225566_b_(LUMLIGHT_TREE_CONFIG).func_227228_a_(Placement.COUNT_EXTRA_HEIGHTMAP.func_225566_b_(AtSurfaceWithExtraConfig(5, 0.1f, 1))))
-    }*/
 
     fun withSparseLumlightTrees(biome: BiomeGenerationSettings.Builder) {
         biome.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, SPARSE_LUMLIGHT_TREES)
     }
-    /*
-    fun addTallLumlightTrees(biome: BiomeGenerationSettings.Builder) {
-        biome.addFeature(Decoration.VEGETAL_DECORATION, TALL_LUMLIGHT_TREE_FEATURE.configured(LUMLIGHT_LOG_LEAVES_CONFIG).decorated(Placement.COUNT_EXTRA_HEIGHTMAP.configure(AtSurfaceWithExtraConfig(0, 0.01f, 1))))//Feature.RANDOM_SELECTOR.func_225566_b_(MultipleRandomFeatureConfig(listOf(LUMLIGHT_TREE_FEATURE.func_225566_b_(LUMLIGHT_TREE_CONFIG).withChance(0.33333334f)), Feature.NORMAL_TREE.func_225566_b_(LUMLIGHT_TREE_CONFIG))).func_227228_a_(Placement.COUNT_EXTRA_HEIGHTMAP.func_225566_b_(AtSurfaceWithExtraConfig(0, 0.05f, 1))))
-    }*/
 
     fun withLumlightShrubs(genSettings: BiomeGenerationSettings.Builder) {
         genSettings.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, LUMLIGHT_SHRUBS)

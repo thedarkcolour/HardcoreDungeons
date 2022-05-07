@@ -8,9 +8,9 @@ import net.minecraftforge.registries.ForgeRegistries
 import thedarkcolour.hardcoredungeons.block.base.ItemMaker
 import thedarkcolour.hardcoredungeons.item.*
 import thedarkcolour.hardcoredungeons.item.debug.GreenWandItem
-import thedarkcolour.hardcoredungeons.item.misc.GunItem
-import thedarkcolour.hardcoredungeons.item.misc.StaffItem
-import thedarkcolour.hardcoredungeons.item.overworld.ShroomySwordItem
+import thedarkcolour.hardcoredungeons.item.GunItem
+import thedarkcolour.hardcoredungeons.item.StaffItem
+import thedarkcolour.hardcoredungeons.item.ShroomySwordItem
 
 object HItemsNew : HRegistry<Item>(ForgeRegistries.ITEMS) {
     val GREEN_WAND by ItemMaker.simple("green_wand") { GreenWandItem(Item.Properties().tab(Group).stacksTo(1).rarity(ItemMisc.MYTHIC)) }

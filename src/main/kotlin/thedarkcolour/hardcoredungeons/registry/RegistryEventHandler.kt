@@ -4,7 +4,6 @@ import net.minecraft.enchantment.Enchantment
 import net.minecraft.item.Item
 import net.minecraft.potion.Effect
 import net.minecraft.util.SoundEvent
-import net.minecraft.world.gen.feature.Feature
 import net.minecraft.world.gen.feature.structure.Structure
 import net.minecraft.world.gen.surfacebuilders.SurfaceBuilder
 import net.minecraftforge.event.RegistryEvent.Register
@@ -31,16 +30,17 @@ object RegistryEventHandler {
 
         HBlocks.init()
         HPaintings.init()
+        HCarvers.init()
         HEntities.init()
         HItemsNew.init()
         HBiomes.init()
         HTileEntities.init()
+        HFeatures.init()
         //MOD_BUS.addGenericListener(::registerBlocks)
         //MOD_BUS.addGenericListener(::registerContainerTypes)
         MOD_BUS.addGenericListener(::registerDataSerializers)
         //MOD_BUS.addGenericListener(::registerEffects)
         MOD_BUS.addGenericListener(::registerEnchantments)
-        MOD_BUS.addGenericListener(::registerFeatures)
         MOD_BUS.addGenericListener(::registerStructures)
         MOD_BUS.addGenericListener(::registerItems)
         HParticles.PARTICLE_TYPES.register(MOD_BUS)
@@ -65,8 +65,6 @@ object RegistryEventHandler {
     private fun registerEffects(event: Register<Effect>) = HEffects.registerEffects(event.registry)
 
     private fun registerEnchantments(event: Register<Enchantment>) = HEnchantments.registerEnchantments(event.registry)
-
-    private fun registerFeatures(event: Register<Feature<*>>) = HFeatures.registerFeatures(event.registry)
 
     private fun registerStructures(event: Register<Structure<*>>) = HStructures.registerStructures(event.registry)
 

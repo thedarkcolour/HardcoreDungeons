@@ -6,7 +6,7 @@ import net.minecraft.world.gen.carver.ConfiguredCarvers
 import net.minecraft.world.gen.surfacebuilders.ConfiguredSurfaceBuilder
 import net.minecraft.world.gen.surfacebuilders.ISurfaceBuilderConfig
 import net.minecraft.world.gen.surfacebuilders.SurfaceBuilder
-import thedarkcolour.hardcoredungeons.worldgen.feature.HConfiguredFeatures
+import thedarkcolour.hardcoredungeons.worldgen.feature.HWorldGen
 import thedarkcolour.hardcoredungeons.worldgen.surfacebuilder.HConfiguredSurfaceBuilders
 
 object HBiomeMaker {
@@ -17,7 +17,7 @@ object HBiomeMaker {
         genSettings.addCarver(GenerationStage.Carving.AIR, ConfiguredCarvers.CAVE)
         genSettings.addCarver(GenerationStage.Carving.AIR, ConfiguredCarvers.CANYON)
 
-        HConfiguredFeatures.withPurpleLumshrooms(genSettings)
+        HWorldGen.withPurpleLumshrooms(genSettings)
 
         return biome(
             precipitation = Biome.RainType.NONE,
@@ -35,8 +35,8 @@ object HBiomeMaker {
         val genSettings = genSettings(HConfiguredSurfaceBuilders.CASTLETON_SURFACE)
         genSettings.addCarver(GenerationStage.Carving.AIR, ConfiguredCarvers.CAVE)
 
-        HConfiguredFeatures.withSparseLumlightTrees(genSettings)
-        HConfiguredFeatures.withPurpleLumshrooms(genSettings)
+        HWorldGen.withSparseLumlightTrees(genSettings)
+        HWorldGen.withPurpleLumshrooms(genSettings)
         DefaultBiomeFeatures.addBlueIce(genSettings)
 
         return biome(
@@ -55,8 +55,8 @@ object HBiomeMaker {
         val genSettings = genSettings(HConfiguredSurfaceBuilders.SUGARY_SURFACE)
         val spawnSettings = spawnSettings()
 
-        HConfiguredFeatures.withSparseCandyCanes(genSettings)
-        HConfiguredFeatures.withSparseChocolateBars(genSettings)
+        HWorldGen.withSparseCandyCanes(genSettings)
+        HWorldGen.withSparseChocolateBars(genSettings)
 
         return biome(
             precipitation = Biome.RainType.NONE,

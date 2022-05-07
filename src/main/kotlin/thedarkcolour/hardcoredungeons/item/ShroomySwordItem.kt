@@ -1,4 +1,4 @@
-package thedarkcolour.hardcoredungeons.item.overworld
+package thedarkcolour.hardcoredungeons.item
 
 import net.minecraft.entity.Entity
 import net.minecraft.entity.LivingEntity
@@ -7,12 +7,7 @@ import net.minecraft.item.ItemStack
 import net.minecraft.potion.EffectInstance
 import net.minecraft.potion.Effects
 import net.minecraft.util.text.TextFormatting
-import thedarkcolour.hardcoredungeons.item.HItemTier
-import thedarkcolour.hardcoredungeons.item.misc.SwordWithLoreItem
 
-/**
- * @author TheDarkColour
- */
 class ShroomySwordItem(properties: Properties) : SwordWithLoreItem(HItemTier.SHROOMY, 3, -2.7f, properties, { it.applyFormat(TextFormatting.GRAY) }) {
     override fun onLeftClickEntity(stack: ItemStack, player: PlayerEntity, entity: Entity): Boolean {
         if (entity is LivingEntity) {

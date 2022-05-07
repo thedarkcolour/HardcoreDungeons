@@ -112,16 +112,21 @@ class FullbrightBakedModel(private val base: IBakedModel, private val fullbright
         val rand: Random,
     ) {
         override fun equals(other: Any?): Boolean {
-            return when {
-                this === other -> true
-                other !is CacheKey -> false
-                side == other.side && state == other.state -> true
-                else -> false
-            }
+            if (this === other) return true
+            if (javaClass != other?.javaClass) return false
+
+            other as CacheKey
+
+            if (state != other.state) return false
+            if (side != other.side) return false
+
+            return true
         }
 
         override fun hashCode(): Int {
-            return state.hashCode() + 113 * (side?.hashCode() ?: 0)
+            var result = state.hashCode()
+            result = 31 * result + (side?.hashCode() ?: 0)
+            return result
         }
     }
 }

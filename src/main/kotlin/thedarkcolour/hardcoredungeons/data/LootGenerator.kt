@@ -12,6 +12,7 @@ import net.minecraft.entity.EntityType
 import net.minecraft.item.Items
 import net.minecraft.loot.*
 import net.minecraft.loot.AlternativesLootEntry.alternatives
+import net.minecraft.loot.BinomialRange.binomial
 import net.minecraft.loot.ConstantRange.exactly
 import net.minecraft.loot.LootPool.lootPool
 import net.minecraft.loot.LootTable.lootTable
@@ -22,6 +23,7 @@ import net.minecraft.loot.conditions.MatchTool.toolMatches
 import net.minecraft.loot.conditions.RandomChance.randomChance
 import net.minecraft.loot.conditions.RandomChanceWithLooting.randomChanceAndLootingBoost
 import net.minecraft.loot.conditions.SurvivesExplosion
+import net.minecraft.loot.conditions.TableBonus
 import net.minecraft.loot.functions.ApplyBonus
 import net.minecraft.loot.functions.ExplosionDecay.explosionDecay
 import net.minecraft.loot.functions.LootingEnchantBonus.lootingMultiplier
@@ -34,6 +36,7 @@ import net.minecraft.state.properties.SlabType
 import net.minecraft.util.IItemProvider
 import net.minecraft.util.IStringSerializable
 import net.minecraft.util.ResourceLocation
+import net.minecraftforge.common.Tags
 import net.minecraftforge.registries.ForgeRegistries
 import org.apache.logging.log4j.LogManager
 import thedarkcolour.hardcoredungeons.HardcoreDungeons
@@ -55,9 +58,7 @@ class LootGenerator(private val generator: DataGenerator) : LootTableProvider(ge
             .withPool(lootPool().setRolls(exactly(1))
                 .add(item(HItems.VENISON)
                     .apply(setCount(between(1.0f, 3.0f)))
-                    .apply(smelted()
-                        .`when`(hasProperties(LootContext.EntityTarget.THIS, ON_FIRE))).apply(lootingMultiplier(between(0.0F, 1.0F))
-                    ))
+                    .apply(smelted().`when`(hasProperties(LootContext.EntityTarget.THIS, ON_FIRE))).apply(lootingMultiplier(between(0.0F, 1.0F))))
             )
     }
 
@@ -82,16 +83,16 @@ class LootGenerator(private val generator: DataGenerator) : LootTableProvider(ge
         //
 
         addLoot(HBlocks.CASTLETON_VASE, lootTable().withPool(lootPool()
-            .add(item(HItems.BULLET).setWeight(5).setCountRandom(3.0f, 7.0f))
-            .add(item(Items.ARROW).setWeight(5).setCountRandom(2.0f, 6.0f))
+            .add(item(HItems.BULLET).setWeight(5).apply(setCount(between(3.0f, 7.0f))))
+            .add(item(Items.ARROW).setWeight(5).apply(setCount(between(2.0f, 6.0f))))
             .add(item(Items.MUSHROOM_STEW).setWeight(3))
             .add(item(HItems.CASTLE_GEM).setWeight(1))
         ))
 
         addLoot(HBlocks.CASTLETON_TREASURE_VASE, lootTable().withPool(
             lootPool()
-            .add(item(HItems.CASTLE_GEM).setCountBinomial(6, 0.6f).setWeight(10))
-            .add(item(HBlocks.CHILI_PEPPER.item).setCountBinomial(3, 0.7f).setWeight(5))
+            .add(item(HItems.CASTLE_GEM).apply(setCount(binomial(6, 0.6f))).setWeight(10))
+            .add(item(HBlocks.CHILI_PEPPER.item).apply(setCount(binomial(3, 0.7f))).setWeight(5))
         ))
         HBlocks.MALACHITE_CRYSTAL.addLoot(this)
         HBlocks.DIAMOND_CRYSTAL.addLoot(this)
@@ -112,10 +113,13 @@ class LootGenerator(private val generator: DataGenerator) : LootTableProvider(ge
         HBlocks.CASTLETON_SOIL.addLoot(this)
         HBlocks.AURISOIL.addLoot(this)
         HBlocks.SUGARY_SOIL.addLoot(this)
+        HBlocks.LUMLIGHT_WOOD.addLoot(this)
+        HBlocks.AURI_WOOD.addLoot(this)
+        HBlocks.COTTONMARSH_WOOD.addLoot(this)
         //dropSilk(block = HBlocksNew.RAINBOW_SOIL.grass, normal = item(HBlocksNew.RAINBOW_SOIL.soil), silk = item(HBlocksNew.RAINBOW_SOIL.grass))
         dropSilk(block = HBlocks.RAINBOW_GLASS, normal = null, silk = item(HBlocks.RAINBOW_GLASS))
         dropSilk(block = HBlocks.RAINBOW_GLASS_PANE, normal = null, silk = item(HBlocks.RAINBOW_GLASS_PANE))
-        dropSilk(block = HBlocks.SCRAP_METAL, normal = item(Items.IRON_NUGGET).setCountBinomial(5, 0.45f), silk = item(HBlocks.SCRAP_METAL))
+        dropSilk(block = HBlocks.SCRAP_METAL, normal = item(Items.IRON_NUGGET).apply(setCount(binomial(5, 0.45f))), silk = item(HBlocks.SCRAP_METAL))
 
         pristineLootTable()
     }
@@ -154,7 +158,9 @@ class LootGenerator(private val generator: DataGenerator) : LootTableProvider(ge
     }
 
     private fun dropSlabs(block: Block) {
-        singlePool(block) { add(item(block)).survivesExplosion().setCount(2).`when`(propertyCondition(block, SlabBlock.TYPE, SlabType.DOUBLE)) }
+        singlePool(block) {
+            add(item(block).apply(setCount(exactly(2)).`when`(propertyCondition(block, SlabBlock.TYPE, SlabType.DOUBLE))).apply(explosionDecay()))
+        }
     }
 
     private fun dropDoor(block: Block) {
@@ -224,14 +230,23 @@ class LootGenerator(private val generator: DataGenerator) : LootTableProvider(ge
         return "Hardcore Dungeons Loot Tables"
     }
 
+    fun addLeaves(leaves: LeavesBlock, sapling: Block) {
+        addLoot(leaves, lootTable()
+            .withPool(lootPool().add(item(leaves).`when`(SILK_TOUCH.or(SHEARS)).otherwise(item(sapling).`when`(SurvivesExplosion.survivesExplosion()).`when`(NORMAL_LEAVES_SAPLING_CHANCES))))
+            .withPool(lootPool().add(item(Items.STICK).`when`(NORMAL_LEAVES_STICK_CHANCES).apply(setCount(between(1f, 2f)))).`when`(SILK_TOUCH.or(SHEARS).invert())))
+    }
+
     companion object {
         // block conditions
         private val SILK_TOUCH = toolMatches(ItemPredicate.Builder.item().hasEnchantment(EnchantmentPredicate(Enchantments.SILK_TOUCH, MinMaxBounds.IntBound.atLeast(1))))
+        private val SHEARS = toolMatches(ItemPredicate.Builder.item().of(Tags.Items.SHEARS))
         private val PROSPECTING = toolMatches(ItemPredicate.Builder.item().hasEnchantment(EnchantmentPredicate(HEnchantments.PROSPECTING, MinMaxBounds.IntBound.atLeast(1))))
         // entity conditions
         private val ON_FIRE = EntityPredicate.Builder.entity().flags(EntityFlagsPredicate.Builder.flags().setOnFire(true).build())
 
         private val FORTUNE = ApplyBonus.addOreBonusCount(Enchantments.BLOCK_FORTUNE)
+        private val NORMAL_LEAVES_SAPLING_CHANCES = TableBonus.bonusLevelFlatChance(Enchantments.BLOCK_FORTUNE, 0.05f, 0.0625f, 0.083333336f, 0.1f)
+        private val NORMAL_LEAVES_STICK_CHANCES = TableBonus.bonusLevelFlatChance(Enchantments.BLOCK_FORTUNE, 0.02f, 0.022222223f, 0.025f, 0.033333335f, 0.1f)
         //private val IS_STAG = EntityPredicate.Builder.create().flags(HEntityFlagsPredicate(isStagDeer = true)) // todo make this work
 
         // internal stuff

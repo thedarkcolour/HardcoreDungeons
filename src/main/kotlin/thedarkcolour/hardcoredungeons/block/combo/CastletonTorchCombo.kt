@@ -11,15 +11,15 @@ import thedarkcolour.hardcoredungeons.block.base.ItemMaker
 import thedarkcolour.hardcoredungeons.block.base.properties.HProperties
 import thedarkcolour.hardcoredungeons.block.decoration.castleton.CastletonTorchBlock
 import thedarkcolour.hardcoredungeons.data.modelgen.item.ItemModelType
+import thedarkcolour.hardcoredungeons.item.CastletonTorchItem
 import thedarkcolour.hardcoredungeons.item.Group
-import thedarkcolour.hardcoredungeons.item.castleton.CastletonTorchItem
 import thedarkcolour.hardcoredungeons.registry.HBlocks
 
 /**
  * @param name The prefix ex. "soul_fire". "_torch" and "_wall_torch" are applied as name suffixes.
  */
 class CastletonTorchCombo : ICombo {
-    private val properties = HProperties.of(Material.DECORATION).lightLevel { state -> if (state.getValue(BlockStateProperties.LIT)) 7 else 0 }.sound(SoundType.WOOD).noCollission()
+    private val properties = HProperties.of(Material.DECORATION).lightLevel { state -> if (state.getValue(BlockStateProperties.LIT)) 7 else 0 }.sound(SoundType.WOOD).noCollision()
 
     val standing by HBlocks.register("castleton_torch") { CastletonTorchBlock(properties) }
     val wall by HBlocks.register("castleton_wall_torch") { CastletonTorchBlock.Wall(properties) }

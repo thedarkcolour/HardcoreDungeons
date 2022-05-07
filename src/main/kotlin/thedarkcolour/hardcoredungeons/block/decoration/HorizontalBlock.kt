@@ -27,7 +27,7 @@ open class HorizontalBlock(properties: HProperties) : HBlock(properties) {
         return state.rotate(mirrorIn.getRotation(state.getValue(HORIZONTAL_FACING)))
     }
 
-    override fun getStateForPlacement(context: BlockItemUseContext): BlockState {
+    override fun getStateForPlacement(context: BlockItemUseContext): BlockState? {
         return defaultBlockState().setValue(HORIZONTAL_FACING, context.horizontalDirection.opposite)
     }
 }

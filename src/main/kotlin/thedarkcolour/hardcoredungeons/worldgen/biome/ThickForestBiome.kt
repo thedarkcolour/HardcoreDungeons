@@ -9,7 +9,7 @@ import net.minecraft.world.gen.surfacebuilders.SurfaceBuilder
 import net.minecraftforge.common.BiomeManager
 import net.minecraftforge.common.world.BiomeGenerationSettingsBuilder
 import team.rusty.util.worldgen.biome.AbstractBiome
-import thedarkcolour.hardcoredungeons.worldgen.feature.HConfiguredFeatures
+import thedarkcolour.hardcoredungeons.worldgen.feature.HWorldGen
 import thedarkcolour.hardcoredungeons.registry.HEntities
 
 object ThickForestBiome : AbstractBiome() {
@@ -39,7 +39,7 @@ object ThickForestBiome : AbstractBiome() {
         //DefaultBiomeFeatures.addExtraGold(generation)
         DefaultBiomeFeatures.addWarmFlowers(generation) // warm flowers
         DefaultBiomeFeatures.addDefaultExtraVegetation(generation) // pumpkin + sugar cane
-        HConfiguredFeatures.withOakShrubs(generation)
+        HWorldGen.withOakShrubs(generation)
 
 
         spawns.addSpawn(EntityClassification.CREATURE, EntityType.SHEEP, 12, 4, 4)

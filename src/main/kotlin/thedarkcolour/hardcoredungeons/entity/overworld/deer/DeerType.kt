@@ -2,26 +2,29 @@ package thedarkcolour.hardcoredungeons.entity.overworld.deer
 
 import thedarkcolour.kotlinforforge.kotlin.enumSetOf
 
-enum class DeerType(val type: Type) {
+enum class DeerType(
+    val isDoe: Boolean = false,
+    val isStag: Boolean = false,
+    val isAlpha: Boolean = false,
+    val isBlue: Boolean = false,
+    val isSpotted: Boolean = false,
+    val isForest: Boolean = false,
+) {
     // overworld patterns
-    FOREST_STAG(Type.STAG),
-    FOREST_DOE(Type.DOE),
+    FOREST_STAG(isStag = true, isForest = true),
+    FOREST_DOE(isDoe = true, isForest = true),
 
     // castleton patterns
-    BLUE_EYED_STAG(Type.STAG),
-    BLUE_EYED_DOE(Type.DOE),
-    BLUE_SPOTTED_STAG(Type.STAG),
-    BLUE_SPOTTED_DOE(Type.DOE),
-    BLUE_ALPHA(Type.ALPHA),
-    PURPLE_EYED_STAG(Type.STAG),
-    PURPLE_EYED_DOE(Type.DOE),
-    PURPLE_SPOTTED_STAG(Type.STAG),
-    PURPLE_SPOTTED_DOE(Type.DOE),
-    PURPLE_ALPHA(Type.ALPHA);
-
-    enum class Type {
-        STAG, DOE, ALPHA
-    }
+    BLUE_EYED_STAG(isStag = true, isBlue = true),
+    BLUE_EYED_DOE(isDoe = true, isBlue = true),
+    BLUE_SPOTTED_STAG(isStag = true, isSpotted = true, isBlue = true),
+    BLUE_SPOTTED_DOE(isDoe = true, isSpotted = true, isBlue = true),
+    BLUE_ALPHA(isAlpha = true, isBlue = true),
+    PURPLE_EYED_STAG(isStag = true),
+    PURPLE_EYED_DOE(isDoe = true),
+    PURPLE_SPOTTED_STAG(isStag = true, isSpotted = true),
+    PURPLE_SPOTTED_DOE(isDoe = true, isSpotted = true),
+    PURPLE_ALPHA(isAlpha = true);
 
     fun toPurple(): DeerType {
         return when (this) {
@@ -46,26 +49,6 @@ enum class DeerType(val type: Type) {
             else -> this
         }
     }
-
-    val isDoe: Boolean
-        get() {
-            return this.type == Type.DOE
-        }
-
-    val isStag: Boolean
-        get() {
-            return this.type == Type.STAG
-        }
-
-    val isAlpha: Boolean
-        get() {
-            return this.type == Type.ALPHA
-        }
-
-    val isBlue: Boolean
-        get() {
-            return BLUE_PATTERNS.contains(this)
-        }
 
     companion object {
         // todo use arrays

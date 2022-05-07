@@ -23,7 +23,7 @@ import thedarkcolour.hardcoredungeons.block.portal.HPortalBlock
 import thedarkcolour.hardcoredungeons.capability.HPlayer
 import thedarkcolour.hardcoredungeons.capability.PlayerHelper
 import thedarkcolour.hardcoredungeons.config.HConfig
-import thedarkcolour.hardcoredungeons.worldgen.feature.HConfiguredFeatures
+import thedarkcolour.hardcoredungeons.worldgen.feature.HWorldGen
 import thedarkcolour.hardcoredungeons.registry.HBlocks
 import thedarkcolour.hardcoredungeons.worldgen.structure.HConfiguredStructures
 import thedarkcolour.hardcoredungeons.worldgen.surfacebuilder.HConfiguredSurfaceBuilders
@@ -128,7 +128,7 @@ object EventHandler {
 
         // World generation
         event.enqueueWork {
-            HConfiguredFeatures.registerConfiguredFeatures()
+            HWorldGen.registerConfiguredFeatures()
             HConfiguredSurfaceBuilders.registerConfiguredSurfaceBuilders()
             HConfiguredStructures.registerConfiguredStructures()
         }

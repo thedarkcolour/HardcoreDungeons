@@ -36,6 +36,7 @@ abstract class ItemModelType : ModelType<() -> Item>() {
     companion object {
         val SIMPLE_ITEM = SimpleItemModelType() // 2d
         val BLOCK_ITEM = NewBlockItemModelType() // 3d
+        val TRAPDOOR_ITEM = TrapdoorItemModelType()
         val HANDHELD_ITEM = ParentedModelType(ResourceLocation("item/handheld")) // tool
         val ROTATED_HANDHELD_ITEM = ParentedModelType(modLoc("item/handheld_rotated")) // tool with special gui rotations
         val ROTATED_GUN_ITEM = ParentedModelType(modLoc("item/gun_rotated")) // rotated handheld + 3rd person rotations for guns

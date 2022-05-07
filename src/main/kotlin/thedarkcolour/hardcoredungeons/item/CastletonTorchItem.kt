@@ -1,4 +1,4 @@
-package thedarkcolour.hardcoredungeons.item.castleton
+package thedarkcolour.hardcoredungeons.item
 
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState

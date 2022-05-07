@@ -28,21 +28,21 @@
                 {
                     "biome": "hardcoredungeons:knightly_shrubland",
                     "parameters": {
-                        "altitude": 0.2,
+                        "altitude": 0.4,
                         "weirdness": 0.5,
-                        "temperature": 0.0,
-                        "humidity": 1.0,
-                        "offset": 0.3
+                        "temperature": 0.1,
+                        "humidity": 0.5,
+                        "offset": 0.0
                     }
                 },
                 {
                     "biome": "hardcoredungeons:castleton_hills",
                     "parameters": {
                         "altitude": 0.5,
-                        "weirdness": 0.3,
-                        "temperature": 0.0,
-                        "humidity": 0.6,
-                        "offset": 0.1
+                        "weirdness": 0.4,
+                        "temperature": 0.5,
+                        "humidity": 0.5,
+                        "offset": 0.0
                     }
                 }
             ]

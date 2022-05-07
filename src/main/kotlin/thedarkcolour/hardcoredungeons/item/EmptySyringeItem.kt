@@ -1,4 +1,4 @@
-package thedarkcolour.hardcoredungeons.item.misc
+package thedarkcolour.hardcoredungeons.item
 
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.Item

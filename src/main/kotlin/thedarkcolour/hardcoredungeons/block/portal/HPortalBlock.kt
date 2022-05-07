@@ -7,6 +7,7 @@ import net.minecraft.entity.player.ServerPlayerEntity
 import net.minecraft.item.BlockItemUseContext
 import net.minecraft.state.StateContainer
 import net.minecraft.state.properties.BlockStateProperties
+import net.minecraft.util.Direction
 import net.minecraft.util.Direction.Axis
 import net.minecraft.util.RegistryKey
 import net.minecraft.util.math.BlockPos
@@ -18,11 +19,13 @@ import net.minecraft.world.IBlockReader
 import net.minecraft.world.IWorld
 import net.minecraft.world.World
 import thedarkcolour.hardcoredungeons.block.base.properties.HProperties
+import thedarkcolour.hardcoredungeons.block.combo.PortalCombo
+import thedarkcolour.hardcoredungeons.block.structure.LockBlock
 import thedarkcolour.hardcoredungeons.capability.PlayerHelper
 
 class HPortalBlock(
     private val dimensionKey: () -> RegistryKey<World>,
-    private val frameState: () -> BlockState, // todo use a tag here
+    private val combo: PortalCombo, // todo use a tag here
     properties: HProperties
 ) : Block(properties.build()) {
     init {
@@ -80,9 +83,7 @@ class HPortalBlock(
             }
 
             // each state has one reference
-            // state does not need equals()
             if (destination.getBlockState(BlockPos(entityIn.blockPosition().x.toDouble(), portalOffset, entityIn.blockPosition().z.toDouble())) != state) {
-
                 // create portal that matches the one in this dimension
                 constructMatchingPortal(destination, worldIn, pos, entityIn.blockPosition(), state)
             }
@@ -98,7 +99,7 @@ class HPortalBlock(
         var startY = pos.y
 
         // only get the state of the portal frame once
-        val frame = frameState()
+        val frame = combo.frame.defaultBlockState()
 
         // find the top and bottom of the portal
         while (origin.getBlockState(testCursor.move(0, -1, 0)).block == this) --startY
@@ -186,6 +187,43 @@ class HPortalBlock(
         } else {
             Z_SHAPE
         }
+    }
+
+    override fun updateShape(
+        state: BlockState,
+        direction: Direction,
+        fromState: BlockState,
+        level: IWorld,
+        pos: BlockPos,
+        fromPos: BlockPos
+    ): BlockState {
+        if (!level.isClientSide) {
+            if (direction.axis == Axis.Y || state.getValue(AXIS) == direction.axis) {
+                if (fromState.block != this && fromState.block != combo.frame) {
+                    val toDestroy = arrayListOf(pos)
+
+                    // not sure what this limit should be
+                    LockBlock.collectAdjacentBlocks(level, pos, this, toDestroy, 21 * 21)
+
+                    // since state has HORIZONTAL_AXIS there are only two axes
+                    if (direction.axis == Axis.X) {
+                        for (position in toDestroy) {
+                            if (position.z == pos.z) {
+                                level.destroyBlock(position, false) // doDrops: false
+                            }
+                        }
+                    } else {
+                        for (position in toDestroy) {
+                            if (position.x == pos.x) {
+                                level.destroyBlock(position, false)
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return state
     }
 
     companion object {

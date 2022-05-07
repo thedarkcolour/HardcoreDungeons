@@ -8,7 +8,7 @@ import team.rusty.util.worldgen.biome.AbstractBiomeRegistry
 import thedarkcolour.hardcoredungeons.HardcoreDungeons
 import thedarkcolour.hardcoredungeons.worldgen.biome.*
 import thedarkcolour.hardcoredungeons.config.HConfig
-import thedarkcolour.hardcoredungeons.worldgen.feature.HConfiguredFeatures
+import thedarkcolour.hardcoredungeons.worldgen.feature.HWorldGen
 import thedarkcolour.kotlinforforge.forge.MOD_BUS
 
 /**
@@ -49,11 +49,11 @@ object HBiomes {
 
     fun biomeLoading(event: BiomeLoadingEvent) {
         if (event.name == ResourceLocation("minecraft:mushroom_islands")) {
-            HConfiguredFeatures.withMushroomHut(event.generation)
+            HWorldGen.withMushroomHut(event.generation)
         }
 
         if (HConfig.malachiteCrystalGeneration.value) {
-            HConfiguredFeatures.withMalachiteCrystals(event.generation)
+            HWorldGen.withMalachiteCrystals(event.generation)
         }
     }
 }

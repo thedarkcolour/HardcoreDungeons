@@ -82,7 +82,7 @@ class SoulFrayParticle(
             mX: Double, mY: Double, mZ: Double
         ): Particle {
             val particle = SoulFrayParticle(worldIn, x, y, z, mX, mY, mZ, spriteSet)
-            particle.color(50, 230, 255)
+            particle.setColor(50 / 255.0f, 230 / 255.0f, 355 / 255.0f)
             particle.setAlpha(0.4f)
             return particle
         }

@@ -12,7 +12,7 @@ import net.minecraft.world.server.ServerWorld
 import net.minecraftforge.event.world.WorldEvent
 import net.minecraftforge.registries.IForgeRegistry
 import thedarkcolour.hardcoredungeons.HardcoreDungeons
-import thedarkcolour.hardcoredungeons.structure.SimpleStructure
+import thedarkcolour.hardcoredungeons.worldgen.structure.SimpleStructure
 import java.util.*
 
 @Suppress("MemberVisibilityCanBePrivate", "UNCHECKED_CAST")

@@ -28,6 +28,7 @@ class KnightlyJuggernautEntity(type: EntityType<KnightlyJuggernautEntity>, world
                 return 2.0f + super.getAttackReachSqr(living)
             }
         })
+        targetSelector.addGoal(0, NearestAttackableTargetGoal(this, PlayerEntity::class.java, true))
 
         targetSelector.addGoal(1, HurtByTargetGoal(this))
     }

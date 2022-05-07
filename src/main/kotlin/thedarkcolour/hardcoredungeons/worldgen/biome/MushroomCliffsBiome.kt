@@ -6,7 +6,7 @@ import net.minecraft.world.biome.MobSpawnInfo
 import net.minecraft.world.gen.surfacebuilders.SurfaceBuilder
 import net.minecraftforge.common.world.BiomeGenerationSettingsBuilder
 import team.rusty.util.worldgen.biome.AbstractBiome
-import thedarkcolour.hardcoredungeons.worldgen.feature.HConfiguredFeatures
+import thedarkcolour.hardcoredungeons.worldgen.feature.HWorldGen
 
 object MushroomCliffsBiome : AbstractBiome() {
     init {
@@ -32,6 +32,6 @@ object MushroomCliffsBiome : AbstractBiome() {
         DefaultBiomeFeatures.addDefaultMushrooms(generation) // mushrooms
         DefaultBiomeFeatures.addDefaultExtraVegetation(generation) // pumpkin + sugar cane
 
-        HConfiguredFeatures.addShroomyBoulders(generation)
+        HWorldGen.addShroomyBoulders(generation)
     }
 }

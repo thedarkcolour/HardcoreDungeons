@@ -7,7 +7,7 @@ buildscript {
     dependencies {
         classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '4.+', changing: true
         // Make sure this version matches the one included in Kotlin for Forge
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.0"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.10"
         // OPTIONAL Gradle plugin for Kotlin Serialization
         classpath "org.jetbrains.kotlin:kotlin-serialization:1.6.0"
         //classpath "org.parchmentmc:librarian:1.+"
@@ -118,7 +118,7 @@ dependencies {
     minecraft ('net.minecraftforge:forge:1.16.5-36.2.19')
 
     // Use the latest version of KotlinForForge
-    implementation('thedarkcolour:kotlinforforge:1.16.0')
+    implementation('thedarkcolour:kotlinforforge:1.17.0')
 
     // curios
     implementation fg.deobf('top.theillusivec4.curios:curios-forge:1.16.5-4.0.5.2')

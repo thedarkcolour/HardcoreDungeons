@@ -1,4 +1,4 @@
-package thedarkcolour.hardcoredungeons.item.misc
+package thedarkcolour.hardcoredungeons.item
 
 import net.minecraft.block.BlockState
 import net.minecraft.entity.LivingEntity
@@ -11,11 +11,6 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 import net.minecraftforge.common.util.Constants
 
-// hopefully we can make a speedy pickaxe with this
-// this was inspired from an idea i had today about doing a vanilla playthrough
-// but then i realized how fucking boring it would be if i just sat there with a diamond pickaxe
-// being a god or whatever
-// so i decided we need more epic pickaxes
 class MalachitePickaxeItem(
     tier: IItemTier,
     attackDamageIn: Int,

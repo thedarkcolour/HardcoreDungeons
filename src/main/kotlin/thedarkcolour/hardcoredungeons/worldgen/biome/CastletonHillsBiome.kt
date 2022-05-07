@@ -2,7 +2,6 @@ package thedarkcolour.hardcoredungeons.worldgen.biome
 
 import net.minecraft.entity.EntityClassification
 import net.minecraft.world.biome.Biome
-import net.minecraft.world.biome.DefaultBiomeFeatures
 import net.minecraft.world.biome.MobSpawnInfo
 import net.minecraft.world.gen.GenerationStage
 import net.minecraft.world.gen.blockplacer.SimpleBlockPlacer
@@ -18,7 +17,7 @@ import net.minecraftforge.common.world.BiomeGenerationSettingsBuilder
 import team.rusty.util.worldgen.biome.AbstractBiome
 import thedarkcolour.hardcoredungeons.registry.HBlocks
 import thedarkcolour.hardcoredungeons.registry.HEntities
-import thedarkcolour.hardcoredungeons.worldgen.feature.HConfiguredFeatures
+import thedarkcolour.hardcoredungeons.worldgen.feature.HWorldGen
 import thedarkcolour.hardcoredungeons.worldgen.surfacebuilder.HConfiguredSurfaceBuilders
 
 object CastletonHillsBiome : AbstractBiome() {
@@ -35,8 +34,8 @@ object CastletonHillsBiome : AbstractBiome() {
     override fun configure(generation: BiomeGenerationSettingsBuilder, spawns: MobSpawnInfo.Builder) {
         generation.surfaceBuilder(HConfiguredSurfaceBuilders.CASTLETON_SURFACE)
 
-        DefaultBiomeFeatures.addDefaultCarvers(generation)
-        HConfiguredFeatures.withPurpleLumshrooms(generation)
+        HWorldGen.addCastletonCarvers(generation)
+        HWorldGen.withPurpleLumshrooms(generation)
 
         val blueLumshrooms = Feature.RANDOM_PATCH.configured(BlockClusterFeatureConfig.Builder(SimpleBlockStateProvider(HBlocks.BLUE_LUMSHROOM.plant.defaultBlockState()), SimpleBlockPlacer()).tries(64).build()).decorated(Features.Placements.HEIGHTMAP_DOUBLE_SQUARE).chance(8)
         val ore = Feature.ORE.configured(OreFeatureConfig(BlockMatchRuleTest(HBlocks.CASTLETON_STONE.stone.block), HBlocks.RUNED_CASTLETON_STONE.defaultBlockState(), 7)).decorated(Placement.DEPTH_AVERAGE.configured(

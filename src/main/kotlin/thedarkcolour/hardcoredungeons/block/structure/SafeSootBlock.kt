@@ -3,6 +3,7 @@ package thedarkcolour.hardcoredungeons.block.structure
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
 import net.minecraft.block.Blocks
+import net.minecraft.pathfinding.PathType
 import net.minecraft.tags.BlockTags
 import net.minecraft.util.Direction
 import net.minecraft.util.SoundCategory
@@ -11,20 +12,13 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.world.IBlockReader
 import net.minecraft.world.World
 import net.minecraft.world.server.ServerWorld
-import thedarkcolour.hardcoredungeons.registry.HBlocks
 import thedarkcolour.hardcoredungeons.block.base.HBlock
 import thedarkcolour.hardcoredungeons.block.base.properties.HProperties
+import thedarkcolour.hardcoredungeons.registry.HBlocks
 import java.util.*
 
 class SafeSootBlock(properties: HProperties) : HBlock(properties) {
-    override fun neighborChanged(
-        state: BlockState,
-        level: World,
-        pos: BlockPos,
-        block: Block,
-        fromPos: BlockPos,
-        p_220069_6_: Boolean
-    ) {
+    override fun neighborChanged(state: BlockState, level: World, pos: BlockPos, block: Block, fromPos: BlockPos, p_220069_6_: Boolean) {
         if (level.getBlockState(fromPos).`is`(BlockTags.FIRE)) {
             if (pos.above() == fromPos) {
                 level.blockTicks.scheduleTick(pos, HBlocks.SOOT, 40)
@@ -50,5 +44,13 @@ class SafeSootBlock(properties: HProperties) : HBlock(properties) {
 
     override fun isFlammable(state: BlockState?, world: IBlockReader?, pos: BlockPos?, face: Direction?): Boolean {
         return face == Direction.UP
+    }
+
+    override fun useShapeForLightOcclusion(state: BlockState): Boolean {
+        return true
+    }
+
+    override fun isPathfindable(p_196266_1_: BlockState?, p_196266_2_: IBlockReader?, p_196266_3_: BlockPos?, p_196266_4_: PathType?): Boolean {
+        return false
     }
 }

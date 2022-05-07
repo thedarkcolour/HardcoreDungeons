@@ -24,7 +24,8 @@ import java.util.function.ToIntFunction
  * extending [Factory] to create instances of this class.
  *
  * The extra properties not provided by Vanilla are only guaranteed to work
- * for the accompanying [HBlock] class. Vanilla properties will still work.
+ * for the accompanying [HBlock] class. If the use of these properties is needed
+ * for blocks that do not extend [HBlock], implementing them is simple.
  *
  * @author TheDarkColour
  */
@@ -42,9 +43,9 @@ abstract class BlockProperties<T : BlockProperties<T>> protected constructor() {
 
     /**
      * Set this block's collision shape to empty.
-     * Yes, Mojang made a typo.
+     * Yes, Mojang made a typo in "collission"
      */
-    fun noCollission(): T {
+    fun noCollision(): T {
         internal.noCollission()
         return this as T
     }

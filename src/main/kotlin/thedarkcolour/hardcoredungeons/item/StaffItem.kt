@@ -1,4 +1,4 @@
-package thedarkcolour.hardcoredungeons.item.misc
+package thedarkcolour.hardcoredungeons.item
 
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.player.PlayerEntity
@@ -32,8 +32,5 @@ class StaffItem(properties: Properties) : Item(properties) {
         return stack
     }
 
-    /**
-     * Return the enchantability factor of the item, most of the time is based on material.
-     */
     override fun getEnchantmentValue() = 1
 }

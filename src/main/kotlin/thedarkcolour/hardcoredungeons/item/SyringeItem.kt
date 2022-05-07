@@ -1,4 +1,4 @@
-package thedarkcolour.hardcoredungeons.item.misc
+package thedarkcolour.hardcoredungeons.item
 
 import net.minecraft.advancements.CriteriaTriggers
 import net.minecraft.entity.LivingEntity
@@ -15,7 +15,7 @@ import thedarkcolour.hardcoredungeons.registry.HItems
 
 /**
  * Quick potion item for use in combat.
- * Can also be stacked to save on inventory space.
+ * Stacks to two to save inventory space.
  */
 class SyringeItem(properties: Properties) : PotionItem(properties) {
     override fun finishUsingItem(stack: ItemStack, worldIn: World, entity: LivingEntity): ItemStack {

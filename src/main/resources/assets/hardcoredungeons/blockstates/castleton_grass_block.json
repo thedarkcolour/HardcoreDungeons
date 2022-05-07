@@ -1,5 +1,21 @@
 {
     "variants": {
-        "": { "model": "hardcoredungeons:block/castleton_grass_block" }
+        "": [
+            {
+                "model": "hardcoredungeons:block/castleton_grass_block"
+            },
+            {
+                "model": "hardcoredungeons:block/castleton_grass_block",
+                "y": 90
+            },
+            {
+                "model": "hardcoredungeons:block/castleton_grass_block",
+                "y": 180
+            },
+            {
+                "model": "hardcoredungeons:block/castleton_grass_block",
+                "y": 270
+            }
+        ]
     }
 }

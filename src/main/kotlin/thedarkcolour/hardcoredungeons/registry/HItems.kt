@@ -15,13 +15,10 @@ import thedarkcolour.hardcoredungeons.client.color.PotionColor
 import thedarkcolour.hardcoredungeons.client.color.RainbowColor
 import thedarkcolour.hardcoredungeons.data.modelgen.item.ItemModelType
 import thedarkcolour.hardcoredungeons.item.*
-import thedarkcolour.hardcoredungeons.item.castleton.CumChaliceItem
 import thedarkcolour.hardcoredungeons.item.debug.ClearWandItem
 import thedarkcolour.hardcoredungeons.item.debug.CloneWandItem
 import thedarkcolour.hardcoredungeons.item.debug.DistanceWandItem
 import thedarkcolour.hardcoredungeons.item.debug.FillWandItem
-import thedarkcolour.hardcoredungeons.item.misc.*
-import thedarkcolour.hardcoredungeons.item.overworld.MushroomArmorItem
 import thedarkcolour.hardcoredungeons.recipe.SyringeRecipe
 import thedarkcolour.hardcoredungeons.util.modLoc
 
@@ -67,7 +64,6 @@ object HItems {
     val TOWER_LEGGINGS = ArmorItem(HArmorMaterial.TOWER, EquipmentSlotType.LEGS, Properties().tab(Group).stacksTo(1)).setRegistryKey("tower_leggings")
     val TOWER_BOOTS = ArmorItem(HArmorMaterial.TOWER, EquipmentSlotType.FEET, Properties().tab(Group).stacksTo(1)).setRegistryKey("tower_boots")
     val BLUE_CASTLETON_DUNGEON_KEY = Item(Properties().tab(Group).stacksTo(1).rarity(Rarity.RARE)).setRegistryKey("blue_castleton_dungeon_key")
-    val CUM_CHALICE = CumChaliceItem(Properties().stacksTo(1).food(ItemMisc.CUM_CHALICE)).setRegistryKey("cum_chalice")
 
     // Rainbowland items
     val RAINBOWSTONE_AXE = AxeItem(ItemTier.GOLD, 11.0f, -3.2f, Properties().tab(Group).durability(1326)).setRegistryKey("rainbowstone_axe")
@@ -90,7 +86,7 @@ object HItems {
     val CLEAR_WAND = ClearWandItem(Properties().tab(Group).stacksTo(1).rarity(Rarity.EPIC)).setRegistryKey("clear_wand")
     val CLONE_WAND = CloneWandItem(Properties().tab(Group).stacksTo(1).rarity(Rarity.UNCOMMON)).setRegistryKey("clone_wand")
     val DISTANCE_WAND = DistanceWandItem(Properties().tab(Group).stacksTo(1).rarity(ItemMisc.LEGENDARY)).setRegistryKey("distance_wand")
-    val GEAR_WAND = Item(Properties().tab(Group).stacksTo(1)).setRegistryKey("gear_wand")
+    val GEAR_WAND = GearWandItem(Properties().tab(Group).stacksTo(1)).setRegistryKey("gear_wand")
 
     // @formatter:on
 

@@ -5,7 +5,7 @@ import net.minecraft.world.biome.Biome
 import net.minecraft.world.biome.MobSpawnInfo
 import net.minecraftforge.common.world.BiomeGenerationSettingsBuilder
 import team.rusty.util.worldgen.biome.AbstractBiome
-import thedarkcolour.hardcoredungeons.worldgen.feature.HConfiguredFeatures
+import thedarkcolour.hardcoredungeons.worldgen.feature.HWorldGen
 import thedarkcolour.hardcoredungeons.registry.HEntities
 import thedarkcolour.hardcoredungeons.worldgen.surfacebuilder.HConfiguredSurfaceBuilders
 
@@ -23,8 +23,8 @@ object KnightlyShrublandBiome : AbstractBiome() {
     override fun configure(generation: BiomeGenerationSettingsBuilder, spawns: MobSpawnInfo.Builder) {
         generation.surfaceBuilder(HConfiguredSurfaceBuilders.CASTLETON_SURFACE)
 
-        HConfiguredFeatures.withLumlightCabin(generation)
-        HConfiguredFeatures.withLumlightShrubs(generation)
+        HWorldGen.withLumlightCabin(generation)
+        HWorldGen.withLumlightShrubs(generation)
 
         spawns.addSpawn(EntityClassification.CREATURE, HEntities.CASTLETON_DEER, 6, 2, 6)
     }

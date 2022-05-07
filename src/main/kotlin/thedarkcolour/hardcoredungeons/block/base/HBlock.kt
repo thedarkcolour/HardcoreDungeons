@@ -21,21 +21,15 @@ import thedarkcolour.hardcoredungeons.block.base.properties.HProperties
  * @author TheDarkColour
  */
 open class HBlock(properties: HProperties) : Block(properties.build()) {
-    /** The [VoxelShape] that is used for collision and selection boxes. */
+    /** The [VoxelShape] used for collision and selection boxes. */
     val shape: VoxelShape = properties.getShape() ?: VoxelShapes.block()
     /** The enchantment power of this block. */
     private val enchantmentPower = properties.getEnchantmentPower()
 
-    /**
-     * Returns the enchantment power bonus of this block. (Bookshelf returns 1)
-     */
     override fun getEnchantPowerBonus(state: BlockState?, world: IWorldReader?, pos: BlockPos?): Float {
         return enchantmentPower
     }
 
-    /**
-     * Returns the collision and selection shape of this block.
-     */
     override fun getShape(state: BlockState?, worldIn: IBlockReader?, pos: BlockPos?, ctx: ISelectionContext?): VoxelShape {
         return shape
     }

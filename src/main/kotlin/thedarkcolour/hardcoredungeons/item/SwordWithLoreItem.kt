@@ -1,4 +1,4 @@
-package thedarkcolour.hardcoredungeons.item.misc
+package thedarkcolour.hardcoredungeons.item
 
 import net.minecraft.client.util.ITooltipFlag
 import net.minecraft.item.IItemTier
@@ -16,12 +16,7 @@ open class SwordWithLoreItem(
     properties: Properties,
     private val style: (Style) -> Style,
 ) : SwordItem(tier, damage, speed, properties) {
-    override fun appendHoverText(
-        stack: ItemStack,
-        worldIn: World?,
-        tooltip: MutableList<ITextComponent>,
-        flagIn: ITooltipFlag
-    ) {
+    override fun appendHoverText(stack: ItemStack?, level: World?, tooltip: MutableList<ITextComponent>, flagIn: ITooltipFlag?) {
         tooltip.add(TranslationTextComponent("$descriptionId.lore").setStyle(style(Style.EMPTY)))
     }
 }

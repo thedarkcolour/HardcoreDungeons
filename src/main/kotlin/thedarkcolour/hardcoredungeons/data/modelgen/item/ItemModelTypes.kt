@@ -15,6 +15,13 @@ class NewBlockItemModelType : ItemModelType() {
     }
 }
 
+class TrapdoorItemModelType : ItemModelType() {
+    override fun process(item: Item, gen: ModelGenerator) {
+        val name = item.registryName!!.path
+        gen.blockItemModel(name, name + "_bottom")
+    }
+}
+
 class ParentedModelType(parentLoc: ResourceLocation) : ItemModelType() {
     private val parentFile = ModelFile.UncheckedModelFile(parentLoc)
 

@@ -1,4 +1,4 @@
-package thedarkcolour.hardcoredungeons.item.overworld
+package thedarkcolour.hardcoredungeons.item
 
 import net.minecraft.client.renderer.entity.model.BipedModel
 import net.minecraft.entity.Entity
@@ -10,7 +10,6 @@ import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn
 import thedarkcolour.hardcoredungeons.HardcoreDungeons
 import thedarkcolour.hardcoredungeons.client.model.armor.MushroomArmorModel
-import thedarkcolour.hardcoredungeons.item.HArmorMaterial
 import thedarkcolour.kotlinforforge.forge.runWhenOn
 
 class MushroomArmorItem(slot: EquipmentSlotType, properties: Properties) : ArmorItem(HArmorMaterial.SHROOMY, slot, properties) {

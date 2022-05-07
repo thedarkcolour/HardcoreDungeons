@@ -4,7 +4,7 @@ import net.minecraft.world.biome.Biome
 import net.minecraft.world.biome.MobSpawnInfo
 import net.minecraftforge.common.world.BiomeGenerationSettingsBuilder
 import team.rusty.util.worldgen.biome.AbstractBiome
-import thedarkcolour.hardcoredungeons.worldgen.feature.HConfiguredFeatures
+import thedarkcolour.hardcoredungeons.worldgen.feature.HWorldGen
 import thedarkcolour.hardcoredungeons.worldgen.surfacebuilder.HConfiguredSurfaceBuilders
 
 object RainbowPlainsBiome : AbstractBiome() {
@@ -21,7 +21,7 @@ object RainbowPlainsBiome : AbstractBiome() {
     override fun configure(generation: BiomeGenerationSettingsBuilder, spawns: MobSpawnInfo.Builder) {
         generation.surfaceBuilder(HConfiguredSurfaceBuilders.RAINBOWLAND_SURFACE)
 
-        HConfiguredFeatures.withRainbowlandOres(generation)
-        HConfiguredFeatures.withRainbowlandStructures(generation)
+        HWorldGen.withRainbowlandOres(generation)
+        HWorldGen.withRainbowlandStructures(generation)
     }
 }

@@ -4,7 +4,7 @@ import net.minecraft.world.biome.Biome
 import net.minecraft.world.biome.MobSpawnInfo
 import net.minecraftforge.common.world.BiomeGenerationSettingsBuilder
 import team.rusty.util.worldgen.biome.AbstractBiome
-import thedarkcolour.hardcoredungeons.worldgen.feature.HConfiguredFeatures
+import thedarkcolour.hardcoredungeons.worldgen.feature.HWorldGen
 import thedarkcolour.hardcoredungeons.worldgen.surfacebuilder.HConfiguredSurfaceBuilders
 
 object GumdropFieldsBiome : AbstractBiome() {
@@ -21,7 +21,7 @@ object GumdropFieldsBiome : AbstractBiome() {
     override fun configure(generation: BiomeGenerationSettingsBuilder, spawns: MobSpawnInfo.Builder) {
         generation.surfaceBuilder(HConfiguredSurfaceBuilders.SUGARY_SURFACE)
 
-        HConfiguredFeatures.withSparseCandyCanes(generation)
-        HConfiguredFeatures.withSparseChocolateBars(generation)
+        HWorldGen.withSparseCandyCanes(generation)
+        HWorldGen.withSparseChocolateBars(generation)
     }
 }

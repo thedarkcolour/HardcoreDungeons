@@ -34,29 +34,28 @@ class BonusFarmlandBlock(
     val boostMap: Object2FloatMap<() -> Block> = EMPTY, // default to empty map
     properties: HProperties,
 ) : HBlock(properties.randomTicks()) {
-
     init {
         registerDefaultState(stateDefinition.any().setValue(MOISTURE, 0))
     }
 
     override fun updateShape(
-        stateIn: BlockState,
-        facing: Direction,
-        facingState: BlockState,
-        worldIn: IWorld,
-        currentPos: BlockPos,
-        facingPos: BlockPos,
+        state: BlockState,
+        direction: Direction,
+        fromState: BlockState,
+        level: IWorld,
+        pos: BlockPos,
+        fromPos: BlockPos,
     ): BlockState {
-        if (facing == Direction.UP && !stateIn.canSurvive(worldIn, currentPos)) {
-            worldIn.blockTicks.scheduleTick(currentPos, this, 1)
+        if (direction == Direction.UP && !state.canSurvive(level, pos)) {
+            level.blockTicks.scheduleTick(pos, this, 1)
         }
 
-        return stateIn
+        return state
     }
 
     override fun canSurvive(state: BlockState, worldIn: IWorldReader, pos: BlockPos): Boolean {
-        val state1 = worldIn.getBlockState(pos.above())
-        return !state1.material.isSolid || state.block.`is`(Tags.Blocks.FENCE_GATES) || state.block is MovingPistonBlock
+        val aboveState = worldIn.getBlockState(pos.above())
+        return !aboveState.material.isSolid || aboveState.block.`is`(Tags.Blocks.FENCE_GATES) || aboveState.block is MovingPistonBlock
     }
 
     override fun getStateForPlacement(context: BlockItemUseContext): BlockState? {

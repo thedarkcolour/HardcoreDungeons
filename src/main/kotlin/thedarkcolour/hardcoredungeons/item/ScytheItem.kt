@@ -1,4 +1,4 @@
-package thedarkcolour.hardcoredungeons.item.misc
+package thedarkcolour.hardcoredungeons.item
 
 import com.google.common.collect.ImmutableMultimap
 import com.google.common.collect.Multimap
@@ -22,6 +22,9 @@ import net.minecraft.util.math.MathHelper
 import net.minecraft.world.World
 import thedarkcolour.hardcoredungeons.util.toDegrees
 
+/**
+ * Area of effect melee weapon.
+ */
 open class ScytheItem(
     tier: IItemTier,
     attackDamage: Int,

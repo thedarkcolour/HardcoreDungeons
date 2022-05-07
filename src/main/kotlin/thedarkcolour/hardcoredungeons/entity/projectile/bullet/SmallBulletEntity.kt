@@ -15,7 +15,7 @@ import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn
 import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData
 import thedarkcolour.hardcoredungeons.entity.projectile.ProjectileEntity
-import thedarkcolour.hardcoredungeons.item.misc.GunItem
+import thedarkcolour.hardcoredungeons.item.GunItem
 import thedarkcolour.hardcoredungeons.registry.HItems
 
 @OnlyIn(value = Dist.CLIENT, _interface = IRendersAsItem::class)

@@ -31,6 +31,10 @@ class FrayedSoulEntity(type: EntityType<FrayedSoulEntity>, worldIn: World) : Cre
         return HSounds.ENTITY_FRAYED_SOUL_IDLE
     }
 
+    override fun canBeLeashed(player: PlayerEntity): Boolean {
+        return false
+    }
+
     companion object {
         val ATTRIBUTES: AttributeModifierMap.MutableAttribute = AttributeModifierMap.builder()
             .add(Attributes.MAX_HEALTH, 20.0)

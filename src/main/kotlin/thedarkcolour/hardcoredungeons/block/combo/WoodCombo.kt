@@ -19,6 +19,7 @@ import thedarkcolour.hardcoredungeons.HardcoreDungeons
 import thedarkcolour.hardcoredungeons.block.base.BlockMaker
 import thedarkcolour.hardcoredungeons.block.base.ItemMaker
 import thedarkcolour.hardcoredungeons.block.base.properties.HProperties
+import thedarkcolour.hardcoredungeons.data.LootGenerator
 import thedarkcolour.hardcoredungeons.data.RecipeGenerator
 import thedarkcolour.hardcoredungeons.data.RecipeGenerator.Companion.shaped
 import thedarkcolour.hardcoredungeons.data.RecipeGenerator.Companion.shapeless
@@ -86,7 +87,7 @@ class WoodCombo(
         ItemMaker.blockItem(wood + "_fence_gate", block = ::fenceGate)
         ItemMaker.blockItem(wood + "_pressure_plate", block = ::pressurePlate)
         ItemMaker.blockItem(wood + "_button", block = ::button)
-        ItemMaker.blockItem(wood + "_trapdoor", block = ::trapdoor)
+        ItemMaker.blockItem(wood + "_trapdoor", type = ItemModelType.TRAPDOOR_ITEM, block = ::trapdoor)
         ItemMaker.simpleBlockItem(wood + "_door", block = ::door)
     }
 
@@ -117,6 +118,10 @@ class WoodCombo(
         tags.block(BlockTags.SAPLINGS, ItemTags.SAPLINGS, sapling.plant)
 
         sign.addTags(tags)
+    }
+
+    override fun addLoot(gen: LootGenerator) {
+        gen.addLeaves(leaves, sapling.plant)
     }
 
     override fun addRecipes(consumer: Consumer<IFinishedRecipe>) {

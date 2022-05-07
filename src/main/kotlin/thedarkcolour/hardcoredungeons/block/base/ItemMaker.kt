@@ -55,7 +55,7 @@ object ItemMaker {
 
     fun <T : Item> registerModelled(name: String, type: ItemModelType, supplier: () -> T): ObjectHolderDelegate<T> {
         val obj = HItemsNew.register(name, supplier)
-        HItemsNew.onceRegistered { type.add(obj) }
+        HItemsNew.onceRegistered { type.add(obj) } // why is this a onceRegistered?
         return obj
     }
 }

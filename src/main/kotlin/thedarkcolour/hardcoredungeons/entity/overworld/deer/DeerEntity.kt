@@ -34,19 +34,23 @@ open class DeerEntity(type: EntityType<out AnimalEntity>, worldIn: World) : Anim
         return stack.item == Items.WHEAT || Tags.Items.MUSHROOMS.contains(stack.item)
     }
 
+    /**
+     * An ingredient to decide whether to follow a player holding an item
+     */
+    open fun getTemptIngredient(): Ingredient {
+        return Ingredient.merge(listOf(Ingredient.of(Items.WHEAT), Ingredient.of(Tags.Items.MUSHROOMS)))
+    }
+
     override fun registerGoals() {
         goalSelector.addGoal(0, SwimGoal(this))
         goalSelector.addGoal(2, BreedGoal(this, 0.9))
-        goalSelector.addGoal(3, TemptGoal(this, 0.9, false, Ingredient.of(Tags.Items.MUSHROOMS)))
-        goalSelector.addGoal(3, TemptGoal(this, 0.9, false, Ingredient.of(Items.WHEAT)))
+        goalSelector.addGoal(3, TemptGoal(this, 0.9, false, getTemptIngredient()))
         goalSelector.addGoal(4, FollowParentGoal(this, 0.7))
         goalSelector.addGoal(5, WaterAvoidingRandomWalkingGoal(this, 0.4))
         goalSelector.addGoal(6, LookAtWithoutMovingGoal(this, PlayerEntity::class.java, 25.0f, 0.04f))
         goalSelector.addGoal(6, LookRandomlyGoal(this))
 
-        //if (deerType.isDoe()) {
-            goalSelector.addGoal(1, PanicGoal(this, 0.9)) // todo have the stags retaliate
-        //}
+        targetSelector.addGoal(1, HurtByTargetGoal(this).setAlertOthers(DeerEntity::class.java))
     }
 
     override fun setCustomName(name: ITextComponent?) {

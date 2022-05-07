@@ -26,11 +26,15 @@ class GreenWandItem(properties: Properties) : Item(properties) {
         hand: Hand
     ): ActionResultType {
 
-        if (target is DeerEntity) {
-            player.displayClientMessage(StringTextComponent("DeerType: " + target.deerType), true)
+        if (!player.level.isClientSide) {
+            if (target is DeerEntity) {
+                player.displayClientMessage(StringTextComponent("DeerType: " + target.deerType), true)
+
+                return ActionResultType.SUCCESS
+            }
         }
 
-        return ActionResultType.sidedSuccess(player.level.isClientSide)
+        return ActionResultType.PASS
     }
 
     override fun useOn(ctx: ItemUseContext): ActionResultType {

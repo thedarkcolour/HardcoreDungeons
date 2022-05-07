@@ -5,10 +5,10 @@ import net.minecraft.entity.ILivingEntityData
 import net.minecraft.entity.MobEntity
 import net.minecraft.entity.SpawnReason
 import net.minecraft.entity.ai.goal.Goal
-import net.minecraft.entity.ai.goal.HurtByTargetGoal
 import net.minecraft.entity.ai.goal.MeleeAttackGoal
 import net.minecraft.entity.ai.goal.PanicGoal
 import net.minecraft.item.ItemStack
+import net.minecraft.item.crafting.Ingredient
 import net.minecraft.nbt.CompoundNBT
 import net.minecraft.potion.EffectInstance
 import net.minecraft.potion.Effects
@@ -20,12 +20,31 @@ import net.minecraft.world.World
 import thedarkcolour.hardcoredungeons.registry.HBlocks
 
 class CastletonDeerEntity(type: EntityType<CastletonDeerEntity>, worldIn: World) : DeerEntity(type, worldIn) {
-    /**
-     * Checks if the parameter is an item which this animal can be fed to breed it (wheat, carrots or seeds depending on
-     * the animal type)
-     */
+    private fun addGoals(deerType: DeerType) {
+        // goals must be registered later because dataManager is null when goals are normally registered.
+        // without dataManager it is impossible to distinguish between doe and stag
+        if (deerType.isDoe) {
+            goalSelector.addGoal(1, PanicGoal(this, 0.7))
+        } else if (deerType.isStag || deerType.isAlpha) {
+            targetSelector.addGoal(2, MeleeAttackGoal(this, 0.7, false))
+
+            if (deerType.isAlpha) {
+                targetSelector.addGoal(3, EmpowerGoal(this))
+            }
+        }
+    }
+
     override fun isFood(stack: ItemStack): Boolean {
         return stack.item == HBlocks.WILD_BERROOK.item
+    }
+
+    override fun getTemptIngredient(): Ingredient {
+        return Ingredient.of(HBlocks.WILD_BERROOK.item)
+    }
+
+    // fix deer not spawning on castleton grass during world gen
+    override fun getWalkTargetValue(pos: BlockPos, level: IWorldReader): Float {
+        return if (level.getBlockState(pos.below()).`is`(HBlocks.CASTLETON_SOIL.grass)) 10.0f else level.getBrightness(pos) - 0.5f
     }
 
     override fun getDefaultType(): DeerType {
@@ -36,9 +55,10 @@ class CastletonDeerEntity(type: EntityType<CastletonDeerEntity>, worldIn: World)
         return if (random.nextBoolean()) DeerType.PURPLE_PATTERNS.random() else DeerType.BLUE_PATTERNS.random()
     }
 
-    // fix deer not spawning on castleton grass
-    override fun getWalkTargetValue(pos: BlockPos, level: IWorldReader): Float {
-        return if (level.getBlockState(pos.below()).`is`(HBlocks.CASTLETON_SOIL.grass)) 10.0f else level.getBrightness(pos) - 0.5f
+    fun isSameColor(other: MobEntity): Boolean {
+        if (other !is CastletonDeerEntity) return false
+
+        return this.deerType.isBlue == other.deerType.isBlue
     }
 
     override fun finalizeSpawn(
@@ -49,8 +69,8 @@ class CastletonDeerEntity(type: EntityType<CastletonDeerEntity>, worldIn: World)
         dataTag: CompoundNBT?
     ): ILivingEntityData {
         var group = spawnDataIn as? GroupData
+        var deerType = this.deerType
 
-        // todo move the pattern picking to this method
         if (group == null) {
             group = GroupData(deerType.isBlue, deerType.isAlpha)
         } else {
@@ -66,52 +86,38 @@ class CastletonDeerEntity(type: EntityType<CastletonDeerEntity>, worldIn: World)
             }
 
             if (!group.hasAlpha) {
-                if (deerType.isBlue) {
-                    deerType = DeerType.BLUE_ALPHA
+                deerType = if (deerType.isBlue) {
+                    DeerType.BLUE_ALPHA
                 } else {
-                    deerType = DeerType.PURPLE_ALPHA
+                    DeerType.PURPLE_ALPHA
                 }
                 group.hasAlpha = true
             } else if (deerType.isAlpha) {
-                var deerType = deerType
-
                 while (deerType.isAlpha) {
                     deerType = pickRandomPattern()
                 }
-
-                this.deerType = deerType
             }
         }
 
-        // goals must be registered later because dataManager is null when goals are normally registered.
-        // without dataManager it is impossible to distinguish between doe and stag
-        if (deerType.isDoe) {
-            goalSelector.addGoal(1, PanicGoal(this, 0.7))
-            //goalSelector.addGoal(1, AlertHerd(this))
-        } else if (deerType.isStag || deerType.isAlpha) {
-            //goalSelector.addGoal(1, FightGoal(this))
-            targetSelector.addGoal(1, HurtByTargetGoal(this))
-            targetSelector.addGoal(2, MeleeAttackGoal(this, 0.7, false))
+        this.deerType = deerType
 
-            if (deerType.isAlpha) {
-                targetSelector.addGoal(3, EmpowerGoal(this))
-            }
-        }
+        addGoals(deerType)
 
         return group
     }
 
-    fun isSameColor(other: MobEntity): Boolean {
-        if (other !is CastletonDeerEntity) return false
+    override fun readAdditionalSaveData(compound: CompoundNBT) {
+        super.readAdditionalSaveData(compound)
 
-        return this.deerType.isBlue == other.deerType.isBlue
+        // Re-add goals as they are cleared when NBT is read
+        addGoals(deerType)
     }
 
     class EmpowerGoal(val deer: DeerEntity) : Goal() {
-        private var cooldown = 50
+        private var cooldown = 0
 
         override fun canUse(): Boolean {
-            return cooldown-- <= 0
+            return (deer.target?.isAlive == true) && cooldown-- <= 0
         }
 
         override fun start() {
@@ -122,11 +128,11 @@ class CastletonDeerEntity(type: EntityType<CastletonDeerEntity>, worldIn: World)
             for (ally in deer.level.getEntitiesOfClass(CastletonDeerEntity::class.java, deer.boundingBox.inflate(6.0))) {
                 if (ally.isSameColor(deer)) {
                     ally.addEffect(EffectInstance(Effects.DAMAGE_BOOST, 100, 2))
-                    ally.target = deer.target
                 }
             }
         }
     }
 
+    // Used to ensure a group has only one alpha and all of its members are the same color
     private class GroupData(var isBlue: Boolean, var hasAlpha: Boolean = false) : ILivingEntityData
 }

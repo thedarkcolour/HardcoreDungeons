@@ -1,11 +1,11 @@
-package thedarkcolour.hardcoredungeons.biome
+package thedarkcolour.hardcoredungeons.worldgen.biome
 
 import net.minecraft.world.biome.Biome
 import net.minecraft.world.biome.MobSpawnInfo
 import net.minecraftforge.common.world.BiomeGenerationSettingsBuilder
 import team.rusty.util.worldgen.biome.AbstractBiome
-import thedarkcolour.hardcoredungeons.feature.HConfiguredFeatures
-import thedarkcolour.hardcoredungeons.surfacebuilder.HConfiguredSurfaceBuilders
+import thedarkcolour.hardcoredungeons.worldgen.feature.HWorldGen
+import thedarkcolour.hardcoredungeons.worldgen.surfacebuilder.HConfiguredSurfaceBuilders
 
 object AuriPlainsBiome : AbstractBiome() {
     init {
@@ -21,6 +21,6 @@ object AuriPlainsBiome : AbstractBiome() {
     override fun configure(generation: BiomeGenerationSettingsBuilder, spawns: MobSpawnInfo.Builder) {
         generation.surfaceBuilder(HConfiguredSurfaceBuilders.AUBRUM_WASTELAND_SURFACE)
 
-        HConfiguredFeatures.withAubrumFlowers(generation)
+        HWorldGen.withAubrumFlowers(generation)
     }
 }

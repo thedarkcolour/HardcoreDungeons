@@ -1,4 +1,4 @@
-package thedarkcolour.hardcoredungeons.item.castleton
+package thedarkcolour.hardcoredungeons.item
 
 import com.mojang.blaze3d.matrix.MatrixStack
 import net.minecraft.client.renderer.IRenderTypeBuffer

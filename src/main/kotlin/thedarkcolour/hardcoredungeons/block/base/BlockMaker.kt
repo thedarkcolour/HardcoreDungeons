@@ -16,6 +16,7 @@ import net.minecraft.world.World
 import net.minecraftforge.common.ToolType
 import net.minecraftforge.fml.DatagenModLoader
 import thedarkcolour.hardcoredungeons.block.base.properties.HProperties
+import thedarkcolour.hardcoredungeons.block.combo.PortalCombo
 import thedarkcolour.hardcoredungeons.block.combo.PottedPlantCombo
 import thedarkcolour.hardcoredungeons.block.decoration.RotatableBlock
 import thedarkcolour.hardcoredungeons.block.misc.BonusFarmlandBlock
@@ -23,6 +24,7 @@ import thedarkcolour.hardcoredungeons.block.plant.FlowerBlock
 import thedarkcolour.hardcoredungeons.block.plant.HSaplingBlock
 import thedarkcolour.hardcoredungeons.block.plant.PlantProperties
 import thedarkcolour.hardcoredungeons.block.portal.HPortalBlock
+import thedarkcolour.hardcoredungeons.block.portal.HPortalFrameBlock
 import thedarkcolour.hardcoredungeons.data.modelgen.block.BlockModelType
 import thedarkcolour.hardcoredungeons.data.modelgen.item.ItemModelType
 import thedarkcolour.hardcoredungeons.registry.HBlocks
@@ -128,7 +130,7 @@ object BlockMaker {
     }
 
     fun saplingCombo(name: String, tree: Tree): PottedPlantCombo {
-        return PottedPlantCombo(name) { HSaplingBlock(tree, HProperties.of(Material.PLANT).sound(SoundType.GRASS).noCollission()) }
+        return PottedPlantCombo(name) { HSaplingBlock(tree, HProperties.of(Material.PLANT).sound(SoundType.GRASS).noCollision()) }
     }
 
     fun registerWall(name: String, block: () -> Block): ObjectHolderDelegate<WallBlock> {
@@ -141,7 +143,7 @@ object BlockMaker {
 
     fun gumdrop(name: String): PottedPlantCombo {
         return PottedPlantCombo(name) {
-            FlowerBlock(PlantProperties.of(Material.PLANT).stewEffect(Effects.REGENERATION, 7).sound(SoundType.SLIME_BLOCK).noCollission().instabreak().lightLevel(3))
+            FlowerBlock(PlantProperties.of(Material.PLANT).stewEffect(Effects.REGENERATION, 7).sound(SoundType.SLIME_BLOCK).noCollision().instabreak().lightLevel(3))
         }
     }
 
@@ -150,10 +152,15 @@ object BlockMaker {
     }
 
     // todo add model type
-    fun registerPortal(id: ResourceLocation, key: () -> RegistryKey<World>, frame: () -> BlockState): ObjectHolderDelegate<HPortalBlock> {
+    fun registerPortal(id: ResourceLocation, key: () -> RegistryKey<World>, combo: PortalCombo): ObjectHolderDelegate<HPortalBlock> {
         return registerModelled(id.path + "_portal", BlockModelType.PORTAL) {
-            HPortalBlock(key, frame, HProperties.of(Material.PORTAL).noCollission().strength(-1.0f).sound(SoundType.GLASS).noDrops())
+            HPortalBlock(key, combo, HProperties.of(Material.PORTAL).noCollision().strength(-1.0f).sound(SoundType.GLASS).noDrops())
         }
+    }
+
+    fun portalFrameWithItem(id: ResourceLocation, props: HProperties, combo: PortalCombo): ObjectHolderDelegate<HPortalFrameBlock> {
+        val name = id.path + "_portal_frame"
+        return withItem(name, ItemModelType.BLOCK_ITEM, registerModelled(name, BlockModelType.CUBE_ALL, null) { HPortalFrameBlock(combo, props) })
     }
 
     fun getComboName(name: String): String {
@@ -224,7 +231,9 @@ object BlockMaker {
         boostMap: (Object2FloatMap<() -> Block>) -> Unit = { }
     ): ObjectHolderDelegate<BonusFarmlandBlock> {
         val farmland = withItem(name, ItemModelType.BLOCK_ITEM, registerModelled(name, BlockModelType.FARMLAND) { BonusFarmlandBlock(soil, Util.make(Object2FloatOpenHashMap(), boostMap), props) })
-        HBlocks.onceRegistered { HBlocksOld.registerHoeInteraction(from(), farmland().defaultBlockState()) }
+        HBlocks.onceRegistered {
+            HBlocksOld.registerHoeInteraction(from(), farmland().defaultBlockState())
+        }
         return farmland
     }
 

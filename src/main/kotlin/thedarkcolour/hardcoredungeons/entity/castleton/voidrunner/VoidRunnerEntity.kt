@@ -4,7 +4,9 @@ import net.minecraft.entity.CreatureEntity
 import net.minecraft.entity.EntityType
 import net.minecraft.entity.ai.attributes.AttributeModifierMap
 import net.minecraft.entity.ai.attributes.Attributes
-import net.minecraft.entity.ai.goal.Goal
+import net.minecraft.entity.ai.goal.*
+import net.minecraft.entity.passive.IronGolemEntity
+import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.util.DamageSource
 import net.minecraft.util.SoundEvent
 import net.minecraft.world.World
@@ -17,7 +19,15 @@ class VoidRunnerEntity(type: EntityType<VoidRunnerEntity>, worldIn: World) : Cre
     }
 
     override fun registerGoals() {
-
+        goalSelector.addGoal(1, SwimGoal(this))
+        goalSelector.addGoal(3, LeapAtTargetGoal(this, 0.4f))
+        goalSelector.addGoal(4, MeleeAttackGoal(this, 0.7, false))
+        goalSelector.addGoal(5, WaterAvoidingRandomWalkingGoal(this, 0.8))
+        goalSelector.addGoal(6, LookAtGoal(this, PlayerEntity::class.java, 8.0f))
+        goalSelector.addGoal(6, LookRandomlyGoal(this))
+        targetSelector.addGoal(1, HurtByTargetGoal(this))
+        targetSelector.addGoal(2, NearestAttackableTargetGoal(this, PlayerEntity::class.java, true))
+        targetSelector.addGoal(3, NearestAttackableTargetGoal(this, IronGolemEntity::class.java, true))
     }
 
     class ChargeGoal(private val entity: VoidRunnerEntity) : Goal() {
