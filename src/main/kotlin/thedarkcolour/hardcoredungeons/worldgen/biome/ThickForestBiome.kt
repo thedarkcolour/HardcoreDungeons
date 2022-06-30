@@ -9,9 +9,10 @@ import net.minecraft.world.gen.surfacebuilders.SurfaceBuilder
 import net.minecraftforge.common.BiomeManager
 import net.minecraftforge.common.world.BiomeGenerationSettingsBuilder
 import team.rusty.util.worldgen.biome.AbstractBiome
-import thedarkcolour.hardcoredungeons.worldgen.feature.HWorldGen
 import thedarkcolour.hardcoredungeons.registry.HEntities
+import thedarkcolour.hardcoredungeons.worldgen.feature.HWorldGen
 
+// todo remove
 object ThickForestBiome : AbstractBiome() {
     init {
         precipitation = Biome.RainType.RAIN
@@ -20,11 +21,14 @@ object ThickForestBiome : AbstractBiome() {
         scale = 0.25f
         temperature = 0.7f
         downfall = 0.8f
-        effects = biomeFx(0x3f76e4, 0x50533, getSkyForTemp(0.7f), 12638463).build()
+        effects = biomeFx(0x3f76e4, 0x50533, getSkyForTemp(0.7f), 12638463)
+            .foliageColorOverride(0x775729)
+            .grassColorOverride(0x775729)
+            .build()
     }
 
     override fun configure(generation: BiomeGenerationSettingsBuilder, spawns: MobSpawnInfo.Builder) {
-        generation.surfaceBuilder(SurfaceBuilder.DEFAULT.configured(SurfaceBuilder.CONFIG_PODZOL))
+        generation.surfaceBuilder(SurfaceBuilder.DEFAULT.configured(SurfaceBuilder.CONFIG_GRASS))
         DefaultBiomeFeatures.addDefaultCarvers(generation)
         DefaultBiomeFeatures.addDefaultOverworldLandStructures(generation)
         DefaultBiomeFeatures.addDefaultMonsterRoom(generation)

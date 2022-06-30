@@ -25,7 +25,6 @@ class GreenWandItem(properties: Properties) : Item(properties) {
         target: LivingEntity,
         hand: Hand
     ): ActionResultType {
-
         if (!player.level.isClientSide) {
             if (target is DeerEntity) {
                 player.displayClientMessage(StringTextComponent("DeerType: " + target.deerType), true)

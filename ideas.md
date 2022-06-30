@@ -10,6 +10,10 @@
 ## Castleton Farmland
 * Grow lumshrooms into Magic Lumshrooms for use in magical recipes
 
+## Moon theme
+* Moonstones obtained in the overworld
+* Moonwater: water that doubles as a light source, can be used to make strange potions
+
 ##~~Mending Cloth~~
 * ~~Unique armor pieces can be repaired with mending cloth.~~
 * This idea isn't original + makes repairing weapons annoying
@@ -22,6 +26,10 @@
 
 ## Structure tips
 * Remove parkour from structure
+* Gargoyles?
+
+## Hugen (hyoo gen)
+* Villager type mob
 
 ## New Data + Registry
 * Only combos should handle data gen
