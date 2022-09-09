@@ -1,14 +1,18 @@
 package thedarkcolour.hardcoredungeons.item
 
-import net.minecraft.block.Block
-import net.minecraft.block.BlockState
-import net.minecraft.item.*
-import net.minecraft.util.Direction
-import net.minecraft.util.NonNullList
-import net.minecraft.util.math.shapes.ISelectionContext
+import net.minecraft.core.Direction
+import net.minecraft.core.NonNullList
+import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.item.BlockItem
+import net.minecraft.world.item.CreativeModeTab
+import net.minecraft.world.item.Item
+import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.context.BlockPlaceContext
+import net.minecraft.world.level.block.Block
+import net.minecraft.world.phys.shapes.CollisionContext
 
 class CastletonTorchItem(blockIn: Block, private val wallBlock: Block, private val isLit: Boolean, builder: Properties) : BlockItem(blockIn, builder) {
-    override fun getPlacementState(context: BlockItemUseContext): BlockState? {
+    override fun getPlacementState(context: BlockPlaceContext): BlockState? {
         val state = wallBlock.getStateForPlacement(context)
         var state1: BlockState? = null
         val worldIn = context.level
@@ -24,7 +28,7 @@ class CastletonTorchItem(blockIn: Block, private val wallBlock: Block, private v
             }
         }
 
-        return if (state1 != null && worldIn.isUnobstructed(state1, pos, ISelectionContext.empty())) state1 else null
+        return if (state1 != null && worldIn.isUnobstructed(state1, pos, CollisionContext.empty())) state1 else null
     }
 
     override fun registerBlocks(blockToItemMap: MutableMap<Block, Item>, itemIn: Item) {
@@ -49,11 +53,11 @@ class CastletonTorchItem(blockIn: Block, private val wallBlock: Block, private v
         }
     }
 
-    override fun fillItemCategory(group: ItemGroup, items: NonNullList<ItemStack>) {
+    override fun fillItemCategory(group: CreativeModeTab, items: NonNullList<ItemStack>) {
         if (isLit) {
             super.fillItemCategory(group, items)
         } else {
-            if (allowdedIn(group)) {
+            if (allowedIn(group)) {
                 items.add(ItemStack(this))
             }
         }

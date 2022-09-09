@@ -4,7 +4,7 @@ import net.minecraft.item.IItemTier
 import net.minecraft.item.Item
 import net.minecraft.item.crafting.Ingredient
 import net.minecraft.tags.ITag
-import net.minecraft.util.IItemProvider
+import net.minecraft.world.level.ItemLike
 import net.minecraft.util.LazyValue
 import net.minecraftforge.common.Tags
 import thedarkcolour.hardcoredungeons.registry.HItems
@@ -21,7 +21,7 @@ import java.util.function.Supplier
  * @property enchantability the enchantability of this tool material
  * @property repairMaterial the lazily initialized repair material for this tool material
  *
- * @author TheDarkColour
+ * @author thedarkcolour
  */
 class HItemTier(
     private val harvestLevel: Int,
@@ -37,7 +37,7 @@ class HItemTier(
         val VALABLADE = createTier(0, 1237, 5.0f, 3.0f, 26)
         val SHROOMY = createTier(3, 726, 7.0f, 3.0f, 17, Tags.Items.MUSHROOMS)
 
-        fun createTier(level: Int, durability: Int, efficiency: Float, damage: Float, enchantability: Int, item: IItemProvider): HItemTier {
+        fun createTier(level: Int, durability: Int, efficiency: Float, damage: Float, enchantability: Int, item: ItemLike): HItemTier {
             return HItemTier(level, durability, efficiency, damage, enchantability) { Ingredient.of(item.asItem()) }
         }
 

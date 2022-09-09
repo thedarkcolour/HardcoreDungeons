@@ -1,12 +1,7 @@
 package thedarkcolour.hardcoredungeons.entity.overworld.mazeboss
 
-import net.minecraft.client.renderer.entity.BipedRenderer
-import net.minecraft.client.renderer.entity.EntityRendererManager
-import net.minecraft.client.renderer.entity.model.SkeletonModel
-import net.minecraft.util.ResourceLocation
-import thedarkcolour.hardcoredungeons.util.modLoc
-
-class MazeBossRenderer(manager: EntityRendererManager) : BipedRenderer<MazeBossEntity, SkeletonModel<MazeBossEntity>>(manager, SkeletonModel(), 0.4f) {
+/*
+class MazeBossRenderer(manager: EntityRendererManager) : HumanoidMobRenderer<MazeBossEntity, SkeletonModel<MazeBossEntity>>(manager, SkeletonModel(), 0.4f) {
     override fun getTextureLocation(entity: MazeBossEntity): ResourceLocation {
         return SKELETON_TEXTURES
     }
@@ -16,3 +11,4 @@ class MazeBossRenderer(manager: EntityRendererManager) : BipedRenderer<MazeBossE
         private val MAZE_BOSS_TEXTURE = modLoc("textures/entity/maze_boss/")
     }
 }
+ */

@@ -1,8 +1,8 @@
 package thedarkcolour.hardcoredungeons.block.combo
 
-import net.minecraft.block.Block
-import net.minecraft.item.Item
-import net.minecraft.tags.ITag
+import net.minecraft.world.level.block.Block
+import net.minecraft.tags.TagKey
+import net.minecraft.world.item.Item
 import thedarkcolour.hardcoredungeons.block.base.BlockMaker
 import thedarkcolour.hardcoredungeons.block.base.properties.HProperties
 
@@ -11,7 +11,7 @@ class VariantCombo(props: HProperties, name: String, vararg variants: String) {
         BlockMaker.cubeAllWithItem(variants[i] + "_" + name, props)
     }
 
-    fun addTag(tags: DataTags, blockTag: ITag.INamedTag<Block>, itemTag: ITag.INamedTag<Item>) {
+    fun addTag(tags: DataTags, blockTag: TagKey<Block>, itemTag: TagKey<Item>) {
         for (variant in variants) {
             tags.block(blockTag, itemTag, variant.get())
         }

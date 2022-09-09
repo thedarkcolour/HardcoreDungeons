@@ -1,12 +1,12 @@
 package thedarkcolour.hardcoredungeons.item
 
-import net.minecraft.item.ItemGroup
-import net.minecraft.item.ItemStack
+import net.minecraft.world.item.CreativeModeTab
+import net.minecraft.world.item.ItemStack
 import thedarkcolour.hardcoredungeons.HardcoreDungeons
 import thedarkcolour.hardcoredungeons.registry.HBlocks
 import thedarkcolour.hardcoredungeons.util.modLoc
 
-object Group : ItemGroup(HardcoreDungeons.ID) {
+object Group : CreativeModeTab(HardcoreDungeons.ID) {
     init {
         backgroundImage = modLoc("textures/gui/container/creative_inventory/tab_background.png")
     }

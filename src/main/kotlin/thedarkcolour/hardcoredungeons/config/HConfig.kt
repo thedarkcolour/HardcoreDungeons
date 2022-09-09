@@ -2,6 +2,7 @@
 
 package thedarkcolour.hardcoredungeons.config
 
+import net.minecraftforge.common.ForgeConfigSpec
 import thedarkcolour.hardcoredungeons.config.option.OptionType
 
 object HConfig {
@@ -26,18 +27,19 @@ object HConfig {
         .configure("malachite_crystal_generation")
         .description("Whether Malachite Crystals generate naturally.")
         .build(true)
-    // Setup the options here and create the config option hierarchy
-    private fun configure() {
-        overworld.add(thickForestGenerates)
-    }
 
     private var setup = false
 
-    fun setup() {
+    fun setup(builder: ForgeConfigSpec.Builder) {
         if (!setup) {
             configure()
 
             setup = true
         }
+    }
+
+    // Setup the options here and create the config option hierarchy
+    private fun configure() {
+        overworld.add(thickForestGenerates)
     }
 }

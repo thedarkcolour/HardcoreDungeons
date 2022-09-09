@@ -1,8 +1,8 @@
 package thedarkcolour.hardcoredungeons.block.plant
 
-import net.minecraft.block.Block
-import net.minecraft.block.BlockState
-import net.minecraft.block.Blocks
+import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.block.Blocks
 import net.minecraft.potion.Effect
 import net.minecraft.potion.Effects
 import net.minecraft.tags.ITag

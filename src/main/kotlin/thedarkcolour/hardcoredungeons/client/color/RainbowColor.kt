@@ -1,17 +1,17 @@
 package thedarkcolour.hardcoredungeons.client.color
 
-import net.minecraft.block.BlockState
+import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.client.Minecraft
-import net.minecraft.item.ItemStack
-import net.minecraft.util.math.BlockPos
-import net.minecraft.world.FoliageColors
-import net.minecraft.world.IBlockDisplayReader
+import net.minecraft.world.item.ItemStack
+import net.minecraft.core.BlockPos
+import net.minecraft.world.level.BlockAndTintGetter
+import net.minecraft.world.level.FoliageColor
 import java.awt.Color
 
 object RainbowColor : HColor {
-    override fun getColor(state: BlockState?, worldIn: IBlockDisplayReader?, pos: BlockPos?, tintIndex: Int): Int {
+    override fun getColor(state: BlockState?, worldIn: BlockAndTintGetter?, pos: BlockPos?, tintIndex: Int): Int {
         return if (pos == null) {
-            FoliageColors.getDefaultColor()
+            FoliageColor.getDefaultColor()
         } else {
             getColor(pos.x, pos.y, pos.z)
         }

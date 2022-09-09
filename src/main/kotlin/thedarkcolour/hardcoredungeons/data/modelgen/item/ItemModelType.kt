@@ -1,13 +1,14 @@
 package thedarkcolour.hardcoredungeons.data.modelgen.item
 
-import net.minecraft.item.Item
-import net.minecraft.util.ResourceLocation
+import net.minecraft.resources.ResourceLocation
+import net.minecraft.world.item.Item
 import thedarkcolour.hardcoredungeons.data.ModelGenerator
 import thedarkcolour.hardcoredungeons.data.modelgen.ModelType
 import thedarkcolour.hardcoredungeons.util.modLoc
+import thedarkcolour.kotlinforforge.forge.ObjectHolderDelegate
 
-abstract class ItemModelType : ModelType<() -> Item>() {
-    private val items = ArrayList<() -> Item>()
+abstract class ItemModelType : ModelType<ObjectHolderDelegate<out Item>>() {
+    private val items = ArrayList<ObjectHolderDelegate<out Item>>()
 
     /**
      * Ran during model generation.
@@ -17,7 +18,7 @@ abstract class ItemModelType : ModelType<() -> Item>() {
             try {
                 process(item(), gen)
             } catch (e: Exception) {
-                println("Error generating ${item().registryName}: " + e.message)
+                println("Error generating ${item.registryObject.id}: " + e.message)
                 continue
             }
         }
@@ -28,8 +29,7 @@ abstract class ItemModelType : ModelType<() -> Item>() {
      */
     abstract fun process(item: Item, gen: ModelGenerator)
 
-    // Should be an ObjectHolderDelegate
-    fun add(item: () -> Item) {
+    fun add(item: ObjectHolderDelegate<out Item>) {
         items.add(item)
     }
 

@@ -1,21 +1,22 @@
 package thedarkcolour.hardcoredungeons.worldgen.feature
 
 import com.mojang.serialization.Codec
-import net.minecraft.util.math.BlockPos
-import net.minecraft.world.ISeedReader
-import net.minecraft.world.gen.ChunkGenerator
-import net.minecraft.world.gen.feature.Feature
-import net.minecraft.world.gen.feature.NoFeatureConfig
+import net.minecraft.core.BlockPos
+import net.minecraft.world.level.WorldGenLevel
+import net.minecraft.world.level.levelgen.feature.Feature
+import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration
 import thedarkcolour.hardcoredungeons.registry.HBlocks
 import java.util.*
 
-class ChocolateBarFeature(codec: Codec<NoFeatureConfig>) : Feature<NoFeatureConfig>(codec) {
-    override fun place(
-        worldIn: ISeedReader,
-        generator: ChunkGenerator,
-        rand: Random,
+class ChocolateBarFeature : Feature<NoneFeatureConfiguration>(NoneFeatureConfiguration.CODEC) {
+    override fun place(pContext: FeaturePlaceContext<NoneFeatureConfiguration>): Boolean {
+        return place(pContext.level(), pContext.origin())
+    }
+
+    fun place(
+        worldIn: WorldGenLevel,
         pos: BlockPos,
-        config: NoFeatureConfig,
     ): Boolean {
         if (!worldIn.getBlockState(pos.below()).canOcclude()) return false
 

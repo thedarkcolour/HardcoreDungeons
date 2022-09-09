@@ -5,7 +5,7 @@ import net.minecraft.entity.LivingEntity
 import net.minecraft.item.Item
 import net.minecraft.item.Items
 import thedarkcolour.hardcoredungeons.registry.HItems
-import thedarkcolour.hardcoredungeons.registry.HItemsNew
+import thedarkcolour.hardcoredungeons.registry.items.HItemsNew
 
 object HElementRegistry {
     val ENTITY_ELEMENTS = hashMapOf<EntityType<out LivingEntity>, HElement>()

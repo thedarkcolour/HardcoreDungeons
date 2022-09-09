@@ -13,7 +13,7 @@ import kotlin.reflect.KProperty
  * @param name name of the option
  * @param default the initial value of this option
  * @param desc description of this option
- * @author TheDarkColour
+ * @author thedarkcolour
  */
 open class Option<V>(val name: String, private val default: V, val desc: String): ReadWriteProperty<Any?, V> {
     /**
@@ -30,13 +30,17 @@ open class Option<V>(val name: String, private val default: V, val desc: String)
         get() = "config.${HardcoreDungeons.ID}.${name}"
 
     /**
-     * Used to sync during [net.minecraftforge.fml.config.ModConfig.ModConfigEvent]
+     * Used to sync during [net.minecraftforge.fml.event.config.ModConfigEvent]
      *
      * @param data from the synced forge config
      * @param parentName the path of this option, includes parent categories
      */
-    open fun sync(data: CommentedConfig, parentName: String) {
-        this.value = data.get("$parentName.$name")
+    open fun sync(data: CommentedConfig, parentName: String? = null) {
+        this.value = if (parentName == null) {
+            data.get(name)
+        } else {
+            data.get("$parentName.$name")
+        }
     }
 
     /**

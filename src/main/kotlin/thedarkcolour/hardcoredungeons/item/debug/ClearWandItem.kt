@@ -1,16 +1,16 @@
 package thedarkcolour.hardcoredungeons.item.debug
 
-import net.minecraft.block.Blocks
-import net.minecraft.item.ItemUseContext
-import net.minecraft.util.ActionResultType
+import net.minecraft.world.InteractionResult
+import net.minecraft.world.item.context.UseOnContext
+import net.minecraft.world.level.block.Blocks
 
 /**
- * @author TheDarkColour
+ * @author thedarkcolour
  */
 class ClearWandItem(properties: Properties) : AbstractFillingWandItem(properties) {
     override val fillMessage = "item.hardcoredungeons.wand.clear"
 
-    override fun useOn(context: ItemUseContext): ActionResultType {
+    override fun useOn(context: UseOnContext): InteractionResult {
         val worldIn = context.level
 
         if (!worldIn.isClientSide) {
@@ -25,6 +25,6 @@ class ClearWandItem(properties: Properties) : AbstractFillingWandItem(properties
             }
         }
 
-        return ActionResultType.SUCCESS
+        return InteractionResult.SUCCESS
     }
 }

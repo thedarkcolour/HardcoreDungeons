@@ -8,7 +8,7 @@ import net.minecraft.world.gen.feature.structure.Structure
 import thedarkcolour.hardcoredungeons.registry.HStructures
 import thedarkcolour.hardcoredungeons.util.modLoc
 
-@Suppress("HasPlatformType", "MemberVisibilityCanBePrivate")
+@Suppress("MemberVisibilityCanBePrivate")
 object HConfiguredStructures {
     val MUSHROOM_HUT_FEATURE = HStructures.MUSHROOM_HUT.configured(IFeatureConfig.NONE)
     val LUMLIGHT_CABIN_FEATURE = HStructures.LUMLIGHT_CABIN.configured(IFeatureConfig.NONE)

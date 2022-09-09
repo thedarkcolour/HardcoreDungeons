@@ -1,19 +1,11 @@
 package thedarkcolour.hardcoredungeons.entity.castleton.voidrunner
 
-import net.minecraft.entity.CreatureEntity
-import net.minecraft.entity.EntityType
-import net.minecraft.entity.ai.attributes.AttributeModifierMap
-import net.minecraft.entity.ai.attributes.Attributes
-import net.minecraft.entity.ai.goal.*
-import net.minecraft.entity.passive.IronGolemEntity
-import net.minecraft.entity.player.PlayerEntity
-import net.minecraft.util.DamageSource
-import net.minecraft.util.SoundEvent
-import net.minecraft.world.World
+import net.minecraft.world.entity.ambient.AmbientCreature
 import net.minecraftforge.common.ForgeMod
 import thedarkcolour.hardcoredungeons.registry.HSounds
 
-class VoidRunnerEntity(type: EntityType<VoidRunnerEntity>, worldIn: World) : CreatureEntity(type, worldIn) {
+/*
+class VoidRunnerEntity(type: EntityType<VoidRunnerEntity>, worldIn: World) : AmbientCreature(type, worldIn) {
     override fun getHurtSound(source: DamageSource): SoundEvent {
         return HSounds.ENTITY_VOID_RUNNER_HIT
     }
@@ -49,4 +41,4 @@ class VoidRunnerEntity(type: EntityType<VoidRunnerEntity>, worldIn: World) : Cre
             .add(Attributes.FOLLOW_RANGE, 16.0)
             .add(Attributes.ATTACK_KNOCKBACK)
     }
-}
+}*/

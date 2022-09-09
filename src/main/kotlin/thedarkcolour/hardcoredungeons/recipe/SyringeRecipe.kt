@@ -1,6 +1,6 @@
 package thedarkcolour.hardcoredungeons.recipe
 
-import net.minecraft.item.ItemStack
+import net.minecraft.world.item.ItemStack
 import net.minecraft.potion.PotionBrewing
 import net.minecraftforge.common.brewing.IBrewingRecipe
 import thedarkcolour.hardcoredungeons.registry.HItems

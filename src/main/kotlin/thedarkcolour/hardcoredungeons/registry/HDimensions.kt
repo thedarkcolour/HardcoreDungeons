@@ -5,7 +5,7 @@ import net.minecraft.util.registry.Registry
 import thedarkcolour.hardcoredungeons.util.modLoc
 
 /**
- * @author TheDarkColour
+ * @author thedarkcolour
  */
 @Suppress("HasPlatformType")
 object HDimensions {

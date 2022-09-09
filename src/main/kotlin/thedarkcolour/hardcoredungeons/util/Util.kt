@@ -1,11 +1,11 @@
 package thedarkcolour.hardcoredungeons.util
 
 import net.minecraft.entity.Entity
-import net.minecraft.item.ItemStack
+import net.minecraft.world.item.ItemStack
 import net.minecraft.nbt.NBTUtil
 import net.minecraft.network.datasync.DataParameter
-import net.minecraft.util.ResourceLocation
-import net.minecraft.util.math.BlockPos
+import net.minecraft.resources.ResourceLocation
+import net.minecraft.core.BlockPos
 import thedarkcolour.hardcoredungeons.HardcoreDungeons
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty

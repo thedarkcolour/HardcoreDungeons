@@ -33,9 +33,9 @@ import net.minecraft.state.Property
 import net.minecraft.state.properties.BlockStateProperties
 import net.minecraft.state.properties.DoubleBlockHalf
 import net.minecraft.state.properties.SlabType
-import net.minecraft.util.IItemProvider
+import net.minecraft.world.level.ItemLike
 import net.minecraft.util.IStringSerializable
-import net.minecraft.util.ResourceLocation
+import net.minecraft.resources.ResourceLocation
 import net.minecraftforge.common.Tags
 import net.minecraftforge.registries.ForgeRegistries
 import org.apache.logging.log4j.LogManager
@@ -181,7 +181,7 @@ class LootGenerator(private val generator: DataGenerator) : LootTableProvider(ge
         return BlockStateProperty.hasBlockStateProperties(block).setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(property, value))
     }
 
-    fun item(item: IItemProvider): StandaloneLootEntry.Builder<*> {
+    fun item(item: ItemLike): StandaloneLootEntry.Builder<*> {
         return ItemLootEntry.lootTableItem(item)
     }
 

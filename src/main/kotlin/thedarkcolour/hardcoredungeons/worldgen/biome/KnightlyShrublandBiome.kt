@@ -1,15 +1,17 @@
 package thedarkcolour.hardcoredungeons.worldgen.biome
 
+/*
 import net.minecraft.entity.EntityClassification
 import net.minecraft.world.biome.Biome
 import net.minecraft.world.biome.MobSpawnInfo
 import net.minecraftforge.common.world.BiomeGenerationSettingsBuilder
+import team.rusty.util.biome.ModBiome
 import team.rusty.util.worldgen.biome.AbstractBiome
-import thedarkcolour.hardcoredungeons.worldgen.feature.HWorldGen
+import thedarkcolour.hardcoredungeons.worldgen.HWorldGen
 import thedarkcolour.hardcoredungeons.registry.HEntities
 import thedarkcolour.hardcoredungeons.worldgen.surfacebuilder.HConfiguredSurfaceBuilders
 
-object KnightlyShrublandBiome : AbstractBiome() {
+object KnightlyShrublandBiome : ModBiome() {
     init {
         precipitation = Biome.RainType.NONE
         category = Biome.Category.PLAINS
@@ -28,4 +30,4 @@ object KnightlyShrublandBiome : AbstractBiome() {
 
         spawns.addSpawn(EntityClassification.CREATURE, HEntities.CASTLETON_DEER, 6, 2, 6)
     }
-}
+}*/

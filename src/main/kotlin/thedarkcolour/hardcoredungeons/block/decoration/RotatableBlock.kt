@@ -1,12 +1,13 @@
 package thedarkcolour.hardcoredungeons.block.decoration
 
-import net.minecraft.block.Block
-import net.minecraft.block.BlockState
-import net.minecraft.block.DirectionalBlock.FACING
-import net.minecraft.item.BlockItemUseContext
-import net.minecraft.state.StateContainer
-import net.minecraft.util.Mirror
-import net.minecraft.util.Rotation
+import net.minecraft.world.item.context.BlockPlaceContext
+import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.Mirror
+import net.minecraft.world.level.block.Rotation
+import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.block.state.StateDefinition
+import net.minecraft.world.level.block.state.properties.BlockStateProperties
+import net.minecraft.world.level.block.state.properties.BlockStateProperties.FACING
 import thedarkcolour.hardcoredungeons.block.base.HBlock
 import thedarkcolour.hardcoredungeons.block.base.properties.HProperties
 
@@ -15,7 +16,7 @@ import thedarkcolour.hardcoredungeons.block.base.properties.HProperties
  * Look at [HorizontalBlock] if you only want horizontal rotations.
  */
 open class RotatableBlock(properties: HProperties) : HBlock(properties) {
-    override fun createBlockStateDefinition(builder: StateContainer.Builder<Block, BlockState>) {
+    override fun createBlockStateDefinition(builder: StateDefinition.Builder<Block, BlockState>) {
         builder.add(FACING)
     }
 
@@ -27,7 +28,7 @@ open class RotatableBlock(properties: HProperties) : HBlock(properties) {
         return state.setValue(FACING, mirrorIn.mirror(state.getValue(FACING)))
     }
 
-    override fun getStateForPlacement(context: BlockItemUseContext): BlockState {
+    override fun getStateForPlacement(context: BlockPlaceContext): BlockState {
         return defaultBlockState().setValue(FACING, context.nearestLookingDirection.opposite)
     }
 }

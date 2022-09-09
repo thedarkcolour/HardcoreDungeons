@@ -1,19 +1,18 @@
 package thedarkcolour.hardcoredungeons.block.combo
 
-import net.minecraft.block.Block
-import net.minecraft.block.PressurePlateBlock
-import net.minecraft.block.WoodType
-import net.minecraft.block.material.Material
-import net.minecraft.block.material.MaterialColor
-import net.minecraft.block.trees.Tree
-import net.minecraft.data.IFinishedRecipe
-import net.minecraft.item.AxeItem
-import net.minecraft.item.Item
-import net.minecraft.state.properties.BlockStateProperties
+import net.minecraft.core.Direction
+import net.minecraft.data.recipes.FinishedRecipe
 import net.minecraft.tags.BlockTags
-import net.minecraft.tags.ITag
 import net.minecraft.tags.ItemTags
-import net.minecraft.util.Direction
+import net.minecraft.tags.TagKey
+import net.minecraft.world.item.Item
+import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.PressurePlateBlock
+import net.minecraft.world.level.block.grower.AbstractTreeGrower
+import net.minecraft.world.level.block.state.properties.BlockStateProperties
+import net.minecraft.world.level.block.state.properties.WoodType
+import net.minecraft.world.level.material.Material
+import net.minecraft.world.level.material.MaterialColor
 import net.minecraftforge.common.Tags
 import thedarkcolour.hardcoredungeons.HardcoreDungeons
 import thedarkcolour.hardcoredungeons.block.base.BlockMaker
@@ -27,6 +26,7 @@ import thedarkcolour.hardcoredungeons.data.RecipeGenerator.Companion.slab
 import thedarkcolour.hardcoredungeons.data.RecipeGenerator.Companion.stairs
 import thedarkcolour.hardcoredungeons.data.RecipeGenerator.Companion.twoByTwo
 import thedarkcolour.hardcoredungeons.data.modelgen.item.ItemModelType
+import thedarkcolour.hardcoredungeons.registry.HBlockUtil
 import thedarkcolour.hardcoredungeons.registry.HBlocks
 import thedarkcolour.hardcoredungeons.tags.HItemTags
 import java.util.function.Consumer
@@ -41,9 +41,9 @@ class WoodCombo(
     wood: String,
     topCol: MaterialColor,
     barkCol: MaterialColor,
-    tree: Tree,
-    val blockTag: ITag.INamedTag<Block>,
-    val itemTag: ITag.INamedTag<Item>,
+    tree: AbstractTreeGrower,
+    val blockTag: TagKey<Block>,
+    val itemTag: TagKey<Item>,
     applyProperties: (HProperties) -> Unit
 ) : ICombo {
     // Wood Type
@@ -76,8 +76,8 @@ class WoodCombo(
 
     init {
         HBlocks.onceRegistered {
-            registerAxeInteraction(this.log,  this.strippedLog )
-            registerAxeInteraction(this.wood, this.strippedWood)
+            HBlockUtil.STRIPPABLES[this.log] = this.strippedLog
+            HBlockUtil.STRIPPABLES[this.wood] = this.strippedWood
         }
 
         // todo get rid of the rest of these
@@ -89,14 +89,6 @@ class WoodCombo(
         ItemMaker.blockItem(wood + "_button", block = ::button)
         ItemMaker.blockItem(wood + "_trapdoor", type = ItemModelType.TRAPDOOR_ITEM, block = ::trapdoor)
         ItemMaker.simpleBlockItem(wood + "_door", block = ::door)
-    }
-
-    private fun registerAxeInteraction(target: Block, result: Block) {
-        if (AxeItem.STRIPABLES !is HashMap<*, *>) {
-            AxeItem.STRIPABLES = HashMap(AxeItem.STRIPABLES)
-        }
-
-        AxeItem.STRIPABLES[target] = result
     }
 
     override fun addTags(tags: DataTags) {
@@ -124,7 +116,7 @@ class WoodCombo(
         gen.addLeaves(leaves, sapling.plant)
     }
 
-    override fun addRecipes(consumer: Consumer<IFinishedRecipe>) {
+    override fun addRecipes(consumer: Consumer<FinishedRecipe>) {
         // todo more recipes
         consumer.shapeless(planks, 4) { builder ->
             builder.requires(itemTag)

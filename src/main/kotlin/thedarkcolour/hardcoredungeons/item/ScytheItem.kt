@@ -2,35 +2,35 @@ package thedarkcolour.hardcoredungeons.item
 
 import com.google.common.collect.ImmutableMultimap
 import com.google.common.collect.Multimap
-import net.minecraft.block.BlockState
-import net.minecraft.enchantment.EnchantmentHelper
-import net.minecraft.enchantment.IVanishable
-import net.minecraft.entity.LivingEntity
-import net.minecraft.entity.ai.attributes.Attribute
-import net.minecraft.entity.ai.attributes.AttributeModifier
-import net.minecraft.entity.ai.attributes.Attributes
-import net.minecraft.entity.item.ArmorStandEntity
-import net.minecraft.entity.player.PlayerEntity
-import net.minecraft.inventory.EquipmentSlotType
-import net.minecraft.item.IItemTier
-import net.minecraft.item.ItemStack
-import net.minecraft.item.TieredItem
-import net.minecraft.util.DamageSource
-import net.minecraft.util.SoundEvents
-import net.minecraft.util.math.BlockPos
-import net.minecraft.util.math.MathHelper
-import net.minecraft.world.World
+import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.item.ItemStack
+import net.minecraft.core.BlockPos
+import net.minecraft.sounds.SoundEvents
+import net.minecraft.util.Mth
+import net.minecraft.world.damagesource.DamageSource
+import net.minecraft.world.entity.EquipmentSlot
+import net.minecraft.world.entity.LivingEntity
+import net.minecraft.world.entity.ai.attributes.Attribute
+import net.minecraft.world.entity.ai.attributes.AttributeModifier
+import net.minecraft.world.entity.ai.attributes.Attributes
+import net.minecraft.world.entity.decoration.ArmorStand
+import net.minecraft.world.entity.player.Player
+import net.minecraft.world.item.Tier
+import net.minecraft.world.item.TieredItem
+import net.minecraft.world.item.Vanishable
+import net.minecraft.world.item.enchantment.EnchantmentHelper
+import net.minecraft.world.level.Level
 import thedarkcolour.hardcoredungeons.util.toDegrees
 
 /**
  * Area of effect melee weapon.
  */
 open class ScytheItem(
-    tier: IItemTier,
+    tier: Tier,
     attackDamage: Int,
     attackSpeed: Float,
     builder: Properties,
-) : TieredItem(tier, builder), IVanishable {
+) : TieredItem(tier, builder), Vanishable {
     // total attack damage as float
     private val attackDamage = attackDamage + tier.attackDamageBonus
     // entity modifiers when held in primary hand
@@ -39,20 +39,20 @@ open class ScytheItem(
         Attributes.ATTACK_SPEED, AttributeModifier(BASE_ATTACK_SPEED_UUID, "Weapon modifier", attackSpeed.toDouble(), AttributeModifier.Operation.ADDITION),
     )
 
-    override fun canAttackBlock(state: BlockState, worldIn: World, pos: BlockPos, player: PlayerEntity): Boolean {
+    override fun canAttackBlock(state: BlockState, worldIn: Level, pos: BlockPos, player: Player): Boolean {
         return !player.isCreative
     }
 
     override fun hurtEnemy(stack: ItemStack, target: LivingEntity, playerIn: LivingEntity): Boolean {
-        if (playerIn is PlayerEntity) {
+        if (playerIn is Player) {
             val f2 = playerIn.getAttackStrengthScale(0.5f)
 
             // if the sweep should play
             // mostly from PlayerEntity for SwordItem with a few tweaks
             if (f2 > 0.05f && !playerIn.isSprinting && (playerIn.walkDist - playerIn.walkDistO < playerIn.speed)) {
                 for (living in playerIn.level.getEntitiesOfClass(LivingEntity::class.java, target.boundingBox.inflate(1.5, 0.25, 1.5))) {
-                    if (living != playerIn && living != target && !playerIn.isAlliedTo(living) && (living !is ArmorStandEntity || !living.isMarker) && playerIn.distanceToSqr(living) < 9.0) {
-                        living.knockback(0.4f, MathHelper.sin(toDegrees(playerIn.yRot)).toDouble(), (-MathHelper.cos(toDegrees(playerIn.yRot))).toDouble())
+                    if (living != playerIn && living != target && !playerIn.isAlliedTo(living) && (living !is ArmorStand || !living.isMarker) && playerIn.distanceToSqr(living) < 9.0) {
+                        living.knockback(0.4, Mth.sin(toDegrees(playerIn.yRot)).toDouble(), (-Mth.cos(toDegrees(playerIn.yRot))).toDouble())
                         living.hurt(DamageSource.playerAttack(playerIn), (1.0f + EnchantmentHelper.getSweepingDamageRatio(playerIn) * playerIn.getAttributeValue(Attributes.ATTACK_DAMAGE).toFloat()))
                     }
                 }
@@ -62,27 +62,27 @@ open class ScytheItem(
             }
         }
         stack.hurtAndBreak(1, playerIn) { entity ->
-            entity.broadcastBreakEvent(EquipmentSlotType.MAINHAND)
+            entity.broadcastBreakEvent(EquipmentSlot.MAINHAND)
         }
         return true
     }
 
     override fun mineBlock(
         stack: ItemStack,
-        worldIn: World,
+        worldIn: Level,
         state: BlockState,
         pos: BlockPos,
         entityLiving: LivingEntity,
     ): Boolean {
         if (state.getDestroySpeed(worldIn, pos) != 0.0f) {
             stack.hurtAndBreak(2, entityLiving) { entity ->
-                entity.broadcastBreakEvent(EquipmentSlotType.MAINHAND)
+                entity.broadcastBreakEvent(EquipmentSlot.MAINHAND)
             }
         }
         return true
     }
 
-    override fun getAttributeModifiers(slot: EquipmentSlotType, stack: ItemStack): Multimap<Attribute, AttributeModifier> {
-        return if (slot == EquipmentSlotType.MAINHAND) attributeModifiers else super.getAttributeModifiers(slot, stack)
+    override fun getAttributeModifiers(slot: EquipmentSlot, stack: ItemStack): Multimap<Attribute, AttributeModifier> {
+        return if (slot == EquipmentSlot.MAINHAND) attributeModifiers else super.getAttributeModifiers(slot, stack)
     }
 }

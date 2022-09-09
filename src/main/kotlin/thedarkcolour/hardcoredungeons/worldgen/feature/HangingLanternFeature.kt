@@ -1,21 +1,13 @@
 package thedarkcolour.hardcoredungeons.worldgen.feature
 
 import com.mojang.serialization.Codec
-import net.minecraft.util.math.BlockPos
-import net.minecraft.world.ISeedReader
-import net.minecraft.world.gen.ChunkGenerator
-import net.minecraft.world.gen.feature.BlockStateFeatureConfig
-import net.minecraft.world.gen.feature.Feature
+import net.minecraft.world.level.levelgen.feature.Feature
+import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext
+import net.minecraft.world.level.levelgen.feature.configurations.BlockStateConfiguration
 import java.util.*
 
-class HangingLanternFeature(codec: Codec<BlockStateFeatureConfig>) : Feature<BlockStateFeatureConfig>(codec) {
-    override fun place(
-        level: ISeedReader,
-        generator: ChunkGenerator,
-        random: Random,
-        pos: BlockPos,
-        config: BlockStateFeatureConfig
-    ): Boolean {
-        TODO()
+class HangingLanternFeature(codec: Codec<BlockStateConfiguration>) : Feature<BlockStateConfiguration>(codec) {
+    override fun place(p_159749_: FeaturePlaceContext<BlockStateConfiguration>): Boolean {
+        TODO("not implemented")
     }
 }

@@ -1,52 +1,52 @@
 package thedarkcolour.hardcoredungeons.block.plant.misc
 
-import net.minecraft.block.*
-import net.minecraft.item.BlockItemUseContext
-import net.minecraft.state.IntegerProperty
-import net.minecraft.state.StateContainer
-import net.minecraft.state.properties.BlockStateProperties
-import net.minecraft.state.properties.DoubleBlockHalf
-import net.minecraft.util.Direction
-import net.minecraft.util.math.BlockPos
-import net.minecraft.util.math.MathHelper
-import net.minecraft.util.math.shapes.ISelectionContext
-import net.minecraft.util.math.shapes.VoxelShape
-import net.minecraft.util.math.shapes.VoxelShapes
-import net.minecraft.world.IBlockReader
-import net.minecraft.world.World
-import net.minecraft.world.server.ServerWorld
+import net.minecraft.core.Direction
+import net.minecraft.core.BlockPos
+import net.minecraft.server.level.ServerLevel
+import net.minecraft.util.Mth
+import net.minecraft.util.RandomSource
+import net.minecraft.world.item.context.BlockPlaceContext
+import net.minecraft.world.level.BlockGetter
+import net.minecraft.world.level.Level
+import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.Blocks
+import net.minecraft.world.level.block.BonemealableBlock
+import net.minecraft.world.level.block.DoublePlantBlock
+import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.block.state.StateDefinition
+import net.minecraft.world.level.block.state.properties.BlockStateProperties
+import net.minecraft.world.level.block.state.properties.DoubleBlockHalf
+import net.minecraft.world.level.block.state.properties.IntegerProperty
+import net.minecraft.world.phys.shapes.CollisionContext
+import net.minecraft.world.phys.shapes.Shapes
+import net.minecraft.world.phys.shapes.VoxelShape
 import net.minecraftforge.common.ForgeHooks
 import net.minecraftforge.common.IPlantable
 import net.minecraftforge.common.PlantType
 import thedarkcolour.hardcoredungeons.block.base.properties.HProperties
-import java.util.*
 
-class ChiliPepperBlock(properties: HProperties) : DoublePlantBlock(properties.build()), IGrowable {
+class ChiliPepperBlock(properties: HProperties) : DoublePlantBlock(properties.build()), BonemealableBlock {
     init {
         registerDefaultState(stateDefinition.any().setValue(HALF, DoubleBlockHalf.LOWER))
     }
 
-    override fun getShape(state: BlockState, worldIn: IBlockReader, pos: BlockPos, context: ISelectionContext): VoxelShape {
+    override fun getShape(state: BlockState, worldIn: BlockGetter, pos: BlockPos, context: CollisionContext): VoxelShape {
         return if (state.getValue(HALF) == DoubleBlockHalf.UPPER) {
-            if (isTall(worldIn, pos, state)) {
+            if (isTall(state)) {
                 SHAPE_TOP
             } else {
-                VoxelShapes.empty()
+                Shapes.empty()
             }
         } else {
             SHAPE_BOTTOM
         }
     }
 
-    override fun getOffsetType(): OffsetType {
-        return OffsetType.NONE
-    }
-
-    override fun createBlockStateDefinition(builder: StateContainer.Builder<Block, BlockState>) {
+    override fun createBlockStateDefinition(builder: StateDefinition.Builder<Block, BlockState>) {
         builder.add(HALF, AGE)
     }
 
-    override fun mayPlaceOn(state: BlockState, worldIn: IBlockReader, pos: BlockPos): Boolean {
+    override fun mayPlaceOn(state: BlockState, worldIn: BlockGetter, pos: BlockPos): Boolean {
         return state.block == Blocks.FARMLAND
     }
 
@@ -60,18 +60,18 @@ class ChiliPepperBlock(properties: HProperties) : DoublePlantBlock(properties.bu
      *
      * @return if the plant is visually taller than 1 block.
      */
-    private fun isTall(worldIn: IBlockReader, pos: BlockPos, state: BlockState): Boolean {
+    private fun isTall(state: BlockState): Boolean {
         return state.getValue(AGE) > 4
     }
 
-    override fun isValidBonemealTarget(worldIn: IBlockReader, pos: BlockPos, state: BlockState, isClient: Boolean) = isNotMaxAge(state)
+    override fun isValidBonemealTarget(worldIn: BlockGetter, pos: BlockPos, state: BlockState, isClient: Boolean) = isNotMaxAge(state)
 
-    override fun isBonemealSuccess(worldIn: World, rand: Random, pos: BlockPos, state: BlockState): Boolean {
+    override fun isBonemealSuccess(worldIn: Level, rand: RandomSource, pos: BlockPos, state: BlockState): Boolean {
         return true
     }
 
-    override fun performBonemeal(worldIn: ServerWorld, rand: Random, pos: BlockPos, state: BlockState) {
-        val growth = (state.getValue(AGE) + MathHelper.nextInt(rand, 3, 6)).coerceAtMost(10)
+    override fun performBonemeal(worldIn: ServerLevel, rand: RandomSource, pos: BlockPos, state: BlockState) {
+        val growth = (state.getValue(AGE) + Mth.nextInt(rand, 3, 6)).coerceAtMost(10)
 
         if (state.getValue(HALF) == DoubleBlockHalf.LOWER) {
             worldIn.setBlockAndUpdate(pos, defaultBlockState().setValue(AGE, growth))
@@ -82,7 +82,7 @@ class ChiliPepperBlock(properties: HProperties) : DoublePlantBlock(properties.bu
         }
     }
 
-    override fun randomTick(state: BlockState, worldIn: ServerWorld, pos: BlockPos, rand: Random) {
+    override fun randomTick(state: BlockState, worldIn: ServerLevel, pos: BlockPos, rand: RandomSource) {
         if (state.getValue(HALF) == DoubleBlockHalf.LOWER) {
             if (isNotMaxAge(state)) {
                 val chance = getGrowthChance(state, worldIn, pos.mutable())
@@ -95,7 +95,7 @@ class ChiliPepperBlock(properties: HProperties) : DoublePlantBlock(properties.bu
         }
     }
 
-    private fun getGrowthChance(blockState: BlockState, worldIn: ServerWorld, pos: BlockPos.Mutable): Float {
+    private fun getGrowthChance(blockState: BlockState, worldIn: ServerLevel, pos: BlockPos.MutableBlockPos): Float {
         var f = 1.0f
 
         val state = if (blockState.getValue(HALF) == DoubleBlockHalf.UPPER) {
@@ -144,14 +144,14 @@ class ChiliPepperBlock(properties: HProperties) : DoublePlantBlock(properties.bu
         return f
     }
 
-    override fun getPlantType(world: IBlockReader?, pos: BlockPos?): PlantType {
+    override fun getPlantType(world: BlockGetter?, pos: BlockPos?): PlantType {
         return PlantType.CROP
     }
 
-    override fun getStateForPlacement(context: BlockItemUseContext): BlockState? {
+    override fun getStateForPlacement(context: BlockPlaceContext): BlockState? {
         val pos = context.clickedPos.above()
 
-        return if (context.level.getBlockState(pos).isAir(context.level, pos)) {
+        return if (context.level.getBlockState(pos).isAir) {
             super.getStateForPlacement(context)
         } else {
             null

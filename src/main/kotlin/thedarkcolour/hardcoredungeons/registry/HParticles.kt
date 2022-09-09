@@ -1,30 +1,25 @@
 package thedarkcolour.hardcoredungeons.registry
 
-import net.minecraft.client.Minecraft
 import net.minecraft.client.particle.FlameParticle
 import net.minecraft.client.particle.LavaParticle
-import net.minecraft.particles.BasicParticleType
-import net.minecraftforge.client.event.ParticleFactoryRegisterEvent
+import net.minecraft.core.particles.ParticleType
+import net.minecraft.core.particles.SimpleParticleType
+import net.minecraftforge.client.event.RegisterParticleProvidersEvent
 import net.minecraftforge.registries.ForgeRegistries
-import thedarkcolour.hardcoredungeons.HardcoreDungeons
 import thedarkcolour.hardcoredungeons.particle.SoulFrayParticle
-import thedarkcolour.kotlinforforge.forge.KDeferredRegister
 
 /**
- * @author TheDarkColour
+ * @author thedarkcolour
  */
-object HParticles {
-    val PARTICLE_TYPES = KDeferredRegister(ForgeRegistries.PARTICLE_TYPES, HardcoreDungeons.ID)
+object HParticles : HRegistry<ParticleType<*>>(ForgeRegistries.Keys.PARTICLE_TYPES) {
+    // todo make the soul_fray particle look better + rename to magic_bolt_trail
+    val SOUL_FRAY by register("soul_fray") { SimpleParticleType(false) }
+    val CASTLETON_TORCH_FLAME by register("castleton_torch_flame") { SimpleParticleType(false) }
+    val CASTLETON_CAMPFIRE_POP by register("castleton_campfire_pop") { SimpleParticleType(false) }
 
-    val SOUL_FRAY by PARTICLE_TYPES.registerObject("soul_fray") { BasicParticleType(false) }
-    val CASTLETON_TORCH_FLAME by PARTICLE_TYPES.registerObject("castleton_torch_flame") { BasicParticleType(false) }
-    val CASTLETON_CAMPFIRE_POP by PARTICLE_TYPES.registerObject("castleton_campfire_pop") { BasicParticleType(false) }
-
-    fun registerParticleFactories(event: ParticleFactoryRegisterEvent) {
-        val manager = Minecraft.getInstance().particleEngine
-
-        manager.register(SOUL_FRAY, SoulFrayParticle::Factory)
-        manager.register(CASTLETON_TORCH_FLAME, FlameParticle::Factory)
-        manager.register(CASTLETON_CAMPFIRE_POP, LavaParticle::Factory)
+    fun registerParticleFactories(event: RegisterParticleProvidersEvent) {
+        event.register(SOUL_FRAY, SoulFrayParticle::Factory)
+        event.register(CASTLETON_TORCH_FLAME, FlameParticle::Provider)
+        event.register(CASTLETON_CAMPFIRE_POP, LavaParticle::Provider)
     }
 }

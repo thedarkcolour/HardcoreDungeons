@@ -1,13 +1,13 @@
 package thedarkcolour.hardcoredungeons.block.structure
 
-import net.minecraft.block.Block
-import net.minecraft.block.BlockState
+import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.item.BlockItemUseContext
 import net.minecraft.state.EnumProperty
 import net.minecraft.state.StateContainer
 import net.minecraft.state.properties.BlockStateProperties.HORIZONTAL_FACING
 import net.minecraft.state.properties.BlockStateProperties.OPEN
-import net.minecraft.util.Direction
+import net.minecraft.core.Direction
 import net.minecraft.util.IStringSerializable
 import thedarkcolour.hardcoredungeons.block.base.properties.HProperties
 import thedarkcolour.hardcoredungeons.block.decoration.HorizontalBlock

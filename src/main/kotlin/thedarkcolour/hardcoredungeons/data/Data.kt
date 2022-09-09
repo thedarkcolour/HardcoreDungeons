@@ -1,5 +1,6 @@
 package thedarkcolour.hardcoredungeons.data
 
+import net.minecraftforge.data.event.GatherDataEvent
 import net.minecraftforge.eventbus.api.SubscribeEvent
 import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.event.lifecycle.GatherDataEvent
@@ -9,7 +10,7 @@ import net.minecraftforge.fml.event.lifecycle.GatherDataEvent
  *
  * Data providers for Hardcore Dungeons.
  *
- * @author TheDarkColour
+ * @author thedarkcolour
  */
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 object Data {

@@ -1,18 +1,18 @@
 package thedarkcolour.hardcoredungeons.data
 
-import net.minecraft.block.Block
 import net.minecraft.data.DataGenerator
-import net.minecraft.state.properties.BlockStateProperties
-import net.minecraft.util.IItemProvider
-import net.minecraft.util.ResourceLocation
+import net.minecraft.resources.ResourceLocation
+import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.StairBlock
+import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.minecraftforge.client.model.generators.BlockModelBuilder
 import net.minecraftforge.client.model.generators.BlockStateProvider
 import net.minecraftforge.client.model.generators.ConfiguredModel
 import net.minecraftforge.client.model.generators.ModelFile
 import net.minecraftforge.common.data.ExistingFileHelper
 import thedarkcolour.hardcoredungeons.HardcoreDungeons
-import thedarkcolour.hardcoredungeons.block.base.HStairsBlock
 import thedarkcolour.hardcoredungeons.data.modelgen.ModelType
+import thedarkcolour.hardcoredungeons.util.registryName
 
 class ModelGenerator(gen: DataGenerator, private val helper: ExistingFileHelper) : BlockStateProvider(gen, HardcoreDungeons.ID, helper) {
     override fun registerStatesAndModels() {
@@ -58,7 +58,7 @@ class ModelGenerator(gen: DataGenerator, private val helper: ExistingFileHelper)
     }
 
     private fun stairs(stairs: Block, block: Block) {
-        if (stairs is HStairsBlock) {
+        if (stairs is StairBlock) {
             stairsBlock(stairs, ResourceLocation(HardcoreDungeons.ID, "block/" + block.registryName!!.path))
             blockItemModel(stairs)
         } else {
@@ -120,7 +120,7 @@ class ModelGenerator(gen: DataGenerator, private val helper: ExistingFileHelper)
             .setModels(ConfiguredModel(getModelFile(m)))
     }
 
-    fun simpleItem(item: IItemProvider) {
+    fun simpleItem(item: ItemLike) {
         val i = item.asItem()
         simpleItem(i.registryName!!.path)
     }

@@ -1,6 +1,6 @@
 package thedarkcolour.hardcoredungeons.data
 
-import net.minecraft.block.Block
+import net.minecraft.world.level.block.Block
 import net.minecraft.data.BlockTagsProvider
 import net.minecraft.data.DataGenerator
 import net.minecraft.data.ItemTagsProvider

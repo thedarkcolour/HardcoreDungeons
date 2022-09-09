@@ -6,20 +6,24 @@ import net.minecraft.entity.MobEntity
 import net.minecraft.entity.SpawnReason
 import net.minecraft.entity.ai.goal.Goal
 import net.minecraft.entity.ai.goal.MeleeAttackGoal
-import net.minecraft.entity.ai.goal.PanicGoal
-import net.minecraft.item.ItemStack
+import net.minecraft.world.item.ItemStack
 import net.minecraft.item.crafting.Ingredient
 import net.minecraft.nbt.CompoundNBT
 import net.minecraft.potion.EffectInstance
 import net.minecraft.potion.Effects
-import net.minecraft.util.math.BlockPos
+import net.minecraft.core.BlockPos
 import net.minecraft.world.DifficultyInstance
 import net.minecraft.world.IServerWorld
 import net.minecraft.world.IWorldReader
-import net.minecraft.world.World
+import net.minecraft.world.entity.EntityType
+import net.minecraft.world.entity.ai.goal.MeleeAttackGoal
+import net.minecraft.world.entity.ai.goal.PanicGoal
+import net.minecraft.world.item.crafting.Ingredient
+import net.minecraft.world.level.Level
+import net.minecraft.world.level.LevelReader
 import thedarkcolour.hardcoredungeons.registry.HBlocks
 
-class CastletonDeerEntity(type: EntityType<CastletonDeerEntity>, worldIn: World) : DeerEntity(type, worldIn) {
+class CastletonDeerEntity(type: EntityType<CastletonDeerEntity>, worldIn: Level) : DeerEntity(type, worldIn) {
     private fun addGoals(deerType: DeerType) {
         // goals must be registered later because dataManager is null when goals are normally registered.
         // without dataManager it is impossible to distinguish between doe and stag
@@ -43,7 +47,7 @@ class CastletonDeerEntity(type: EntityType<CastletonDeerEntity>, worldIn: World)
     }
 
     // fix deer not spawning on castleton grass during world gen
-    override fun getWalkTargetValue(pos: BlockPos, level: IWorldReader): Float {
+    override fun getWalkTargetValue(pos: BlockPos, level: LevelReader): Float {
         return if (level.getBlockState(pos.below()).`is`(HBlocks.CASTLETON_SOIL.grass)) 10.0f else level.getBrightness(pos) - 0.5f
     }
 

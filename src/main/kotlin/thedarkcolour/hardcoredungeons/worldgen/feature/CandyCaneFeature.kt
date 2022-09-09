@@ -1,24 +1,26 @@
 package thedarkcolour.hardcoredungeons.worldgen.feature
 
 import com.mojang.serialization.Codec
-import net.minecraft.state.properties.BlockStateProperties.AXIS
-import net.minecraft.state.properties.BlockStateProperties.FACING
-import net.minecraft.util.Direction
-import net.minecraft.util.math.BlockPos
-import net.minecraft.world.ISeedReader
-import net.minecraft.world.gen.ChunkGenerator
-import net.minecraft.world.gen.feature.Feature
-import net.minecraft.world.gen.feature.NoFeatureConfig
+import net.minecraft.world.level.block.state.properties.BlockStateProperties.AXIS
+import net.minecraft.world.level.block.state.properties.BlockStateProperties.FACING
+import net.minecraft.core.Direction
+import net.minecraft.core.BlockPos
+import net.minecraft.util.RandomSource
+import net.minecraft.world.level.WorldGenLevel
+import net.minecraft.world.level.levelgen.feature.Feature
+import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration
 import thedarkcolour.hardcoredungeons.registry.HBlocks
-import java.util.*
 
-class CandyCaneFeature(codec: Codec<NoFeatureConfig>) : Feature<NoFeatureConfig>(codec) {
-    override fun place(
-        worldIn: ISeedReader,
-        generator: ChunkGenerator,
-        rand: Random,
+class CandyCaneFeature : Feature<NoneFeatureConfiguration>(NoneFeatureConfiguration.CODEC) {
+    override fun place(ctx: FeaturePlaceContext<NoneFeatureConfiguration>): Boolean {
+        return place(ctx.level(), ctx.random(), ctx.origin())
+    }
+
+    private fun place(
+        worldIn: WorldGenLevel,
+        rand: RandomSource,
         pos: BlockPos,
-        config: NoFeatureConfig,
     ): Boolean {
         // don't spawn in the water
         if (!worldIn.getBlockState(pos.below()).canOcclude()) return false

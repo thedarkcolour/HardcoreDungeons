@@ -5,7 +5,7 @@ import net.minecraft.item.Rarity
 import net.minecraft.util.text.TextFormatting
 
 /**
- * @author TheDarkColour
+ * @author thedarkcolour
  */
 object ItemMisc {
 

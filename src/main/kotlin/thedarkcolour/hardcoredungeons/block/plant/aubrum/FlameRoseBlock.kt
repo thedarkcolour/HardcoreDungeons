@@ -1,15 +1,15 @@
 package thedarkcolour.hardcoredungeons.block.plant.aubrum
 
-import net.minecraft.block.BlockState
-import net.minecraft.particles.ParticleTypes
-import net.minecraft.util.math.BlockPos
-import net.minecraft.world.World
+import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.core.BlockPos
+import net.minecraft.core.particles.ParticleTypes
+import net.minecraft.util.RandomSource
+import net.minecraft.world.level.Level
 import thedarkcolour.hardcoredungeons.block.plant.FlowerBlock
 import thedarkcolour.hardcoredungeons.block.plant.PlantProperties
-import java.util.*
 
 class FlameRoseBlock(properties: PlantProperties) : FlowerBlock(properties) {
-    override fun animateTick(state: BlockState, worldIn: World, pos: BlockPos, rand: Random?) {
+    override fun animateTick(state: BlockState, worldIn: Level, pos: BlockPos, rand: RandomSource) {
         val d0 = state.getOffset(worldIn, pos).x + pos.x + 0.5
         val d1 = state.getOffset(worldIn, pos).y + pos.y + 0.96
         val d2 = state.getOffset(worldIn, pos).z + pos.z + 0.5

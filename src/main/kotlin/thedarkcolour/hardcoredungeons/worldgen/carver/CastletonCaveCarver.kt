@@ -1,19 +1,24 @@
 package thedarkcolour.hardcoredungeons.worldgen.carver
 
-import net.minecraft.block.BlockState
-import net.minecraft.block.Blocks
-import net.minecraft.util.Direction
-import net.minecraft.util.math.BlockPos
+import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.block.Blocks
+import net.minecraft.core.Direction
+import net.minecraft.core.BlockPos
+import net.minecraft.core.Direction
 import net.minecraft.world.biome.Biome
 import net.minecraft.world.chunk.IChunk
 import net.minecraft.world.gen.carver.CaveWorldCarver
 import net.minecraft.world.gen.feature.ProbabilityConfig
+import net.minecraft.world.level.biome.Biome
+import net.minecraft.world.level.block.Blocks
+import net.minecraft.world.level.levelgen.carver.CaveCarverConfiguration
+import net.minecraft.world.level.levelgen.carver.CaveWorldCarver
 import org.apache.commons.lang3.mutable.MutableBoolean
 import thedarkcolour.hardcoredungeons.registry.HBlocks
 import java.util.*
 import java.util.function.Function
 
-class CastletonCaveCarver : CaveWorldCarver(ProbabilityConfig.CODEC, 256), ICarver {
+class CastletonCaveCarver : CaveWorldCarver(CaveCarverConfiguration.CODEC), ICarver {
     init {
         replaceableBlocks = CASTLETON_BLOCKS_FOR_CARVING
     }
@@ -59,7 +64,7 @@ class CastletonCaveCarver : CaveWorldCarver(ProbabilityConfig.CODEC, 256), ICarv
                         if (p_230358_16_.isTrue) {
                             pos3.setWithOffset(pos1, Direction.DOWN)
                             if (chunk.getBlockState(pos3).`is`(Blocks.DIRT)) {
-                                chunk.setBlockState(pos3, getBiome.apply(pos1).generationSettings.surfaceBuilderConfig.topMaterial, false)
+                                chunk.setBlockState(pos3, getBiome.apply(pos1).generationSettings.topMaterial, false)
                             }
                         }
                     }

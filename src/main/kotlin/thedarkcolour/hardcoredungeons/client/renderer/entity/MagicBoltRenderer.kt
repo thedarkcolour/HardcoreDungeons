@@ -1,16 +1,16 @@
 package thedarkcolour.hardcoredungeons.client.renderer.entity
 
-import com.mojang.blaze3d.matrix.MatrixStack
-import net.minecraft.client.renderer.IRenderTypeBuffer
+import com.mojang.blaze3d.vertex.PoseStack
+import net.minecraft.client.renderer.MultiBufferSource
 import net.minecraft.client.renderer.entity.EntityRenderer
-import net.minecraft.client.renderer.entity.EntityRendererManager
+import net.minecraft.client.renderer.entity.EntityRendererProvider
 import net.minecraft.client.renderer.texture.OverlayTexture
-import net.minecraft.util.ResourceLocation
+import net.minecraft.resources.ResourceLocation
 import thedarkcolour.hardcoredungeons.client.model.entity.MagicBoltModel
 import thedarkcolour.hardcoredungeons.entity.projectile.magic.MagicBoltEntity
 import thedarkcolour.hardcoredungeons.util.modLoc
 
-class MagicBoltRenderer(manager: EntityRendererManager) : EntityRenderer<MagicBoltEntity>(manager) {
+class MagicBoltRenderer(ctx: EntityRendererProvider.Context) : EntityRenderer<MagicBoltEntity>(ctx) {
     val model = MagicBoltModel()
 
     override fun getTextureLocation(entity: MagicBoltEntity): ResourceLocation {
@@ -21,8 +21,8 @@ class MagicBoltRenderer(manager: EntityRendererManager) : EntityRenderer<MagicBo
         entity: MagicBoltEntity,
         entityYaw: Float,
         partialTicks: Float,
-        stack: MatrixStack,
-        buffer: IRenderTypeBuffer,
+        stack: PoseStack,
+        buffer: MultiBufferSource,
         light: Int
     ) {
         stack.pushPose()

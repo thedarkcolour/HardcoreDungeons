@@ -1,31 +1,21 @@
-buildscript {
-    repositories {
-        maven { url = 'https://maven.minecraftforge.net' }
-        maven { url = 'https://maven.parchmentmc.org' }
-        mavenCentral()
-    }
-    dependencies {
-        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '4.+', changing: true
-        // Make sure this version matches the one included in Kotlin for Forge
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.10"
-        // OPTIONAL Gradle plugin for Kotlin Serialization
-        classpath "org.jetbrains.kotlin:kotlin-serialization:1.6.0"
-        //classpath "org.parchmentmc:librarian:1.+"
-    }
+plugins {
+    id 'org.jetbrains.kotlin.jvm' version '1.7.10'
+    id 'net.minecraftforge.gradle' version '5.1.+'
+    id 'org.parchmentmc.librarian.forgegradle' version '1.+'
+    //id 'wtf.gofancy.koremods.gradle' version '0.1.19'
 }
-apply plugin: 'net.minecraftforge.gradle'
-apply plugin: 'kotlin'
-//apply plugin: 'org.parchmentmc.librarian.forgegradle'
+
+apply from: 'https://raw.githubusercontent.com/thedarkcolour/KotlinForForge/site/thedarkcolour/kotlinforforge/gradle/kff-3.7.1.gradle'
 
 version = '1.0.0'
-group = 'thedarkcolour.hardcoredungeons'
+group = 'thedarkcolour'
 archivesBaseName = 'hardcoredungeons'
 
-java.toolchain.languageVersion = JavaLanguageVersion.of(8)
+java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
 minecraft {
     // Change to your preferred mappings
-    mappings channel: 'official', version: '1.16.5'
+    mappings channel: 'parchment', version: '1.18.2-2022.07.17-1.19'
     // Add your AccessTransformer
     accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
 
@@ -79,6 +69,7 @@ minecraft {
 
 // Include assets and data from data generators
 sourceSets.main.resources { srcDirs 'src/generated/resources/' }
+sourceSets.main.java { srcDirs 'src/util/java' }
 
 repositories {
     mavenCentral()
@@ -89,17 +80,17 @@ repositories {
 	maven {
         name = 'curios'
         url = 'https://maven.theillusivec4.top/'
-        content {includeGroup "top.theillusivec4.curios" }
+        content { includeGroup "top.theillusivec4.curios" }
     }
     maven {
         name = 'ctm'
         url = 'https://maven.tterrag.com/'
-        content {includeGroup "team.chisel.ctm" }
+        content { includeGroup "team.chisel.ctm" }
     }
     maven {
         name = 'jei'
         url = 'https://dvs1.progwml6.com/files/maven/'
-        content {includeGroup "mezz.jei" }
+        content { includeGroup "mezz.jei" }
     }
     maven {
         name = "TOP"
@@ -107,36 +98,45 @@ repositories {
     }
     maven {
         url = 'https://www.cursemaven.com'
-        content {includeGroup "curse.maven" }
+        content { includeGroup "curse.maven" }
     }
+    //maven {
+    //    name = 'Garden of Fancy'
+    //    url = 'https://maven.gofancy.wtf/releases'
+    //}
 }
 // Check duplicate files
 //processResources.setDuplicatesStrategy(DuplicatesStrategy.WARN)
 
 dependencies {
     // Use the latest version of Minecraft Forge
-    minecraft ('net.minecraftforge:forge:1.16.5-36.2.19')
+    minecraft('net.minecraftforge:forge:1.19.2-43.1.15')
 
-    // Use the latest version of KotlinForForge
-    implementation('thedarkcolour:kotlinforforge:1.17.0')
+    // Koremods
+    //koremods group: 'wtf.gofancy.koremods', name: 'koremods-modlauncher', version: '0.4.10'
 
     // curios
-    implementation fg.deobf('top.theillusivec4.curios:curios-forge:1.16.5-4.0.5.2')
+    implementation fg.deobf('top.theillusivec4.curios:curios-forge:1.19.2-5.1.1.0')
 
     // ctm
-    implementation fg.deobf('team.chisel.ctm:CTM:MC1.16.1-1.1.2.6')
+    //implementation fg.deobf('team.chisel.ctm:CTM:MC1.16.1-1.1.2.6')
 
     // jei
-    compileOnly fg.deobf('mezz.jei:jei-1.16.5:7.7.0.106:api')
-    runtimeOnly fg.deobf('mezz.jei:jei-1.16.5:7.7.0.106')
+    implementation fg.deobf('mezz.jei:jei-1.19.2-forge:11.2.0.246')
 
     // biomes o plenty
-    implementation fg.deobf('curse.maven:biomesoplenty-220318:3360574')
-    implementation fg.deobf('curse.maven:biomesoplenty-sources-220318:3360575')
+    //implementation fg.deobf('curse.maven:biomesoplenty-220318:3360574')
+    //implementation fg.deobf('curse.maven:biomesoplenty-sources-220318:3360575')
 
     // the one probe
-    implementation(fg.deobf('mcjty.theoneprobe:TheOneProbe-1.16:1.16-3.1.4-22'))
+    implementation fg.deobf('curse.maven:top-245211:3965693')
 }
+
+//koremods {
+//    workerDaemonOptions {
+//        it.maxHeapSize = '1G' // Increase worker daemon heap size as needed
+//    }
+//}
 
 jar {
     manifest {

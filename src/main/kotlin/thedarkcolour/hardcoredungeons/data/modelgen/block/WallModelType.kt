@@ -1,11 +1,11 @@
 package thedarkcolour.hardcoredungeons.data.modelgen.block
 
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap
-import net.minecraft.block.Block
+import net.minecraft.world.level.block.Block
 import net.minecraft.block.WallHeight
 import net.minecraft.state.EnumProperty
 import net.minecraft.state.properties.BlockStateProperties
-import net.minecraft.util.Direction
+import net.minecraft.core.Direction
 import net.minecraftforge.client.model.generators.ModelFile
 import thedarkcolour.hardcoredungeons.data.ModelGenerator
 import thedarkcolour.hardcoredungeons.util.modLoc
@@ -19,7 +19,7 @@ import thedarkcolour.hardcoredungeons.util.modLoc
  *
  * You do not need to add an item model yourself.
  *
- * @author TheDarkColour
+ * @author thedarkcolour
  */
 class WallModelType : BlockModelType<Block>() {
     /**

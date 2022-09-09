@@ -1,8 +1,8 @@
 package thedarkcolour.hardcoredungeons.data.modelgen.block
 
-import net.minecraft.block.Block
+import net.minecraft.world.level.block.Block
 import net.minecraft.state.properties.BlockStateProperties
-import net.minecraft.util.Direction
+import net.minecraft.core.Direction
 import net.minecraftforge.client.model.generators.ConfiguredModel
 import net.minecraftforge.client.model.generators.ModelFile
 import thedarkcolour.hardcoredungeons.data.ModelGenerator

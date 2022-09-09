@@ -1,21 +1,17 @@
 package thedarkcolour.hardcoredungeons.tileentity
 
-import net.minecraft.block.BlockState
-import net.minecraft.nbt.CompoundNBT
-import net.minecraft.nbt.ListNBT
-import net.minecraft.nbt.NBTUtil
-import net.minecraft.tileentity.TileEntity
-import net.minecraft.util.math.BlockPos
-import net.minecraftforge.common.util.Constants
+import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.core.BlockPos
+import net.minecraft.world.level.block.entity.BlockEntity
 import thedarkcolour.hardcoredungeons.registry.HBlocks
 import thedarkcolour.hardcoredungeons.registry.HTileEntities
 
-class SootTrapControllerTileEntity : TileEntity(HTileEntities.SOOT_TRAP_CONTROLLER) {
+class SootTrapControllerTileEntity : BlockEntity(HTileEntities.SOOT_TRAP_CONTROLLER) {
     val paths = arrayListOf<BlockPos>()
 
     fun activate() {
         paths.forEachIndexed { i, pos ->
-            level!!.blockTicks.scheduleTick(pos, HBlocks.SOOT, 30 + (i * 5))
+            level!!.scheduleTick(pos, HBlocks.SOOT, 30 + (i * 5))
         }
     }
 

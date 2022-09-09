@@ -1,48 +1,50 @@
 package thedarkcolour.hardcoredungeons.block.structure
 
-import net.minecraft.block.Block
-import net.minecraft.block.BlockState
-import net.minecraft.block.Blocks
-import net.minecraft.pathfinding.PathType
+import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.tags.BlockTags
-import net.minecraft.util.Direction
-import net.minecraft.util.SoundCategory
-import net.minecraft.util.SoundEvents
-import net.minecraft.util.math.BlockPos
-import net.minecraft.world.IBlockReader
-import net.minecraft.world.World
-import net.minecraft.world.server.ServerWorld
+import net.minecraft.core.BlockPos
+import net.minecraft.core.Direction
+import net.minecraft.server.level.ServerLevel
+import net.minecraft.sounds.SoundEvents
+import net.minecraft.sounds.SoundSource
+import net.minecraft.util.RandomSource
+import net.minecraft.world.level.BlockGetter
+import net.minecraft.world.level.Level
+import net.minecraft.world.level.LevelReader
+import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.Blocks
+import net.minecraft.world.level.pathfinder.PathComputationType
 import thedarkcolour.hardcoredungeons.block.base.HBlock
 import thedarkcolour.hardcoredungeons.block.base.properties.HProperties
 import thedarkcolour.hardcoredungeons.registry.HBlocks
 import java.util.*
 
 class SafeSootBlock(properties: HProperties) : HBlock(properties) {
-    override fun neighborChanged(state: BlockState, level: World, pos: BlockPos, block: Block, fromPos: BlockPos, p_220069_6_: Boolean) {
+    override fun neighborChanged(state: BlockState, level: Level, pos: BlockPos, block: Block, fromPos: BlockPos, p_220069_6_: Boolean) {
         if (level.getBlockState(fromPos).`is`(BlockTags.FIRE)) {
             if (pos.above() == fromPos) {
-                level.blockTicks.scheduleTick(pos, HBlocks.SOOT, 40)
+                level.scheduleTick(pos, HBlocks.SOOT, 40)
             }
         }
     }
 
-    override fun tick(p_225534_1_: BlockState, level: ServerWorld, pos: BlockPos, p_225534_4_: Random) {
+    override fun tick(state: BlockState, level: ServerLevel, pos: BlockPos, rand: RandomSource) {
         val above = pos.above()
 
         if (level.getBlockState(above).`is`(BlockTags.FIRE)) {
             level.removeBlock(above, false)
-            level.playSound(null, pos.x + 0.5, pos.y.toDouble(), pos.z + 0.5, SoundEvents.FIRE_EXTINGUISH, SoundCategory.BLOCKS,
+            level.playSound(null, pos.x + 0.5, pos.y.toDouble(), pos.z + 0.5, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS,
                 0.5f,
-                2.6f + (p_225534_4_.nextFloat() - p_225534_4_.nextFloat()) * 0.8f)
+                2.6f + (rand.nextFloat() - rand.nextFloat()) * 0.8f)
         } else {
             level.setBlockAndUpdate(pos.above(), Blocks.FIRE.defaultBlockState())
-            level.playSound(null, pos.x + 0.5, pos.y.toDouble(), pos.z + 0.5, SoundEvents.FIRE_EXTINGUISH, SoundCategory.BLOCKS,
+            level.playSound(null, pos.x + 0.5, pos.y.toDouble(), pos.z + 0.5, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS,
                 0.5f,
-                2.6f + (p_225534_4_.nextFloat() - p_225534_4_.nextFloat()) * 0.8f)
+                2.6f + (rand.nextFloat() - rand.nextFloat()) * 0.8f)
         }
     }
 
-    override fun isFlammable(state: BlockState?, world: IBlockReader?, pos: BlockPos?, face: Direction?): Boolean {
+    override fun isFlammable(state: BlockState?, world: LevelReader?, pos: BlockPos?, face: Direction?): Boolean {
         return face == Direction.UP
     }
 
@@ -50,7 +52,7 @@ class SafeSootBlock(properties: HProperties) : HBlock(properties) {
         return true
     }
 
-    override fun isPathfindable(p_196266_1_: BlockState?, p_196266_2_: IBlockReader?, p_196266_3_: BlockPos?, p_196266_4_: PathType?): Boolean {
+    override fun isPathfindable(p_196266_1_: BlockState?, p_196266_2_: BlockGetter?, p_196266_3_: BlockPos?, p_196266_4_: PathComputationType?): Boolean {
         return false
     }
 }

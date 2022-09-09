@@ -1,6 +1,6 @@
 package thedarkcolour.hardcoredungeons.data.modelgen.block
 
-import net.minecraft.block.Block
+import net.minecraft.world.level.block.Block
 import thedarkcolour.hardcoredungeons.data.ModelGenerator
 
 class SootModelType : BlockModelType<Block>() {

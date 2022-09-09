@@ -1,6 +1,6 @@
 package thedarkcolour.hardcoredungeons.block.combo
 
-import net.minecraft.data.IFinishedRecipe
+import net.minecraft.data.recipes.FinishedRecipe
 import net.minecraftforge.common.Tags
 import thedarkcolour.hardcoredungeons.block.base.properties.HProperties
 import thedarkcolour.hardcoredungeons.data.RecipeGenerator.Companion.stonecutterRecipes
@@ -21,7 +21,7 @@ class PolishedStoneBrickCombo(name: String, props: HProperties) : ICombo {
         tags.block(Tags.Blocks.STONE, Tags.Items.STONE, stone.block)
     }
 
-    override fun addRecipes(consumer: Consumer<IFinishedRecipe>) {
+    override fun addRecipes(consumer: Consumer<FinishedRecipe>) {
         consumer.stonecutterRecipes(base = stone.block, stone.stairs, brick.block, brick.stairs, brick.fence, brick.wall, polished.block, polished.stairs, polished.wall)
         consumer.stonecutterRecipes(base = brick.block, brick.stairs, brick.fence, polished.block, polished.stairs, polished.wall)
         consumer.stonecutterRecipes(base = polished.block, polished.stairs)

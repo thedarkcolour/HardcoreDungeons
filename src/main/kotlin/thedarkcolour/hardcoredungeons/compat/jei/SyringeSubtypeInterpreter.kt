@@ -2,13 +2,13 @@ package thedarkcolour.hardcoredungeons.compat.jei
 
 import mezz.jei.api.ingredients.subtypes.IIngredientSubtypeInterpreter
 import mezz.jei.api.ingredients.subtypes.UidContext
-import net.minecraft.item.ItemStack
-import net.minecraft.potion.PotionUtils
+import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.alchemy.PotionUtils
 
 // From JEI's PotionSubtypeInterpreter class
 object SyringeSubtypeInterpreter : IIngredientSubtypeInterpreter<ItemStack> {
 
-    override fun apply(stack: ItemStack, context: UidContext?): String {
+    override fun apply(stack: ItemStack, context: UidContext): String {
         return if (!stack.hasTag()) {
             ""
         } else {

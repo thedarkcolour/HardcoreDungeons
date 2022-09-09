@@ -1,40 +1,45 @@
 package thedarkcolour.hardcoredungeons.entity.castleton.knightlyjuggernaut
 
-import net.minecraft.entity.AgeableEntity
-import net.minecraft.entity.EntityType
-import net.minecraft.entity.LivingEntity
-import net.minecraft.entity.ai.attributes.AttributeModifierMap
-import net.minecraft.entity.ai.attributes.Attributes
-import net.minecraft.entity.ai.goal.*
-import net.minecraft.entity.passive.AnimalEntity
-import net.minecraft.entity.player.PlayerEntity
-import net.minecraft.world.World
-import net.minecraft.world.server.ServerWorld
+import net.minecraft.server.level.ServerLevel
+import net.minecraft.world.entity.AgeableMob
+import net.minecraft.world.entity.EntityType
+import net.minecraft.world.entity.LivingEntity
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier
+import net.minecraft.world.entity.ai.attributes.Attributes
+import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal
+import net.minecraft.world.entity.ai.goal.MeleeAttackGoal
+import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal
+import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal
+import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal
+import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal
+import net.minecraft.world.entity.animal.Animal
+import net.minecraft.world.entity.player.Player
+import net.minecraft.world.level.Level
 import net.minecraftforge.common.ForgeMod
 import thedarkcolour.hardcoredungeons.registry.HEntities
 
-class KnightlyJuggernautEntity(type: EntityType<KnightlyJuggernautEntity>, worldIn: World) : AnimalEntity(type, worldIn) {
-    override fun getBreedOffspring(worldIn: ServerWorld, ageable: AgeableEntity): KnightlyJuggernautEntity {
+class KnightlyJuggernautEntity(type: EntityType<KnightlyJuggernautEntity>, level: Level) : Animal(type, level) {
+    override fun getBreedOffspring(level: ServerLevel, ageable: AgeableMob): KnightlyJuggernautEntity {
         return HEntities.KNIGHTLY_JUGGERNAUT.create(level)!!
     }
 
     override fun registerGoals() {
-        goalSelector.addGoal(0, WaterAvoidingRandomWalkingGoal(this, 0.2))
-        goalSelector.addGoal(2, LookAtGoal(this, PlayerEntity::class.java, 8.0F))
-        goalSelector.addGoal(3, LookRandomlyGoal(this))
+        goalSelector.addGoal(0, WaterAvoidingRandomStrollGoal(this, 0.2))
+        goalSelector.addGoal(2, LookAtPlayerGoal(this, Player::class.java, 8.0F))
+        goalSelector.addGoal(3, RandomLookAroundGoal(this))
 
         targetSelector.addGoal(1, object : MeleeAttackGoal(this, 0.4, true) {
             override fun getAttackReachSqr(living: LivingEntity): Double {
                 return 2.0f + super.getAttackReachSqr(living)
             }
         })
-        targetSelector.addGoal(0, NearestAttackableTargetGoal(this, PlayerEntity::class.java, true))
+        targetSelector.addGoal(0, NearestAttackableTargetGoal(this, Player::class.java, true))
 
         targetSelector.addGoal(1, HurtByTargetGoal(this))
     }
 
     companion object {
-        val ATTRIBUTES: AttributeModifierMap.MutableAttribute = AttributeModifierMap.builder()
+        val ATTRIBUTES: AttributeSupplier.Builder = AttributeSupplier.builder()
             .add(Attributes.MAX_HEALTH, 80.0)
             .add(Attributes.KNOCKBACK_RESISTANCE, 0.5)
             .add(Attributes.MOVEMENT_SPEED)

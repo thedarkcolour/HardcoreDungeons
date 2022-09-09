@@ -1,14 +1,13 @@
 package thedarkcolour.hardcoredungeons.block.base
 
-import net.minecraft.block.AbstractBlock
-import net.minecraft.block.Block
-import net.minecraft.block.BlockState
-import net.minecraft.util.math.BlockPos
-import net.minecraft.util.math.shapes.ISelectionContext
-import net.minecraft.util.math.shapes.VoxelShape
-import net.minecraft.util.math.shapes.VoxelShapes
-import net.minecraft.world.IBlockReader
-import net.minecraft.world.IWorldReader
+import net.minecraft.core.BlockPos
+import net.minecraft.world.level.BlockGetter
+import net.minecraft.world.level.LevelReader
+import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.phys.shapes.CollisionContext
+import net.minecraft.world.phys.shapes.Shapes
+import net.minecraft.world.phys.shapes.VoxelShape
 import thedarkcolour.hardcoredungeons.block.base.properties.BlockProperties
 import thedarkcolour.hardcoredungeons.block.base.properties.HProperties
 
@@ -18,19 +17,19 @@ import thedarkcolour.hardcoredungeons.block.base.properties.HProperties
  * @property enchantmentPower the enchantment power of this block
  * @property shape the (collision and selection) shape of this block
  *
- * @author TheDarkColour
+ * @author thedarkcolour
  */
 open class HBlock(properties: HProperties) : Block(properties.build()) {
     /** The [VoxelShape] used for collision and selection boxes. */
-    val shape: VoxelShape = properties.getShape() ?: VoxelShapes.block()
+    val shape: VoxelShape = properties.getShape() ?: Shapes.block()
     /** The enchantment power of this block. */
     private val enchantmentPower = properties.getEnchantmentPower()
 
-    override fun getEnchantPowerBonus(state: BlockState?, world: IWorldReader?, pos: BlockPos?): Float {
+    override fun getEnchantPowerBonus(state: BlockState?, world: LevelReader?, pos: BlockPos?): Float {
         return enchantmentPower
     }
 
-    override fun getShape(state: BlockState?, worldIn: IBlockReader?, pos: BlockPos?, ctx: ISelectionContext?): VoxelShape {
+    override fun getShape(state: BlockState?, level: BlockGetter?, pos: BlockPos?, ctx: CollisionContext?): VoxelShape {
         return shape
     }
 

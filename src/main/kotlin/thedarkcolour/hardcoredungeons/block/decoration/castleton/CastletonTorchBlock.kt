@@ -1,19 +1,20 @@
 package thedarkcolour.hardcoredungeons.block.decoration.castleton
 
-import net.minecraft.block.Block
-import net.minecraft.block.BlockState
-import net.minecraft.block.TorchBlock
-import net.minecraft.block.WallTorchBlock
-import net.minecraft.entity.player.PlayerEntity
-import net.minecraft.item.BlockItemUseContext
-import net.minecraft.item.ItemStack
-import net.minecraft.particles.ParticleTypes
-import net.minecraft.state.StateContainer
-import net.minecraft.state.properties.BlockStateProperties.LIT
-import net.minecraft.util.math.BlockPos
-import net.minecraft.util.math.RayTraceResult
-import net.minecraft.world.IBlockReader
-import net.minecraft.world.World
+import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.item.ItemStack
+import net.minecraft.world.level.block.state.properties.BlockStateProperties.LIT
+import net.minecraft.core.BlockPos
+import net.minecraft.core.particles.ParticleTypes
+import net.minecraft.util.RandomSource
+import net.minecraft.world.entity.player.Player
+import net.minecraft.world.item.context.BlockPlaceContext
+import net.minecraft.world.level.BlockGetter
+import net.minecraft.world.level.Level
+import net.minecraft.world.level.block.TorchBlock
+import net.minecraft.world.level.block.WallTorchBlock
+import net.minecraft.world.level.block.state.StateDefinition
+import net.minecraft.world.phys.HitResult
 import thedarkcolour.hardcoredungeons.block.base.properties.HProperties
 import thedarkcolour.hardcoredungeons.registry.HBlocks
 import thedarkcolour.hardcoredungeons.registry.HParticles
@@ -24,15 +25,15 @@ class CastletonTorchBlock(properties: HProperties) : TorchBlock(properties.build
         registerDefaultState(stateDefinition.any().setValue(LIT, false))
     }
 
-    override fun createBlockStateDefinition(builder: StateContainer.Builder<Block, BlockState>) {
+    override fun createBlockStateDefinition(builder: StateDefinition.Builder<Block, BlockState>) {
         builder.add(LIT)
     }
 
-    override fun getStateForPlacement(context: BlockItemUseContext): BlockState? {
+    override fun getStateForPlacement(context: BlockPlaceContext): BlockState? {
         return withLitState(super.getStateForPlacement(context), context)
     }
 
-    override fun animateTick(state: BlockState, level: World, pos: BlockPos, rand: Random?) {
+    override fun animateTick(state: BlockState, level: Level, pos: BlockPos, rand: RandomSource) {
         if (state.getValue(LIT)) {
             val d0 = pos.x.toDouble() + 0.5
             val d1 = pos.y.toDouble() + 0.7
@@ -42,20 +43,20 @@ class CastletonTorchBlock(properties: HProperties) : TorchBlock(properties.build
         }
     }
 
-    override fun getPickBlock(state: BlockState, result: RayTraceResult?, level: IBlockReader?, pos: BlockPos?, player: PlayerEntity?): ItemStack {
+    override fun getCloneItemStack(state: BlockState, result: HitResult?, level: BlockGetter?, pos: BlockPos?, player: Player?): ItemStack {
         return pickBlock(state)
     }
 
     class Wall(properties: HProperties) : WallTorchBlock(properties.build(), null) {
-        override fun getStateForPlacement(context: BlockItemUseContext): BlockState? {
+        override fun getStateForPlacement(context: BlockPlaceContext): BlockState? {
             return withLitState(super.getStateForPlacement(context), context)
         }
 
-        override fun createBlockStateDefinition(builder: StateContainer.Builder<Block, BlockState>) {
+        override fun createBlockStateDefinition(builder: StateDefinition.Builder<Block, BlockState>) {
             builder.add(FACING, LIT)
         }
 
-        override fun animateTick(state: BlockState, level: World, pos: BlockPos, rand: Random?) {
+        override fun animateTick(state: BlockState, level: Level, pos: BlockPos, rand: RandomSource) {
             if (state.getValue(LIT)) {
                 val direction1 = state.getValue(FACING).opposite
                 val d0 = pos.x + 0.5 + 0.27 * direction1.stepX
@@ -66,12 +67,7 @@ class CastletonTorchBlock(properties: HProperties) : TorchBlock(properties.build
             }
         }
 
-        // todo remove
-        override fun getLightValue(state: BlockState, level: IBlockReader?, pos: BlockPos?): Int {
-            return if (state.getValue(LIT)) super.getLightValue(state, level, pos) else 0
-        }
-
-        override fun getPickBlock(state: BlockState, result: RayTraceResult?, level: IBlockReader?, pos: BlockPos?, player: PlayerEntity?): ItemStack {
+        override fun getCloneItemStack(state: BlockState, result: HitResult?, level: BlockGetter?, pos: BlockPos?, player: Player?): ItemStack {
             return pickBlock(state)
         }
     }
@@ -85,7 +81,7 @@ class CastletonTorchBlock(properties: HProperties) : TorchBlock(properties.build
             }
         }
 
-        private fun withLitState(state: BlockState?, context: BlockItemUseContext): BlockState? {
+        private fun withLitState(state: BlockState?, context: BlockPlaceContext): BlockState? {
             return state?.setValue(LIT, context.itemInHand.item == HBlocks.CASTLETON_TORCH.litItem)
         }
     }

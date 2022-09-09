@@ -4,7 +4,7 @@ import net.minecraft.potion.Effect
 import net.minecraftforge.registries.IForgeRegistry
 
 /**
- * @author TheDarkColour
+ * @author thedarkcolour
  */
 object HEffects {
     //val RAGE = RageEffect().setRegistryKey("rage")

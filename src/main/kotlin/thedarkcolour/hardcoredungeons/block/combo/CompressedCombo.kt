@@ -1,14 +1,13 @@
 package thedarkcolour.hardcoredungeons.block.combo
 
-import net.minecraft.block.Block
-import net.minecraft.client.util.ITooltipFlag
-import net.minecraft.data.IFinishedRecipe
-import net.minecraft.item.ItemStack
-import net.minecraft.util.text.ITextComponent
-import net.minecraft.util.text.StringTextComponent
-import net.minecraft.util.text.Style
-import net.minecraft.util.text.TextFormatting
-import net.minecraft.world.IBlockReader
+import net.minecraft.ChatFormatting
+import net.minecraft.data.recipes.FinishedRecipe
+import net.minecraft.network.chat.Component
+import net.minecraft.network.chat.Style
+import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.TooltipFlag
+import net.minecraft.world.level.BlockGetter
+import net.minecraft.world.level.block.Block
 import net.minecraftforge.common.Tags
 import thedarkcolour.hardcoredungeons.block.base.BlockMaker
 import thedarkcolour.hardcoredungeons.block.base.HBlock
@@ -18,6 +17,7 @@ import thedarkcolour.hardcoredungeons.data.RecipeGenerator.Companion.lines
 import thedarkcolour.hardcoredungeons.data.RecipeGenerator.Companion.shaped
 import thedarkcolour.hardcoredungeons.data.RecipeGenerator.Companion.shapeless
 import thedarkcolour.hardcoredungeons.util.modLoc
+import thedarkcolour.hardcoredungeons.util.registryName
 import thedarkcolour.kotlinforforge.forge.ObjectHolderDelegate
 import java.text.DecimalFormat
 import java.util.function.Consumer
@@ -32,10 +32,9 @@ class CompressedCombo(val block: () -> Block, private val properties: HPropertie
                 Variant(i + 1, properties ?: HProperties.copy(block()))
             })
         }
-
     }
 
-    override fun addRecipes(consumer: Consumer<IFinishedRecipe>) {
+    override fun addRecipes(consumer: Consumer<FinishedRecipe>) {
         val variants = variants
 
         variants.forEachIndexed { i, obj ->
@@ -61,20 +60,20 @@ class CompressedCombo(val block: () -> Block, private val properties: HPropertie
     }
 
     private class Variant(compressionLevel: Int, properties: HProperties) : HBlock(properties) {
-        val tooltip: ITextComponent
+        val tooltip: Component
 
         init {
             val amount = 9.0.pow(compressionLevel.toDouble())
             val format = DecimalFormat("#,###")
 
-            tooltip = StringTextComponent(format.format(amount) + " Blocks").setStyle(Style.EMPTY.applyFormat(TextFormatting.GRAY))
+            tooltip = Component.literal(format.format(amount) + " Blocks").setStyle(Style.EMPTY.applyFormat(ChatFormatting.GRAY))
         }
 
         override fun appendHoverText(
             stack: ItemStack,
-            worldIn: IBlockReader?,
-            tooltip: MutableList<ITextComponent>,
-            flagIn: ITooltipFlag,
+            worldIn: BlockGetter?,
+            tooltip: MutableList<Component>,
+            flagIn: TooltipFlag,
         ) {
             tooltip.add(this.tooltip)
         }

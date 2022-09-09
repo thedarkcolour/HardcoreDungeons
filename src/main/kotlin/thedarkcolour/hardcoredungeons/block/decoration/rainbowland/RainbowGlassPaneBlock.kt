@@ -1,14 +1,14 @@
 package thedarkcolour.hardcoredungeons.block.decoration.rainbowland
 
-import net.minecraft.block.BlockState
-import net.minecraft.block.PaneBlock
-import net.minecraft.util.math.BlockPos
-import net.minecraft.world.IWorldReader
+import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.core.BlockPos
+import net.minecraft.world.level.LevelReader
+import net.minecraft.world.level.block.IronBarsBlock
 import thedarkcolour.hardcoredungeons.block.base.properties.HProperties
 import thedarkcolour.hardcoredungeons.client.color.RainbowColor
 
-class RainbowGlassPaneBlock(properties: HProperties) : PaneBlock(properties.build()) {
-    override fun getBeaconColorMultiplier(state: BlockState?, world: IWorldReader?, pos: BlockPos, beaconPos: BlockPos?): FloatArray {
+class RainbowGlassPaneBlock(properties: HProperties) : IronBarsBlock(properties.build()) {
+    override fun getBeaconColorMultiplier(state: BlockState?, world: LevelReader?, pos: BlockPos, beaconPos: BlockPos?): FloatArray {
         return RainbowColor.getBeaconColor(pos)
     }
 }

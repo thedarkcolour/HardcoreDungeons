@@ -1,7 +1,7 @@
 package thedarkcolour.hardcoredungeons.tileentity
 
-import net.minecraft.block.BlockState
-import net.minecraft.block.Blocks
+import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.block.Blocks
 import net.minecraft.entity.*
 import net.minecraft.nbt.CompoundNBT
 import net.minecraft.nbt.ListNBT
@@ -12,11 +12,13 @@ import net.minecraft.tileentity.TileEntity
 import net.minecraft.tileentity.TileEntityType
 import net.minecraft.util.*
 import net.minecraft.util.math.AxisAlignedBB
-import net.minecraft.util.math.BlockPos
+import net.minecraft.core.BlockPos
+import net.minecraft.world.entity.Entity
+import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.server.ServerWorld
 import thedarkcolour.hardcoredungeons.registry.HTileEntities
 
-class DungeonSpawnerTileEntity(tileEntityTypeIn: TileEntityType<*> = HTileEntities.DUNGEON_SPAWNER) : TileEntity(tileEntityTypeIn), ITickableTileEntity {
+class DungeonSpawnerTileEntity(tileEntityTypeIn: TileEntityType<*> = HTileEntities.DUNGEON_SPAWNER) : BlockEntity(tileEntityTypeIn), ITickableTileEntity {
     private val potentialSpawns = ArrayList<WeightedSpawnerEntity>()
     var remainingKills = 0
     var spawnDelay = 20

@@ -1,6 +1,6 @@
 package thedarkcolour.hardcoredungeons.block.combo
 
-import net.minecraft.data.IFinishedRecipe
+import net.minecraft.data.recipes.FinishedRecipe
 import net.minecraft.tags.BlockTags
 import net.minecraft.tags.ItemTags
 import thedarkcolour.hardcoredungeons.block.base.BlockMaker
@@ -18,7 +18,7 @@ open class StairsSlabWallCombo(name: String, properties: HProperties) : StairsSl
         tags.block(BlockTags.WALLS, ItemTags.WALLS, wall)
     }
 
-    override fun addRecipes(consumer: Consumer<IFinishedRecipe>) {
+    override fun addRecipes(consumer: Consumer<FinishedRecipe>) {
         super.addRecipes(consumer)
 
         consumer.wall(wall, block)

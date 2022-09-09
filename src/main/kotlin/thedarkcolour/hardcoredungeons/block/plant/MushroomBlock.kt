@@ -1,10 +1,10 @@
 package thedarkcolour.hardcoredungeons.block.plant
 
-import net.minecraft.block.BlockState
-import net.minecraft.block.Blocks
+import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.block.Blocks
 import net.minecraft.block.MushroomBlock
-import net.minecraft.util.Direction
-import net.minecraft.util.math.BlockPos
+import net.minecraft.core.Direction
+import net.minecraft.core.BlockPos
 import net.minecraft.world.IBlockReader
 import net.minecraft.world.IWorldReader
 

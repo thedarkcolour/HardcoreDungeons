@@ -1,16 +1,16 @@
 package thedarkcolour.hardcoredungeons.block.structure
 
-import net.minecraft.block.Block
-import net.minecraft.block.BlockState
+import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.util.ActionResultType
-import net.minecraft.util.Direction
+import net.minecraft.core.Direction
 import net.minecraft.util.Hand
-import net.minecraft.util.IItemProvider
-import net.minecraft.util.math.BlockPos
+import net.minecraft.world.level.ItemLike
+import net.minecraft.core.BlockPos
 import net.minecraft.util.math.BlockRayTraceResult
 import net.minecraft.world.IBlockReader
-import net.minecraft.world.World
+import net.minecraft.world.level.Level
 import thedarkcolour.hardcoredungeons.block.base.HBlock
 import thedarkcolour.hardcoredungeons.block.base.properties.HProperties
 
@@ -19,7 +19,7 @@ import thedarkcolour.hardcoredungeons.block.base.properties.HProperties
  * @param keyspace The block that is "unlocked" by this key
  * @param properties Block properties
  */
-class LockBlock(private val key: IItemProvider, private val keyspace: () -> Block, properties: HProperties) : HBlock(properties) {
+class LockBlock(private val key: ItemLike, private val keyspace: () -> Block, properties: HProperties) : HBlock(properties) {
     override fun use(
         state: BlockState,
         level: World,

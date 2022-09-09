@@ -2,9 +2,9 @@ package thedarkcolour.hardcoredungeons.worldgen.structure
 
 import net.minecraft.nbt.CompoundNBT
 import net.minecraft.util.Mirror
-import net.minecraft.util.ResourceLocation
+import net.minecraft.resources.ResourceLocation
 import net.minecraft.util.Rotation
-import net.minecraft.util.math.BlockPos
+import net.minecraft.core.BlockPos
 import net.minecraft.util.math.ChunkPos
 import net.minecraft.util.math.MutableBoundingBox
 import net.minecraft.util.math.vector.Vector3i
@@ -34,7 +34,7 @@ import java.util.*
  *
  * Uses a Vector3i to ResourceLocation map to place structure pieces from NBT files.
  *
- * @author TheDarkColour
+ * @author thedarkcolour
  */
 class SimpleStructure(structureID: String, addPieces: (MutableMap<Vector3i, ResourceLocation>) -> Unit) : Structure<NoFeatureConfig>(NoFeatureConfig.CODEC) {
     private val pieceMap: Map<Vector3i, ResourceLocation>

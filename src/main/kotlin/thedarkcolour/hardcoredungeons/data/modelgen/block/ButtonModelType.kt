@@ -2,11 +2,11 @@ package thedarkcolour.hardcoredungeons.data.modelgen.block
 
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap
 import net.minecraft.block.AbstractButtonBlock
-import net.minecraft.block.Block
+import net.minecraft.world.level.block.Block
 import net.minecraft.block.WoodButtonBlock
 import net.minecraft.state.properties.AttachFace
 import net.minecraft.state.properties.BlockStateProperties
-import net.minecraft.util.Direction
+import net.minecraft.core.Direction
 import net.minecraftforge.client.model.generators.BlockModelBuilder
 import net.minecraftforge.client.model.generators.ConfiguredModel
 import net.minecraftforge.client.model.generators.ModelFile

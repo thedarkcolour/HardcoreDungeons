@@ -21,7 +21,7 @@ import top.theillusivec4.curios.api.SlotTypeMessage
 /**
  * Main mod class for Hardcore Dungeons.
  *
- * @author TheDarkColour, genericrandom64
+ * @author thedarkcolour, genericrandom64
  */
 @Mod(HardcoreDungeons.ID)
 object HardcoreDungeons {

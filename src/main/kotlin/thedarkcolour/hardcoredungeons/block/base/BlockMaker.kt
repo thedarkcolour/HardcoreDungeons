@@ -2,19 +2,20 @@ package thedarkcolour.hardcoredungeons.block.base
 
 import it.unimi.dsi.fastutil.objects.Object2FloatMap
 import it.unimi.dsi.fastutil.objects.Object2FloatOpenHashMap
-import net.minecraft.block.*
-import net.minecraft.block.material.Material
-import net.minecraft.block.material.MaterialColor
-import net.minecraft.block.trees.Tree
-import net.minecraft.potion.Effects
-import net.minecraft.util.RegistryKey
-import net.minecraft.util.ResourceLocation
-import net.minecraft.util.Util
-import net.minecraft.util.math.shapes.VoxelShape
-import net.minecraft.util.math.shapes.VoxelShapes
-import net.minecraft.world.World
-import net.minecraftforge.common.ToolType
-import net.minecraftforge.fml.DatagenModLoader
+import net.minecraft.Util
+import net.minecraft.resources.ResourceKey
+import net.minecraft.resources.ResourceLocation
+import net.minecraft.world.effect.MobEffects
+import net.minecraft.world.level.Level
+import net.minecraft.world.level.block.*
+import net.minecraft.world.level.block.grower.AbstractTreeGrower
+import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.block.state.properties.WoodType
+import net.minecraft.world.level.material.Material
+import net.minecraft.world.level.material.MaterialColor
+import net.minecraft.world.phys.shapes.Shapes
+import net.minecraft.world.phys.shapes.VoxelShape
+import net.minecraftforge.data.loading.DatagenModLoader
 import thedarkcolour.hardcoredungeons.block.base.properties.HProperties
 import thedarkcolour.hardcoredungeons.block.combo.PortalCombo
 import thedarkcolour.hardcoredungeons.block.combo.PottedPlantCombo
@@ -27,26 +28,26 @@ import thedarkcolour.hardcoredungeons.block.portal.HPortalBlock
 import thedarkcolour.hardcoredungeons.block.portal.HPortalFrameBlock
 import thedarkcolour.hardcoredungeons.data.modelgen.block.BlockModelType
 import thedarkcolour.hardcoredungeons.data.modelgen.item.ItemModelType
+import thedarkcolour.hardcoredungeons.legacy.ObjectHolderDelegate
 import thedarkcolour.hardcoredungeons.registry.HBlocks
-import thedarkcolour.hardcoredungeons.registry.HBlocksOld
-import thedarkcolour.kotlinforforge.forge.ObjectHolderDelegate
+import thedarkcolour.hardcoredungeons.registry.HBlockUtil
 
 /**
  * Used in combos and anything else that's repeated
  *
- * @author TheDarkColour
+ * @author thedarkcolour
  */
 object BlockMaker {
 
     // Preset shapes
-    val VASE_SHAPE: VoxelShape = VoxelShapes.or(cube(4.0, 0.0, 4.0, 12.0, 1.0, 12.0), cube(3.0, 1.0, 3.0, 13.0, 9.0, 13.0), cube(4.0, 9.0, 4.0, 12.0, 10.0, 12.0), cube(6.0, 10.0, 6.0, 10.0, 11.0, 10.0), cube(5.0, 11.0, 5.0, 11.0, 13.0, 11.0))
-    val WINE_BOTTLE_SHAPE: VoxelShape = VoxelShapes.or(cube(6.5, 0.0, 6.5, 9.5, 7.0, 9.5), cube(7.5, 7.0, 7.5, 8.5, 11.0, 8.5))
+    val VASE_SHAPE: VoxelShape = Shapes.or(cube(4.0, 0.0, 4.0, 12.0, 1.0, 12.0), cube(3.0, 1.0, 3.0, 13.0, 9.0, 13.0), cube(4.0, 9.0, 4.0, 12.0, 10.0, 12.0), cube(6.0, 10.0, 6.0, 10.0, 11.0, 10.0), cube(5.0, 11.0, 5.0, 11.0, 13.0, 11.0))
+    val WINE_BOTTLE_SHAPE: VoxelShape = Shapes.or(cube(6.5, 0.0, 6.5, 9.5, 7.0, 9.5), cube(7.5, 7.0, 7.5, 8.5, 11.0, 8.5))
     val DRUM_SHAPE: VoxelShape = cube(3.0, 0.0, 3.0, 13.0, 16.0, 13.0)
     val LOST_SKULL_SHAPE: VoxelShape = cube(4.0, 0.0, 4.0, 12.0, 8.0, 12.0)
     val PLATE_SHAPE: VoxelShape = cube(3.0, 0.0, 3.0, 13.0, 2.0, 13.0)
-    val CANDLE_SHAPE: VoxelShape = VoxelShapes.or(cube(6.0, 0.0, 6.0, 10.0, 1.0, 10.0), cube(7.0, 0.75, 7.0, 9.0, 2.75, 9.0), cube(6.0, 2.5, 6.0, 10.0, 4.5, 10.0), cube(7.0, 3.5, 7.0, 9.0, 15.5, 9.0), cube(7.5, 14.75, 7.5, 8.5, 15.75, 8.5))
+    val CANDLE_SHAPE: VoxelShape = Shapes.or(cube(6.0, 0.0, 6.0, 10.0, 1.0, 10.0), cube(7.0, 0.75, 7.0, 9.0, 2.75, 9.0), cube(6.0, 2.5, 6.0, 10.0, 4.5, 10.0), cube(7.0, 3.5, 7.0, 9.0, 15.5, 9.0), cube(7.5, 14.75, 7.5, 8.5, 15.75, 8.5))
     val CROWN_SHAPE: VoxelShape = cube(4.0, 0.0, 4.0, 12.0, 4.0, 12.0)
-    val CHALICE_SHAPE: VoxelShape = VoxelShapes.or(cube(6.0, 0.0, 6.0, 10.0, 1.0, 10.0), cube(7.0, 1.0, 7.0, 9.0, 3.0, 9.0), cube(6.0, 3.0, 6.0, 10.0, 4.0, 10.0), cube(5.0, 4.0, 5.0, 11.0, 8.0, 11.0))
+    val CHALICE_SHAPE: VoxelShape = Shapes.or(cube(6.0, 0.0, 6.0, 10.0, 1.0, 10.0), cube(7.0, 1.0, 7.0, 9.0, 3.0, 9.0), cube(6.0, 3.0, 6.0, 10.0, 4.0, 10.0), cube(5.0, 4.0, 5.0, 11.0, 8.0, 11.0))
     val FARMLAND_SHAPE: VoxelShape = cube(0.0, 0.0, 0.0, 16.0, 15.0, 16.0)
 
     inline fun props(material: Material, color: MaterialColor, apply: (HProperties) -> Unit): HProperties {
@@ -57,10 +58,11 @@ object BlockMaker {
         return Block.box(x1, y1, z1, x2, y2, z2)
     }
 
+    // Register block only and adds to model type
     fun <T : M, M : Block> registerModelled(name: String, type: BlockModelType<M>, appearance: (() -> Block)? = null, supplier: () -> T): ObjectHolderDelegate<T> {
         val obj = HBlocks.register(name, supplier)
         if (DatagenModLoader.isRunningDataGen()) // don't bother filling lists outside data gen
-            HBlocks.onceRegistered { type.add(obj, appearance ?: obj) }
+            type.add(obj, appearance ?: obj)
         return obj
     }
 
@@ -76,8 +78,8 @@ object BlockMaker {
         return registerModelled(name, BlockModelType.CROSS, null, supplier)
     }
 
-    fun registerStairs(name: String, full: () -> Block, props: HProperties): ObjectHolderDelegate<StairsBlock> {
-        return registerModelled(name, BlockModelType.STAIRS, full) { StairsBlock(full()::defaultBlockState, props.build()) }
+    fun registerStairs(name: String, full: () -> Block, props: HProperties): ObjectHolderDelegate<StairBlock> {
+        return registerModelled(name, BlockModelType.STAIRS, full) { StairBlock(full()::defaultBlockState, props.build()) }
     }
 
     fun registerFence(name: String, props: HProperties, appearance: (() -> Block)? = null): ObjectHolderDelegate<FenceBlock> {
@@ -129,7 +131,7 @@ object BlockMaker {
         return registerModelled(name, BlockModelType.CUBE_ALL) { LeavesBlock(HProperties.of(Material.LEAVES, MaterialColor.COLOR_LIGHT_BLUE).strength(0.2F).randomTicks().sound(SoundType.GRASS).noOcclusion().build()) }
     }
 
-    fun saplingCombo(name: String, tree: Tree): PottedPlantCombo {
+    fun saplingCombo(name: String, tree: AbstractTreeGrower): PottedPlantCombo {
         return PottedPlantCombo(name) { HSaplingBlock(tree, HProperties.of(Material.PLANT).sound(SoundType.GRASS).noCollision()) }
     }
 
@@ -138,21 +140,23 @@ object BlockMaker {
     }
 
     fun registerOre(name: String, level: Int, hardness: Float, resistance: Float, color: MaterialColor): ObjectHolderDelegate<HBlock> {
-        return registerCubeAll(name, HProperties.of(Material.STONE, color).strength(hardness, resistance).harvestLevel(level).requiresCorrectToolForDrops().harvestTool(ToolType.PICKAXE))
+        // todo some mechanism for mining tools
+        return registerCubeAll(name, HProperties.of(Material.STONE, color).strength(hardness, resistance).requiresCorrectToolForDrops())
     }
 
     fun gumdrop(name: String): PottedPlantCombo {
         return PottedPlantCombo(name) {
-            FlowerBlock(PlantProperties.of(Material.PLANT).stewEffect(Effects.REGENERATION, 7).sound(SoundType.SLIME_BLOCK).noCollision().instabreak().lightLevel(3))
+            FlowerBlock(PlantProperties.of(Material.PLANT).stewEffect(MobEffects.REGENERATION, 7).sound(SoundType.SLIME_BLOCK).noCollision().instabreak().lightLevel(3))
         }
     }
 
     fun registerCrystal(name: String, color: MaterialColor): ObjectHolderDelegate<HBlock> {
-        return registerCross(name) { HBlock(HProperties.of(Material.STONE, color).harvestLevel(2).strength(2.3f, 40.0f).lightLevel(4).shape(Block.box(6.0, 0.0, 6.0, 10.0, 4.0, 10.0))) }
+        // todo some mechanism for mining tools
+        return registerCross(name) { HBlock(HProperties.of(Material.STONE, color).strength(2.3f, 40.0f).lightLevel(4).shape(Block.box(6.0, 0.0, 6.0, 10.0, 4.0, 10.0))) }
     }
 
     // todo add model type
-    fun registerPortal(id: ResourceLocation, key: () -> RegistryKey<World>, combo: PortalCombo): ObjectHolderDelegate<HPortalBlock> {
+    fun registerPortal(id: ResourceLocation, key: () -> ResourceKey<Level>, combo: PortalCombo): ObjectHolderDelegate<HPortalBlock> {
         return registerModelled(id.path + "_portal", BlockModelType.PORTAL) {
             HPortalBlock(key, combo, HProperties.of(Material.PORTAL).noCollision().strength(-1.0f).sound(SoundType.GLASS).noDrops())
         }
@@ -189,7 +193,7 @@ object BlockMaker {
         return withItem(name, type, registerSlab(name, full, props))
     }
 
-    fun stairsWithItem(name: String, full: () -> Block, props: HProperties, type: ItemModelType = ItemModelType.BLOCK_ITEM): ObjectHolderDelegate<StairsBlock> {
+    fun stairsWithItem(name: String, full: () -> Block, props: HProperties, type: ItemModelType = ItemModelType.BLOCK_ITEM): ObjectHolderDelegate<StairBlock> {
         return withItem(name, type, registerStairs(name, full, props))
     }
 
@@ -232,7 +236,7 @@ object BlockMaker {
     ): ObjectHolderDelegate<BonusFarmlandBlock> {
         val farmland = withItem(name, ItemModelType.BLOCK_ITEM, registerModelled(name, BlockModelType.FARMLAND) { BonusFarmlandBlock(soil, Util.make(Object2FloatOpenHashMap(), boostMap), props) })
         HBlocks.onceRegistered {
-            HBlocksOld.registerHoeInteraction(from(), farmland().defaultBlockState())
+            HBlockUtil.registerHoeInteraction(from(), farmland().defaultBlockState())
         }
         return farmland
     }

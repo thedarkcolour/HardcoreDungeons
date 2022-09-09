@@ -6,11 +6,17 @@ import net.minecraft.world.gen.carver.ConfiguredCarvers
 import net.minecraft.world.gen.surfacebuilders.ConfiguredSurfaceBuilder
 import net.minecraft.world.gen.surfacebuilders.ISurfaceBuilderConfig
 import net.minecraft.world.gen.surfacebuilders.SurfaceBuilder
-import thedarkcolour.hardcoredungeons.worldgen.feature.HWorldGen
+import net.minecraftforge.common.world.BiomeSpecialEffectsBuilder
+import thedarkcolour.hardcoredungeons.worldgen.HWorldGen
 import thedarkcolour.hardcoredungeons.worldgen.surfacebuilder.HConfiguredSurfaceBuilders
 
 object HBiomeMaker {
-    val DEFAULT_CASTLETON_EFFECTS = biomeFx(0x6fa3bf, 0x1f37f2, 0x113d51, 0x1d5a75)
+    val DEFAULT_CASTLETON_EFFECTS: BiomeSpecialEffectsBuilder.() -> Unit = {
+        waterColor(0x6fa3bf)
+        waterFogColor(0x1f37f2)
+        skyColor(0x113d51)
+        fogColor(0x1d5a75)
+    }
 
     fun makeCastletonForest(): Biome {
         val genSettings = genSettings(HConfiguredSurfaceBuilders.CASTLETON_SURFACE)

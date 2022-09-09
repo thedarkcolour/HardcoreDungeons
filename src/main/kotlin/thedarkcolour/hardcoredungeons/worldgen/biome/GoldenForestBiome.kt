@@ -3,10 +3,12 @@ package thedarkcolour.hardcoredungeons.worldgen.biome
 import net.minecraft.world.biome.Biome
 import net.minecraft.world.biome.MobSpawnInfo
 import net.minecraftforge.common.world.BiomeGenerationSettingsBuilder
+import team.rusty.util.biome.ModBiome
 import team.rusty.util.worldgen.biome.AbstractBiome
 import thedarkcolour.hardcoredungeons.worldgen.surfacebuilder.HConfiguredSurfaceBuilders
 
-object GoldenForestBiome : AbstractBiome() {
+/*
+object GoldenForestBiome : ModBiome() {
     init {
         precipitation = Biome.RainType.NONE
         category = Biome.Category.MUSHROOM
@@ -20,4 +22,4 @@ object GoldenForestBiome : AbstractBiome() {
     override fun configure(generation: BiomeGenerationSettingsBuilder, spawns: MobSpawnInfo.Builder) {
         generation.surfaceBuilder(HConfiguredSurfaceBuilders.AUBRUM_WASTELAND_SURFACE)
     }
-}
+}*/

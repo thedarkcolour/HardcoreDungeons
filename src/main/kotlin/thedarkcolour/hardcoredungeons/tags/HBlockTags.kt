@@ -1,6 +1,6 @@
 package thedarkcolour.hardcoredungeons.tags
 
-import net.minecraft.block.Block
+import net.minecraft.world.level.block.Block
 import net.minecraft.tags.BlockTags
 import net.minecraft.tags.ITag
 import thedarkcolour.hardcoredungeons.HardcoreDungeons
@@ -8,7 +8,7 @@ import thedarkcolour.hardcoredungeons.HardcoreDungeons
 /**
  * Block tags in Hardcore Dungeons.
  *
- * @author TheDarkColour
+ * @author thedarkcolour
  */
 object HBlockTags {
     val LUMLIGHT_LOGS = tag("lumlight_logs")

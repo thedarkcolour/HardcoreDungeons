@@ -1,40 +1,37 @@
 package thedarkcolour.hardcoredungeons.entity.projectile.magic
 
-import net.minecraft.entity.Entity
-import net.minecraft.entity.EntityType
-import net.minecraft.entity.IRendersAsItem
-import net.minecraft.entity.LivingEntity
-import net.minecraft.item.ItemStack
-import net.minecraft.item.Items
-import net.minecraft.particles.IParticleData
-import net.minecraft.particles.ParticleTypes
-import net.minecraft.util.DamageSource
-import net.minecraft.util.math.BlockRayTraceResult
-import net.minecraft.util.math.EntityRayTraceResult
-import net.minecraft.world.World
-import net.minecraftforge.api.distmarker.Dist
-import net.minecraftforge.api.distmarker.OnlyIn
+import net.minecraft.core.particles.ParticleOptions
+import net.minecraft.core.particles.ParticleTypes
+import net.minecraft.world.damagesource.DamageSource
+import net.minecraft.world.entity.Entity
+import net.minecraft.world.entity.EntityType
+import net.minecraft.world.entity.LivingEntity
+import net.minecraft.world.entity.projectile.ItemSupplier
+import net.minecraft.world.item.ItemStack
+import net.minecraft.world.level.Level
+import net.minecraft.world.phys.BlockHitResult
+import net.minecraft.world.phys.EntityHitResult
 import thedarkcolour.hardcoredungeons.entity.projectile.ProjectileEntity
 import thedarkcolour.hardcoredungeons.registry.HParticles
+import thedarkcolour.hardcoredungeons.registry.items.CASTLE_GEM_ITEM
 
-@OnlyIn(value = Dist.CLIENT, _interface = IRendersAsItem::class)
-class MagicBoltEntity(type: EntityType<out ProjectileEntity>, worldIn: World) : ProjectileEntity(type, worldIn), IRendersAsItem {
-    override fun getTrailParticle(): IParticleData {
+class MagicBoltEntity(type: EntityType<out ProjectileEntity>, worldIn: Level) : ProjectileEntity(type, worldIn), ItemSupplier {
+    override fun getTrailParticle(): ParticleOptions {
         return HParticles.SOUL_FRAY
     }
 
-    override fun onHitTarget(result: EntityRayTraceResult, shooter: LivingEntity?, target: Entity) {
+    override fun onHitTarget(result: EntityHitResult, shooter: LivingEntity?, target: Entity) {
         if (!level.isClientSide) {
             if (target.hurt(DamageSource.MAGIC, 7.0f) && shooter != null) {
                 doEnchantDamageEffects(shooter, target)
             }
-            remove()
+            discard()
         }
     }
 
-    override fun onHitBlock(result: BlockRayTraceResult) {
+    override fun onHitBlock(result: BlockHitResult) {
         super.onHitBlock(result)
-        remove()
+        remove(RemovalReason.KILLED)
 
         val dx = random.nextGaussian() * 0.02
         val dy = random.nextGaussian() * 0.02
@@ -51,6 +48,6 @@ class MagicBoltEntity(type: EntityType<out ProjectileEntity>, worldIn: World) : 
     }
 
     companion object {
-        private val ICON = ItemStack(Items.MAGMA_CREAM)
+        private val ICON = ItemStack(CASTLE_GEM_ITEM)
     }
 }

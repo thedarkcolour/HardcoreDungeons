@@ -4,17 +4,18 @@ import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.state.properties.BlockStateProperties.HORIZONTAL_FACING
 import net.minecraft.tileentity.ITickableTileEntity
 import net.minecraft.tileentity.TileEntity
-import net.minecraft.util.Direction
+import net.minecraft.core.Direction
 import net.minecraft.util.math.AxisAlignedBB
-import net.minecraft.util.math.BlockPos
-import net.minecraft.world.World
+import net.minecraft.core.BlockPos
+import net.minecraft.world.level.Level
+import net.minecraft.world.level.block.entity.BlockEntity
 import thedarkcolour.hardcoredungeons.HardcoreDungeons
 import thedarkcolour.hardcoredungeons.entity.overworld.mazeboss.MazeBossEntity
 import thedarkcolour.hardcoredungeons.registry.HBlocks
 import thedarkcolour.hardcoredungeons.registry.HTileEntities
 import thedarkcolour.hardcoredungeons.util.toRadians
 
-class MazeBossSpawnerTileEntity : TileEntity(HTileEntities.MAZE_BOSS_SPAWNER), ITickableTileEntity {
+class MazeBossSpawnerTileEntity : BlockEntity(HTileEntities.MAZE_BOSS_SPAWNER) {
     private lateinit var bounds: AxisAlignedBB
     private var ticks = 0
 

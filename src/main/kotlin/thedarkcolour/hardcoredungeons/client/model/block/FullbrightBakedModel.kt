@@ -2,24 +2,25 @@ package thedarkcolour.hardcoredungeons.client.model.block
 
 import com.google.common.cache.CacheBuilder
 import com.google.common.cache.CacheLoader
-import net.minecraft.block.Block
-import net.minecraft.block.BlockState
-import net.minecraft.client.renderer.BlockModelShapes
+import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.client.renderer.LightTexture
-import net.minecraft.client.renderer.model.BakedQuad
-import net.minecraft.client.renderer.model.IBakedModel
-import net.minecraft.client.renderer.model.ItemOverrideList
+import net.minecraft.client.renderer.block.BlockModelShaper
+import net.minecraft.client.renderer.block.model.BakedQuad
+import net.minecraft.client.renderer.block.model.ItemOverrides
 import net.minecraft.client.renderer.texture.TextureAtlasSprite
-import net.minecraft.util.Direction
-import net.minecraft.util.ResourceLocation
-import net.minecraftforge.client.model.data.EmptyModelData
+import net.minecraft.client.resources.model.BakedModel
+import net.minecraft.core.Direction
+import net.minecraft.resources.ResourceLocation
+import net.minecraft.util.RandomSource
+import net.minecraftforge.client.model.data.ModelData
 import java.util.*
 
 // thanks to commoble and raoulvdberge
-class FullbrightBakedModel(private val base: IBakedModel, private val fullbrightSprites: Set<ResourceLocation>) : IBakedModel {
-    @Suppress("DEPRECATION")
-    override fun getQuads(state: BlockState?, side: Direction?, rand: Random): List<BakedQuad> {
-        return QUAD_CACHE.getUnchecked(CacheKey(state ?: return base.getQuads(state, side, rand), side, base, fullbrightSprites, rand))
+class FullbrightBakedModel(private val base: BakedModel, private val fullbrightSprites: Set<ResourceLocation>) : BakedModel {
+    @Deprecated("Deprecated in Java")
+    override fun getQuads(state: BlockState?, side: Direction?, rand: RandomSource): List<BakedQuad> {
+        return QUAD_CACHE.getUnchecked(CacheKey(state ?: return base.getQuads(null, side, rand), side, base, fullbrightSprites, rand))
     }
 
     override fun isCustomRenderer(): Boolean {
@@ -38,7 +39,7 @@ class FullbrightBakedModel(private val base: IBakedModel, private val fullbright
         return base.usesBlockLight()
     }
 
-    override fun getOverrides(): ItemOverrideList {
+    override fun getOverrides(): ItemOverrides {
         return base.overrides
     }
 
@@ -50,7 +51,7 @@ class FullbrightBakedModel(private val base: IBakedModel, private val fullbright
     companion object {
         private val QUAD_CACHE = CacheBuilder.newBuilder().build(object : CacheLoader<CacheKey, List<BakedQuad>>() {
             override fun load(key: CacheKey): List<BakedQuad> {
-                return transformQuads(key.model.getQuads(key.state, key.side, key.rand, EmptyModelData.INSTANCE), key.textures)
+                return transformQuads(key.model.getQuads(key.state, key.side, key.rand), key.textures)
             }
         })
 
@@ -84,7 +85,7 @@ class FullbrightBakedModel(private val base: IBakedModel, private val fullbright
         /**
          * Adds fullbright effects to every possible state of the block.
          */
-        fun addFullBrightEffects(registry: MutableMap<ResourceLocation, IBakedModel>, block: Block, fullbrightLayers: Set<ResourceLocation>) {
+        fun addFullBrightEffects(registry: MutableMap<ResourceLocation, BakedModel>, block: Block, fullbrightLayers: Set<ResourceLocation>) {
             for (state in block.stateDefinition.possibleStates) {
                 addFullBrightEffects(registry, state, fullbrightLayers)
             }
@@ -95,8 +96,8 @@ class FullbrightBakedModel(private val base: IBakedModel, private val fullbright
          *
          * @param state variant to add fullbright effects to
          */
-        private fun addFullBrightEffects(registry: MutableMap<ResourceLocation, IBakedModel>, state: BlockState, fullbrightLayers: Set<ResourceLocation>) {
-            val key = BlockModelShapes.stateToModelLocation(state)
+        private fun addFullBrightEffects(registry: MutableMap<ResourceLocation, BakedModel>, state: BlockState, fullbrightLayers: Set<ResourceLocation>) {
+            val key = BlockModelShaper.stateToModelLocation(state)
 
             if (registry.containsKey(key)) {
                 registry[key] = FullbrightBakedModel(registry[key]!!, fullbrightLayers)
@@ -107,9 +108,9 @@ class FullbrightBakedModel(private val base: IBakedModel, private val fullbright
     private class CacheKey(
         val state: BlockState,
         val side: Direction?,
-        val model: IBakedModel,
+        val model: BakedModel,
         val textures: Set<ResourceLocation>,
-        val rand: Random,
+        val rand: RandomSource,
     ) {
         override fun equals(other: Any?): Boolean {
             if (this === other) return true

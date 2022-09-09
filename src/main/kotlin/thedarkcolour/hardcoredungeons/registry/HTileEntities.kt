@@ -1,6 +1,6 @@
 package thedarkcolour.hardcoredungeons.registry
 
-import net.minecraft.block.Block
+import net.minecraft.world.level.block.Block
 import net.minecraft.tileentity.TileEntity
 import net.minecraft.tileentity.TileEntityType
 import net.minecraftforge.registries.ForgeRegistries

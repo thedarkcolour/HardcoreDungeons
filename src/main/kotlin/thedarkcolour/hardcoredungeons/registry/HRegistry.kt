@@ -1,23 +1,22 @@
 package thedarkcolour.hardcoredungeons.registry
 
-import net.minecraft.block.Block
-import net.minecraftforge.event.RegistryEvent
+import net.minecraft.core.Registry
+import net.minecraft.resources.ResourceKey
 import net.minecraftforge.eventbus.api.EventPriority
-import net.minecraftforge.registries.IForgeRegistry
-import net.minecraftforge.registries.IForgeRegistryEntry
+import net.minecraftforge.registries.DeferredRegister
+import net.minecraftforge.registries.RegisterEvent
 import thedarkcolour.hardcoredungeons.HardcoreDungeons
-import thedarkcolour.kotlinforforge.forge.KDeferredRegister
-import thedarkcolour.kotlinforforge.forge.MOD_BUS
-import thedarkcolour.kotlinforforge.forge.ObjectHolderDelegate
+import thedarkcolour.hardcoredungeons.legacy.ObjectHolderDelegate
+import thedarkcolour.kotlinforforge.forge.*
 
-open class HRegistry<T : IForgeRegistryEntry<T>>(forgeRegistry: IForgeRegistry<T>) {
+open class HRegistry<T>(forgeRegistry: ResourceKey<Registry<T>>) {
     private val queue = ArrayDeque<() -> Unit>()
-    val registry = KDeferredRegister(forgeRegistry, HardcoreDungeons.ID) // do not register directly
+    private val registry = DeferredRegister.create(forgeRegistry, HardcoreDungeons.ID) // do not register directly
 
     // register here instead
     fun init() {
         registry.register(MOD_BUS)
-        MOD_BUS.addGenericListener(EventPriority.LOWEST, ::postRegistry)
+        MOD_BUS.addListener(EventPriority.LOWEST, ::postRegistry)
     }
 
     fun onceRegistered(function: () -> Unit) {
@@ -28,9 +27,11 @@ open class HRegistry<T : IForgeRegistryEntry<T>>(forgeRegistry: IForgeRegistry<T
         return registry.registerObject(name, supplier)
     }
 
-    private fun postRegistry(event: RegistryEvent.Register<Block>) {
-        while (queue.isNotEmpty()) {
-            queue.removeFirst().invoke()
+    private fun postRegistry(event: RegisterEvent) {
+        if (event.registryKey == registry.registryKey) {
+            while (queue.isNotEmpty()) {
+                queue.removeFirst().invoke()
+            }
         }
     }
 }

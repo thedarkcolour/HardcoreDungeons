@@ -1,8 +1,9 @@
 package thedarkcolour.hardcoredungeons.data.modelgen.block
 
-import net.minecraft.block.Block
+import net.minecraft.world.level.block.Block
 import thedarkcolour.hardcoredungeons.data.ModelGenerator
 import thedarkcolour.hardcoredungeons.data.modelgen.ModelType
+import thedarkcolour.hardcoredungeons.util.registryName
 
 abstract class BlockModelType<B : Block> : ModelType<B>() {
     val blocks = hashMapOf<() -> B, () -> Block>()

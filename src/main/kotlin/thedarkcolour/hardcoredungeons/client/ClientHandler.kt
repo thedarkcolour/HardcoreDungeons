@@ -1,15 +1,16 @@
 package thedarkcolour.hardcoredungeons.client
 
-import net.minecraft.client.renderer.Atlases
+import net.minecraft.client.renderer.ItemBlockRenderTypes
 import net.minecraft.client.renderer.RenderType
-import net.minecraft.client.renderer.RenderTypeLookup
-import net.minecraft.client.world.DimensionRenderInfo
-import net.minecraftforge.client.event.ColorHandlerEvent
-import net.minecraftforge.client.event.ModelBakeEvent
+import net.minecraft.client.renderer.Sheets
+import net.minecraftforge.client.event.ModelEvent
+import net.minecraftforge.client.event.RegisterColorHandlersEvent
+import net.minecraftforge.client.event.RegisterDimensionSpecialEffectsEvent
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent
 import thedarkcolour.hardcoredungeons.client.color.RainbowColor
 import thedarkcolour.hardcoredungeons.client.dimension.AubrumEffects
 import thedarkcolour.hardcoredungeons.client.dimension.CastletonEffects
+import thedarkcolour.hardcoredungeons.client.model.HModelLayers
 import thedarkcolour.hardcoredungeons.client.model.block.FullbrightBakedModel
 import thedarkcolour.hardcoredungeons.client.renderer.GreenWandRender
 import thedarkcolour.hardcoredungeons.registry.*
@@ -20,7 +21,7 @@ import thedarkcolour.kotlinforforge.forge.MOD_BUS
 /**
  * Handles events that are only fired on the client side.
  *
- * @author TheDarkColour
+ * @author thedarkcolour
  */
 object ClientHandler {
     /**
@@ -32,6 +33,9 @@ object ClientHandler {
         MOD_BUS.addListener(::registerBlockColors)
         MOD_BUS.addListener(::registerItemColors)
         MOD_BUS.addListener(::registerBakedModels)
+        MOD_BUS.addListener(HModelLayers::registerLayers)
+        MOD_BUS.addListener(HEntities::registerEntityShaders)
+        MOD_BUS.addListener(::registerDimensionFx)
 
         FORGE_BUS.addListener(GreenWandRender::renderTick)
         FORGE_BUS.addListener(GreenWandRender::renderOutline)
@@ -39,7 +43,7 @@ object ClientHandler {
         //FORGE_BUS.addListener(::postRender)
     }
 
-    // RenderTypeLookup is not (?) thread safe so enqueue on main thread
+    // ItemBlockRenderTypes is not (?) thread safe so enqueue on main thread
     private fun clientSetup(event: FMLClientSetupEvent) {
         event.enqueueWork(::setRenderTypes)
         HEntities.registerEntityRenderers()
@@ -47,49 +51,46 @@ object ClientHandler {
         //HContainers.registerScreens()
         HItems.registerItemProperties()
 
-        DimensionRenderInfo.EFFECTS[HDimensions.CASTLETON_ID] = CastletonEffects
-        DimensionRenderInfo.EFFECTS[HDimensions.AUBRUM_ID] = AubrumEffects
-
-        Atlases.addWoodType(HBlocks.LUMLIGHT_WOOD.type)
-        Atlases.addWoodType(HBlocks.AURI_WOOD.type)
-        Atlases.addWoodType(HBlocks.COTTONMARSH_WOOD.type)
+        Sheets.addWoodType(HBlocks.LUMLIGHT_WOOD.type)
+        Sheets.addWoodType(HBlocks.AURI_WOOD.type)
+        Sheets.addWoodType(HBlocks.COTTONMARSH_WOOD.type)
     }
 
-    private fun registerBakedModels(event: ModelBakeEvent) {
-        val registry = event.modelRegistry as MutableMap
+    private fun registerDimensionFx(event: RegisterDimensionSpecialEffectsEvent) {
+        event.register(HDimensions.CASTLETON_ID, CastletonEffects)
+    }
+
+    private fun registerBakedModels(event: ModelEvent.BakingCompleted) {
+        val registry = event.models as MutableMap
 
         FullbrightBakedModel.addFullBrightEffects(registry, HBlocks.CROWN, setOf(modLoc("block/crown_fullbright")))
         FullbrightBakedModel.addFullBrightEffects(registry, HBlocks.RUNED_CASTLETON_STONE, setOf(modLoc("block/runed_castleton_stone_fullbright")))
     }
 
-    private fun registerBlockColors(event: ColorHandlerEvent.Block) {
-        val colors = event.blockColors
-
-        colors.register(RainbowColor, HBlocks.RAINBOW_SOIL.grass)
-        colors.register(RainbowColor, HBlocks.RAINBOW_GLASS)
-        colors.register(RainbowColor, HBlocks.RAINBOW_GLASS_PANE)
+    private fun registerBlockColors(event: RegisterColorHandlersEvent.Block) {
+        event.register(RainbowColor, HBlocks.RAINBOW_SOIL.grass)
+        event.register(RainbowColor, HBlocks.RAINBOW_GLASS)
+        event.register(RainbowColor, HBlocks.RAINBOW_GLASS_PANE)
     }
 
     private fun setRenderTypes() {
-        RenderTypeLookup.setRenderLayer(HBlocks.GOLDEN_CARROTS, RenderType.cutout())
-
-        RenderTypeLookup.setRenderLayer(HBlocks.CHILI_PEPPER.crop, RenderType.cutout())
-        RenderTypeLookup.setRenderLayer(HBlocks.RAINBOW_SOIL.grass, RenderType.cutout())
-        RenderTypeLookup.setRenderLayer(HBlocks.RAINBOW_GLASS, RenderType.translucent())
-        RenderTypeLookup.setRenderLayer(HBlocks.RAINBOW_GLASS_PANE, RenderType.translucent())
+        ItemBlockRenderTypes.setRenderLayer(HBlocks.CHILI_PEPPER.crop, RenderType.cutout())
+        ItemBlockRenderTypes.setRenderLayer(HBlocks.RAINBOW_SOIL.grass, RenderType.cutout())
+        ItemBlockRenderTypes.setRenderLayer(HBlocks.RAINBOW_GLASS, RenderType.translucent())
+        ItemBlockRenderTypes.setRenderLayer(HBlocks.RAINBOW_GLASS_PANE, RenderType.translucent())
         HBlocks.CASTLETON_TORCH.setRenderLayers()
-        RenderTypeLookup.setRenderLayer(HBlocks.CROWN, RenderType.cutout())
-        RenderTypeLookup.setRenderLayer(HBlocks.RED_WINE_BOTTLE, RenderType.translucent())
-        RenderTypeLookup.setRenderLayer(HBlocks.WHITE_WINE_BOTTLE, RenderType.translucent())
-        RenderTypeLookup.setRenderLayer(HBlocks.WINE_BOTTLE, RenderType.translucent())
-        RenderTypeLookup.setRenderLayer(HBlocks.CASTLETON_LANTERN, RenderType.cutout())
-        RenderTypeLookup.setRenderLayer(HBlocks.DUNGEON_SPAWNER, RenderType.cutout())
-        RenderTypeLookup.setRenderLayer(HBlocks.LUMLIGHT_CAMPFIRE, RenderType.cutout())
-        RenderTypeLookup.setRenderLayer(HBlocks.COTTONMARSH_WOOD.leaves, RenderType.cutout())
-        RenderTypeLookup.setRenderLayer(HBlocks.RUNED_CASTLETON_STONE, RenderType.cutout())
-        RenderTypeLookup.setRenderLayer(HBlocks.WILD_BERROOK.crop, RenderType.cutout())
-        RenderTypeLookup.setRenderLayer(HBlocks.DIAMOND_CRYSTAL.crystal, RenderType.cutout())
-        RenderTypeLookup.setRenderLayer(HBlocks.MALACHITE_CRYSTAL.crystal, RenderType.cutout())
+        ItemBlockRenderTypes.setRenderLayer(HBlocks.CROWN, RenderType.cutout())
+        ItemBlockRenderTypes.setRenderLayer(HBlocks.RED_WINE_BOTTLE, RenderType.translucent())
+        ItemBlockRenderTypes.setRenderLayer(HBlocks.WHITE_WINE_BOTTLE, RenderType.translucent())
+        ItemBlockRenderTypes.setRenderLayer(HBlocks.WINE_BOTTLE, RenderType.translucent())
+        ItemBlockRenderTypes.setRenderLayer(HBlocks.CASTLETON_LANTERN, RenderType.cutout())
+        ItemBlockRenderTypes.setRenderLayer(HBlocks.DUNGEON_SPAWNER, RenderType.cutout())
+        ItemBlockRenderTypes.setRenderLayer(HBlocks.LUMLIGHT_CAMPFIRE, RenderType.cutout())
+        ItemBlockRenderTypes.setRenderLayer(HBlocks.COTTONMARSH_WOOD.leaves, RenderType.cutout())
+        ItemBlockRenderTypes.setRenderLayer(HBlocks.RUNED_CASTLETON_STONE, RenderType.cutout())
+        ItemBlockRenderTypes.setRenderLayer(HBlocks.WILD_BERROOK.crop, RenderType.cutout())
+        ItemBlockRenderTypes.setRenderLayer(HBlocks.DIAMOND_CRYSTAL.crystal, RenderType.cutout())
+        ItemBlockRenderTypes.setRenderLayer(HBlocks.MALACHITE_CRYSTAL.crystal, RenderType.cutout())
 
         HBlocks.LUMLIGHT_WOOD.setRenderLayers()
         HBlocks.AURI_WOOD.setRenderLayers()
@@ -115,5 +116,5 @@ object ClientHandler {
         HBlocks.MINI_YELLOW_GUMDROP.setRenderLayers()
     }
 
-    private fun registerItemColors(event: ColorHandlerEvent.Item) = HItems.setItemColors(event.itemColors)
+    private fun registerItemColors(event: RegisterColorHandlersEvent.Item) = HItems.setItemColors(event)
 }

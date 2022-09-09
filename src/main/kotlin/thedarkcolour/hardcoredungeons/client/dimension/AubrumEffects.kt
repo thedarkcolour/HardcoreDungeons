@@ -1,16 +1,6 @@
 package thedarkcolour.hardcoredungeons.client.dimension
 
-import com.mojang.blaze3d.matrix.MatrixStack
-import com.mojang.blaze3d.systems.RenderSystem
-import net.minecraft.client.Minecraft
-import net.minecraft.client.renderer.Tessellator
-import net.minecraft.client.renderer.vertex.DefaultVertexFormats
-import net.minecraft.client.world.DimensionRenderInfo
-import net.minecraft.util.math.vector.Vector3d
-import net.minecraft.util.math.vector.Vector3f
-import net.minecraftforge.client.ISkyRenderHandler
-import org.lwjgl.opengl.GL11
-import thedarkcolour.hardcoredungeons.util.modLoc
+/*
 
 object AubrumEffects : DimensionRenderInfo(Float.NaN, true, FogType.NONE, false, true) {
     private val SKY_TEXTURES_AUBRUM = modLoc("textures/environment/aubrum_sky")
@@ -65,4 +55,4 @@ object AubrumEffects : DimensionRenderInfo(Float.NaN, true, FogType.NONE, false,
     override fun getSunriseColor(p_230492_1_: Float, p_230492_2_: Float): FloatArray? {
         return null
     }
-}
+}*/

@@ -1,15 +1,15 @@
 package thedarkcolour.hardcoredungeons.item
 
-import net.minecraft.entity.LivingEntity
-import net.minecraft.entity.player.PlayerEntity
-import net.minecraft.item.Item
-import net.minecraft.item.ItemStack
-import net.minecraft.item.ShootableItem
-import net.minecraft.item.UseAction
-import net.minecraft.tags.ITag
-import net.minecraft.util.ActionResult
-import net.minecraft.util.Hand
-import net.minecraft.world.World
+import net.minecraft.world.item.ItemStack
+import net.minecraft.tags.TagKey
+import net.minecraft.world.InteractionHand
+import net.minecraft.world.InteractionResultHolder
+import net.minecraft.world.entity.LivingEntity
+import net.minecraft.world.entity.player.Player
+import net.minecraft.world.item.Item
+import net.minecraft.world.item.ProjectileWeaponItem
+import net.minecraft.world.item.UseAnim
+import net.minecraft.world.level.Level
 import thedarkcolour.hardcoredungeons.entity.projectile.bullet.SmallBulletEntity
 import thedarkcolour.hardcoredungeons.registry.HEntities
 import thedarkcolour.hardcoredungeons.tags.HItemTags
@@ -25,19 +25,19 @@ import java.util.function.Predicate
  * @property chargeTime The amount of time it takes to charge up a shot
  */
 open class GunItem(
-    properties: Properties,
+    properties: Item.Properties,
     val bulletDamage: Float = 3.0f,
     val velocity: Float = 1.2f,
     val drop: Float = 0.0f,
     private val automatic: Boolean = false,
-    val ammoItem: () -> ITag<Item> = { HItemTags.AMMUNITION_SMALL },
+    val ammoItem: () -> TagKey<Item> = { HItemTags.AMMUNITION_SMALL },
     val chargeTime: Int = 1,
-) : ShootableItem(properties) {
+) : ProjectileWeaponItem(properties) {
     /**
      * returns the action that specifies what animation to play when the items is being used
      */
-    override fun getUseAnimation(stack: ItemStack): UseAction {
-        return UseAction.BOW
+    override fun getUseAnimation(stack: ItemStack): UseAnim {
+        return UseAnim.BOW
     }
 
     /**
@@ -45,35 +45,35 @@ open class GunItem(
      */
     override fun getUseDuration(stack: ItemStack) = chargeTime
 
-    override fun use(worldIn: World, playerIn: PlayerEntity, handIn: Hand): ActionResult<ItemStack> {
+    override fun use(level: Level, playerIn: Player, handIn: InteractionHand): InteractionResultHolder<ItemStack> {
         val stack = playerIn.getItemInHand(handIn)
 
         return if (!playerIn.getProjectile(stack).isEmpty) {
             playerIn.startUsingItem(handIn)
-            ActionResult.consume(stack)
+            InteractionResultHolder.consume(stack)
         } else {
-            ActionResult.fail(stack)
+            InteractionResultHolder.fail(stack)
         }
     }
 
-    override fun finishUsingItem(stack: ItemStack, worldIn: World, entity: LivingEntity): ItemStack {
+    override fun finishUsingItem(stack: ItemStack, level: Level, entity: LivingEntity): ItemStack {
         val ammo = entity.getProjectile(stack)
 
-        if (!worldIn.isClientSide) {
+        if (!level.isClientSide) {
             val vec = entity.lookAngle
 
             // change to match fire type????
-            val bullet = SmallBulletEntity(HEntities.SMALL_BULLET, worldIn)
+            val bullet = SmallBulletEntity(HEntities.SMALL_BULLET, level)
             var ammoType = SmallBulletEntity.BULLET
 
-            if (ammo.item.`is`(HItemTags.AMMUNITION_INCENDIARY)) {
+            if (ammo.`is`(HItemTags.AMMUNITION_INCENDIARY)) {
                 ammoType = SmallBulletEntity.INCENDIARY_BULLET
             }
 
             bullet.shoot(entity, ammoType, entity.x, entity.eyeY - 0.1, entity.z, vec.x, vec.y, vec.z)
         }
 
-        if (!(entity is PlayerEntity && entity.isCreative)) {
+        if (!(entity is Player && entity.isCreative)) {
             ammo.shrink(1)
         }
 
@@ -85,10 +85,10 @@ open class GunItem(
     }
 
     override fun getAllSupportedProjectiles(): Predicate<ItemStack> {
-        return Predicate { stack -> stack.item.`is`(getAmmoTag()) }
+        return Predicate { stack -> stack.`is`(getAmmoTag()) }
     }
 
-    open fun getAmmoTag(): ITag<Item> {
+    open fun getAmmoTag(): TagKey<Item> {
         return HItemTags.AMMUNITION_GENERIC
     }
 

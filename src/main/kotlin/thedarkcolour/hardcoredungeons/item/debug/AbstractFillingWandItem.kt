@@ -1,21 +1,20 @@
 package thedarkcolour.hardcoredungeons.item.debug
 
 import com.google.common.collect.ImmutableMap
-import net.minecraft.block.BlockState
-import net.minecraft.entity.LivingEntity
-import net.minecraft.entity.player.PlayerEntity
-import net.minecraft.item.Item
-import net.minecraft.item.ItemStack
-import net.minecraft.item.ItemUseContext
-import net.minecraft.item.UseAction
-import net.minecraft.nbt.NBTUtil
-import net.minecraft.util.ActionResult
-import net.minecraft.util.ActionResultType
-import net.minecraft.util.Hand
-import net.minecraft.util.math.BlockPos
-import net.minecraft.util.text.StringTextComponent
-import net.minecraft.util.text.TranslationTextComponent
-import net.minecraft.world.World
+import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.item.ItemStack
+import net.minecraft.core.BlockPos
+import net.minecraft.nbt.NbtUtils
+import net.minecraft.network.chat.Component
+import net.minecraft.world.InteractionHand
+import net.minecraft.world.InteractionResult
+import net.minecraft.world.InteractionResultHolder
+import net.minecraft.world.entity.LivingEntity
+import net.minecraft.world.entity.player.Player
+import net.minecraft.world.item.Item
+import net.minecraft.world.item.UseAnim
+import net.minecraft.world.item.context.UseOnContext
+import net.minecraft.world.level.Level
 
 /**
  * Base class for wands that have a fill-style function.
@@ -25,13 +24,13 @@ import net.minecraft.world.World
  * @property undoMap the map of undo actions per player
  * @property fillMessage the message this wand should display when filling
  *
- * @author TheDarkColour
+ * @author thedarkcolour
  */
 abstract class AbstractFillingWandItem(properties: Properties) : Item(properties) {
-    private val undoMap = hashMapOf<PlayerEntity, Map<BlockPos, BlockState>>()
+    private val undoMap = hashMapOf<Player, Map<BlockPos, BlockState>>()
     abstract val fillMessage: String
 
-    abstract override fun useOn(context: ItemUseContext): ActionResultType
+    abstract override fun useOn(context: UseOnContext): InteractionResult
 
     /**
      * Places blocks from the saved StartPos tag to the specified [pos].
@@ -42,8 +41,8 @@ abstract class AbstractFillingWandItem(properties: Properties) : Item(properties
      * @param worldIn the world
      * @param playerIn the player that may or may not exist
      */
-    protected fun place(stack: ItemStack, state: BlockState, pos: BlockPos, worldIn: World, playerIn: PlayerEntity?) {
-        val startPos = NBTUtil.readBlockPos(stack.getTagElement("StartPos")!!)
+    protected fun place(stack: ItemStack, state: BlockState, pos: BlockPos, worldIn: Level, playerIn: Player?) {
+        val startPos = NbtUtils.readBlockPos(stack.getTagElement("StartPos")!!)
         val builder = ImmutableMap.builder<BlockPos, BlockState>()
 
         for (blockPos in BlockPos.betweenClosed(startPos, pos)) {
@@ -57,9 +56,9 @@ abstract class AbstractFillingWandItem(properties: Properties) : Item(properties
             undoMap[p] = builder.build()
         }
         playerIn?.displayClientMessage(
-            TranslationTextComponent(fillMessage)
+            Component.translatable(fillMessage)
                 .append(" (${startPos.x} ${startPos.y} ${startPos.z}) ")
-                .append(TranslationTextComponent("lang.hardcoredungeons.to"))
+                .append(Component.translatable("lang.hardcoredungeons.to"))
                 .append(" (${pos.x} ${pos.y} ${pos.z})"),
             true
         )
@@ -70,13 +69,13 @@ abstract class AbstractFillingWandItem(properties: Properties) : Item(properties
      * Called when the player finishes using this Item (E.g. finishes eating.). Not called when the player stops using
      * the Item before the action is complete.
      */
-    override fun finishUsingItem(stack: ItemStack?, worldIn: World, entityLiving: LivingEntity): ItemStack? {
-        if (entityLiving is PlayerEntity) {
+    override fun finishUsingItem(stack: ItemStack?, worldIn: Level, entityLiving: LivingEntity): ItemStack? {
+        if (entityLiving is Player) {
             undoMap[entityLiving]?.let { pos2StateMap ->
                 for (entry in pos2StateMap) {
                     worldIn.setBlock(entry.key, entry.value, 2)
                 }
-                entityLiving.displayClientMessage(StringTextComponent("Undo!"), true)
+                entityLiving.displayClientMessage(Component.literal("Undo!"), true)
                 undoMap.remove(entityLiving)
             }
         }
@@ -102,9 +101,9 @@ abstract class AbstractFillingWandItem(properties: Properties) : Item(properties
      * @param pos the starting position
      * @param playerIn the player to send a selection message
      */
-    protected fun saveStartPosition(stack: ItemStack, pos: BlockPos, playerIn: PlayerEntity?) {
-        stack.addTagElement("StartPos", NBTUtil.writeBlockPos(pos))
-        playerIn?.displayClientMessage(StringTextComponent("Starting position: (${pos.x} ${pos.y} ${pos.z})"), true)
+    protected fun saveStartPosition(stack: ItemStack, pos: BlockPos, playerIn: Player?) {
+        stack.addTagElement("StartPos", NbtUtils.writeBlockPos(pos))
+        playerIn?.displayClientMessage(Component.literal("Starting position: (${pos.x} ${pos.y} ${pos.z})"), true)
     }
 
     /**
@@ -115,22 +114,22 @@ abstract class AbstractFillingWandItem(properties: Properties) : Item(properties
     /**
      * Returns the action that specifies what animation to play when the items is being used
      */
-    override fun getUseAnimation(stack: ItemStack?) = UseAction.BOW
+    override fun getUseAnimation(stack: ItemStack?) = UseAnim.BOW
 
     /**
      * Called to trigger the item's "innate" right click behavior.
      * To handle when this item is used on a Block, see [onItemUse].
      */
-    override fun use(worldIn: World, playerIn: PlayerEntity, handIn: Hand): ActionResult<ItemStack> {
+    override fun use(worldIn: Level, playerIn: Player, handIn: InteractionHand): InteractionResultHolder<ItemStack> {
         if (!worldIn.isClientSide) {
             if (playerIn.isShiftKeyDown) {
                 playerIn.getItemInHand(handIn).removeTagKey("StartPos")
-                playerIn.displayClientMessage(StringTextComponent("Cleared start position"), true)
+                playerIn.displayClientMessage(Component.literal("Cleared start position"), true)
             } else if (undoMap[playerIn] != null) {
-                playerIn.displayClientMessage(StringTextComponent("Hold to undo"), true)
+                playerIn.displayClientMessage(Component.literal("Hold to undo"), true)
                 playerIn.startUsingItem(handIn)
             }
         }
-        return ActionResult.pass(playerIn.getItemInHand(handIn))
+        return InteractionResultHolder.pass(playerIn.getItemInHand(handIn))
     }
 }

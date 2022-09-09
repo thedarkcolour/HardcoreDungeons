@@ -10,15 +10,17 @@ import net.minecraft.entity.ai.goal.LookAtGoal
 import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.util.SoundEvent
-import net.minecraft.util.math.BlockPos
-import net.minecraft.world.World
+import net.minecraft.core.BlockPos
+import net.minecraft.world.entity.ai.goal.Goal
+import net.minecraft.world.entity.ambient.AmbientCreature
+import net.minecraft.world.level.Level
 import net.minecraftforge.common.ForgeMod
 import thedarkcolour.hardcoredungeons.entity.projectile.magic.MagicBoltEntity
 import thedarkcolour.hardcoredungeons.registry.HBlocks
 import thedarkcolour.hardcoredungeons.registry.HEntities
 import thedarkcolour.hardcoredungeons.registry.HSounds
 
-class FrayedSoulEntity(type: EntityType<FrayedSoulEntity>, worldIn: World) : CreatureEntity(type, worldIn) {
+class FrayedSoulEntity(type: EntityType<FrayedSoulEntity>, worldIn: World) : AmbientCreature(type, worldIn) {
     override fun registerGoals() {
         goalSelector.addGoal(0, FindBlueLumshroomGoal(this))
         goalSelector.addGoal(1, LookAtGoal(this, PlayerEntity::class.java, 40f, 1f))
@@ -65,7 +67,7 @@ class FrayedSoulEntity(type: EntityType<FrayedSoulEntity>, worldIn: World) : Cre
         }
 
         // Note: three for loops is faster than BlockPos.betweenClosed
-        private inline fun FrayedSoulEntity.findBlockInRange(range: Int, predicate: (BlockPos, World) -> Boolean): BlockPos? {
+        private inline fun FrayedSoulEntity.findBlockInRange(range: Int, predicate: (BlockPos, Level) -> Boolean): BlockPos? {
             val pos = blockPosition().offset(-range, -range, -range)
 
             for (x in 0 until (range shl 1) + 1) {

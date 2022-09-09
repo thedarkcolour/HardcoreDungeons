@@ -3,16 +3,22 @@ package thedarkcolour.hardcoredungeons.item.debug
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.Item
-import net.minecraft.item.ItemStack
+import net.minecraft.world.item.ItemStack
 import net.minecraft.item.ItemUseContext
 import net.minecraft.nbt.CompoundNBT
 import net.minecraft.nbt.ListNBT
 import net.minecraft.nbt.NBTUtil
 import net.minecraft.util.ActionResultType
 import net.minecraft.util.Hand
-import net.minecraft.util.math.BlockPos
+import net.minecraft.core.BlockPos
+import net.minecraft.network.chat.Component
 import net.minecraft.util.text.ITextComponent
 import net.minecraft.util.text.StringTextComponent
+import net.minecraft.world.InteractionHand
+import net.minecraft.world.InteractionResult
+import net.minecraft.world.entity.LivingEntity
+import net.minecraft.world.entity.player.Player
+import net.minecraft.world.item.Item
 import net.minecraftforge.common.util.Constants
 import thedarkcolour.hardcoredungeons.block.structure.SootTrapControllerBlock
 import thedarkcolour.hardcoredungeons.entity.overworld.deer.DeerEntity
@@ -21,19 +27,19 @@ import thedarkcolour.hardcoredungeons.tileentity.SootTrapControllerTileEntity
 class GreenWandItem(properties: Properties) : Item(properties) {
     override fun interactLivingEntity(
         stack: ItemStack,
-        player: PlayerEntity,
+        player: Player,
         target: LivingEntity,
-        hand: Hand
-    ): ActionResultType {
+        hand: InteractionHand
+    ): InteractionResult {
         if (!player.level.isClientSide) {
             if (target is DeerEntity) {
-                player.displayClientMessage(StringTextComponent("DeerType: " + target.deerType), true)
+                player.displayClientMessage(Component.literal("DeerType: " + target.deerType), true)
 
-                return ActionResultType.SUCCESS
+                return InteractionResult.SUCCESS
             }
         }
 
-        return ActionResultType.PASS
+        return InteractionResult.PASS
     }
 
     override fun useOn(ctx: ItemUseContext): ActionResultType {

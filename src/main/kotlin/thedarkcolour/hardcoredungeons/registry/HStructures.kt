@@ -1,13 +1,14 @@
 package thedarkcolour.hardcoredungeons.registry
 
 import com.google.common.collect.ImmutableMap
-import net.minecraft.util.ResourceLocation
+import net.minecraft.resources.ResourceLocation
 import net.minecraft.util.math.vector.Vector3i
 import net.minecraft.world.gen.feature.IFeatureConfig
 import net.minecraft.world.gen.feature.structure.IStructurePieceType
 import net.minecraft.world.gen.feature.structure.Structure
 import net.minecraft.world.gen.settings.DimensionStructuresSettings
 import net.minecraft.world.gen.settings.StructureSeparationSettings
+import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration
 import net.minecraft.world.server.ServerWorld
 import net.minecraftforge.event.world.WorldEvent
 import net.minecraftforge.registries.IForgeRegistry
@@ -37,7 +38,7 @@ object HStructures {
         map[Vector3i(0, 0, 1)] = RAINBOW_FACTORY_PIECE_1
     }, StructureSeparationSettings(32, 8, 523332), true)
 
-    fun <C : IFeatureConfig> structure(
+    fun <C : FeatureConfiguration> structure(
         structure: Structure<C>,
         separationSettings: StructureSeparationSettings,
         addLand: Boolean

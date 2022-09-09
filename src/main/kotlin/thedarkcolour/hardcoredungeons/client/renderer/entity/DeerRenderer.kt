@@ -4,7 +4,7 @@ import com.mojang.blaze3d.matrix.MatrixStack
 import net.minecraft.client.renderer.IRenderTypeBuffer
 import net.minecraft.client.renderer.RenderType
 import net.minecraft.client.renderer.entity.EntityRendererManager
-import net.minecraft.util.ResourceLocation
+import net.minecraft.resources.ResourceLocation
 import thedarkcolour.hardcoredungeons.client.model.entity.DoeModel
 import thedarkcolour.hardcoredungeons.client.model.entity.StagModel
 import thedarkcolour.hardcoredungeons.client.renderer.entity.layers.DeerFullbrightLayer
@@ -25,7 +25,7 @@ class DeerRenderer(manager: EntityRendererManager) : ReloadableRenderer<DeerEnti
         entity: DeerEntity, entityYaw: Float, partialTicks: Float,
         stack: MatrixStack, buffer: IRenderTypeBuffer, light: Int
     ) {
-        model = if (entity.isTheDarkColour()) {
+        model = if (entity.isthedarkcolour()) {
             stag
         } else {
             if (entity.deerType.isDoe) doe else stag
@@ -34,7 +34,7 @@ class DeerRenderer(manager: EntityRendererManager) : ReloadableRenderer<DeerEnti
     }
 
     override fun getTextureLocation(entity: DeerEntity): ResourceLocation {
-        if (entity.isTheDarkColour()) {
+        if (entity.isthedarkcolour()) {
             return THEDARKCOLOUR
         }
 
@@ -49,7 +49,7 @@ class DeerRenderer(manager: EntityRendererManager) : ReloadableRenderer<DeerEnti
     }
 
     fun getOverlayTexture(entity: DeerEntity): RenderType? {
-        if (entity.isTheDarkColour()) {
+        if (entity.isthedarkcolour()) {
             return THEDARKCOLOUR_OVERLAY
         }
 

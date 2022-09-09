@@ -5,6 +5,9 @@ import net.minecraft.entity.EntityType
 import net.minecraft.util.math.MathHelper
 import net.minecraft.world.biome.BiomeAmbience
 import net.minecraft.world.biome.MobSpawnInfo
+import net.minecraft.world.entity.EntityType
+import net.minecraft.world.entity.MobCategory
+import net.minecraft.world.level.biome.MobSpawnSettings
 
 /**
  * Biome ambience with default parameters and enforced the required ones.
@@ -29,12 +32,12 @@ fun getSkyForTemp(temperature: Float): Int {
 }
 
 /** Shortcut function */
-fun MobSpawnInfo.Builder.addSpawn(
-    classification: EntityClassification,
+fun MobSpawnSettings.Builder.addSpawn(
+    classification: MobCategory,
     entityType: EntityType<*>,
     weight: Int,
     min: Int,
     max: Int
-): MobSpawnInfo.Builder {
+): MobSpawnSettings.Builder {
     return addSpawn(classification, MobSpawnInfo.Spawners(entityType, weight, min, max))
 }

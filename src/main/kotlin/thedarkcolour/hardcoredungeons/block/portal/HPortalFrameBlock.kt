@@ -1,6 +1,6 @@
 package thedarkcolour.hardcoredungeons.block.portal
 
-import net.minecraft.block.Block
+import net.minecraft.world.level.block.Block
 import thedarkcolour.hardcoredungeons.block.base.properties.HProperties
 import thedarkcolour.hardcoredungeons.block.combo.PortalCombo
 

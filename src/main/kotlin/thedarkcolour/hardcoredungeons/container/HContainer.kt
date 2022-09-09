@@ -1,19 +1,20 @@
 package thedarkcolour.hardcoredungeons.container
 
-import net.minecraft.block.Block
-import net.minecraft.entity.player.PlayerEntity
-import net.minecraft.entity.player.PlayerInventory
-import net.minecraft.inventory.container.Container
-import net.minecraft.inventory.container.Slot
-import net.minecraft.tags.ITag
-import net.minecraft.util.math.BlockPos
+import net.minecraft.core.BlockPos
+import net.minecraft.tags.TagKey
+import net.minecraft.world.entity.player.Inventory
+import net.minecraft.world.entity.player.Player
+import net.minecraft.world.inventory.AbstractContainerMenu
+import net.minecraft.world.inventory.MenuType
+import net.minecraft.world.inventory.Slot
+import net.minecraft.world.level.block.Block
 
 /**
  * Base [Container] class that has utility functions for [WorldPos]
  *
  * It has a few other utilities and will have better support for opening screens.
  */
-abstract class HContainer(type: HContainerType<*>, id: Int, val playerIn: PlayerEntity) : Container(type, id) {
+abstract class HContainer(type: MenuType<*>, id: Int, val playerIn: Player) : AbstractContainerMenu(type, id) {
     /**
      * Checks if the block at the position matches the [tag]
      * and if it is within the player's usable distance.
@@ -22,9 +23,9 @@ abstract class HContainer(type: HContainerType<*>, id: Int, val playerIn: Player
      * @param playerIn the player whose usable distance is checked
      * @param tag the block tag to check
      */
-    fun isTagInRange(worldPos: WorldPos, playerIn: PlayerEntity, tag: ITag.INamedTag<Block>): Boolean {
-        return worldPos.invokeDefaulted(true) { worldIn, pos ->
-            worldIn.getBlockState(pos).`is`(tag) && isUsableInRange(pos, playerIn)
+    fun isTagInRange(worldPos: WorldPos, playerIn: Player, tag: TagKey<Block>): Boolean {
+        return worldPos.invokeDefaulted(true) { level, pos ->
+            level.getBlockState(pos).`is`(tag) && isUsableInRange(pos, playerIn)
         }
     }
 
@@ -36,7 +37,7 @@ abstract class HContainer(type: HContainerType<*>, id: Int, val playerIn: Player
      * @param playerIn the player whose usable distance is checked
      * @param block the expected block
      */
-    fun isBlockInRange(worldPos: WorldPos, playerIn: PlayerEntity, block: Block): Boolean {
+    fun isBlockInRange(worldPos: WorldPos, playerIn: Player, block: Block): Boolean {
         return worldPos.invokeDefaulted(true) { worldIn, pos ->
             worldIn.getBlockState(pos).`is`(block) && isUsableInRange(pos, playerIn)
         }
@@ -45,14 +46,14 @@ abstract class HContainer(type: HContainerType<*>, id: Int, val playerIn: Player
     /**
      * Checks if the position is within the player's usable distance.
      */
-    private fun isUsableInRange(pos: BlockPos, playerIn: PlayerEntity): Boolean {
+    private fun isUsableInRange(pos: BlockPos, playerIn: Player): Boolean {
         return playerIn.distanceToSqr(pos.x.toDouble() + 0.5, pos.y.toDouble() + 0.5, pos.z.toDouble() + 0.5) <= 64.0
     }
 
     /**
      * Make sure to add your own slots **before** adding player slots.
      */
-    protected fun addPlayerSlots(playerInv: PlayerInventory) {
+    protected fun addPlayerSlots(playerInv: Inventory) {
         for (row in 0..2) {
             for (col in 0..8) {
                 val x = col * 18 + 8

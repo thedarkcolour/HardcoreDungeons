@@ -1,28 +1,22 @@
 package thedarkcolour.hardcoredungeons.entity.projectile
 
-import net.minecraft.entity.Entity
-import net.minecraft.entity.EntityType
-import net.minecraft.entity.LivingEntity
-import net.minecraft.entity.ai.attributes.AttributeModifierMap
-import net.minecraft.entity.projectile.DamagingProjectileEntity
-import net.minecraft.network.IPacket
-import net.minecraft.util.math.EntityRayTraceResult
-import net.minecraft.util.math.RayTraceResult
-import net.minecraft.util.math.vector.Vector3d
-import net.minecraft.world.World
-import net.minecraftforge.fml.network.NetworkHooks
-import thedarkcolour.hardcoredungeons.entity.HEntityType
+import com.mojang.math.Vector3d
+import net.minecraft.network.protocol.Packet
+import net.minecraft.world.entity.Entity
+import net.minecraft.world.entity.EntityType
+import net.minecraft.world.entity.LivingEntity
+import net.minecraft.world.entity.projectile.AbstractHurtingProjectile
+import net.minecraft.world.level.Level
+import net.minecraft.world.phys.EntityHitResult
+import net.minecraft.world.phys.HitResult
+import net.minecraftforge.network.NetworkHooks
 import kotlin.math.sqrt
 
 abstract class ProjectileEntity(
     type: EntityType<out ProjectileEntity>,
-    worldIn: World,
-) : DamagingProjectileEntity(type, worldIn), HEntityType.HEntity {
-
-    var shootingEntity: LivingEntity?
-        get() = getOwner() as LivingEntity?
-        set(shooter) = setOwner(shooter)
-
+    level: Level,
+) : AbstractHurtingProjectile(type, level)
+{
     fun shoot(shooter: LivingEntity, pos: Vector3d, acceleration: Vector3d) {
         this.shoot(
             shooter,
@@ -47,30 +41,28 @@ abstract class ProjectileEntity(
         yPower = mY / d0 * 0.1
         zPower = mZ / d0 * 0.1
 
-        shootingEntity = shooter
+        owner = shooter
 
         level.addFreshEntity(this)
     }
 
-    final override fun onHit(result: RayTraceResult) {
+    final override fun onHit(result: HitResult) {
         super.onHit(result)
     }
 
-    override fun onHitEntity(result: EntityRayTraceResult) {
-        if (result.entity != shootingEntity) {
-            onHitTarget(result, shootingEntity, result.entity)
+    override fun onHitEntity(result: EntityHitResult) {
+        val target = result.entity
+
+        if (target != owner) {
+            onHitTarget(result, owner as LivingEntity?, target)
         }
     }
 
-    protected open fun onHitTarget(result: EntityRayTraceResult, shooter: LivingEntity?, target: Entity) {
+    protected open fun onHitTarget(result: EntityHitResult, shooter: LivingEntity?, target: Entity) {
 
     }
 
-    override fun getAttributes(): AttributeModifierMap.MutableAttribute {
-        return AttributeModifierMap.builder()
-    }
-
-    override fun getAddEntityPacket(): IPacket<*> = NetworkHooks.getEntitySpawningPacket(this)
+    override fun getAddEntityPacket(): Packet<*> = NetworkHooks.getEntitySpawningPacket(this)
 
     override fun shouldBurn() = false
 }

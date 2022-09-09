@@ -1,51 +1,59 @@
 package thedarkcolour.hardcoredungeons.block.portal
 
-import net.minecraft.block.Block
-import net.minecraft.block.BlockState
+import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.entity.Entity
 import net.minecraft.entity.player.ServerPlayerEntity
 import net.minecraft.item.BlockItemUseContext
 import net.minecraft.state.StateContainer
 import net.minecraft.state.properties.BlockStateProperties
-import net.minecraft.util.Direction
-import net.minecraft.util.Direction.Axis
+import net.minecraft.core.Direction
+import net.minecraft.core.Direction.Axis
 import net.minecraft.util.RegistryKey
-import net.minecraft.util.math.BlockPos
+import net.minecraft.core.BlockPos
+import net.minecraft.core.BlockPos.MutableBlockPos
+import net.minecraft.core.Direction
+import net.minecraft.resources.ResourceKey
+import net.minecraft.server.level.ServerPlayer
 import net.minecraft.util.math.shapes.IBooleanFunction
 import net.minecraft.util.math.shapes.ISelectionContext
 import net.minecraft.util.math.shapes.VoxelShape
 import net.minecraft.util.math.shapes.VoxelShapes
 import net.minecraft.world.IBlockReader
 import net.minecraft.world.IWorld
-import net.minecraft.world.World
+import net.minecraft.world.entity.Entity
+import net.minecraft.world.level.Level
+import net.minecraft.world.level.LevelReader
+import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import thedarkcolour.hardcoredungeons.block.base.properties.HProperties
 import thedarkcolour.hardcoredungeons.block.combo.PortalCombo
 import thedarkcolour.hardcoredungeons.block.structure.LockBlock
 import thedarkcolour.hardcoredungeons.capability.PlayerHelper
 
 class HPortalBlock(
-    private val dimensionKey: () -> RegistryKey<World>,
+    private val dimensionKey: () -> ResourceKey<Level>,
     private val combo: PortalCombo, // todo use a tag here
     properties: HProperties
 ) : Block(properties.build()) {
     init {
-        registerDefaultState(stateDefinition.any().setValue(AXIS, Axis.X))
+        registerDefaultState(stateDefinition.any().setValue(AXIS, Direction.Axis.X))
     }
 
-    override fun entityInside(state: BlockState, worldIn: World, blockPos: BlockPos, entityIn: Entity) {
+    override fun entityInside(state: BlockState, worldIn: Level, blockPos: BlockPos, entityIn: Entity) {
         val pos = blockPos.mutable()
 
         @Suppress("ControlFlowWithEmptyBody")
         if (!worldIn.isClientSide && canTeleport(state, worldIn, pos, entityIn)) {
             // exit early before reading the world
-            if (entityIn !is ServerPlayerEntity || PlayerHelper.getPortalCooldown(entityIn) > 0) {
+            if (entityIn !is ServerPlayer || PlayerHelper.getPortalCooldown(entityIn) > 0) {
                 return
             }
             // picks the destination dimension
             val key = dimensionKey()
 
             val type = if (worldIn.dimension() == key) {
-                World.OVERWORLD
+                Level.OVERWORLD
             } else {
                 key
             }
@@ -57,7 +65,7 @@ class HPortalBlock(
             var portalOffset = 0.0
             val x = entityIn.x
             val z = entityIn.z
-            val mutable = BlockPos.Mutable(x, portalOffset, z)
+            val mutable = MutableBlockPos(x, portalOffset, z)
 
             // first check for existing portal
             while (++portalOffset < 255 && destination.getBlockState(mutable.set(x, portalOffset, z)).block != this);
@@ -91,7 +99,7 @@ class HPortalBlock(
     }
 
     // if a portal block is missing then we make a new portal here
-    private fun constructMatchingPortal(destination: IWorld, origin: IWorld, pos: BlockPos, tpLocation: BlockPos, state: BlockState) {
+    private fun constructMatchingPortal(destination: LevelReader, origin: LevelReader, pos: BlockPos, tpLocation: BlockPos, state: BlockState) {
         val axis = state.getValue(AXIS)
         // cursor for measuring portal
         val testCursor = pos.mutable()
@@ -227,7 +235,7 @@ class HPortalBlock(
     }
 
     companion object {
-        private val AXIS = BlockStateProperties.HORIZONTAL_AXIS 
+        private val AXIS = BlockStateProperties.HORIZONTAL_AXIS
         private val X_SHAPE = box(0.0, 0.0, 6.0, 16.0, 16.0, 10.0)
         private val Z_SHAPE = box(6.0, 0.0, 0.0, 10.0, 16.0, 16.0)
     }

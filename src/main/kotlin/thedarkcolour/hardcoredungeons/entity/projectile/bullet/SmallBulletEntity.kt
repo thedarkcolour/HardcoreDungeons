@@ -1,25 +1,25 @@
 package thedarkcolour.hardcoredungeons.entity.projectile.bullet
 
 import net.minecraft.entity.Entity
-import net.minecraft.entity.EntityType
-import net.minecraft.entity.IRendersAsItem
-import net.minecraft.entity.LivingEntity
-import net.minecraft.item.ItemStack
+import net.minecraft.world.item.ItemStack
 import net.minecraft.nbt.CompoundNBT
 import net.minecraft.network.PacketBuffer
 import net.minecraft.util.IndirectEntityDamageSource
 import net.minecraft.util.math.BlockRayTraceResult
 import net.minecraft.util.math.EntityRayTraceResult
-import net.minecraft.world.World
-import net.minecraftforge.api.distmarker.Dist
-import net.minecraftforge.api.distmarker.OnlyIn
-import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData
+import net.minecraft.world.damagesource.IndirectEntityDamageSource
+import net.minecraft.world.entity.Entity
+import net.minecraft.world.entity.EntityType
+import net.minecraft.world.entity.LivingEntity
+import net.minecraft.world.entity.projectile.ItemSupplier
+import net.minecraft.world.level.Level
+import net.minecraft.world.phys.EntityHitResult
+import net.minecraftforge.entity.IEntityAdditionalSpawnData
 import thedarkcolour.hardcoredungeons.entity.projectile.ProjectileEntity
 import thedarkcolour.hardcoredungeons.item.GunItem
 import thedarkcolour.hardcoredungeons.registry.HItems
 
-@OnlyIn(value = Dist.CLIENT, _interface = IRendersAsItem::class)
-class SmallBulletEntity(type: EntityType<out ProjectileEntity>, worldIn: World) : ProjectileEntity(type, worldIn), IRendersAsItem, IEntityAdditionalSpawnData {
+class SmallBulletEntity(type: EntityType<out ProjectileEntity>, level: Level) : ProjectileEntity(type, level), ItemSupplier, IEntityAdditionalSpawnData {
     private var drop = 0.0f
     private var damage = 0.0f
     private var ammoType = 0
@@ -69,13 +69,13 @@ class SmallBulletEntity(type: EntityType<out ProjectileEntity>, worldIn: World) 
         damage = gun.bulletDamage
     }
 
-    override fun onHitTarget(result: EntityRayTraceResult, shooter: LivingEntity?, target: Entity) {
+    override fun onHitTarget(result: EntityHitResult, shooter: LivingEntity?, target: Entity) {
         super.onHitTarget(result, shooter, target)
 
         if (!level.isClientSide) {
             // todo custom damage source + lang
             if (target.hurt(IndirectEntityDamageSource("arrow", shooter, this), damage) && shooter != null) {
-                doEnchantDamageEffects(shooter, entity)
+                doEnchantDamageEffects(shooter, target)
             }
 
             if (ammoType == INCENDIARY_BULLET) {

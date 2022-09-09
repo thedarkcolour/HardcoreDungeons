@@ -1,10 +1,10 @@
 package thedarkcolour.hardcoredungeons.data
 
 import net.minecraft.data.DataGenerator
-import net.minecraft.enchantment.Enchantment
-import net.minecraft.item.Item
-import net.minecraft.util.IItemProvider
-import net.minecraft.util.text.TranslationTextComponent
+import net.minecraft.network.chat.Component
+import net.minecraft.world.item.Item
+import net.minecraft.world.item.enchantment.Enchantment
+import net.minecraft.world.level.ItemLike
 import net.minecraftforge.common.data.LanguageProvider
 import thedarkcolour.hardcoredungeons.HardcoreDungeons
 import thedarkcolour.hardcoredungeons.block.combo.CompressedCombo
@@ -12,20 +12,20 @@ import thedarkcolour.hardcoredungeons.block.combo.StairsSlabWallCombo
 import thedarkcolour.hardcoredungeons.registry.HBlocks
 import thedarkcolour.hardcoredungeons.registry.HEnchantments
 import thedarkcolour.hardcoredungeons.registry.HItems
-import thedarkcolour.hardcoredungeons.registry.HItemsNew
+import thedarkcolour.hardcoredungeons.registry.items.HItemsNew
 
 /**
  * Language data provider for Hardcore Dungeons.
  *
  * Currently includes American English and Latin American Spanish.
  *
- * @author TheDarkColour
+ * @author thedarkcolour
  */
 abstract class Lang(gen: DataGenerator, locale: String) : LanguageProvider(gen, HardcoreDungeons.ID, locale) {
     /**
      * American English.
      *
-     * @author TheDarkColour
+     * @author thedarkcolour
      */
     class English(gen: DataGenerator) : Lang(gen, "en_us") {
         override fun addTranslations() {
@@ -62,7 +62,6 @@ abstract class Lang(gen: DataGenerator, locale: String) : LanguageProvider(gen, 
             add(HBlocks.SHROOMY_VASE, "Shroomy Vase")
             add(HBlocks.ASHY_FARMLAND, "Ashy Farmland")
             add(HBlocks.SANDY_FARMLAND, "Sandy Farmland")
-            add(HItems.PRISTINE_DIAMOND, "Pristine Diamond")
 
             add(HBlocks.CASTLETON_SOIL.soil, "Castleton Soil")
             add(HBlocks.CASTLETON_SOIL.grass, "Castleton Grass")
@@ -196,7 +195,7 @@ abstract class Lang(gen: DataGenerator, locale: String) : LanguageProvider(gen, 
             add(HItemsNew.SHROOMY_SWORD, "Shroomy Sword")
             add(HItemsNew.MINI_PISTOL, "Mini Pistol")
 
-            add(HItems.SYRINGE, "Syringe")
+            add(HItemsNew.SYRINGE, "Syringe")
             add("item.hardcoredungeons.potion_syringe.effect.empty", "Uncraftable Syringe")
             add("item.hardcoredungeons.potion_syringe.effect.water", "Water Syringe")
             add("item.hardcoredungeons.potion_syringe.effect.mundane", "Mundane Syringe")
@@ -220,16 +219,16 @@ abstract class Lang(gen: DataGenerator, locale: String) : LanguageProvider(gen, 
             add("item.hardcoredungeons.potion_syringe.effect.turtle_master", "Syringe of Turtle Master")
             add("item.hardcoredungeons.potion_syringe.effect.slow_falling", "Syringe of Slow Falling")
 
-            add(HItems.DEER_ANTLER, "Deer Antler")
-            add(HItems.VENISON, "Venison")
-            add(HItems.COOKED_VENISON, "Cooked Venison")
-            add(HItems.DEER_SPAWN_EGG, "Deer Spawn Egg")
+            add(HItemsNew.DEER_ANTLER, "Deer Antler")
+            add(HItemsNew.VENISON, "Venison")
+            add(HItemsNew.COOKED_VENISON, "Cooked Venison")
+            add(HItemsNew.DEER_SPAWN_EGG, "Deer Spawn Egg")
 
             add(HItemsNew.CASTLETON_SWORD, "Castleton Sword")
             add(HItemsNew.VALABLADE, "Valablade")
             add(HItemsNew.GILDED_VALABLADE, "Gilded Valablade")
-            add(HItems.CASTLE_GEM, "Castle Gem")
-            add(HItems.FRAYED_SOUL_SPAWN_EGG, "Frayed Soul Spawn Egg")
+            add(HItemsNew.CASTLE_GEM, "Castle Gem")
+            add(HItemsNew.FRAYED_SOUL_SPAWN_EGG, "Frayed Soul Spawn Egg")
             add(HItems.VOID_RUNNER_SPAWN_EGG, "Void Runner Spawn Egg")
             add(HItems.CASTLETON_DEER_SPAWN_EGG, "Castleton Deer Spawn Egg")
             add(HItems.KNIGHTLY_JUGGERNAUT_SPAWN_EGG, "Knightly Juggernaut Spawn Egg")
@@ -242,13 +241,13 @@ abstract class Lang(gen: DataGenerator, locale: String) : LanguageProvider(gen, 
             add(HItems.TOWER_BOOTS, "Tower Boots")
             add(HItemsNew.CASTLETON_STAFF, "Castleton Staff")
             add(HBlocks.WILD_BERROOK, "Wild Berrook")
-            add(HItems.MUSHROOM_CAP, "Mushroom Cap")
-            add(HItems.MUSHROOM_CHESTPLATE, "Mushroom Chestplate")
+            add(HItemsNew.MUSHROOM_CAP, "Mushroom Cap")
+            add(HItemsNew.MUSHROOM_CHESTPLATE, "Mushroom Chestplate")
             add(HItemsNew.MALACHITE_SWORD, "Malachite Sword")
-            add(HItems.MALACHITE_SHOVEL, "Malachite Shovel")
-            add(HItems.MALACHITE_PICKAXE, "Malachite Pickaxe")
-            add(HItems.MALACHITE_AXE, "Malachite Axe")
-            add(HItems.MALACHITE_HOE, "Malachite Hoe")
+            add(HItemsNew.MALACHITE_SHOVEL, "Malachite Shovel")
+            add(HItemsNew.MALACHITE_PICKAXE, "Malachite Pickaxe")
+            add(HItemsNew.MALACHITE_AXE, "Malachite Axe")
+            add(HItemsNew.MALACHITE_HOE, "Malachite Hoe")
 
             add(HItems.RAINBOWSTONE_AXE, "Rainbowstone Axe")
             add(HItems.RAINBOWSTONE_HOE, "Rainbowstone Hoe")
@@ -267,9 +266,9 @@ abstract class Lang(gen: DataGenerator, locale: String) : LanguageProvider(gen, 
             add(HItems.CANDY_CANE, "Candy Cane")
 
             add(HBlocks.CHILI_PEPPER, "Chili Pepper")
-            add(HItems.BULLET, "Bullet")
-            add(HItems.INCENDIARY_BULLET, "Incendiary Bullet")
-            add(HItems.SHELL, "Shell")
+            add(HItemsNew.BULLET, "Bullet")
+            add(HItemsNew.INCENDIARY_BULLET, "Incendiary Bullet")
+            add(HItemsNew.SHELL, "Shell")
 
             add(HItems.FILL_WAND, "Fill Wand")
             add(HItems.CLEAR_WAND, "Clear Wand")
@@ -289,7 +288,7 @@ abstract class Lang(gen: DataGenerator, locale: String) : LanguageProvider(gen, 
         protected fun addCompressedBlock(block: CompressedCombo) {
             val compression = arrayOf("Compressed ", "Double Compressed ", "Triple Compressed ", "Quadruple Compressed ", "Quintuple Compressed ", "Sextuple Compressed ", "Septuple Compressed ", "Octuple Compressed ")
             val variants = block.variants
-            val blockName = TranslationTextComponent(block.block().descriptionId).string
+            val blockName = Component.translatable(block.block().descriptionId).string
 
             for (i in 0..7) {
                 add(variants[i](), compression[i] + blockName)
@@ -309,7 +308,7 @@ abstract class Lang(gen: DataGenerator, locale: String) : LanguageProvider(gen, 
      * Classname doesn't matter because this
      * is strictly for use in dev environment.
      *
-     * @author TheDarkColour
+     * @author thedarkcolour
      */
     @Suppress("ClassName", "NonAsciiCharacters", "SpellCheckingInspection")
     class Español(gen: DataGenerator) : Lang(gen, "es_mx") {
@@ -353,7 +352,7 @@ abstract class Lang(gen: DataGenerator, locale: String) : LanguageProvider(gen, 
         add(item.descriptionId + ".lore", translation)
     }
 
-    protected fun add(item: IItemProvider, translation: String) {
+    protected fun add(item: ItemLike, translation: String) {
         add(item.asItem(), translation)
     }
 

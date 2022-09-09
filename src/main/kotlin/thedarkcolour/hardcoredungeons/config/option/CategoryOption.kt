@@ -10,9 +10,9 @@ class CategoryOption(name: String, default: Unit, desc: String) : Option<Unit>(n
         options.add(option)
     }
 
-    override fun sync(data: CommentedConfig, parentName: String) {
+    override fun sync(data: CommentedConfig, parentName: String?) {
         for (option in this) {
-            val name = if (parentName.isEmpty()) {
+            val name = if (parentName == null) {
                 this.name
             } else {
                 "$parentName.$name"

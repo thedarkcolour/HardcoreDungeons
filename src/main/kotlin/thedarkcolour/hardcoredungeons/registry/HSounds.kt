@@ -1,7 +1,7 @@
 package thedarkcolour.hardcoredungeons.registry
 
 import net.minecraft.block.SoundType
-import net.minecraft.util.ResourceLocation
+import net.minecraft.resources.ResourceLocation
 import net.minecraft.util.SoundEvent
 import net.minecraftforge.registries.IForgeRegistry
 import thedarkcolour.hardcoredungeons.HardcoreDungeons

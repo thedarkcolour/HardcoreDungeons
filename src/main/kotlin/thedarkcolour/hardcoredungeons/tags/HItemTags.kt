@@ -1,14 +1,14 @@
 package thedarkcolour.hardcoredungeons.tags
 
-import net.minecraft.item.Item
-import net.minecraft.tags.ITag
 import net.minecraft.tags.ItemTags
-import thedarkcolour.hardcoredungeons.HardcoreDungeons
+import net.minecraft.tags.TagKey
+import net.minecraft.world.item.Item
+import thedarkcolour.hardcoredungeons.util.modLoc
 
 /**
  * Item tags in Hardcore Dungeons.
  *
- * @author TheDarkColour
+ * @author thedarkcolour
  */
 object HItemTags {
     // Wood
@@ -23,7 +23,7 @@ object HItemTags {
     val GEMS_MALACHITE = tag("gems/malachite")
     val GEMS_RAINBOWSTONE = tag("gems/rainbowstone")
 
-    private fun tag(tag: String): ITag.INamedTag<Item> {
-        return ItemTags.bind(HardcoreDungeons.ID + ":" + tag)
+    private fun tag(tag: String): TagKey<Item> {
+        return ItemTags.create(modLoc(tag))
     }
 }

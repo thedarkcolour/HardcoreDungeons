@@ -7,15 +7,21 @@ import net.minecraft.entity.ai.attributes.Attributes
 import net.minecraft.entity.ai.goal.*
 import net.minecraft.entity.passive.AnimalEntity
 import net.minecraft.entity.player.PlayerEntity
-import net.minecraft.item.ItemStack
+import net.minecraft.world.item.ItemStack
 import net.minecraft.item.Items
 import net.minecraft.item.crafting.Ingredient
 import net.minecraft.nbt.CompoundNBT
 import net.minecraft.network.datasync.DataSerializers
 import net.minecraft.network.datasync.EntityDataManager
 import net.minecraft.network.datasync.IDataSerializer
+import net.minecraft.network.syncher.SynchedEntityData
 import net.minecraft.util.text.ITextComponent
-import net.minecraft.world.World
+import net.minecraft.world.entity.EntityType
+import net.minecraft.world.entity.ai.attributes.Attributes
+import net.minecraft.world.entity.animal.Animal
+import net.minecraft.world.item.Items
+import net.minecraft.world.item.crafting.Ingredient
+import net.minecraft.world.level.Level
 import net.minecraft.world.server.ServerWorld
 import net.minecraftforge.common.ForgeMod
 import net.minecraftforge.common.Tags
@@ -26,7 +32,7 @@ import kotlin.experimental.and
 import kotlin.experimental.inv
 import kotlin.experimental.or
 
-open class DeerEntity(type: EntityType<out AnimalEntity>, worldIn: World) : AnimalEntity(type, worldIn) {
+open class DeerEntity(type: EntityType<out Animal>, worldIn: World) : Animal(type, worldIn) {
     var deerType by dataParameterDelegate<DeerType>(DEER_TYPE)
     var deerFlags by dataParameterDelegate<Byte>(DEER_FLAGS)
 
@@ -61,7 +67,7 @@ open class DeerEntity(type: EntityType<out AnimalEntity>, worldIn: World) : Anim
     override fun getBreedOffspring(worldIn: ServerWorld, parent: AgeableEntity): DeerEntity {
         val entity = type.create(worldIn) as DeerEntity
         entity.deerType = getDefaultType()
-        entity.setIsTheDarkColour(isTheDarkColour() || (parent as DeerEntity).isTheDarkColour())
+        entity.setIsthedarkcolour(isthedarkcolour() || (parent as DeerEntity).isthedarkcolour())
         return entity
     }
 
@@ -71,11 +77,11 @@ open class DeerEntity(type: EntityType<out AnimalEntity>, worldIn: World) : Anim
         entityData.define(DEER_FLAGS, 0)
     }
 
-    fun isTheDarkColour(): Boolean {
+    fun isthedarkcolour(): Boolean {
         return getDeerFlag(IS_THEDARKCOLOUR)
     }
 
-    fun setIsTheDarkColour(value: Boolean) {
+    fun setIsthedarkcolour(value: Boolean) {
         setDeerFlag(IS_THEDARKCOLOUR, value)
     }
 
@@ -114,8 +120,8 @@ open class DeerEntity(type: EntityType<out AnimalEntity>, worldIn: World) : Anim
 
     companion object {
         @Suppress("UNCHECKED_CAST")
-        private val DEER_TYPE = EntityDataManager.defineId(DeerEntity::class.java, HDataSerializers.DEER_TYPE.serializer as IDataSerializer<DeerType>)
-        private val DEER_FLAGS = EntityDataManager.defineId(DeerEntity::class.java, DataSerializers.BYTE)
+        private val DEER_TYPE = SynchedEntityData.defineId(DeerEntity::class.java, HDataSerializers.DEER_TYPE.serializer as IDataSerializer<DeerType>)
+        private val DEER_FLAGS = SynchedEntityData.defineId(DeerEntity::class.java, DataSerializers.BYTE)
 
         // flags
         protected const val IS_THEDARKCOLOUR = 0x1
@@ -136,5 +142,5 @@ open class DeerEntity(type: EntityType<out AnimalEntity>, worldIn: World) : Anim
 
     // If a doe is attacked, it should alert any stags nearby
     // If there are no stags nearby or a stag is attacked, then the doe retaliates
-    inner class PanicGoal {}
+    //inner class PanicGoal {}
 }

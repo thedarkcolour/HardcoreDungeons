@@ -1,7 +1,7 @@
 package thedarkcolour.hardcoredungeons.item.debug
 
 import net.minecraft.item.Item
-import net.minecraft.item.ItemStack
+import net.minecraft.world.item.ItemStack
 import net.minecraft.item.ItemUseContext
 import net.minecraft.util.ActionResultType
 import net.minecraft.util.text.StringTextComponent

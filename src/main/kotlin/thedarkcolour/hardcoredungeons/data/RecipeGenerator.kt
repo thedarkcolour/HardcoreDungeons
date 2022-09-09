@@ -1,27 +1,29 @@
 package thedarkcolour.hardcoredungeons.data
 
-import net.minecraft.advancements.criterion.EntityPredicate
-import net.minecraft.advancements.criterion.InventoryChangeTrigger
-import net.minecraft.advancements.criterion.ItemPredicate
-import net.minecraft.advancements.criterion.MinMaxBounds
-import net.minecraft.block.*
+import net.minecraft.advancements.critereon.EntityPredicate
+import net.minecraft.advancements.critereon.InventoryChangeTrigger
+import net.minecraft.advancements.critereon.ItemPredicate
+import net.minecraft.advancements.critereon.MinMaxBounds
 import net.minecraft.data.*
-import net.minecraft.item.Item
-import net.minecraft.item.Items
-import net.minecraft.item.crafting.IRecipeSerializer
-import net.minecraft.item.crafting.Ingredient
-import net.minecraft.tags.ITag
+import net.minecraft.data.recipes.*
 import net.minecraft.tags.ItemTags
-import net.minecraft.util.IItemProvider
-import net.minecraft.util.ResourceLocation
+import net.minecraft.resources.ResourceLocation
+import net.minecraft.tags.TagKey
+import net.minecraft.world.item.Item
+import net.minecraft.world.item.Items
+import net.minecraft.world.item.crafting.Ingredient
+import net.minecraft.world.item.crafting.RecipeSerializer
+import net.minecraft.world.level.ItemLike
+import net.minecraft.world.level.block.*
 import net.minecraftforge.common.Tags
-import net.minecraftforge.registries.IForgeRegistryEntry
+import net.minecraftforge.registries.ForgeRegistries
 import thedarkcolour.hardcoredungeons.compat.getBiomesOPlentyCompat
 import thedarkcolour.hardcoredungeons.registry.HBlocks
 import thedarkcolour.hardcoredungeons.registry.HItems
-import thedarkcolour.hardcoredungeons.registry.HItemsNew
+import thedarkcolour.hardcoredungeons.registry.items.HItemsNew
 import thedarkcolour.hardcoredungeons.tags.HItemTags
 import thedarkcolour.hardcoredungeons.util.modLoc
+import thedarkcolour.hardcoredungeons.util.registryName
 import java.util.function.Consumer
 import java.util.function.Supplier
 
@@ -31,7 +33,7 @@ class RecipeGenerator(generatorIn: DataGenerator) : RecipeProvider(generatorIn) 
      *
      * Uses several extension functions declared later on in the file.
      */
-    override fun buildShapelessRecipes(consumer: Consumer<IFinishedRecipe>) {
+    override fun buildCraftingRecipes(consumer: Consumer<FinishedRecipe>) {
         // lumlight blocks
         HBlocks.LUMLIGHT_WOOD.addRecipes(consumer)
         HBlocks.AURI_WOOD.addRecipes(consumer)
@@ -62,7 +64,7 @@ class RecipeGenerator(generatorIn: DataGenerator) : RecipeProvider(generatorIn) 
         }
         consumer.slab(HBlocks.SHROOMY_STONE_BRICKS.slab, HBlocks.SHROOMY_STONE_BRICKS.block)
         consumer.stairs(HBlocks.SHROOMY_STONE_BRICKS.stairs, HBlocks.SHROOMY_STONE_BRICKS.block)
-        consumer.shaped(HItems.SYRINGE, 2) { builder ->
+        consumer.shaped(HItemsNew.SYRINGE, 2) { builder ->
             builder.define('B', Items.GLASS_BOTTLE)
             builder.define('I', Items.IRON_INGOT)
             builder.define('N', Items.IRON_NUGGET)
@@ -74,7 +76,7 @@ class RecipeGenerator(generatorIn: DataGenerator) : RecipeProvider(generatorIn) 
 
 
         // ammunition
-        consumer.shaped(HItems.BULLET, 8) { builder ->
+        consumer.shaped(HItemsNew.BULLET, 8) { builder ->
             builder.define('I', Items.IRON_NUGGET)
             builder.define('G', Items.GUNPOWDER)
             builder.pattern("III")
@@ -82,8 +84,8 @@ class RecipeGenerator(generatorIn: DataGenerator) : RecipeProvider(generatorIn) 
             builder.pattern("III")
             builder.unlockedBy("has_item", has(Items.GUNPOWDER))
         }
-        consumer.shaped(HItems.INCENDIARY_BULLET, 8) { builder ->
-            builder.define('I', HItems.BULLET)
+        consumer.shaped(HItemsNew.INCENDIARY_BULLET, 8) { builder ->
+            builder.define('I', HItemsNew.BULLET)
             builder.define('G', Items.BLAZE_POWDER)
             builder.pattern("III")
             builder.pattern("IGI")
@@ -94,10 +96,10 @@ class RecipeGenerator(generatorIn: DataGenerator) : RecipeProvider(generatorIn) 
 
         // tools
         consumer.sword(HItemsNew.MALACHITE_SWORD, HBlocks.MALACHITE_CRYSTAL.item)
-        consumer.shovel(HItems.MALACHITE_SHOVEL, HBlocks.MALACHITE_CRYSTAL.item)
-        consumer.pickaxe(HItems.MALACHITE_PICKAXE, HBlocks.MALACHITE_CRYSTAL.item)
-        consumer.axe(HItems.MALACHITE_AXE, HBlocks.MALACHITE_CRYSTAL.item)
-        consumer.hoe(HItems.MALACHITE_HOE, HBlocks.MALACHITE_CRYSTAL.item)
+        consumer.shovel(HItemsNew.MALACHITE_SHOVEL, HBlocks.MALACHITE_CRYSTAL.item)
+        consumer.pickaxe(HItemsNew.MALACHITE_PICKAXE, HBlocks.MALACHITE_CRYSTAL.item)
+        consumer.axe(HItemsNew.MALACHITE_AXE, HBlocks.MALACHITE_CRYSTAL.item)
+        consumer.hoe(HItemsNew.MALACHITE_HOE, HBlocks.MALACHITE_CRYSTAL.item)
 
         consumer.sword(HItems.RAINBOWSTONE_SWORD, HItems.RAINBOWSTONE_GEM)
         consumer.shovel(HItems.RAINBOWSTONE_SHOVEL, HItems.RAINBOWSTONE_GEM)
@@ -124,7 +126,7 @@ class RecipeGenerator(generatorIn: DataGenerator) : RecipeProvider(generatorIn) 
 
 
         // food
-        consumer.smeltingRecipe(HItems.VENISON, HItems.COOKED_VENISON, 0.35f, smokingRecipe = true, campfireRecipe = true)
+        consumer.smeltingRecipe(HItemsNew.VENISON, HItemsNew.COOKED_VENISON, 0.35f, smokingRecipe = true, campfireRecipe = true)
         consumer.smeltingRecipe(HBlocks.RAINBOWSTONE_ORE, HItems.RAINBOWSTONE_GEM, 0.85f, blastingRecipe = true)
         //consumer.campfireRecipe(HItems.VENISON, HItems.COOKED_VENISON, 0.35f)
 
@@ -142,20 +144,21 @@ class RecipeGenerator(generatorIn: DataGenerator) : RecipeProvider(generatorIn) 
     }
 
      companion object {
-         fun path(entry: IForgeRegistryEntry<*>): String {
-             return entry.registryName!!.path
+         fun path(entry: ItemLike): String {
+             val item = entry.asItem()
+             return ForgeRegistries.ITEMS.getKey(item)!!.path
          }
 
-         fun has(item: IItemProvider): InventoryChangeTrigger.Instance {
+         fun has(item: ItemLike): InventoryChangeTrigger.TriggerInstance {
              return inventoryTrigger(ItemPredicate.Builder.item().of(item).build())
          }
 
-         fun has(tag: ITag<Item>): InventoryChangeTrigger.Instance {
+         fun has(tag: TagKey<Item>): InventoryChangeTrigger.TriggerInstance {
              return inventoryTrigger(ItemPredicate.Builder.item().of(tag).build())
          }
 
-         private fun inventoryTrigger(vararg predicates: ItemPredicate): InventoryChangeTrigger.Instance {
-             return InventoryChangeTrigger.Instance(EntityPredicate.AndPredicate.ANY, MinMaxBounds.IntBound.ANY, MinMaxBounds.IntBound.ANY, MinMaxBounds.IntBound.ANY, predicates)
+         private fun inventoryTrigger(vararg predicates: ItemPredicate): InventoryChangeTrigger.TriggerInstance {
+             return InventoryChangeTrigger.TriggerInstance(EntityPredicate.Composite.ANY, MinMaxBounds.Ints.ANY, MinMaxBounds.Ints.ANY, MinMaxBounds.Ints.ANY, predicates)
          }
 
          fun ShapedRecipeBuilder.lines(first: String, second: String? = null, third: String? = null) {
@@ -164,7 +167,9 @@ class RecipeGenerator(generatorIn: DataGenerator) : RecipeProvider(generatorIn) 
              pattern(third ?: return)
          }
 
-         private fun CookingRecipeBuilder.saveNullable(consumer: Consumer<IFinishedRecipe>, recipeName: String?) {
+
+         // Don't have to call two different methods if the recipeName is null
+         private fun SimpleCookingRecipeBuilder.save(consumer: Consumer<FinishedRecipe>, recipeName: String?) {
              if (recipeName != null) {
                  save(consumer, recipeName)
              } else {
@@ -173,7 +178,7 @@ class RecipeGenerator(generatorIn: DataGenerator) : RecipeProvider(generatorIn) 
          }
 
          // 3x3 storage recipe (to and from)
-         private fun Consumer<IFinishedRecipe>.storage(storage: Block, regular: Item, regularTag: ITag<Item>? = null) {
+         private fun Consumer<FinishedRecipe>.storage(storage: Block, regular: Item, regularTag: TagKey<Item>? = null) {
              val item = regular.asItem()
              // compress
              shaped(storage, 1) { builder ->
@@ -192,7 +197,7 @@ class RecipeGenerator(generatorIn: DataGenerator) : RecipeProvider(generatorIn) 
              }
          }
 
-         fun Consumer<IFinishedRecipe>.slabs2Full(slab: Block, full: Block, group: String? = null) {
+         fun Consumer<FinishedRecipe>.slabs2Full(slab: Block, full: Block, group: String? = null) {
              shaped(full, 1, modLoc(path(full) + "_from_slabs")) { builder ->
                  builder.define('#', slab)
                  if (group != null) builder.group(group)
@@ -201,55 +206,55 @@ class RecipeGenerator(generatorIn: DataGenerator) : RecipeProvider(generatorIn) 
              }
          }
 
-         private fun Consumer<IFinishedRecipe>.campfireRecipe(input: IItemProvider, output: IItemProvider, experience: Float, duration: Int = 600) {
+         private fun Consumer<FinishedRecipe>.campfireRecipe(input: ItemLike, output: ItemLike, experience: Float, duration: Int = 600) {
              val inputItem = input.asItem()
              val outputItem = output.asItem()
 
-             CookingRecipeBuilder.cooking(Ingredient.of(inputItem), outputItem, experience, duration, IRecipeSerializer.CAMPFIRE_COOKING_RECIPE).unlockedBy("has_item", has(inputItem)).save(this, path(outputItem) + "_from_campfire")
+             SimpleCookingRecipeBuilder.cooking(Ingredient.of(inputItem), outputItem, experience, duration, RecipeSerializer.CAMPFIRE_COOKING_RECIPE).unlockedBy("has_item", has(inputItem)).save(this, path(outputItem) + "_from_campfire")
          }
 
-         private fun Consumer<IFinishedRecipe>.smeltingRecipe(
-             input: IItemProvider,
-             output: IItemProvider,
+         private fun Consumer<FinishedRecipe>.smeltingRecipe(
+             input: ItemLike,
+             output: ItemLike,
              experience: Float,
              recipeName: String? = null,
              smokingRecipe: Boolean = false,
              campfireRecipe: Boolean = false,
              blastingRecipe: Boolean = false,
          ) {
-             CookingRecipeBuilder.smelting(Ingredient.of(input), output, experience, 200).unlockedBy("has_item", has(input)).saveNullable(this, recipeName)
+             SimpleCookingRecipeBuilder.smelting(Ingredient.of(input), output, experience, 200).unlockedBy("has_item", has(input)).save(this, recipeName)
 
              if (smokingRecipe)  smokingRecipe (input, output, experience)
              if (campfireRecipe) campfireRecipe(input, output, experience)
              if (blastingRecipe) blastingRecipe(input, output, experience)
          }
 
-         private fun Consumer<IFinishedRecipe>.blastingRecipe(
-             input: IItemProvider,
-             output: IItemProvider,
+         private fun Consumer<FinishedRecipe>.blastingRecipe(
+             input: ItemLike,
+             output: ItemLike,
              experience: Float,
              recipeName: String? = null,
          ) {
              val item = input.asItem()
 
-             CookingRecipeBuilder.blasting(Ingredient.of(item), output, experience, 100).unlockedBy("has_item", has(input)).save(this, recipeName ?: path(item) + "_from_blasting")
+             SimpleCookingRecipeBuilder.blasting(Ingredient.of(item), output, experience, 100).unlockedBy("has_item", has(input)).save(this, recipeName ?: path(item) + "_from_blasting")
          }
 
-         private fun Consumer<IFinishedRecipe>.smokingRecipe(
-             input: IItemProvider,
-             output: IItemProvider,
+         private fun Consumer<FinishedRecipe>.smokingRecipe(
+             input: ItemLike,
+             output: ItemLike,
              experience: Float,
              recipeName: String? = null,
          ) {
              val item = input.asItem()
 
-             CookingRecipeBuilder.cooking(Ingredient.of(item), output, experience, 100, IRecipeSerializer.SMOKING_RECIPE).unlockedBy("has_item", has(item)).save(this, recipeName ?: path(item) + "_from_smoking")
+             SimpleCookingRecipeBuilder.cooking(Ingredient.of(item), output, experience, 100, RecipeSerializer.SMOKING_RECIPE).unlockedBy("has_item", has(item)).save(this, recipeName ?: path(item) + "_from_smoking")
          }
 
-         fun Consumer<IFinishedRecipe>.stonecutterRecipes(
-             base: IItemProvider,
-             vararg others: IItemProvider,
-             slab: IItemProvider? = null,
+         fun Consumer<FinishedRecipe>.stonecutterRecipes(
+             base: ItemLike,
+             vararg others: ItemLike,
+             slab: ItemLike? = null,
          ) {
              for (other in others) {
                  try {
@@ -264,18 +269,18 @@ class RecipeGenerator(generatorIn: DataGenerator) : RecipeProvider(generatorIn) 
              stonecutting(base, slab ?: return, 2)
          }
 
-         fun Consumer<IFinishedRecipe>.stonecutting(
-             input: IItemProvider,
-             output: IItemProvider,
+         fun Consumer<FinishedRecipe>.stonecutting(
+             input: ItemLike,
+             output: ItemLike,
              outputCount: Int = 1,
          ) = SingleItemRecipeBuilder.stonecutting(Ingredient.of(input), output, outputCount)
-             .unlocks("has_item", has(input))
+             .unlockedBy("has_item", has(input))
              .save(this, path(output.asItem()) + "_from_" + path(input.asItem()) + "_stonecutting")
 
-         private fun Consumer<IFinishedRecipe>.pickaxe(
-             result: IItemProvider,
-             material: IItemProvider,
-             rod: IItemProvider = Items.STICK,
+         private fun Consumer<FinishedRecipe>.pickaxe(
+             result: ItemLike,
+             material: ItemLike,
+             rod: ItemLike = Items.STICK,
          ) {
              shaped(result, 1) { builder ->
                  builder.define('I', rod)
@@ -285,10 +290,10 @@ class RecipeGenerator(generatorIn: DataGenerator) : RecipeProvider(generatorIn) 
              }
          }
 
-         private fun Consumer<IFinishedRecipe>.shovel(
-             result: IItemProvider,
-             material: IItemProvider,
-             rod: IItemProvider = Items.STICK,
+         private fun Consumer<FinishedRecipe>.shovel(
+             result: ItemLike,
+             material: ItemLike,
+             rod: ItemLike = Items.STICK,
          ) {
              shaped(result, 1) { builder ->
                  builder.define('I', rod)
@@ -298,10 +303,10 @@ class RecipeGenerator(generatorIn: DataGenerator) : RecipeProvider(generatorIn) 
              }
          }
 
-         private fun Consumer<IFinishedRecipe>.axe(
-             result: IItemProvider,
-             material: IItemProvider,
-             rod: IItemProvider = Items.STICK,
+         private fun Consumer<FinishedRecipe>.axe(
+             result: ItemLike,
+             material: ItemLike,
+             rod: ItemLike = Items.STICK,
          ) {
              shaped(result, 1) { builder ->
                  builder.define('I', rod)
@@ -311,10 +316,10 @@ class RecipeGenerator(generatorIn: DataGenerator) : RecipeProvider(generatorIn) 
              }
          }
 
-         private fun Consumer<IFinishedRecipe>.hoe(
-             result: IItemProvider,
-             material: IItemProvider,
-             rod: IItemProvider = Items.STICK,
+         private fun Consumer<FinishedRecipe>.hoe(
+             result: ItemLike,
+             material: ItemLike,
+             rod: ItemLike = Items.STICK,
          ) {
              shaped(result, 1) { builder ->
                  builder.define('I', rod)
@@ -324,9 +329,9 @@ class RecipeGenerator(generatorIn: DataGenerator) : RecipeProvider(generatorIn) 
              }
          }
 
-         private fun Consumer<IFinishedRecipe>.sword(
-             result: IItemProvider,
-             material: IItemProvider,
+         private fun Consumer<FinishedRecipe>.sword(
+             result: ItemLike,
+             material: ItemLike,
              rod: Item = Items.STICK,
          ) {
              shaped(result, 1) { builder ->
@@ -337,8 +342,8 @@ class RecipeGenerator(generatorIn: DataGenerator) : RecipeProvider(generatorIn) 
              }
          }
 
-         fun Consumer<IFinishedRecipe>.shapeless(
-             result: IItemProvider,
+         fun Consumer<FinishedRecipe>.shapeless(
+             result: ItemLike,
              resultCount: Int,
              id: ResourceLocation = result.asItem().registryName!!,
              addIngredients: (ShapelessRecipeBuilder) -> Unit,
@@ -349,8 +354,8 @@ class RecipeGenerator(generatorIn: DataGenerator) : RecipeProvider(generatorIn) 
              builder.save(this, id)
          }
 
-         fun Consumer<IFinishedRecipe>.shaped(
-             result: IItemProvider,
+         fun Consumer<FinishedRecipe>.shaped(
+             result: ItemLike,
              resultCount: Int,
              id: ResourceLocation = result.asItem().registryName!!,
              addIngredients: (ShapedRecipeBuilder) -> Unit,
@@ -361,7 +366,7 @@ class RecipeGenerator(generatorIn: DataGenerator) : RecipeProvider(generatorIn) 
              builder.save(this, id)
          }
 
-         fun Consumer<IFinishedRecipe>.slab(
+         fun Consumer<FinishedRecipe>.slab(
              slab: SlabBlock,
              block: Block,
              group: String? = null,
@@ -377,8 +382,8 @@ class RecipeGenerator(generatorIn: DataGenerator) : RecipeProvider(generatorIn) 
              slabs2Full(slab, block)
          }
 
-         fun Consumer<IFinishedRecipe>.stairs(
-             stairs: StairsBlock,
+         fun Consumer<FinishedRecipe>.stairs(
+             stairs: StairBlock,
              block: Block,
              group: String? = null,
          ) {
@@ -390,7 +395,7 @@ class RecipeGenerator(generatorIn: DataGenerator) : RecipeProvider(generatorIn) 
              }
          }
 
-         fun Consumer<IFinishedRecipe>.wall(wall: WallBlock, block: Block) {
+         fun Consumer<FinishedRecipe>.wall(wall: WallBlock, block: Block) {
              shaped(wall, 6) { builder ->
                  builder.define('#', block)
                  builder.pattern("###")
@@ -399,10 +404,10 @@ class RecipeGenerator(generatorIn: DataGenerator) : RecipeProvider(generatorIn) 
              }
          }
 
-         fun Consumer<IFinishedRecipe>.twoByTwo(
-             result: IItemProvider,
+         fun Consumer<FinishedRecipe>.twoByTwo(
+             result: ItemLike,
              resultCount: Int,
-             from: IItemProvider,
+             from: ItemLike,
              trigger: String,
              id: ResourceLocation = result.asItem().registryName!!,
              group: String? = null,

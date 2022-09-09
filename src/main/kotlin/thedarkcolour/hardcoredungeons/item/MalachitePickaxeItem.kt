@@ -1,25 +1,26 @@
 package thedarkcolour.hardcoredungeons.item
 
-import net.minecraft.block.BlockState
-import net.minecraft.entity.LivingEntity
-import net.minecraft.item.IItemTier
-import net.minecraft.item.ItemStack
-import net.minecraft.item.PickaxeItem
-import net.minecraft.potion.EffectInstance
-import net.minecraft.potion.Effects
-import net.minecraft.util.math.BlockPos
-import net.minecraft.world.World
-import net.minecraftforge.common.util.Constants
+import net.minecraft.core.BlockPos
+import net.minecraft.nbt.Tag
+import net.minecraft.world.effect.MobEffectInstance
+import net.minecraft.world.effect.MobEffects
+import net.minecraft.world.entity.LivingEntity
+import net.minecraft.world.item.Item
+import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.PickaxeItem
+import net.minecraft.world.item.Tier
+import net.minecraft.world.level.Level
+import net.minecraft.world.level.block.state.BlockState
 
 class MalachitePickaxeItem(
-    tier: IItemTier,
+    tier: Tier,
     attackDamageIn: Int,
     attackSpeedIn: Float,
-    properties: Properties,
+    properties: Item.Properties,
 ) : PickaxeItem(tier, attackDamageIn, attackSpeedIn, properties) {
     override fun mineBlock(
         stack: ItemStack,
-        worldIn: World,
+        worldIn: Level,
         state: BlockState,
         pos: BlockPos,
         entityLiving: LivingEntity,
@@ -28,7 +29,7 @@ class MalachitePickaxeItem(
 
         if (boost >= 5) {
             setBoost(stack, 0)
-            entityLiving.addEffect(EffectInstance(Effects.DIG_SPEED, 100, 1, false, false))
+            entityLiving.addEffect(MobEffectInstance(MobEffects.DIG_SPEED, 100, 1, false, false))
         } else {
             setBoost(stack, boost)
         }
@@ -61,7 +62,7 @@ class MalachitePickaxeItem(
         fun getBoost(stack: ItemStack): Int {
             val compound = stack.tag
 
-            if (compound == null || !compound.contains("Boost", Constants.NBT.TAG_INT)) {
+            if (compound == null || !compound.contains("Boost", Tag.TAG_INT.toInt())) {
                 return 0
             }
 

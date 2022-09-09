@@ -1,9 +1,9 @@
 package thedarkcolour.hardcoredungeons.container
 
-import net.minecraft.block.BlockState
-import net.minecraft.block.Blocks
-import net.minecraft.util.math.BlockPos
-import net.minecraft.world.World
+import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.core.BlockPos
+import net.minecraft.world.level.Level
+import net.minecraft.world.level.block.Blocks
 
 /**
  * Kotlin-ified version of [net.minecraft.util.IWorldPosCallable]
@@ -16,14 +16,14 @@ interface WorldPos {
      *
      * @see invokeDefaulted
      */
-    fun <T> invoke(function: (World, BlockPos) -> T): T?
+    fun <T> invoke(function: (Level, BlockPos) -> T): T?
 
     /**
      * Invokes the function and returns `default` if the function returns null.
      *
      * @param default the value to default to if the [function] returns null.
      */
-    fun <T> invokeDefaulted(default: T, function: (World, BlockPos) -> T?): T {
+    fun <T> invokeDefaulted(default: T, function: (Level, BlockPos) -> T?): T {
         return invoke(function) ?: default
     }
 
@@ -40,7 +40,7 @@ interface WorldPos {
          * A [WorldPos] that always returns null.
          */
         val DUMMY = object : WorldPos {
-            override fun <T> invoke(function: (World, BlockPos) -> T): T? {
+            override fun <T> invoke(function: (Level, BlockPos) -> T): T? {
                 return null
             }
         }
@@ -48,9 +48,9 @@ interface WorldPos {
         /**
          * Helper method for creating a new [WorldPos].
          */
-        fun of(worldIn: World, pos: BlockPos): WorldPos {
+        fun of(worldIn: Level, pos: BlockPos): WorldPos {
             return object : WorldPos {
-                override fun <T> invoke(function: (World, BlockPos) -> T): T {
+                override fun <T> invoke(function: (Level, BlockPos) -> T): T {
                     return function(worldIn, pos)
                 }
             }

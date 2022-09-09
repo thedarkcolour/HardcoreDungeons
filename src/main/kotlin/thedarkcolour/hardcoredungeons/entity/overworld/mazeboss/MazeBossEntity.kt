@@ -1,26 +1,7 @@
 package thedarkcolour.hardcoredungeons.entity.overworld.mazeboss
 
-import com.google.common.base.Preconditions
-import net.minecraft.entity.*
-import net.minecraft.entity.ai.attributes.AttributeModifierMap
-import net.minecraft.entity.ai.attributes.Attributes
-import net.minecraft.entity.ai.goal.Goal
-import net.minecraft.entity.player.PlayerEntity
-import net.minecraft.entity.player.ServerPlayerEntity
-import net.minecraft.nbt.CompoundNBT
-import net.minecraft.nbt.NBTUtil
-import net.minecraft.potion.EffectInstance
-import net.minecraft.potion.Effects
-import net.minecraft.util.Direction
-import net.minecraft.util.EntityPredicates
-import net.minecraft.util.math.AxisAlignedBB
-import net.minecraft.util.math.BlockPos
-import net.minecraft.world.World
-import net.minecraftforge.common.ForgeMod
-import net.minecraftforge.common.util.Constants
-import thedarkcolour.hardcoredungeons.registry.HEntities
-
-class MazeBossEntity(type: EntityType<MazeBossEntity>, worldIn: World) : MobEntity(type, worldIn), IRangedAttackMob {
+/*
+class MazeBossEntity(type: EntityType<MazeBossEntity>, worldIn: World) : Mob(type, worldIn), IRangedAttackMob {
     private var timeSinceLastEarthquake = 0
     private var isAgro = true // agro by default unless in a maze
 
@@ -154,4 +135,4 @@ class MazeBossEntity(type: EntityType<MazeBossEntity>, worldIn: World) : MobEnti
             .add(Attributes.ATTACK_KNOCKBACK, 2.0)
             .add(Attributes.ATTACK_DAMAGE, 2.0)
     }
-}
+}*/

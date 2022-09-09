@@ -1,27 +1,22 @@
 package thedarkcolour.hardcoredungeons.worldgen.biome
 
-import net.minecraft.world.biome.Biome
-import net.minecraft.world.biome.MobSpawnInfo
-import net.minecraftforge.common.world.BiomeGenerationSettingsBuilder
-import team.rusty.util.worldgen.biome.AbstractBiome
-import thedarkcolour.hardcoredungeons.worldgen.feature.HWorldGen
-import thedarkcolour.hardcoredungeons.worldgen.surfacebuilder.HConfiguredSurfaceBuilders
+import net.minecraft.core.Holder
+import net.minecraft.world.level.biome.Biome
+import net.minecraftforge.common.world.ModifiableBiomeInfo
+import team.rusty.util.biome.ModBiome
 
-object RainbowPlainsBiome : AbstractBiome() {
-    init {
-        precipitation = Biome.RainType.NONE
-        category = Biome.Category.PLAINS
-        depth = 0.1f
-        scale = 0.2f
-        temperature = 1.5f
-        downfall = 0.0f
-        effects = biomeFx(0x5008b2, 0x621ff2, 0xcfb3ff, 0xe388cf).build()
-    }
-
-    override fun configure(generation: BiomeGenerationSettingsBuilder, spawns: MobSpawnInfo.Builder) {
-        generation.surfaceBuilder(HConfiguredSurfaceBuilders.RAINBOWLAND_SURFACE)
-
-        HWorldGen.withRainbowlandOres(generation)
-        HWorldGen.withRainbowlandStructures(generation)
+object RainbowPlainsBiome : ModBiome() {
+    override fun configure(biome: Holder<Biome>, info: ModifiableBiomeInfo.BiomeInfo.Builder) {
+        info.climateSettings.apply {
+            precipitation = Biome.Precipitation.NONE
+            temperature = 1.5f
+            downfall = 0.0f
+        }
+        info.specialEffects.apply {
+            waterColor(0x5008b2)
+            waterFogColor(0x621ff2)
+            skyColor(0xcfb3ff)
+            fogColor(0xe388cf)
+        }
     }
 }

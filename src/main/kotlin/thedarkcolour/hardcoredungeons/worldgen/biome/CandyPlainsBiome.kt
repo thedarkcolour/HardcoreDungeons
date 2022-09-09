@@ -3,11 +3,12 @@ package thedarkcolour.hardcoredungeons.worldgen.biome
 import net.minecraft.world.biome.Biome
 import net.minecraft.world.biome.MobSpawnInfo
 import net.minecraftforge.common.world.BiomeGenerationSettingsBuilder
+import team.rusty.util.biome.ModBiome
 import team.rusty.util.worldgen.biome.AbstractBiome
-import thedarkcolour.hardcoredungeons.worldgen.feature.HWorldGen
+import thedarkcolour.hardcoredungeons.worldgen.HWorldGen
 import thedarkcolour.hardcoredungeons.worldgen.surfacebuilder.HConfiguredSurfaceBuilders
 
-object CandyPlainsBiome : AbstractBiome() {
+object CandyPlainsBiome : ModBiome() {
     init {
         precipitation = Biome.RainType.NONE
         category = Biome.Category.PLAINS
@@ -18,8 +19,10 @@ object CandyPlainsBiome : AbstractBiome() {
         effects = biomeFx(0xd19bdc, 0x50533, getSkyForTemp(0.9f), 12638463).build()
     }
 
+
+
     override fun configure(generation: BiomeGenerationSettingsBuilder, spawns: MobSpawnInfo.Builder) {
-        generation.surfaceBuilder(HConfiguredSurfaceBuilders.SUGARY_SURFACE)
+        generation
 
         HWorldGen.withSparseCandyCanes(generation)
         HWorldGen.withSparseChocolateBars(generation)

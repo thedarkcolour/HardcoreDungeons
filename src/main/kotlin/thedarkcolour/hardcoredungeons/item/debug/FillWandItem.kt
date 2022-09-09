@@ -1,17 +1,17 @@
 package thedarkcolour.hardcoredungeons.item.debug
 
-import net.minecraft.item.ItemUseContext
-import net.minecraft.nbt.NBTUtil
-import net.minecraft.util.ActionResultType
-import net.minecraft.util.text.StringTextComponent
+import net.minecraft.nbt.NbtUtils
+import net.minecraft.network.chat.Component
+import net.minecraft.world.InteractionResult
+import net.minecraft.world.item.context.UseOnContext
 
 /**
- * @author TheDarkColour
+ * @author thedarkcolour
  */
 class FillWandItem(properties: Properties) : AbstractFillingWandItem(properties) {
     override val fillMessage = "item.hardcoredungeons.wand.fill"
 
-    override fun useOn(context: ItemUseContext): ActionResultType {
+    override fun useOn(context: UseOnContext): InteractionResult {
         val worldIn = context.level
 
         if (!worldIn.isClientSide) {
@@ -21,23 +21,23 @@ class FillWandItem(properties: Properties) : AbstractFillingWandItem(properties)
 
             if (playerIn?.isShiftKeyDown == true) {
                 val state = worldIn.getBlockState(pos)
-                stack.addTagElement("FillBlock", NBTUtil.writeBlockState(state))
-                playerIn.displayClientMessage(StringTextComponent("Set block to $state"), true)
+                stack.addTagElement("FillBlock", NbtUtils.writeBlockState(state))
+                playerIn.displayClientMessage(Component.literal("Set block to $state"), true)
             } else {
                 if (!hasStartPos(stack)) {
                     saveStartPosition(stack, pos, playerIn)
                 } else {
                     val state = try {
-                        NBTUtil.readBlockState(stack.getTagElement("FillBlock")!!)
+                        NbtUtils.readBlockState(stack.getTagElement("FillBlock")!!)
                     } catch (e: NullPointerException) {
-                        playerIn?.displayClientMessage(StringTextComponent("No filler block"), true)
-                        return ActionResultType.SUCCESS
+                        playerIn?.displayClientMessage(Component.literal("No filler block"), true)
+                        return InteractionResult.SUCCESS
                     }
                     place(stack, state, pos, worldIn, playerIn)
                 }
             }
         }
 
-        return ActionResultType.SUCCESS
+        return InteractionResult.SUCCESS
     }
 }
