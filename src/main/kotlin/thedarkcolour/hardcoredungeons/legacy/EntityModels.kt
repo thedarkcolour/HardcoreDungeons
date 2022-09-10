@@ -132,6 +132,12 @@ class ModelRendererConfigure(val name: String) {
 
         return this
     }
+
+    fun setRotationAngle(x: Float, y: Float, z: Float) {
+        xRot = x
+        yRot = y
+        zRot = z
+    }
 }
 
 class ModelBox(

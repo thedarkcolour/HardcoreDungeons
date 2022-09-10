@@ -16,9 +16,8 @@ import net.minecraft.world.level.block.WallTorchBlock
 import net.minecraft.world.level.block.state.StateDefinition
 import net.minecraft.world.phys.HitResult
 import thedarkcolour.hardcoredungeons.block.base.properties.HProperties
-import thedarkcolour.hardcoredungeons.registry.HBlocks
+import thedarkcolour.hardcoredungeons.registry.block.HBlocks
 import thedarkcolour.hardcoredungeons.registry.HParticles
-import java.util.*
 
 class CastletonTorchBlock(properties: HProperties) : TorchBlock(properties.build(), null) { // Particle is not registered yet
     init {

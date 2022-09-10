@@ -1,10 +1,11 @@
 package thedarkcolour.hardcoredungeons.data.modelgen.block
 
 import net.minecraft.world.level.block.Block
-import net.minecraft.state.properties.BlockStateProperties
+import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.minecraftforge.client.model.generators.ConfiguredModel
 import thedarkcolour.hardcoredungeons.block.misc.BonusFarmlandBlock
 import thedarkcolour.hardcoredungeons.data.ModelGenerator
+import thedarkcolour.hardcoredungeons.util.registryName
 
 class FarmlandModelType : BlockModelType<BonusFarmlandBlock>() {
     /**

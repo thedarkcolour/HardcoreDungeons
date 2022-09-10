@@ -7,13 +7,13 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.SoundType
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.minecraft.world.level.material.Material
-import thedarkcolour.hardcoredungeons.block.base.ItemMaker
+import thedarkcolour.hardcoredungeons.registry.items.ItemMaker
 import thedarkcolour.hardcoredungeons.block.base.properties.HProperties
 import thedarkcolour.hardcoredungeons.block.decoration.castleton.CastletonTorchBlock
 import thedarkcolour.hardcoredungeons.data.modelgen.item.ItemModelType
 import thedarkcolour.hardcoredungeons.item.CastletonTorchItem
 import thedarkcolour.hardcoredungeons.item.Group
-import thedarkcolour.hardcoredungeons.registry.HBlocks
+import thedarkcolour.hardcoredungeons.registry.block.HBlocks
 
 /**
  * @param name The prefix ex. "soul_fire". "_torch" and "_wall_torch" are applied as name suffixes.

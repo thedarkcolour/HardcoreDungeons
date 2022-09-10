@@ -1,9 +1,10 @@
 package thedarkcolour.hardcoredungeons.data.modelgen.item
 
-import net.minecraft.item.Item
 import net.minecraft.resources.ResourceLocation
+import net.minecraft.world.item.Item
 import net.minecraftforge.client.model.generators.ModelFile
 import thedarkcolour.hardcoredungeons.data.ModelGenerator
+import thedarkcolour.hardcoredungeons.util.registryName
 
 /**
  * 3D block item that defers to the block model's transformations
@@ -35,7 +36,7 @@ class ParentedModelType(parentLoc: ResourceLocation) : ItemModelType() {
 }
 
 /**
- * Depends on the block model existing
+ * Defers to the block model
  */
 class WallItemModelType : ItemModelType() {
     override fun process(item: Item, gen: ModelGenerator) {

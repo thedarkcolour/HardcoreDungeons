@@ -16,7 +16,6 @@ import net.minecraft.world.level.material.MaterialColor
 import net.minecraftforge.common.Tags
 import thedarkcolour.hardcoredungeons.HardcoreDungeons
 import thedarkcolour.hardcoredungeons.block.base.BlockMaker
-import thedarkcolour.hardcoredungeons.block.base.ItemMaker
 import thedarkcolour.hardcoredungeons.block.base.properties.HProperties
 import thedarkcolour.hardcoredungeons.data.LootGenerator
 import thedarkcolour.hardcoredungeons.data.RecipeGenerator
@@ -26,8 +25,9 @@ import thedarkcolour.hardcoredungeons.data.RecipeGenerator.Companion.slab
 import thedarkcolour.hardcoredungeons.data.RecipeGenerator.Companion.stairs
 import thedarkcolour.hardcoredungeons.data.RecipeGenerator.Companion.twoByTwo
 import thedarkcolour.hardcoredungeons.data.modelgen.item.ItemModelType
-import thedarkcolour.hardcoredungeons.registry.HBlockUtil
-import thedarkcolour.hardcoredungeons.registry.HBlocks
+import thedarkcolour.hardcoredungeons.registry.block.HBlockUtil
+import thedarkcolour.hardcoredungeons.registry.block.HBlocks
+import thedarkcolour.hardcoredungeons.registry.items.ItemMaker
 import thedarkcolour.hardcoredungeons.tags.HItemTags
 import java.util.function.Consumer
 
@@ -42,8 +42,8 @@ class WoodCombo(
     topCol: MaterialColor,
     barkCol: MaterialColor,
     tree: AbstractTreeGrower,
-    val blockTag: TagKey<Block>,
-    val itemTag: TagKey<Item>,
+    private val blockTag: TagKey<Block>,
+    private val itemTag: TagKey<Item>,
     applyProperties: (HProperties) -> Unit
 ) : ICombo {
     // Wood Type
@@ -76,8 +76,8 @@ class WoodCombo(
 
     init {
         HBlocks.onceRegistered {
-            HBlockUtil.STRIPPABLES[this.log] = this.strippedLog
-            HBlockUtil.STRIPPABLES[this.wood] = this.strippedWood
+            HBlockUtil.registerAxeStripInteraction(this.log, this.strippedLog)
+            HBlockUtil.registerAxeStripInteraction(this.wood, this.strippedWood)
         }
 
         // todo get rid of the rest of these

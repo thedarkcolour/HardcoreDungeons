@@ -3,10 +3,9 @@ package thedarkcolour.hardcoredungeons.block.combo
 import net.minecraft.tags.BlockTags
 import net.minecraft.tags.TagKey
 import net.minecraft.world.level.block.Block
-import net.minecraftforge.common.Tags
+import thedarkcolour.hardcoredungeons.block.HGrassBlock
 import thedarkcolour.hardcoredungeons.block.base.BlockMaker
 import thedarkcolour.hardcoredungeons.block.base.properties.HProperties
-import thedarkcolour.hardcoredungeons.block.misc.HGrassBlock
 import thedarkcolour.hardcoredungeons.data.LootGenerator
 
 /**

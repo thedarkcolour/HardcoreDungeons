@@ -1,28 +1,22 @@
 package thedarkcolour.hardcoredungeons.entity.overworld.deer
 
-import net.minecraft.entity.AgeableEntity
-import net.minecraft.entity.EntityType
-import net.minecraft.entity.ai.attributes.AttributeModifierMap
-import net.minecraft.entity.ai.attributes.Attributes
-import net.minecraft.entity.ai.goal.*
-import net.minecraft.entity.passive.AnimalEntity
-import net.minecraft.entity.player.PlayerEntity
-import net.minecraft.world.item.ItemStack
-import net.minecraft.item.Items
-import net.minecraft.item.crafting.Ingredient
-import net.minecraft.nbt.CompoundNBT
-import net.minecraft.network.datasync.DataSerializers
-import net.minecraft.network.datasync.EntityDataManager
-import net.minecraft.network.datasync.IDataSerializer
+import net.minecraft.nbt.CompoundTag
+import net.minecraft.network.chat.Component
+import net.minecraft.network.syncher.EntityDataSerializers
 import net.minecraft.network.syncher.SynchedEntityData
-import net.minecraft.util.text.ITextComponent
+import net.minecraft.server.level.ServerLevel
+import net.minecraft.world.entity.AgeableMob
 import net.minecraft.world.entity.EntityType
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier
 import net.minecraft.world.entity.ai.attributes.Attributes
+import net.minecraft.world.entity.ai.goal.*
+import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal
 import net.minecraft.world.entity.animal.Animal
+import net.minecraft.world.entity.player.Player
+import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.Level
-import net.minecraft.world.server.ServerWorld
 import net.minecraftforge.common.ForgeMod
 import net.minecraftforge.common.Tags
 import thedarkcolour.hardcoredungeons.registry.HDataSerializers
@@ -32,12 +26,12 @@ import kotlin.experimental.and
 import kotlin.experimental.inv
 import kotlin.experimental.or
 
-open class DeerEntity(type: EntityType<out Animal>, worldIn: World) : Animal(type, worldIn) {
+open class DeerEntity(type: EntityType<out Animal>, worldIn: Level) : Animal(type, worldIn) {
     var deerType by dataParameterDelegate<DeerType>(DEER_TYPE)
     var deerFlags by dataParameterDelegate<Byte>(DEER_FLAGS)
 
     override fun isFood(stack: ItemStack): Boolean {
-        return stack.item == Items.WHEAT || Tags.Items.MUSHROOMS.contains(stack.item)
+        return stack.item == Items.WHEAT || stack.`is`(Tags.Items.MUSHROOMS)
     }
 
     /**
@@ -48,26 +42,27 @@ open class DeerEntity(type: EntityType<out Animal>, worldIn: World) : Animal(typ
     }
 
     override fun registerGoals() {
-        goalSelector.addGoal(0, SwimGoal(this))
+        goalSelector.addGoal(0, FloatGoal(this))
+        goalSelector.addGoal(0, PanicGoal(this, 1.1))
         goalSelector.addGoal(2, BreedGoal(this, 0.9))
-        goalSelector.addGoal(3, TemptGoal(this, 0.9, false, getTemptIngredient()))
+        goalSelector.addGoal(3, TemptGoal(this, 0.9, getTemptIngredient(), false))
         goalSelector.addGoal(4, FollowParentGoal(this, 0.7))
-        goalSelector.addGoal(5, WaterAvoidingRandomWalkingGoal(this, 0.4))
-        goalSelector.addGoal(6, LookAtWithoutMovingGoal(this, PlayerEntity::class.java, 25.0f, 0.04f))
-        goalSelector.addGoal(6, LookRandomlyGoal(this))
+        goalSelector.addGoal(5, WaterAvoidingRandomStrollGoal(this, 0.4))
+        goalSelector.addGoal(6, LookAtPlayerGoal(this, Player::class.java, 12.0f))
+        goalSelector.addGoal(6, RandomLookAroundGoal(this))
 
         targetSelector.addGoal(1, HurtByTargetGoal(this).setAlertOthers(DeerEntity::class.java))
     }
 
-    override fun setCustomName(name: ITextComponent?) {
+    override fun setCustomName(name: Component?) {
         super.setCustomName(name)
-        setDeerFlag(IS_THEDARKCOLOUR, name?.contents?.lowercase(Locale.getDefault()) == "thedarkcolour")
+        setDeerFlag(IS_THEDARKCOLOUR, name?.string?.lowercase(Locale.getDefault()) == "thedarkcolour")
     }
 
-    override fun getBreedOffspring(worldIn: ServerWorld, parent: AgeableEntity): DeerEntity {
+    override fun getBreedOffspring(worldIn: ServerLevel, parent: AgeableMob): DeerEntity {
         val entity = type.create(worldIn) as DeerEntity
         entity.deerType = getDefaultType()
-        entity.setIsthedarkcolour(isthedarkcolour() || (parent as DeerEntity).isthedarkcolour())
+        entity.setIsMe(isMe() || (parent as DeerEntity).isMe())
         return entity
     }
 
@@ -77,11 +72,11 @@ open class DeerEntity(type: EntityType<out Animal>, worldIn: World) : Animal(typ
         entityData.define(DEER_FLAGS, 0)
     }
 
-    fun isthedarkcolour(): Boolean {
+    fun isMe(): Boolean {
         return getDeerFlag(IS_THEDARKCOLOUR)
     }
 
-    fun setIsthedarkcolour(value: Boolean) {
+    private fun setIsMe(value: Boolean) {
         setDeerFlag(IS_THEDARKCOLOUR, value)
     }
 
@@ -100,13 +95,13 @@ open class DeerEntity(type: EntityType<out Animal>, worldIn: World) : Animal(typ
     /** The pattern chosen by default for new deer (natural spawning, spawn egg, /summon, etc.) */
     open fun getDefaultType() = if (random.nextBoolean()) DeerType.FOREST_STAG else DeerType.FOREST_DOE
 
-    override fun addAdditionalSaveData(compound: CompoundNBT) {
+    override fun addAdditionalSaveData(compound: CompoundTag) {
         super.addAdditionalSaveData(compound)
         compound.putString("Pattern", deerType.name)
         compound.putByte("Flags", deerFlags)
     }
 
-    override fun readAdditionalSaveData(compound: CompoundNBT) {
+    override fun readAdditionalSaveData(compound: CompoundTag) {
         super.readAdditionalSaveData(compound)
 
         deerFlags = compound.getByte("Flags")
@@ -120,13 +115,13 @@ open class DeerEntity(type: EntityType<out Animal>, worldIn: World) : Animal(typ
 
     companion object {
         @Suppress("UNCHECKED_CAST")
-        private val DEER_TYPE = SynchedEntityData.defineId(DeerEntity::class.java, HDataSerializers.DEER_TYPE.serializer as IDataSerializer<DeerType>)
-        private val DEER_FLAGS = SynchedEntityData.defineId(DeerEntity::class.java, DataSerializers.BYTE)
+        private val DEER_TYPE = SynchedEntityData.defineId(DeerEntity::class.java, HDataSerializers.DEER_TYPE)
+        private val DEER_FLAGS = SynchedEntityData.defineId(DeerEntity::class.java, EntityDataSerializers.BYTE)
 
         // flags
         protected const val IS_THEDARKCOLOUR = 0x1
 
-        val DEFAULT_ATTRIBUTES: AttributeModifierMap.MutableAttribute = AttributeModifierMap.builder()
+        val DEFAULT_ATTRIBUTES: AttributeSupplier.Builder = AttributeSupplier.builder()
             .add(Attributes.MAX_HEALTH, 20.0)
             .add(Attributes.KNOCKBACK_RESISTANCE, 0.2)
             .add(Attributes.MOVEMENT_SPEED, 0.45)

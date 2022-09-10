@@ -1,11 +1,11 @@
 package thedarkcolour.hardcoredungeons.capability
 
-import net.minecraft.world.entity.player.Player
 import net.minecraftforge.common.capabilities.CapabilityManager
 import net.minecraftforge.common.capabilities.CapabilityToken
 import thedarkcolour.hardcoredungeons.util.modLoc
 
-class HPlayerData(val owner: Player) {
+// Player is only necessary if we end up doing syncing
+class HPlayerData/*(val owner: Player)*/ {
     var portalCooldown: Byte = 0
 
     fun copyFrom(oldData: HPlayerData) {

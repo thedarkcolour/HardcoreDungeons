@@ -10,14 +10,12 @@ import net.minecraft.sounds.SoundSource
 import net.minecraft.util.RandomSource
 import net.minecraft.world.level.BlockGetter
 import net.minecraft.world.level.Level
-import net.minecraft.world.level.LevelReader
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.pathfinder.PathComputationType
 import thedarkcolour.hardcoredungeons.block.base.HBlock
 import thedarkcolour.hardcoredungeons.block.base.properties.HProperties
-import thedarkcolour.hardcoredungeons.registry.HBlocks
-import java.util.*
+import thedarkcolour.hardcoredungeons.registry.block.HBlocks
 
 class SafeSootBlock(properties: HProperties) : HBlock(properties) {
     override fun neighborChanged(state: BlockState, level: Level, pos: BlockPos, block: Block, fromPos: BlockPos, p_220069_6_: Boolean) {
@@ -44,7 +42,7 @@ class SafeSootBlock(properties: HProperties) : HBlock(properties) {
         }
     }
 
-    override fun isFlammable(state: BlockState?, world: LevelReader?, pos: BlockPos?, face: Direction?): Boolean {
+    override fun isFlammable(state: BlockState?, world: BlockGetter?, pos: BlockPos?, face: Direction?): Boolean {
         return face == Direction.UP
     }
 

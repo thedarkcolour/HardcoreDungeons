@@ -1,16 +1,16 @@
 package thedarkcolour.hardcoredungeons.data
 
 import net.minecraft.world.level.block.Block
-import net.minecraft.data.BlockTagsProvider
 import net.minecraft.data.DataGenerator
+import net.minecraft.data.tags.BlockTagsProvider
 import net.minecraft.tags.BlockTags
-import net.minecraft.tags.ITag
 import net.minecraft.tags.ItemTags
+import net.minecraft.tags.TagKey
 import net.minecraftforge.common.Tags.Blocks
 import net.minecraftforge.common.data.ExistingFileHelper
 import thedarkcolour.hardcoredungeons.HardcoreDungeons
 import thedarkcolour.hardcoredungeons.block.combo.DataTags
-import thedarkcolour.hardcoredungeons.registry.HBlocks
+import thedarkcolour.hardcoredungeons.registry.block.HBlocks
 import thedarkcolour.hardcoredungeons.tags.HBlockTags
 
 /**
@@ -42,7 +42,6 @@ class BlockTagGenerator(gen: DataGenerator, helper: ExistingFileHelper) : BlockT
 
         tag(BlockTags.CAMPFIRES).add(HBlocks.LUMLIGHT_CAMPFIRE)
 
-        tag(BlockTags.CROPS).add(HBlocks.GOLDEN_CARROTS)
         tag(HBlockTags.LUMSHROOM).add(HBlocks.PURPLE_LUMSHROOM.plant, HBlocks.BLUE_LUMSHROOM.plant)
 
         // vanilla tags
@@ -113,7 +112,7 @@ class BlockTagGenerator(gen: DataGenerator, helper: ExistingFileHelper) : BlockT
         tag(Blocks.GLASS_PANES_RED).addTag(HBlockTags.GLASS_PANES_RAINBOW)
     }
 
-    public override fun tag(tag: ITag.INamedTag<Block>): Builder<Block> {
+    public override fun tag(tag: TagKey<Block>): TagAppender<Block> {
         return super.tag(tag)
     }
 

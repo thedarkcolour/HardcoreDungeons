@@ -2,14 +2,13 @@ package thedarkcolour.hardcoredungeons.capability
 
 import net.minecraft.core.Direction
 import net.minecraft.nbt.CompoundTag
-import net.minecraft.world.entity.player.Player
 import net.minecraftforge.common.capabilities.Capability
 import net.minecraftforge.common.capabilities.ICapabilityProvider
 import net.minecraftforge.common.util.INBTSerializable
 import net.minecraftforge.common.util.LazyOptional
 
-class HPlayerDataProvider(owner: Player) : ICapabilityProvider, INBTSerializable<CompoundTag> {
-    private val holder = LazyOptional.of { HPlayerData(owner)}
+class HPlayerDataProvider : ICapabilityProvider, INBTSerializable<CompoundTag> {
+    private val holder = LazyOptional.of { HPlayerData() }
 
     override fun <T> getCapability(cap: Capability<T>, side: Direction?): LazyOptional<T> {
         if (cap == HPlayerData.PLAYER_DATA) {

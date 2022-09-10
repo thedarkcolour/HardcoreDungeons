@@ -7,14 +7,15 @@ import net.minecraftforge.registries.DeferredRegister
 import net.minecraftforge.registries.RegisterEvent
 import thedarkcolour.hardcoredungeons.HardcoreDungeons
 import thedarkcolour.hardcoredungeons.legacy.ObjectHolderDelegate
-import thedarkcolour.kotlinforforge.forge.*
+import thedarkcolour.hardcoredungeons.legacy.registerObject
+import thedarkcolour.kotlinforforge.forge.MOD_BUS
 
-open class HRegistry<T>(forgeRegistry: ResourceKey<Registry<T>>) {
+open class HRegistry<T>(registryKey: ResourceKey<Registry<T>>) {
     private val queue = ArrayDeque<() -> Unit>()
-    private val registry = DeferredRegister.create(forgeRegistry, HardcoreDungeons.ID) // do not register directly
+    private val registry = DeferredRegister.create(registryKey, HardcoreDungeons.ID) // do not register directly
 
     // register here instead
-    fun init() {
+    open fun init() {
         registry.register(MOD_BUS)
         MOD_BUS.addListener(EventPriority.LOWEST, ::postRegistry)
     }
@@ -23,9 +24,11 @@ open class HRegistry<T>(forgeRegistry: ResourceKey<Registry<T>>) {
         queue.add(function)
     }
 
-    open fun <V : T> register(name: String, supplier: () -> V): ObjectHolderDelegate<V> {
+    fun <V : T> register(name: String, supplier: () -> V): ObjectHolderDelegate<V> {
         return registry.registerObject(name, supplier)
     }
+
+    fun createTag(name: String) = registry.createTagKey(name)
 
     private fun postRegistry(event: RegisterEvent) {
         if (event.registryKey == registry.registryKey) {

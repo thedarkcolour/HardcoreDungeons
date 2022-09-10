@@ -4,8 +4,8 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Item
 import thedarkcolour.hardcoredungeons.data.ModelGenerator
 import thedarkcolour.hardcoredungeons.data.modelgen.ModelType
+import thedarkcolour.hardcoredungeons.legacy.ObjectHolderDelegate
 import thedarkcolour.hardcoredungeons.util.modLoc
-import thedarkcolour.kotlinforforge.forge.ObjectHolderDelegate
 
 abstract class ItemModelType : ModelType<ObjectHolderDelegate<out Item>>() {
     private val items = ArrayList<ObjectHolderDelegate<out Item>>()

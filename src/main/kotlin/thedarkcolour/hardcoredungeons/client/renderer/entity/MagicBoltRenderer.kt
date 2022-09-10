@@ -6,12 +6,13 @@ import net.minecraft.client.renderer.entity.EntityRenderer
 import net.minecraft.client.renderer.entity.EntityRendererProvider
 import net.minecraft.client.renderer.texture.OverlayTexture
 import net.minecraft.resources.ResourceLocation
+import thedarkcolour.hardcoredungeons.client.model.HModelLayers
 import thedarkcolour.hardcoredungeons.client.model.entity.MagicBoltModel
 import thedarkcolour.hardcoredungeons.entity.projectile.magic.MagicBoltEntity
 import thedarkcolour.hardcoredungeons.util.modLoc
 
 class MagicBoltRenderer(ctx: EntityRendererProvider.Context) : EntityRenderer<MagicBoltEntity>(ctx) {
-    val model = MagicBoltModel()
+    val model = MagicBoltModel(ctx.bakeLayer(HModelLayers.MAGIC_BOLT))
 
     override fun getTextureLocation(entity: MagicBoltEntity): ResourceLocation {
         return TEXTURE

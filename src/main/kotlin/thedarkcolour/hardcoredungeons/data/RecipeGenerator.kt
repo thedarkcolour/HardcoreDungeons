@@ -6,8 +6,8 @@ import net.minecraft.advancements.critereon.ItemPredicate
 import net.minecraft.advancements.critereon.MinMaxBounds
 import net.minecraft.data.*
 import net.minecraft.data.recipes.*
-import net.minecraft.tags.ItemTags
 import net.minecraft.resources.ResourceLocation
+import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
@@ -17,10 +17,8 @@ import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.*
 import net.minecraftforge.common.Tags
 import net.minecraftforge.registries.ForgeRegistries
-import thedarkcolour.hardcoredungeons.compat.getBiomesOPlentyCompat
-import thedarkcolour.hardcoredungeons.registry.HBlocks
-import thedarkcolour.hardcoredungeons.registry.HItems
-import thedarkcolour.hardcoredungeons.registry.items.HItemsNew
+import thedarkcolour.hardcoredungeons.registry.block.HBlocks
+import thedarkcolour.hardcoredungeons.registry.items.*
 import thedarkcolour.hardcoredungeons.tags.HItemTags
 import thedarkcolour.hardcoredungeons.util.modLoc
 import thedarkcolour.hardcoredungeons.util.registryName
@@ -64,7 +62,7 @@ class RecipeGenerator(generatorIn: DataGenerator) : RecipeProvider(generatorIn) 
         }
         consumer.slab(HBlocks.SHROOMY_STONE_BRICKS.slab, HBlocks.SHROOMY_STONE_BRICKS.block)
         consumer.stairs(HBlocks.SHROOMY_STONE_BRICKS.stairs, HBlocks.SHROOMY_STONE_BRICKS.block)
-        consumer.shaped(HItemsNew.SYRINGE, 2) { builder ->
+        consumer.shaped(SYRINGE_ITEM, 2) { builder ->
             builder.define('B', Items.GLASS_BOTTLE)
             builder.define('I', Items.IRON_INGOT)
             builder.define('N', Items.IRON_NUGGET)
@@ -76,7 +74,7 @@ class RecipeGenerator(generatorIn: DataGenerator) : RecipeProvider(generatorIn) 
 
 
         // ammunition
-        consumer.shaped(HItemsNew.BULLET, 8) { builder ->
+        consumer.shaped(BULLET_ITEM, 8) { builder ->
             builder.define('I', Items.IRON_NUGGET)
             builder.define('G', Items.GUNPOWDER)
             builder.pattern("III")
@@ -84,8 +82,8 @@ class RecipeGenerator(generatorIn: DataGenerator) : RecipeProvider(generatorIn) 
             builder.pattern("III")
             builder.unlockedBy("has_item", has(Items.GUNPOWDER))
         }
-        consumer.shaped(HItemsNew.INCENDIARY_BULLET, 8) { builder ->
-            builder.define('I', HItemsNew.BULLET)
+        consumer.shaped(INCENDIARY_BULLET_ITEM, 8) { builder ->
+            builder.define('I', BULLET_ITEM)
             builder.define('G', Items.BLAZE_POWDER)
             builder.pattern("III")
             builder.pattern("IGI")
@@ -95,17 +93,17 @@ class RecipeGenerator(generatorIn: DataGenerator) : RecipeProvider(generatorIn) 
 
 
         // tools
-        consumer.sword(HItemsNew.MALACHITE_SWORD, HBlocks.MALACHITE_CRYSTAL.item)
-        consumer.shovel(HItemsNew.MALACHITE_SHOVEL, HBlocks.MALACHITE_CRYSTAL.item)
-        consumer.pickaxe(HItemsNew.MALACHITE_PICKAXE, HBlocks.MALACHITE_CRYSTAL.item)
-        consumer.axe(HItemsNew.MALACHITE_AXE, HBlocks.MALACHITE_CRYSTAL.item)
-        consumer.hoe(HItemsNew.MALACHITE_HOE, HBlocks.MALACHITE_CRYSTAL.item)
+        consumer.sword(MALACHITE_SWORD_ITEM, HBlocks.MALACHITE_CRYSTAL.item)
+        consumer.shovel(MALACHITE_SHOVEL_ITEM, HBlocks.MALACHITE_CRYSTAL.item)
+        consumer.pickaxe(MALACHITE_PICKAXE_ITEM, HBlocks.MALACHITE_CRYSTAL.item)
+        consumer.axe(MALACHITE_AXE_ITEM, HBlocks.MALACHITE_CRYSTAL.item)
+        consumer.hoe(MALACHITE_HOE_ITEM, HBlocks.MALACHITE_CRYSTAL.item)
 
-        consumer.sword(HItems.RAINBOWSTONE_SWORD, HItems.RAINBOWSTONE_GEM)
-        consumer.shovel(HItems.RAINBOWSTONE_SHOVEL, HItems.RAINBOWSTONE_GEM)
-        consumer.pickaxe(HItems.RAINBOWSTONE_PICKAXE, HItems.RAINBOWSTONE_GEM)
-        consumer.axe(HItems.RAINBOWSTONE_AXE, HItems.RAINBOWSTONE_GEM)
-        consumer.hoe(HItems.RAINBOWSTONE_HOE, HItems.RAINBOWSTONE_GEM)
+        consumer.sword(RAINBOWSTONE_SWORD_ITEM, RAINBOWSTONE_GEM_ITEM)
+        consumer.shovel(RAINBOWSTONE_SHOVEL_ITEM, RAINBOWSTONE_GEM_ITEM)
+        consumer.pickaxe(RAINBOWSTONE_PICKAXE_ITEM, RAINBOWSTONE_GEM_ITEM)
+        consumer.axe(RAINBOWSTONE_AXE_ITEM, RAINBOWSTONE_GEM_ITEM)
+        consumer.hoe(RAINBOWSTONE_HOE_ITEM, RAINBOWSTONE_GEM_ITEM)
 
 
         // stonecutter recipes for HCD blocks
@@ -126,9 +124,9 @@ class RecipeGenerator(generatorIn: DataGenerator) : RecipeProvider(generatorIn) 
 
 
         // food
-        consumer.smeltingRecipe(HItemsNew.VENISON, HItemsNew.COOKED_VENISON, 0.35f, smokingRecipe = true, campfireRecipe = true)
-        consumer.smeltingRecipe(HBlocks.RAINBOWSTONE_ORE, HItems.RAINBOWSTONE_GEM, 0.85f, blastingRecipe = true)
-        //consumer.campfireRecipe(HItems.VENISON, HItems.COOKED_VENISON, 0.35f)
+        consumer.smeltingRecipe(VENISON_ITEM, COOKED_VENISON_ITEM, 0.35f, smokingRecipe = true, campfireRecipe = true)
+        consumer.smeltingRecipe(HBlocks.RAINBOWSTONE_ORE, RAINBOWSTONE_GEM_ITEM, 0.85f, blastingRecipe = true)
+        //consumer.campfireRecipe(VENISON, COOKED_VENISON, 0.35f)
 
         // compressed (storage) block recipes
         HBlocks.COMPRESSED_COBBLESTONE.addRecipes(consumer)
@@ -138,9 +136,7 @@ class RecipeGenerator(generatorIn: DataGenerator) : RecipeProvider(generatorIn) 
         consumer.stairs(HBlocks.CHOCOLATE_BLOCK.stairs, HBlocks.CHOCOLATE_BLOCK.block)
 
         consumer.storage(HBlocks.MALACHITE_BLOCK, HBlocks.MALACHITE_CRYSTAL.item, HItemTags.GEMS_MALACHITE)
-        consumer.storage(HBlocks.RAINBOWSTONE_BLOCK, HItems.RAINBOWSTONE_GEM)
-
-        getBiomesOPlentyCompat()?.genRecipes(consumer)
+        consumer.storage(HBlocks.RAINBOWSTONE_BLOCK, RAINBOWSTONE_GEM_ITEM)
     }
 
      companion object {

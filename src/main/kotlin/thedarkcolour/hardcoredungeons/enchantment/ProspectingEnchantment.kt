@@ -1,17 +1,10 @@
 package thedarkcolour.hardcoredungeons.enchantment
 
-import net.minecraft.enchantment.Enchantment
-import net.minecraft.enchantment.EnchantmentType
-import net.minecraft.enchantment.Enchantments
-import net.minecraft.inventory.EquipmentSlotType
-import net.minecraft.world.item.ItemStack
-import net.minecraft.item.PickaxeItem
 import net.minecraft.world.entity.EquipmentSlot
 import net.minecraft.world.item.PickaxeItem
 import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.item.enchantment.EnchantmentCategory
 import net.minecraft.world.item.enchantment.Enchantments
-import net.minecraftforge.common.ToolType
 
 // Gives tools a chance to mine "pristine" minerals instead of regular ones
 class ProspectingEnchantment : Enchantment(Rarity.VERY_RARE, PICKAXE, arrayOf(EquipmentSlot.MAINHAND)) {

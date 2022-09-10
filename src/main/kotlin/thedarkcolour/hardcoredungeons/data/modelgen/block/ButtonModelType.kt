@@ -1,24 +1,25 @@
 package thedarkcolour.hardcoredungeons.data.modelgen.block
 
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap
-import net.minecraft.block.AbstractButtonBlock
-import net.minecraft.world.level.block.Block
-import net.minecraft.block.WoodButtonBlock
-import net.minecraft.state.properties.AttachFace
-import net.minecraft.state.properties.BlockStateProperties
 import net.minecraft.core.Direction
+import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.ButtonBlock
+import net.minecraft.world.level.block.WoodButtonBlock
+import net.minecraft.world.level.block.state.properties.AttachFace
+import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.minecraftforge.client.model.generators.BlockModelBuilder
 import net.minecraftforge.client.model.generators.ConfiguredModel
 import net.minecraftforge.client.model.generators.ModelFile
 import thedarkcolour.hardcoredungeons.data.ModelGenerator
 import thedarkcolour.hardcoredungeons.data.modelgen.block.WallModelType.Companion.HORIZONTALS
 import thedarkcolour.hardcoredungeons.util.modLoc
+import thedarkcolour.hardcoredungeons.util.registryName
 
-class ButtonModelType : BlockModelType<AbstractButtonBlock>() {
+class ButtonModelType : BlockModelType<ButtonBlock>() {
     /**
      * Generate a model for block [block].
      */
-    override fun process(block: AbstractButtonBlock, appearance: Block, gen: ModelGenerator) {
+    override fun process(block: ButtonBlock, appearance: Block, gen: ModelGenerator) {
         val path = block.registryName!!.path
         val builder = gen.getVariantBuilder(block)
 

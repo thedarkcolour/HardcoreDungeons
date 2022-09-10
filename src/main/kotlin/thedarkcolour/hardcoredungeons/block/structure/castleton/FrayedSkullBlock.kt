@@ -14,7 +14,7 @@ import net.minecraft.world.level.block.state.properties.IntegerProperty
 import net.minecraft.world.phys.BlockHitResult
 import thedarkcolour.hardcoredungeons.block.decoration.HorizontalBlock
 import thedarkcolour.hardcoredungeons.block.base.properties.HProperties
-import thedarkcolour.hardcoredungeons.registry.items.HItemsNew
+import thedarkcolour.hardcoredungeons.registry.items.CASTLE_GEM_ITEM
 
 class FrayedSkullBlock(properties: HProperties) : HorizontalBlock(properties) {
     init {
@@ -34,7 +34,7 @@ class FrayedSkullBlock(properties: HProperties) : HorizontalBlock(properties) {
                 val stack = player.getItemInHand(hand)
                 val eyes = state.getValue(EYES)
 
-                if (stack.item == HItemsNew.CASTLE_GEM && eyes < 2) {
+                if (stack.item == CASTLE_GEM_ITEM && eyes < 2) {
                     worldIn.setBlockAndUpdate(pos, state.setValue(EYES, eyes + 1))
                     //worldIn.playSound()
                     stack.shrink(1)

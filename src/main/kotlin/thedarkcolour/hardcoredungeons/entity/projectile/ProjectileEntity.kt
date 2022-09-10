@@ -1,6 +1,5 @@
 package thedarkcolour.hardcoredungeons.entity.projectile
 
-import com.mojang.math.Vector3d
 import net.minecraft.network.protocol.Packet
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.EntityType
@@ -15,31 +14,18 @@ import kotlin.math.sqrt
 abstract class ProjectileEntity(
     type: EntityType<out ProjectileEntity>,
     level: Level,
-) : AbstractHurtingProjectile(type, level)
-{
-    fun shoot(shooter: LivingEntity, pos: Vector3d, acceleration: Vector3d) {
-        this.shoot(
-            shooter,
-            pos.x,
-            pos.y,
-            pos.z,
-            acceleration.x,
-            acceleration.y,
-            acceleration.z
-        )
-    }
-
+) : AbstractHurtingProjectile(type, level) {
     open fun shoot(
-        shooter: LivingEntity, x: Double,
-        y: Double, z: Double, mX: Double,
-        mY: Double, mZ: Double
+        shooter: LivingEntity,
+        x: Double, y: Double, z: Double,
+        vX: Double, vY: Double, vZ: Double,
     ) {
         moveTo(x, y, z, yRot, xRot)
         setPos(x, y, z)
-        val d0 = sqrt(mX * mX + mY * mY + mZ * mZ)
-        xPower = mX / d0 * 0.1
-        yPower = mY / d0 * 0.1
-        zPower = mZ / d0 * 0.1
+        val d0 = sqrt(vX * vX + vY * vY + vZ * vZ)
+        xPower = vX / d0 * 0.1
+        yPower = vY / d0 * 0.1
+        zPower = vZ / d0 * 0.1
 
         owner = shooter
 

@@ -2,8 +2,6 @@ package thedarkcolour.hardcoredungeons.item
 
 import com.google.common.collect.ImmutableMultimap
 import com.google.common.collect.Multimap
-import net.minecraft.world.level.block.state.BlockState
-import net.minecraft.world.item.ItemStack
 import net.minecraft.core.BlockPos
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.util.Mth
@@ -15,11 +13,13 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier
 import net.minecraft.world.entity.ai.attributes.Attributes
 import net.minecraft.world.entity.decoration.ArmorStand
 import net.minecraft.world.entity.player.Player
+import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Tier
 import net.minecraft.world.item.TieredItem
 import net.minecraft.world.item.Vanishable
 import net.minecraft.world.item.enchantment.EnchantmentHelper
 import net.minecraft.world.level.Level
+import net.minecraft.world.level.block.state.BlockState
 import thedarkcolour.hardcoredungeons.util.toDegrees
 
 /**
@@ -83,6 +83,10 @@ open class ScytheItem(
     }
 
     override fun getAttributeModifiers(slot: EquipmentSlot, stack: ItemStack): Multimap<Attribute, AttributeModifier> {
-        return if (slot == EquipmentSlot.MAINHAND) attributeModifiers else super.getAttributeModifiers(slot, stack)
+        return if (slot == EquipmentSlot.MAINHAND) {
+            attributeModifiers
+        } else {
+            super.getAttributeModifiers(slot, stack)
+        }
     }
 }

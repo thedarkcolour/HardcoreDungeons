@@ -9,10 +9,9 @@ import net.minecraftforge.common.data.LanguageProvider
 import thedarkcolour.hardcoredungeons.HardcoreDungeons
 import thedarkcolour.hardcoredungeons.block.combo.CompressedCombo
 import thedarkcolour.hardcoredungeons.block.combo.StairsSlabWallCombo
-import thedarkcolour.hardcoredungeons.registry.HBlocks
 import thedarkcolour.hardcoredungeons.registry.HEnchantments
-import thedarkcolour.hardcoredungeons.registry.HItems
-import thedarkcolour.hardcoredungeons.registry.items.HItemsNew
+import thedarkcolour.hardcoredungeons.registry.block.HBlocks
+import thedarkcolour.hardcoredungeons.registry.items.*
 
 /**
  * Language data provider for Hardcore Dungeons.
@@ -96,7 +95,6 @@ abstract class Lang(gen: DataGenerator, locale: String) : LanguageProvider(gen, 
             add(HBlocks.LUMLIGHT_WOOD.pressurePlate, "Lumlight Pressure Plate")
             add(HBlocks.LUMLIGHT_WOOD.button, "Lumlight Button")
             add(HBlocks.LUMLIGHT_WOOD.trapdoor, "Lumlight Trapdoor")
-            add(HBlocks.DUNGEON_SPAWNER, "Dungeon Mob Spawner")
             add(HBlocks.LUMLIGHT_CAMPFIRE, "Lumlight Campfire")
             add(HBlocks.CASTLETON_VASE, "Castleton Vase")
             add(HBlocks.CASTLETON_TREASURE_VASE, "Castleton Treasure Vase")
@@ -192,10 +190,10 @@ abstract class Lang(gen: DataGenerator, locale: String) : LanguageProvider(gen, 
             add(HBlocks.MINI_RED_GUMDROP.plant, "Mini Red Gumdrop")
             add(HBlocks.YELLOW_GUMDROP.plant, "Yellow Gumdrop")
             add(HBlocks.MINI_YELLOW_GUMDROP.plant, "Mini Yellow Gumdrop")
-            add(HItemsNew.SHROOMY_SWORD, "Shroomy Sword")
-            add(HItemsNew.MINI_PISTOL, "Mini Pistol")
+            add(SHROOMY_SWORD_ITEM, "Shroomy Sword")
+            add(MINI_PISTOL_ITEM, "Mini Pistol")
 
-            add(HItemsNew.SYRINGE, "Syringe")
+            add(SYRINGE_ITEM, "Syringe")
             add("item.hardcoredungeons.potion_syringe.effect.empty", "Uncraftable Syringe")
             add("item.hardcoredungeons.potion_syringe.effect.water", "Water Syringe")
             add("item.hardcoredungeons.potion_syringe.effect.mundane", "Mundane Syringe")
@@ -219,68 +217,63 @@ abstract class Lang(gen: DataGenerator, locale: String) : LanguageProvider(gen, 
             add("item.hardcoredungeons.potion_syringe.effect.turtle_master", "Syringe of Turtle Master")
             add("item.hardcoredungeons.potion_syringe.effect.slow_falling", "Syringe of Slow Falling")
 
-            add(HItemsNew.DEER_ANTLER, "Deer Antler")
-            add(HItemsNew.VENISON, "Venison")
-            add(HItemsNew.COOKED_VENISON, "Cooked Venison")
-            add(HItemsNew.DEER_SPAWN_EGG, "Deer Spawn Egg")
+            add(DEER_ANTLER_ITEM, "Deer Antler")
+            add(VENISON_ITEM, "Venison")
+            add(COOKED_VENISON_ITEM, "Cooked Venison")
+            add(DEER_SPAWN_EGG_ITEM, "Deer Spawn Egg")
 
-            add(HItemsNew.CASTLETON_SWORD, "Castleton Sword")
-            add(HItemsNew.VALABLADE, "Valablade")
-            add(HItemsNew.GILDED_VALABLADE, "Gilded Valablade")
-            add(HItemsNew.CASTLE_GEM, "Castle Gem")
-            add(HItemsNew.FRAYED_SOUL_SPAWN_EGG, "Frayed Soul Spawn Egg")
-            add(HItems.VOID_RUNNER_SPAWN_EGG, "Void Runner Spawn Egg")
-            add(HItems.CASTLETON_DEER_SPAWN_EGG, "Castleton Deer Spawn Egg")
-            add(HItems.KNIGHTLY_JUGGERNAUT_SPAWN_EGG, "Knightly Juggernaut Spawn Egg")
+            add(CASTLETON_SWORD_ITEM, "Castleton Sword")
+            add(CASTLE_GEM_ITEM, "Castle Gem")
+            add(FRAYED_SOUL_SPAWN_EGG_ITEM, "Frayed Soul Spawn Egg")
+            add(CASTLETON_DEER_SPAWN_EGG_ITEM, "Castleton Deer Spawn Egg")
+            add(KNIGHTLY_JUGGERNAUT_SPAWN_EGG_ITEM, "Knightly Juggernaut Spawn Egg")
             add(HBlocks.CASTLETON_TORCH.litItem, "Castleton Torch")
             add(HBlocks.CASTLETON_TORCH.burntItem, "Burnt Castleton Torch")
             add(HBlocks.LUMLIGHT_WOOD.sign, "Lumlight Sign")
-            add(HItems.TOWER_HELMET, "Tower Helmet")
-            add(HItems.TOWER_CHESTPLATE, "Tower Chestplate")
-            add(HItems.TOWER_LEGGINGS, "Tower Leggings")
-            add(HItems.TOWER_BOOTS, "Tower Boots")
-            add(HItemsNew.CASTLETON_STAFF, "Castleton Staff")
+            add(TOWER_HELMET_ITEM, "Tower Helmet")
+            add(TOWER_CHESTPLATE_ITEM, "Tower Chestplate")
+            add(TOWER_LEGGINGS_ITEM, "Tower Leggings")
+            add(TOWER_BOOTS_ITEM, "Tower Boots")
+            add(CASTLETON_STAFF_ITEM, "Castleton Staff")
             add(HBlocks.WILD_BERROOK, "Wild Berrook")
-            add(HItemsNew.MUSHROOM_CAP, "Mushroom Cap")
-            add(HItemsNew.MUSHROOM_CHESTPLATE, "Mushroom Chestplate")
-            add(HItemsNew.MALACHITE_SWORD, "Malachite Sword")
-            add(HItemsNew.MALACHITE_SHOVEL, "Malachite Shovel")
-            add(HItemsNew.MALACHITE_PICKAXE, "Malachite Pickaxe")
-            add(HItemsNew.MALACHITE_AXE, "Malachite Axe")
-            add(HItemsNew.MALACHITE_HOE, "Malachite Hoe")
+            add(MUSHROOM_CAP_ITEM, "Mushroom Cap")
+            add(MUSHROOM_CHESTPLATE_ITEM, "Mushroom Chestplate")
+            add(MALACHITE_SWORD_ITEM, "Malachite Sword")
+            add(MALACHITE_SHOVEL_ITEM, "Malachite Shovel")
+            add(MALACHITE_PICKAXE_ITEM, "Malachite Pickaxe")
+            add(MALACHITE_AXE_ITEM, "Malachite Axe")
+            add(MALACHITE_HOE_ITEM, "Malachite Hoe")
 
-            add(HItems.RAINBOWSTONE_AXE, "Rainbowstone Axe")
-            add(HItems.RAINBOWSTONE_HOE, "Rainbowstone Hoe")
-            add(HItems.RAINBOWSTONE_PICKAXE, "Rainbowstone Pickaxe")
-            add(HItems.RAINBOWSTONE_SHOVEL, "Rainbowstone Shovel")
-            add(HItemsNew.RAINBOWSTONE_SWORD, "Rainbowstone Sword")
-            add(HItems.RAINBOWSTONE_GEM, "Rainbowstone Gem")
+            add(RAINBOWSTONE_AXE_ITEM, "Rainbowstone Axe")
+            add(RAINBOWSTONE_HOE_ITEM, "Rainbowstone Hoe")
+            add(RAINBOWSTONE_PICKAXE_ITEM, "Rainbowstone Pickaxe")
+            add(RAINBOWSTONE_SHOVEL_ITEM, "Rainbowstone Shovel")
+            add(RAINBOWSTONE_SWORD_ITEM, "Rainbowstone Sword")
+            add(RAINBOWSTONE_GEM_ITEM, "Rainbowstone Gem")
 
-            add(HItemsNew.AUBRI_MINI_PISTOL, "Aubri Mini Pistol")
-            add(HItemsNew.AUBRI_RIFLE, "Aubri Rifle")
-            add(HItems.AURIGOLD, "Aurigold")
-            add(HItems.AURIGOLD_PENDANT, "Aurigold Pendant")
-            add(HItems.AURILO_STAFF, "Aurilo Staff")
+            add(AUBRI_MINI_PISTOL_ITEM, "Aubri Mini Pistol")
+            add(AUBRI_RIFLE_ITEM, "Aubri Rifle")
+            add(AURIGOLD_ITEM, "Aurigold")
+            add(AURIGOLD_PENDANT_ITEM, "Aurigold Pendant")
 
-            add(HItemsNew.CANDY_CANE_SWORD, "Candy Cane Sword")
-            add(HItems.CANDY_CANE, "Candy Cane")
+            add(CANDY_CANE_SWORD_ITEM, "Candy Cane Sword")
+            add(CANDY_CANE_ITEM, "Candy Cane")
 
             add(HBlocks.CHILI_PEPPER, "Chili Pepper")
-            add(HItemsNew.BULLET, "Bullet")
-            add(HItemsNew.INCENDIARY_BULLET, "Incendiary Bullet")
-            add(HItemsNew.SHELL, "Shell")
+            add(BULLET_ITEM, "Bullet")
+            add(INCENDIARY_BULLET_ITEM, "Incendiary Bullet")
+            add(SHELL_ITEM, "Shell")
 
-            add(HItems.FILL_WAND, "Fill Wand")
-            add(HItems.CLEAR_WAND, "Clear Wand")
-            add(HItems.CLONE_WAND, "Clone Wand")
-            add(HItems.DISTANCE_WAND, "Distance Wand")
+            add(FILL_WAND_ITEM, "Fill Wand")
+            add(CLEAR_WAND_ITEM, "Clear Wand")
+            add(CLONE_WAND_ITEM, "Clone Wand")
+            add(DISTANCE_WAND_ITEM, "Distance Wand")
 
             add("item.hardcoredungeons.wand.clear", "Cleared blocks from")
             add("item.hardcoredungeons.wand.fill", "Filled blocks from")
             add("lang.hardcoredungeons.to", "to")
-            addLore(HItemsNew.SHROOMY_SWORD, "Has a chance to inflict poison on the target.")
+            addLore(SHROOMY_SWORD_ITEM, "Has a chance to inflict poison on the target.")
 
-            addEnchantment(HEnchantments.PROSPECTING, "Prospecting", "Certain minerals have a chance to drop \"pristine\" variants instead.")
             addEnchantment(HEnchantments.WITHERING, "Withering", "Causes additional wither damage when used to attack a mob.")
         }
 
@@ -303,10 +296,7 @@ abstract class Lang(gen: DataGenerator, locale: String) : LanguageProvider(gen, 
     }
 
     /**
-     * Latin American Spanish.
-     *
-     * Classname doesn't matter because this
-     * is strictly for use in dev environment.
+     * Mexican Spanish.
      *
      * @author thedarkcolour
      */

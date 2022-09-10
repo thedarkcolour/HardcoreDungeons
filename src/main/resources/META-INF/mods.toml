@@ -1,5 +1,5 @@
 modLoader="kotlinforforge"
-loaderVersion="[1.12,)"
+loaderVersion="[1.17,)"
 license="All rights reserved"
 
 [[mods]]
@@ -7,8 +7,8 @@ modId="hardcoredungeons"
 version="${file.jarVersion}"
 displayName="Hardcore Dungeons"
 logoFile="logo.png"
-credits="Herobrine knows all. Thanks to DJRoundTable, and AlexCipher"
-authors="TheDarkColour, genericrandom64"
+credits="Herobrine knows all. Thanks to genericrandom64, DJRoundTable, and AlexCipher"
+authors="TheDarkColour"
 description='''
 Adds lots of exploration related content to the game.
 '''
@@ -16,13 +16,13 @@ Adds lots of exploration related content to the game.
 [[dependencies.hardcoredungeons]]
     modId="forge"
     mandatory=true
-    versionRange="[36.0.42,)"
+    versionRange="[43.1.7,)"
     ordering="NONE"
     side="BOTH"
 [[dependencies.hardcoredungeons]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.16.5]"
+    versionRange="[1.19.2]"
     ordering="NONE"
     side="BOTH"
 [[dependencies.hardcoredungeons]]

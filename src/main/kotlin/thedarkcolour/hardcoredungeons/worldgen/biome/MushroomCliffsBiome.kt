@@ -5,7 +5,6 @@ import net.minecraft.data.worldgen.BiomeDefaultFeatures
 import net.minecraft.world.level.biome.Biome
 import net.minecraftforge.common.world.ModifiableBiomeInfo
 import team.rusty.util.biome.ModBiome
-import thedarkcolour.hardcoredungeons.worldgen.HWorldGen
 
 object MushroomCliffsBiome : ModBiome() {
     override fun configure(biome: Holder<Biome>, info: ModifiableBiomeInfo.BiomeInfo.Builder) {
@@ -27,7 +26,7 @@ object MushroomCliffsBiome : ModBiome() {
             BiomeDefaultFeatures.addDefaultOres(this)
             BiomeDefaultFeatures.addMushroomFieldVegetation(this)
             BiomeDefaultFeatures.addDefaultExtraVegetation(this)
-            HWorldGen.addShroomyBoulders(this)
+            //HWorldGen.addShroomyBoulders(this)
         }
     }
 }

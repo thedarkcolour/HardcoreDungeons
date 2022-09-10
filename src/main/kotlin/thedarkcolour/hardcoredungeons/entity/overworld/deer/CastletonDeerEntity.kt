@@ -1,27 +1,23 @@
 package thedarkcolour.hardcoredungeons.entity.overworld.deer
 
-import net.minecraft.entity.EntityType
-import net.minecraft.entity.ILivingEntityData
-import net.minecraft.entity.MobEntity
-import net.minecraft.entity.SpawnReason
-import net.minecraft.entity.ai.goal.Goal
-import net.minecraft.entity.ai.goal.MeleeAttackGoal
-import net.minecraft.world.item.ItemStack
-import net.minecraft.item.crafting.Ingredient
-import net.minecraft.nbt.CompoundNBT
-import net.minecraft.potion.EffectInstance
-import net.minecraft.potion.Effects
 import net.minecraft.core.BlockPos
+import net.minecraft.nbt.CompoundTag
 import net.minecraft.world.DifficultyInstance
-import net.minecraft.world.IServerWorld
-import net.minecraft.world.IWorldReader
+import net.minecraft.world.effect.MobEffectInstance
+import net.minecraft.world.effect.MobEffects
 import net.minecraft.world.entity.EntityType
+import net.minecraft.world.entity.Mob
+import net.minecraft.world.entity.MobSpawnType
+import net.minecraft.world.entity.SpawnGroupData
+import net.minecraft.world.entity.ai.goal.Goal
 import net.minecraft.world.entity.ai.goal.MeleeAttackGoal
 import net.minecraft.world.entity.ai.goal.PanicGoal
+import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.LevelReader
-import thedarkcolour.hardcoredungeons.registry.HBlocks
+import net.minecraft.world.level.ServerLevelAccessor
+import thedarkcolour.hardcoredungeons.registry.block.HBlocks
 
 class CastletonDeerEntity(type: EntityType<CastletonDeerEntity>, worldIn: Level) : DeerEntity(type, worldIn) {
     private fun addGoals(deerType: DeerType) {
@@ -46,9 +42,9 @@ class CastletonDeerEntity(type: EntityType<CastletonDeerEntity>, worldIn: Level)
         return Ingredient.of(HBlocks.WILD_BERROOK.item)
     }
 
-    // fix deer not spawning on castleton grass during world gen
+    // fix deer not spawning on castleton grass during world gen, since the dimension is dark and animals spawn in light
     override fun getWalkTargetValue(pos: BlockPos, level: LevelReader): Float {
-        return if (level.getBlockState(pos.below()).`is`(HBlocks.CASTLETON_SOIL.grass)) 10.0f else level.getBrightness(pos) - 0.5f
+        return if (level.getBlockState(pos.below()).`is`(HBlocks.CASTLETON_SOIL.grass)) 10.0f else level.getPathfindingCostFromLightLevels(pos) - 0.5f
     }
 
     override fun getDefaultType(): DeerType {
@@ -59,19 +55,19 @@ class CastletonDeerEntity(type: EntityType<CastletonDeerEntity>, worldIn: Level)
         return if (random.nextBoolean()) DeerType.PURPLE_PATTERNS.random() else DeerType.BLUE_PATTERNS.random()
     }
 
-    fun isSameColor(other: MobEntity): Boolean {
+    fun isSameColor(other: Mob): Boolean {
         if (other !is CastletonDeerEntity) return false
 
         return this.deerType.isBlue == other.deerType.isBlue
     }
 
     override fun finalizeSpawn(
-        worldIn: IServerWorld,
+        worldIn: ServerLevelAccessor,
         difficultyIn: DifficultyInstance,
-        reason: SpawnReason,
-        spawnDataIn: ILivingEntityData?,
-        dataTag: CompoundNBT?
-    ): ILivingEntityData {
+        reason: MobSpawnType,
+        spawnDataIn: SpawnGroupData?,
+        dataTag: CompoundTag?
+    ): SpawnGroupData {
         var group = spawnDataIn as? GroupData
         var deerType = this.deerType
 
@@ -110,7 +106,7 @@ class CastletonDeerEntity(type: EntityType<CastletonDeerEntity>, worldIn: Level)
         return group
     }
 
-    override fun readAdditionalSaveData(compound: CompoundNBT) {
+    override fun readAdditionalSaveData(compound: CompoundTag) {
         super.readAdditionalSaveData(compound)
 
         // Re-add goals as they are cleared when NBT is read
@@ -127,16 +123,16 @@ class CastletonDeerEntity(type: EntityType<CastletonDeerEntity>, worldIn: Level)
         override fun start() {
             cooldown = 50
 
-            deer.addEffect(EffectInstance(Effects.DAMAGE_RESISTANCE, 100, 2, false, false))
+            deer.addEffect(MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 100, 2, false, false))
 
             for (ally in deer.level.getEntitiesOfClass(CastletonDeerEntity::class.java, deer.boundingBox.inflate(6.0))) {
                 if (ally.isSameColor(deer)) {
-                    ally.addEffect(EffectInstance(Effects.DAMAGE_BOOST, 100, 2))
+                    ally.addEffect(MobEffectInstance(MobEffects.DAMAGE_BOOST, 100, 2))
                 }
             }
         }
     }
 
     // Used to ensure a group has only one alpha and all of its members are the same color
-    private class GroupData(var isBlue: Boolean, var hasAlpha: Boolean = false) : ILivingEntityData
+    private class GroupData(var isBlue: Boolean, var hasAlpha: Boolean = false) : SpawnGroupData
 }

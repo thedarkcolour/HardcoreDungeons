@@ -11,8 +11,8 @@ import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
-import thedarkcolour.hardcoredungeons.registry.HBlocks
-import thedarkcolour.hardcoredungeons.registry.items.HItemsNew
+import thedarkcolour.hardcoredungeons.registry.block.HBlocks
+import thedarkcolour.hardcoredungeons.registry.items.POTION_SYRINGE_ITEM
 import thedarkcolour.hardcoredungeons.util.modLoc
 
 @JeiPlugin
@@ -26,7 +26,7 @@ class JeiPlugin : IModPlugin {
     }
 
     override fun registerItemSubtypes(registration: ISubtypeRegistration) {
-        registration.registerSubtypeInterpreter(VanillaTypes.ITEM_STACK, HItemsNew.POTION_SYRINGE, SyringeSubtypeInterpreter)
+        registration.registerSubtypeInterpreter(VanillaTypes.ITEM_STACK, POTION_SYRINGE_ITEM, SyringeSubtypeInterpreter)
     }
 
     override fun registerRecipes(registration: IRecipeRegistration) {

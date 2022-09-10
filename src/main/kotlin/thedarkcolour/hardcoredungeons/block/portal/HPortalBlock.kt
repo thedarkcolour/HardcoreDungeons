@@ -1,43 +1,37 @@
 package thedarkcolour.hardcoredungeons.block.portal
 
-import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
-import net.minecraft.entity.Entity
-import net.minecraft.entity.player.ServerPlayerEntity
-import net.minecraft.item.BlockItemUseContext
-import net.minecraft.state.StateContainer
-import net.minecraft.state.properties.BlockStateProperties
 import net.minecraft.core.Direction
 import net.minecraft.core.Direction.Axis
-import net.minecraft.util.RegistryKey
 import net.minecraft.core.BlockPos
 import net.minecraft.core.BlockPos.MutableBlockPos
-import net.minecraft.core.Direction
 import net.minecraft.resources.ResourceKey
 import net.minecraft.server.level.ServerPlayer
-import net.minecraft.util.math.shapes.IBooleanFunction
-import net.minecraft.util.math.shapes.ISelectionContext
-import net.minecraft.util.math.shapes.VoxelShape
-import net.minecraft.util.math.shapes.VoxelShapes
-import net.minecraft.world.IBlockReader
-import net.minecraft.world.IWorld
 import net.minecraft.world.entity.Entity
+import net.minecraft.world.item.context.BlockPlaceContext
+import net.minecraft.world.level.BlockGetter
 import net.minecraft.world.level.Level
-import net.minecraft.world.level.LevelReader
+import net.minecraft.world.level.LevelAccessor
 import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.state.StateDefinition
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
+import net.minecraft.world.phys.shapes.BooleanOp
+import net.minecraft.world.phys.shapes.CollisionContext
+import net.minecraft.world.phys.shapes.Shapes
+import net.minecraft.world.phys.shapes.VoxelShape
 import thedarkcolour.hardcoredungeons.block.base.properties.HProperties
 import thedarkcolour.hardcoredungeons.block.combo.PortalCombo
 import thedarkcolour.hardcoredungeons.block.structure.LockBlock
 import thedarkcolour.hardcoredungeons.capability.PlayerHelper
 
+@Suppress("OVERRIDE_DEPRECATION")
 class HPortalBlock(
     private val dimensionKey: () -> ResourceKey<Level>,
     private val combo: PortalCombo, // todo use a tag here
     properties: HProperties
 ) : Block(properties.build()) {
     init {
-        registerDefaultState(stateDefinition.any().setValue(AXIS, Direction.Axis.X))
+        registerDefaultState(stateDefinition.any().setValue(AXIS, Axis.X))
     }
 
     override fun entityInside(state: BlockState, worldIn: Level, blockPos: BlockPos, entityIn: Entity) {
@@ -99,7 +93,7 @@ class HPortalBlock(
     }
 
     // if a portal block is missing then we make a new portal here
-    private fun constructMatchingPortal(destination: LevelReader, origin: LevelReader, pos: BlockPos, tpLocation: BlockPos, state: BlockState) {
+    private fun constructMatchingPortal(destination: Level, origin: Level, pos: BlockPos, tpLocation: BlockPos, state: BlockState) {
         val axis = state.getValue(AXIS)
         // cursor for measuring portal
         val testCursor = pos.mutable()
@@ -177,19 +171,19 @@ class HPortalBlock(
         }
     }
 
-    private fun canTeleport(state: BlockState, worldIn: World, pos: BlockPos, entityIn: Entity): Boolean {
-        return !entityIn.isPassenger && !entityIn.isVehicle && entityIn.canChangeDimensions() && VoxelShapes.joinIsNotEmpty(VoxelShapes.create(entityIn.boundingBox.move(-pos.x.toDouble(), -pos.y.toDouble(), -pos.z.toDouble())), state.getShape(worldIn, pos), IBooleanFunction.AND)
+    private fun canTeleport(state: BlockState, worldIn: Level, pos: BlockPos, entityIn: Entity): Boolean {
+        return !entityIn.isPassenger && !entityIn.isVehicle && entityIn.canChangeDimensions() && Shapes.joinIsNotEmpty(Shapes.create(entityIn.boundingBox.move(-pos.x.toDouble(), -pos.y.toDouble(), -pos.z.toDouble())), state.getShape(worldIn, pos), BooleanOp.AND)
     }
 
-    override fun createBlockStateDefinition(builder: StateContainer.Builder<Block, BlockState>) {
+    override fun createBlockStateDefinition(builder: StateDefinition.Builder<Block, BlockState>) {
         builder.add(AXIS)
     }
 
-    override fun getStateForPlacement(context: BlockItemUseContext): BlockState? {
+    override fun getStateForPlacement(context: BlockPlaceContext): BlockState? {
         return defaultBlockState().setValue(BlockStateProperties.HORIZONTAL_AXIS, context.horizontalDirection.clockWise.axis)
     }
 
-    override fun getShape(state: BlockState, worldIn: IBlockReader, pos: BlockPos, ctx: ISelectionContext): VoxelShape {
+    override fun getShape(state: BlockState, worldIn: BlockGetter, pos: BlockPos, ctx: CollisionContext): VoxelShape {
         return if (state.getValue(AXIS) == Axis.X) {
             X_SHAPE
         } else {
@@ -201,7 +195,7 @@ class HPortalBlock(
         state: BlockState,
         direction: Direction,
         fromState: BlockState,
-        level: IWorld,
+        level: LevelAccessor,
         pos: BlockPos,
         fromPos: BlockPos
     ): BlockState {

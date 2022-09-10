@@ -3,7 +3,7 @@ package thedarkcolour.hardcoredungeons.item
 import net.minecraft.world.item.CreativeModeTab
 import net.minecraft.world.item.ItemStack
 import thedarkcolour.hardcoredungeons.HardcoreDungeons
-import thedarkcolour.hardcoredungeons.registry.HBlocks
+import thedarkcolour.hardcoredungeons.registry.block.HBlocks
 import thedarkcolour.hardcoredungeons.util.modLoc
 
 object Group : CreativeModeTab(HardcoreDungeons.ID) {

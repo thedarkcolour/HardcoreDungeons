@@ -4,7 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack
 import net.minecraft.client.renderer.MultiBufferSource
 import net.minecraft.client.renderer.entity.layers.RenderLayer
 import net.minecraft.client.renderer.texture.OverlayTexture
-import thedarkcolour.hardcoredungeons.client.model.entity.DoeModel
+import thedarkcolour.hardcoredungeons.client.model.entity.DeerModel
 import thedarkcolour.hardcoredungeons.client.renderer.entity.DeerRenderer
 import thedarkcolour.hardcoredungeons.entity.overworld.deer.DeerEntity
 
@@ -13,7 +13,7 @@ import thedarkcolour.hardcoredungeons.entity.overworld.deer.DeerEntity
  *
  * @author thedarkcolour
  */
-class DeerFullbrightLayer(private val renderer: DeerRenderer) : RenderLayer<DeerEntity, DoeModel>(renderer) {
+class DeerFullbrightLayer(private val renderer: DeerRenderer) : RenderLayer<DeerEntity, DeerModel>(renderer) {
     override fun render(
         stack: PoseStack, buffer: MultiBufferSource, light: Int, entity: DeerEntity, limbSwing: Float,
         limbSwingAmount: Float, partialTicks: Float, ageInTicks: Float, netHeadYaw: Float, headPitch: Float

@@ -8,15 +8,20 @@ import net.minecraftforge.client.event.RegisterColorHandlersEvent
 import net.minecraftforge.client.event.RegisterDimensionSpecialEffectsEvent
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent
 import thedarkcolour.hardcoredungeons.client.color.RainbowColor
-import thedarkcolour.hardcoredungeons.client.dimension.AubrumEffects
 import thedarkcolour.hardcoredungeons.client.dimension.CastletonEffects
 import thedarkcolour.hardcoredungeons.client.model.HModelLayers
 import thedarkcolour.hardcoredungeons.client.model.block.FullbrightBakedModel
-import thedarkcolour.hardcoredungeons.client.renderer.GreenWandRender
-import thedarkcolour.hardcoredungeons.registry.*
+import thedarkcolour.hardcoredungeons.client.renderer.curio.PendantCurioRenderer
+import thedarkcolour.hardcoredungeons.registry.HDimensions
+import thedarkcolour.hardcoredungeons.registry.HEntities
+import thedarkcolour.hardcoredungeons.registry.HEntities.registerEntityRenderers
+import thedarkcolour.hardcoredungeons.registry.HParticles
+import thedarkcolour.hardcoredungeons.registry.block.HBlocks
+import thedarkcolour.hardcoredungeons.registry.items.AURIGOLD_PENDANT_ITEM
+import thedarkcolour.hardcoredungeons.registry.items.HItems
 import thedarkcolour.hardcoredungeons.util.modLoc
-import thedarkcolour.kotlinforforge.forge.FORGE_BUS
 import thedarkcolour.kotlinforforge.forge.MOD_BUS
+import top.theillusivec4.curios.api.client.CuriosRendererRegistry
 
 /**
  * Handles events that are only fired on the client side.
@@ -35,10 +40,9 @@ object ClientHandler {
         MOD_BUS.addListener(::registerBakedModels)
         MOD_BUS.addListener(HModelLayers::registerLayers)
         MOD_BUS.addListener(HEntities::registerEntityShaders)
+        MOD_BUS.addListener(HEntities::registerEntityShaders)
         MOD_BUS.addListener(::registerDimensionFx)
-
-        FORGE_BUS.addListener(GreenWandRender::renderTick)
-        FORGE_BUS.addListener(GreenWandRender::renderOutline)
+        MOD_BUS.addListener(::registerEntityRenderers)
 
         //FORGE_BUS.addListener(::postRender)
     }
@@ -46,14 +50,14 @@ object ClientHandler {
     // ItemBlockRenderTypes is not (?) thread safe so enqueue on main thread
     private fun clientSetup(event: FMLClientSetupEvent) {
         event.enqueueWork(::setRenderTypes)
-        HEntities.registerEntityRenderers()
-        HEntities.registerEntityShaders()
         //HContainers.registerScreens()
         HItems.registerItemProperties()
 
         Sheets.addWoodType(HBlocks.LUMLIGHT_WOOD.type)
         Sheets.addWoodType(HBlocks.AURI_WOOD.type)
         Sheets.addWoodType(HBlocks.COTTONMARSH_WOOD.type)
+
+        CuriosRendererRegistry.register(AURIGOLD_PENDANT_ITEM, ::PendantCurioRenderer)
     }
 
     private fun registerDimensionFx(event: RegisterDimensionSpecialEffectsEvent) {
@@ -84,7 +88,6 @@ object ClientHandler {
         ItemBlockRenderTypes.setRenderLayer(HBlocks.WHITE_WINE_BOTTLE, RenderType.translucent())
         ItemBlockRenderTypes.setRenderLayer(HBlocks.WINE_BOTTLE, RenderType.translucent())
         ItemBlockRenderTypes.setRenderLayer(HBlocks.CASTLETON_LANTERN, RenderType.cutout())
-        ItemBlockRenderTypes.setRenderLayer(HBlocks.DUNGEON_SPAWNER, RenderType.cutout())
         ItemBlockRenderTypes.setRenderLayer(HBlocks.LUMLIGHT_CAMPFIRE, RenderType.cutout())
         ItemBlockRenderTypes.setRenderLayer(HBlocks.COTTONMARSH_WOOD.leaves, RenderType.cutout())
         ItemBlockRenderTypes.setRenderLayer(HBlocks.RUNED_CASTLETON_STONE, RenderType.cutout())

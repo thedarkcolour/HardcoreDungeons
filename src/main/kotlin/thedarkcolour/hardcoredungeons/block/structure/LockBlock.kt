@@ -2,15 +2,15 @@ package thedarkcolour.hardcoredungeons.block.structure
 
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
-import net.minecraft.entity.player.PlayerEntity
-import net.minecraft.util.ActionResultType
 import net.minecraft.core.Direction
-import net.minecraft.util.Hand
 import net.minecraft.world.level.ItemLike
 import net.minecraft.core.BlockPos
-import net.minecraft.util.math.BlockRayTraceResult
-import net.minecraft.world.IBlockReader
+import net.minecraft.world.InteractionHand
+import net.minecraft.world.InteractionResult
+import net.minecraft.world.entity.player.Player
+import net.minecraft.world.level.BlockGetter
 import net.minecraft.world.level.Level
+import net.minecraft.world.phys.BlockHitResult
 import thedarkcolour.hardcoredungeons.block.base.HBlock
 import thedarkcolour.hardcoredungeons.block.base.properties.HProperties
 
@@ -22,22 +22,22 @@ import thedarkcolour.hardcoredungeons.block.base.properties.HProperties
 class LockBlock(private val key: ItemLike, private val keyspace: () -> Block, properties: HProperties) : HBlock(properties) {
     override fun use(
         state: BlockState,
-        level: World,
+        level: Level,
         pos: BlockPos,
-        player: PlayerEntity,
-        handIn: Hand,
-        hit: BlockRayTraceResult,
-    ): ActionResultType {
+        player: Player,
+        handIn: InteractionHand,
+        hit: BlockHitResult,
+    ): InteractionResult {
         val key = key.asItem()
-        if (key == player.getItemInHand(Hand.MAIN_HAND).item || key == player.getItemInHand(Hand.OFF_HAND).item) {
+        if (key == player.getItemInHand(InteractionHand.MAIN_HAND).item || key == player.getItemInHand(InteractionHand.OFF_HAND).item) {
             if (level.isClientSide) {
-                return ActionResultType.SUCCESS
+                return InteractionResult.SUCCESS
             } else {
                 val keyspace = keyspace()
                 val positions = arrayListOf(pos)
 
                 // This is the fastest way I've tested so far
-                Companion.collectAdjacentBlocks(level, pos, keyspace, positions, 144)
+                collectAdjacentBlocks(level, pos, keyspace, positions, 144)
 
                 for (position in positions) {
                     level.destroyBlock(position, false)
@@ -45,11 +45,11 @@ class LockBlock(private val key: ItemLike, private val keyspace: () -> Block, pr
             }
         }
 
-        return ActionResultType.PASS
+        return InteractionResult.PASS
     }
 
     companion object {
-        fun collectAdjacentBlocks(level: IBlockReader, from: BlockPos, target: Block, list: MutableList<BlockPos>, limit: Int) {
+        fun collectAdjacentBlocks(level: BlockGetter, from: BlockPos, target: Block, list: MutableList<BlockPos>, limit: Int) {
             val toCheck = arrayListOf(from)
             val listIter = toCheck.listIterator(1)
 

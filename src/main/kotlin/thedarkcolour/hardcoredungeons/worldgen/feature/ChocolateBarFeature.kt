@@ -1,13 +1,11 @@
 package thedarkcolour.hardcoredungeons.worldgen.feature
 
-import com.mojang.serialization.Codec
 import net.minecraft.core.BlockPos
 import net.minecraft.world.level.WorldGenLevel
 import net.minecraft.world.level.levelgen.feature.Feature
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration
-import thedarkcolour.hardcoredungeons.registry.HBlocks
-import java.util.*
+import thedarkcolour.hardcoredungeons.registry.block.HBlocks
 
 class ChocolateBarFeature : Feature<NoneFeatureConfiguration>(NoneFeatureConfiguration.CODEC) {
     override fun place(pContext: FeaturePlaceContext<NoneFeatureConfiguration>): Boolean {

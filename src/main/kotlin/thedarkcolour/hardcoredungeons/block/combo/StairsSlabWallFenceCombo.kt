@@ -4,7 +4,7 @@ import net.minecraft.data.recipes.FinishedRecipe
 import net.minecraft.tags.BlockTags
 import net.minecraftforge.common.Tags
 import thedarkcolour.hardcoredungeons.block.base.BlockMaker
-import thedarkcolour.hardcoredungeons.block.base.ItemMaker
+import thedarkcolour.hardcoredungeons.registry.items.ItemMaker
 import thedarkcolour.hardcoredungeons.block.base.properties.HProperties
 import thedarkcolour.hardcoredungeons.data.RecipeGenerator
 import thedarkcolour.hardcoredungeons.data.RecipeGenerator.Companion.shaped

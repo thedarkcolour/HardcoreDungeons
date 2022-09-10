@@ -3,9 +3,9 @@ package thedarkcolour.hardcoredungeons.block.plant
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.Blocks
-import net.minecraft.potion.Effect
-import net.minecraft.potion.Effects
-import net.minecraft.tags.ITag
+import net.minecraft.tags.TagKey
+import net.minecraft.world.effect.MobEffect
+import net.minecraft.world.effect.MobEffects
 import thedarkcolour.hardcoredungeons.block.base.properties.BlockProperties
 
 @Suppress("HasPlatformType")
@@ -15,14 +15,14 @@ class PlantProperties private constructor() : BlockProperties<PlantProperties>()
     /** Used for mushrooms to determine if podzol and mycelium are valid for placement. */
     var strict = false
     /** Used for flowers in suspicious stew */
-    var effect = Effects.MOVEMENT_SPEED
+    var effect = MobEffects.MOVEMENT_SPEED
     /** Used for flowers in suspicious stew*/
     var duration = 0
 
     /**
      * Set the potion effect of this flower for use in suspicious stew.
      */
-    fun stewEffect(effect: Effect, duration: Int): PlantProperties {
+    fun stewEffect(effect: MobEffect, duration: Int): PlantProperties {
         this.effect = effect
         this.duration = duration
         return this
@@ -40,7 +40,7 @@ class PlantProperties private constructor() : BlockProperties<PlantProperties>()
         return this
     }
 
-    fun validGround(tag: ITag<Block>): PlantProperties {
+    fun validGround(tag: TagKey<Block>): PlantProperties {
         predicate = { state -> DEFAULT_PREDICATE(state) && state.`is`(tag) }
         return this
     }

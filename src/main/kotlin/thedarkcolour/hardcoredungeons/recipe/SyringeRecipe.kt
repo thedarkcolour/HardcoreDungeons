@@ -1,13 +1,13 @@
 package thedarkcolour.hardcoredungeons.recipe
 
 import net.minecraft.world.item.ItemStack
-import net.minecraft.potion.PotionBrewing
+import net.minecraft.world.item.alchemy.PotionBrewing
 import net.minecraftforge.common.brewing.IBrewingRecipe
-import thedarkcolour.hardcoredungeons.registry.HItems
+import thedarkcolour.hardcoredungeons.registry.items.POTION_SYRINGE_ITEM
 
 object SyringeRecipe : IBrewingRecipe {
     override fun isInput(input: ItemStack): Boolean {
-        return input.item == HItems.POTION_SYRINGE
+        return input.item == POTION_SYRINGE_ITEM
     }
 
     override fun isIngredient(ingredient: ItemStack): Boolean {

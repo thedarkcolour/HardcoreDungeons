@@ -1,9 +1,8 @@
 package thedarkcolour.hardcoredungeons.tags
 
-import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
-import thedarkcolour.hardcoredungeons.util.modLoc
+import thedarkcolour.hardcoredungeons.registry.items.HItems
 
 /**
  * Item tags in Hardcore Dungeons.
@@ -23,7 +22,7 @@ object HItemTags {
     val GEMS_MALACHITE = tag("gems/malachite")
     val GEMS_RAINBOWSTONE = tag("gems/rainbowstone")
 
-    private fun tag(tag: String): TagKey<Item> {
-        return ItemTags.create(modLoc(tag))
+    private fun tag(path: String): TagKey<Item> {
+        return HItems.createTag(path)
     }
 }

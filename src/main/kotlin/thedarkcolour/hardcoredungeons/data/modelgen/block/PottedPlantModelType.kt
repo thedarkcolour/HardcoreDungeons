@@ -1,12 +1,13 @@
 package thedarkcolour.hardcoredungeons.data.modelgen.block
 
-import net.minecraft.world.level.block.Block
 import net.minecraft.resources.ResourceLocation
+import net.minecraft.world.level.block.Block
 import net.minecraftforge.client.model.generators.BlockModelBuilder
 import net.minecraftforge.client.model.generators.BlockModelProvider
 import net.minecraftforge.client.model.generators.ModelProvider
 import thedarkcolour.hardcoredungeons.data.ModelGenerator
 import thedarkcolour.hardcoredungeons.util.modLoc
+import thedarkcolour.hardcoredungeons.util.registryName
 
 class PottedPlantModelType : BlockModelType<Block>() {
     override fun process(block: Block, appearance: Block, gen: ModelGenerator) {

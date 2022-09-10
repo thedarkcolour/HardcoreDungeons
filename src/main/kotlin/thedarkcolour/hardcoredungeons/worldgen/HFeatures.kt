@@ -10,20 +10,16 @@ import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfigur
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration
 import net.minecraft.world.level.levelgen.feature.configurations.SimpleBlockConfiguration
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider
-import net.minecraft.world.level.levelgen.placement.BlockPredicateFilter
-import net.minecraft.world.level.levelgen.placement.HeightRangePlacement
-import net.minecraft.world.level.levelgen.placement.HeightmapPlacement
-import net.minecraft.world.level.levelgen.placement.InSquarePlacement
-import net.minecraft.world.level.levelgen.placement.PlacedFeature
-import net.minecraft.world.level.levelgen.placement.PlacementModifier
-import net.minecraft.world.level.levelgen.placement.RarityFilter
+import net.minecraft.world.level.levelgen.placement.*
 import team.rusty.util.feature.FeatureRegistry
 import thedarkcolour.hardcoredungeons.HardcoreDungeons
 import thedarkcolour.hardcoredungeons.legacy.ObjectHolderDelegate
-import thedarkcolour.hardcoredungeons.registry.HBlocks
-import thedarkcolour.hardcoredungeons.worldgen.feature.*
+import thedarkcolour.hardcoredungeons.registry.block.HBlocks
+import thedarkcolour.hardcoredungeons.worldgen.feature.CandyCaneFeature
+import thedarkcolour.hardcoredungeons.worldgen.feature.ChocolateBarFeature
 import thedarkcolour.kotlinforforge.forge.MOD_BUS
 import kotlin.reflect.KProperty0
+import kotlin.reflect.jvm.isAccessible
 
 // @formatter:off
 @Suppress("MemberVisibilityCanBePrivate")
@@ -58,8 +54,11 @@ object HFeatures {
 
     @Suppress("UNCHECKED_CAST")
     private fun placed(name: String, configuredFeature: KProperty0<ConfiguredFeature<*, *>>, placements: List<PlacementModifier>): ObjectHolderDelegate<PlacedFeature> {
+        configuredFeature.isAccessible = true
+        val holder = (configuredFeature.getDelegate() as ObjectHolderDelegate<ConfiguredFeature<*, *>>).registryObject.holder.get()
+
         return placed(name) {
-            PlacedFeature((configuredFeature.getDelegate() as ObjectHolderDelegate<ConfiguredFeature<*, *>>).registryObject.holder.get(), placements)
+            PlacedFeature(holder, placements)
         }
     }
 
@@ -92,6 +91,6 @@ object HFeatures {
         HeightRangePlacement.uniform(VerticalAnchor.aboveBottom(5), VerticalAnchor.aboveBottom(60)),
         BlockPredicateFilter.forPredicate(BlockPredicate.ONLY_IN_AIR_PREDICATE)
     ))
-    val SPARSE_CANDY_CANES by placed("sparse_candy_canes", ::CANDY_CANE, listOf(InSquarePlacement.spread(), HeightmapPlacement.onHeightmap(Heightmap.Types.WORLD_SURFACE_WG), PlacementUtils.countExtra(0, 0.15f, 1)))
+    val SPARSE_CANDY_CANES by placed("sparse_candy_canes", ::CANDY_CANE, listOf(InSquarePlacement.spread(), HeightmapPlacement.onHeightmap(Heightmap.Types.WORLD_SURFACE_WG), PlacementUtils.countExtra(0, 0.125f, 1)))
     val SPARSE_CHOCOLATE_BARS by placed("sparse_chocolate_bars", ::CHOCOLATE_BAR, listOf(InSquarePlacement.spread(), HeightmapPlacement.onHeightmap(Heightmap.Types.WORLD_SURFACE_WG), PlacementUtils.countExtra(0, 0.05f, 1)))
 }

@@ -5,7 +5,6 @@ import com.mojang.blaze3d.vertex.VertexConsumer
 import net.minecraft.client.model.EntityModel
 import net.minecraft.client.model.geom.ModelPart
 import net.minecraft.world.entity.LivingEntity
-import thedarkcolour.hardcoredungeons.client.model.entity.setRotationAngle
 import thedarkcolour.hardcoredungeons.legacy.modelConfigure
 
 // Made in BlockBench

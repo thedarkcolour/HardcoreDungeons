@@ -1,13 +1,13 @@
 package thedarkcolour.hardcoredungeons.entity.overworld.mushroomarcher
 
-import net.minecraft.client.renderer.entity.EntityRendererManager
+import net.minecraft.client.renderer.entity.EntityRendererProvider
 import net.minecraft.client.renderer.entity.SkeletonRenderer
-import net.minecraft.entity.monster.AbstractSkeletonEntity
 import net.minecraft.resources.ResourceLocation
+import net.minecraft.world.entity.monster.AbstractSkeleton
 import thedarkcolour.hardcoredungeons.util.modLoc
 
-class MushroomArcherRenderer(manager: EntityRendererManager) : SkeletonRenderer(manager) {
-    override fun getTextureLocation(entity: AbstractSkeletonEntity): ResourceLocation {
+class MushroomArcherRenderer(ctx: EntityRendererProvider.Context) : SkeletonRenderer(ctx) {
+    override fun getTextureLocation(entity: AbstractSkeleton): ResourceLocation {
         return MUSHROOM_ARCHER_TEXTURES
     }
 

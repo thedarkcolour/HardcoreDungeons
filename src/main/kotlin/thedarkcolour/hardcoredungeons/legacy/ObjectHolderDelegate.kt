@@ -6,6 +6,10 @@ import java.util.function.Supplier
 import kotlin.properties.ReadOnlyProperty
 import kotlin.reflect.KProperty
 
+// This stuff is copied from a future version of Kotlin for Forge
+// Can't use it from the library atm because of an issue in Forge's JiJ
+// todo remove when KFF works
+
 /**
  * @property registryObject For getting the ID or any other properties of the RegistryObject
  */

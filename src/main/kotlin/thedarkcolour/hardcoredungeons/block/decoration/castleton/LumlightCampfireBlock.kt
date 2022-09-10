@@ -8,9 +8,8 @@ import net.minecraft.util.RandomSource
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.CampfireBlock
 import thedarkcolour.hardcoredungeons.block.base.properties.HProperties
-import thedarkcolour.hardcoredungeons.registry.HBlocks
+import thedarkcolour.hardcoredungeons.registry.block.HBlocks
 import thedarkcolour.hardcoredungeons.registry.HParticles
-import java.util.*
 
 class LumlightCampfireBlock(properties: HProperties) : CampfireBlock(true, 2, properties.build()) {
     override fun animateTick(state: BlockState, level: Level, pos: BlockPos, rand: RandomSource) {

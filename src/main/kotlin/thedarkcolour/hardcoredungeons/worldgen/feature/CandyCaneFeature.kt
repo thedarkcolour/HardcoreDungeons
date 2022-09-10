@@ -1,6 +1,5 @@
 package thedarkcolour.hardcoredungeons.worldgen.feature
 
-import com.mojang.serialization.Codec
 import net.minecraft.world.level.block.state.properties.BlockStateProperties.AXIS
 import net.minecraft.world.level.block.state.properties.BlockStateProperties.FACING
 import net.minecraft.core.Direction
@@ -10,7 +9,7 @@ import net.minecraft.world.level.WorldGenLevel
 import net.minecraft.world.level.levelgen.feature.Feature
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration
-import thedarkcolour.hardcoredungeons.registry.HBlocks
+import thedarkcolour.hardcoredungeons.registry.block.HBlocks
 
 class CandyCaneFeature : Feature<NoneFeatureConfiguration>(NoneFeatureConfiguration.CODEC) {
     override fun place(ctx: FeaturePlaceContext<NoneFeatureConfiguration>): Boolean {

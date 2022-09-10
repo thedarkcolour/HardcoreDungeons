@@ -3,7 +3,7 @@ package thedarkcolour.hardcoredungeons.command
 import com.mojang.brigadier.CommandDispatcher
 import net.minecraft.commands.CommandSourceStack
 import net.minecraft.commands.Commands
-import thedarkcolour.hardcoredungeons.entity.ReloadableRenderer
+import thedarkcolour.hardcoredungeons.client.renderer.entity.ReloadableRenderer
 
 @Suppress("SpellCheckingInspection")
 object ReloadModelsCommand {

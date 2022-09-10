@@ -1,9 +1,9 @@
 package thedarkcolour.hardcoredungeons.block.plant
 
-import net.minecraft.block.CropsBlock
+import net.minecraft.world.level.block.CropBlock
 import thedarkcolour.hardcoredungeons.block.base.properties.HProperties
 
-class HCropsBlock(builder: HProperties) : CropsBlock(builder.build()) {
+class HCropsBlock(builder: HProperties) : CropBlock(builder.build()) {
     init {
 
     }

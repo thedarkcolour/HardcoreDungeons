@@ -5,10 +5,10 @@ import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.level.block.BonemealableBlock
+import net.minecraftforge.common.brewing.BrewingRecipeRegistry
 import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent
 import net.minecraftforge.event.AttachCapabilitiesEvent
 import net.minecraftforge.event.TickEvent
-import net.minecraftforge.event.entity.living.LivingDamageEvent
 import net.minecraftforge.event.entity.player.PlayerEvent
 import net.minecraftforge.event.level.BlockEvent
 import net.minecraftforge.eventbus.api.Event
@@ -18,34 +18,33 @@ import thedarkcolour.hardcoredungeons.block.portal.HPortalBlock
 import thedarkcolour.hardcoredungeons.capability.HPlayerData
 import thedarkcolour.hardcoredungeons.capability.HPlayerDataProvider
 import thedarkcolour.hardcoredungeons.capability.PlayerHelper
-import thedarkcolour.hardcoredungeons.worldgen.HWorldGen
-import thedarkcolour.hardcoredungeons.worldgen.structure.HConfiguredStructures
-import thedarkcolour.hardcoredungeons.worldgen.surfacebuilder.HConfiguredSurfaceBuilders
-import thedarkcolour.hardcoredungeons.tileentity.DungeonSpawnerTileEntity
+import thedarkcolour.hardcoredungeons.recipe.SyringeRecipe
+import thedarkcolour.hardcoredungeons.registry.block.HBlockUtil
 import thedarkcolour.kotlinforforge.forge.FORGE_BUS
 import thedarkcolour.kotlinforforge.forge.MOD_BUS
 import thedarkcolour.kotlinforforge.forge.addGenericListener
 
+/**
+ * Event handler class for common events. Client-only events are handled in [thedarkcolour.hardcoredungeons.client.ClientHandler]
+ */
 object EventHandler {
     fun registerEvents() {
-
+        // Mod setup
         MOD_BUS.addListener(::commonSetup)
-
         MOD_BUS.addListener(::registerCapabilities)
+
+        // Capability
         FORGE_BUS.addListener(::playerTick)
         FORGE_BUS.addListener(::playerCloned)
-
+        // World events
         FORGE_BUS.addListener(::overrideCropGrowthBehaviour)
         FORGE_BUS.addGenericListener(::attachCapability)
-        FORGE_BUS.addListener(::canBlockBreak)
+        FORGE_BUS.addListener(HBlockUtil::blockModificationEvent)
     }
 
     private fun commonSetup(event: FMLCommonSetupEvent) {
-        // World generation
         event.enqueueWork {
-            HWorldGen.registerConfiguredFeatures()
-            HConfiguredSurfaceBuilders.registerConfiguredSurfaceBuilders()
-            HConfiguredStructures.registerConfiguredStructures()
+            BrewingRecipeRegistry.addRecipe(SyringeRecipe)
         }
     }
 
@@ -58,7 +57,7 @@ object EventHandler {
 
         if (player is Player) {
             if (!player.getCapability(HPlayerData.PLAYER_DATA).isPresent) {
-                event.addCapability(HPlayerData.ID, HPlayerDataProvider(player))
+                event.addCapability(HPlayerData.ID, HPlayerDataProvider())
             }
         }
     }
@@ -101,8 +100,9 @@ object EventHandler {
     private fun playerTick(event: TickEvent.PlayerTickEvent) {
         val player = event.player
 
-        // exit fast
-        if (PlayerHelper.getPortalCooldown(player) == 0) return
+        // don't do anything during regular ticks
+        if (PlayerHelper.getPortalCooldown(player) == 0)
+            return
 
         val bounds = player.boundingBox
         val start = BlockPos(bounds.minX + 0.001, bounds.minY + 0.001, bounds.minZ + 0.001)
@@ -127,19 +127,6 @@ object EventHandler {
 
         if (cooldown > 0) {
             PlayerHelper.setPortalCooldown(player, (cooldown - 1).coerceAtLeast(0))
-        }
-    }
-
-    private fun canBlockBreak(event: BlockEvent.BreakEvent) {
-        val level = event.level
-        val pos = event.pos
-        val tile = level.getBlockEntity(pos)
-
-        if (tile is DungeonSpawnerTileEntity) {
-            if (tile.remainingKills > 0) {
-                // creative players bypass the kill counter
-                event.isCanceled = !event.player.isCreative
-            }
         }
     }
 }

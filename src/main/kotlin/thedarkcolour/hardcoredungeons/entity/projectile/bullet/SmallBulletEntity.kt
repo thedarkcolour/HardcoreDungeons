@@ -1,23 +1,21 @@
 package thedarkcolour.hardcoredungeons.entity.projectile.bullet
 
-import net.minecraft.entity.Entity
-import net.minecraft.world.item.ItemStack
-import net.minecraft.nbt.CompoundNBT
-import net.minecraft.network.PacketBuffer
-import net.minecraft.util.IndirectEntityDamageSource
-import net.minecraft.util.math.BlockRayTraceResult
-import net.minecraft.util.math.EntityRayTraceResult
+import net.minecraft.nbt.CompoundTag
+import net.minecraft.network.FriendlyByteBuf
 import net.minecraft.world.damagesource.IndirectEntityDamageSource
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.projectile.ItemSupplier
+import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
+import net.minecraft.world.phys.BlockHitResult
 import net.minecraft.world.phys.EntityHitResult
 import net.minecraftforge.entity.IEntityAdditionalSpawnData
 import thedarkcolour.hardcoredungeons.entity.projectile.ProjectileEntity
 import thedarkcolour.hardcoredungeons.item.GunItem
-import thedarkcolour.hardcoredungeons.registry.HItems
+import thedarkcolour.hardcoredungeons.registry.items.BULLET_ITEM
+import thedarkcolour.hardcoredungeons.registry.items.INCENDIARY_BULLET_ITEM
 
 class SmallBulletEntity(type: EntityType<out ProjectileEntity>, level: Level) : ProjectileEntity(type, level), ItemSupplier, IEntityAdditionalSpawnData {
     private var drop = 0.0f
@@ -33,11 +31,11 @@ class SmallBulletEntity(type: EntityType<out ProjectileEntity>, level: Level) : 
         yPower -= drop
 
         if (tickCount == 100) {
-            remove()
+            kill()
         }
     }
 
-    @Deprecated(level = DeprecationLevel.ERROR, message = "Add ammoType argument")
+    @Deprecated(level = DeprecationLevel.HIDDEN, message = "Add ammoType argument")
     override fun shoot(
         shooter: LivingEntity,
         x: Double, y: Double, z: Double,
@@ -82,32 +80,32 @@ class SmallBulletEntity(type: EntityType<out ProjectileEntity>, level: Level) : 
                 target.setSecondsOnFire(10)
             }
 
-            remove()
+            kill()
         }
     }
 
-    override fun onHitBlock(p_230299_1_: BlockRayTraceResult) {
+    override fun onHitBlock(p_230299_1_: BlockHitResult) {
         super.onHitBlock(p_230299_1_)
-        remove()
+        kill()
     }
 
-    override fun readAdditionalSaveData(nbt: CompoundNBT) {
+    override fun readAdditionalSaveData(nbt: CompoundTag) {
         super.readAdditionalSaveData(nbt)
 
         ammoType = nbt.getInt("AmmoType")
     }
 
-    override fun addAdditionalSaveData(nbt: CompoundNBT) {
+    override fun addAdditionalSaveData(nbt: CompoundTag) {
         super.addAdditionalSaveData(nbt)
 
         nbt.putInt("AmmoType", ammoType)
     }
 
-    override fun writeSpawnData(buffer: PacketBuffer) {
+    override fun writeSpawnData(buffer: FriendlyByteBuf) {
         buffer.writeVarInt(ammoType)
     }
 
-    override fun readSpawnData(buffer: PacketBuffer) {
+    override fun readSpawnData(buffer: FriendlyByteBuf) {
         ammoType = buffer.readVarInt()
     }
 
@@ -119,8 +117,8 @@ class SmallBulletEntity(type: EntityType<out ProjectileEntity>, level: Level) : 
     }
 
     companion object {
-        private val BULLET_ICON = ItemStack(HItems.BULLET)
-        private val INCENDIARY_BULLET_ICON = ItemStack(HItems.INCENDIARY_BULLET)
+        private val BULLET_ICON = ItemStack(BULLET_ITEM)
+        private val INCENDIARY_BULLET_ICON = ItemStack(INCENDIARY_BULLET_ITEM)
 
         const val BULLET = 0
         const val INCENDIARY_BULLET = 1

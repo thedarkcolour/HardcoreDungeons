@@ -1,21 +1,21 @@
 package thedarkcolour.hardcoredungeons.client.renderer.entity
 
-import com.mojang.blaze3d.matrix.MatrixStack
-import net.minecraft.client.renderer.IRenderTypeBuffer
+import com.mojang.blaze3d.vertex.PoseStack
+import net.minecraft.client.renderer.MultiBufferSource
 import net.minecraft.client.renderer.RenderType
-import net.minecraft.client.renderer.entity.EntityRendererManager
+import net.minecraft.client.renderer.entity.EntityRendererProvider
 import net.minecraft.resources.ResourceLocation
-import thedarkcolour.hardcoredungeons.client.model.entity.DoeModel
-import thedarkcolour.hardcoredungeons.client.model.entity.StagModel
+import thedarkcolour.hardcoredungeons.client.model.HModelLayers
+import thedarkcolour.hardcoredungeons.client.model.entity.DeerModel
 import thedarkcolour.hardcoredungeons.client.renderer.entity.layers.DeerFullbrightLayer
-import thedarkcolour.hardcoredungeons.entity.ReloadableRenderer
 import thedarkcolour.hardcoredungeons.entity.overworld.deer.DeerEntity
 import thedarkcolour.hardcoredungeons.entity.overworld.deer.DeerType
 import thedarkcolour.hardcoredungeons.util.modLoc
 
-class DeerRenderer(manager: EntityRendererManager) : ReloadableRenderer<DeerEntity, DoeModel>(manager, null, 0.4f) {
-    private var doe = DoeModel()
-    private var stag = StagModel() // also used for alpha
+class DeerRenderer(ctx: EntityRendererProvider.Context) : ReloadableRenderer<DeerEntity, DeerModel>(ctx, null, 0.4f) {
+    private var doe = DeerModel(ctx.bakeLayer(HModelLayers.DOE))
+    // also used for alpha
+    private var stag = DeerModel(ctx.bakeLayer(HModelLayers.STAG))
 
     init {
         addLayer(DeerFullbrightLayer(this))
@@ -23,9 +23,9 @@ class DeerRenderer(manager: EntityRendererManager) : ReloadableRenderer<DeerEnti
 
     override fun render(
         entity: DeerEntity, entityYaw: Float, partialTicks: Float,
-        stack: MatrixStack, buffer: IRenderTypeBuffer, light: Int
+        stack: PoseStack, buffer: MultiBufferSource, light: Int
     ) {
-        model = if (entity.isthedarkcolour()) {
+        model = if (entity.isMe()) {
             stag
         } else {
             if (entity.deerType.isDoe) doe else stag
@@ -34,7 +34,7 @@ class DeerRenderer(manager: EntityRendererManager) : ReloadableRenderer<DeerEnti
     }
 
     override fun getTextureLocation(entity: DeerEntity): ResourceLocation {
-        if (entity.isthedarkcolour()) {
+        if (entity.isMe()) {
             return THEDARKCOLOUR
         }
 
@@ -49,7 +49,7 @@ class DeerRenderer(manager: EntityRendererManager) : ReloadableRenderer<DeerEnti
     }
 
     fun getOverlayTexture(entity: DeerEntity): RenderType? {
-        if (entity.isthedarkcolour()) {
+        if (entity.isMe()) {
             return THEDARKCOLOUR_OVERLAY
         }
 
@@ -65,8 +65,8 @@ class DeerRenderer(manager: EntityRendererManager) : ReloadableRenderer<DeerEnti
     }
 
     override fun reload() {
-        doe = DoeModel()
-        stag = StagModel()
+        doe = DeerModel(modelSet.bakeLayer(HModelLayers.DOE))
+        stag = DeerModel(modelSet.bakeLayer(HModelLayers.STAG))
     }
 
     companion object {

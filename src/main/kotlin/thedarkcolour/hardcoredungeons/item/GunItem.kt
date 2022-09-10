@@ -1,12 +1,12 @@
 package thedarkcolour.hardcoredungeons.item
 
-import net.minecraft.world.item.ItemStack
 import net.minecraft.tags.TagKey
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResultHolder
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.Item
+import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.ProjectileWeaponItem
 import net.minecraft.world.item.UseAnim
 import net.minecraft.world.level.Level
@@ -33,16 +33,7 @@ open class GunItem(
     val ammoItem: () -> TagKey<Item> = { HItemTags.AMMUNITION_SMALL },
     val chargeTime: Int = 1,
 ) : ProjectileWeaponItem(properties) {
-    /**
-     * returns the action that specifies what animation to play when the items is being used
-     */
-    override fun getUseAnimation(stack: ItemStack): UseAnim {
-        return UseAnim.BOW
-    }
-
-    /**
-     * How long it takes to use or consume an item
-     */
+    override fun getUseAnimation(stack: ItemStack) = UseAnim.BOW
     override fun getUseDuration(stack: ItemStack) = chargeTime
 
     override fun use(level: Level, playerIn: Player, handIn: InteractionHand): InteractionResultHolder<ItemStack> {
@@ -85,7 +76,9 @@ open class GunItem(
     }
 
     override fun getAllSupportedProjectiles(): Predicate<ItemStack> {
-        return Predicate { stack -> stack.`is`(getAmmoTag()) }
+        return Predicate { stack ->
+            stack.`is`(getAmmoTag())
+        }
     }
 
     open fun getAmmoTag(): TagKey<Item> {

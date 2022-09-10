@@ -1,10 +1,11 @@
 package thedarkcolour.hardcoredungeons.data.modelgen.item
 
-import net.minecraft.item.Item
+import net.minecraft.world.item.Item
 import net.minecraftforge.client.model.generators.ItemModelBuilder
 import net.minecraftforge.client.model.generators.ModelFile
 import thedarkcolour.hardcoredungeons.HardcoreDungeons
 import thedarkcolour.hardcoredungeons.data.ModelGenerator
+import thedarkcolour.hardcoredungeons.util.registryName
 
 class SimpleItemModelType : ItemModelType() {
     /**

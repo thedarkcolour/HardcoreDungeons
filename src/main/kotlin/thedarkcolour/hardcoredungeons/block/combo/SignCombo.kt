@@ -10,12 +10,12 @@ import net.minecraft.world.level.block.state.properties.WoodType
 import net.minecraft.world.level.material.Material
 import net.minecraft.world.level.material.MaterialColor
 import thedarkcolour.hardcoredungeons.block.base.BlockMaker
-import thedarkcolour.hardcoredungeons.block.base.ItemMaker
+import thedarkcolour.hardcoredungeons.registry.items.ItemMaker
 import thedarkcolour.hardcoredungeons.block.base.properties.HProperties
 import thedarkcolour.hardcoredungeons.data.modelgen.item.ItemModelType
 import thedarkcolour.hardcoredungeons.item.Group
-import thedarkcolour.hardcoredungeons.registry.HBlocks
-import thedarkcolour.hardcoredungeons.registry.HBlockUtil
+import thedarkcolour.hardcoredungeons.registry.block.HBlocks
+import thedarkcolour.hardcoredungeons.registry.block.HBlockUtil
 
 class SignCombo(wood: String, type: WoodType, topCol: MaterialColor, applyProperties: (HProperties) -> Unit) : ICombo, ItemLike {
     val sign by BlockMaker.registerStandingSign(wood + "_sign", type, BlockMaker.props(Material.WOOD, topCol, applyProperties))

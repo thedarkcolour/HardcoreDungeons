@@ -1,11 +1,12 @@
 package thedarkcolour.hardcoredungeons.data.modelgen.block
 
 import net.minecraft.world.level.block.Block
-import net.minecraft.block.PressurePlateBlock
-import net.minecraft.block.material.Material
-import net.minecraft.state.properties.BlockStateProperties
+import net.minecraft.world.level.block.PressurePlateBlock
+import net.minecraft.world.level.block.state.properties.BlockStateProperties
+import net.minecraft.world.level.material.Material
 import net.minecraftforge.client.model.generators.ConfiguredModel
 import thedarkcolour.hardcoredungeons.data.ModelGenerator
+import thedarkcolour.hardcoredungeons.util.registryName
 
 class PressurePlateModelType : BlockModelType<PressurePlateBlock>() {
     /**
@@ -36,6 +37,6 @@ class PressurePlateModelType : BlockModelType<PressurePlateBlock>() {
             .with(BlockStateProperties.POWERED, true)
             .addModels(ConfiguredModel(pressed))
 
-        //gen.blockItemModel(block)
+        gen.blockItemModel(block)
     }
 }

@@ -1,9 +1,9 @@
 package thedarkcolour.hardcoredungeons.tags
 
+import net.minecraft.core.Registry
 import net.minecraft.world.level.block.Block
-import net.minecraft.tags.BlockTags
-import net.minecraft.tags.ITag
-import thedarkcolour.hardcoredungeons.HardcoreDungeons
+import net.minecraft.tags.TagKey
+import thedarkcolour.hardcoredungeons.util.modLoc
 
 /**
  * Block tags in Hardcore Dungeons.
@@ -24,7 +24,9 @@ object HBlockTags {
     val AURIGRASS_PLANTABLE = tag("aurigrass_plantable")
     val SUGARY_GRASS_PLANTABLE = tag("sugary_grass_plantable")
 
-    private fun tag(name: String): ITag.INamedTag<Block> {
-        return BlockTags.bind(HardcoreDungeons.ID + ":" + name)
+    val CASTLETON_CARVER_REPLACEABLES = tag("castleton_carver_replaceables")
+
+    private fun tag(name: String): TagKey<Block> {
+        return TagKey.create(Registry.BLOCK_REGISTRY, modLoc(name))
     }
 }

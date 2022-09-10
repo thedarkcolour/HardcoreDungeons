@@ -1,9 +1,10 @@
 package thedarkcolour.hardcoredungeons.data.modelgen.block
 
 import net.minecraft.world.level.block.Block
-import net.minecraft.block.FenceBlock
-import net.minecraft.block.material.Material
+import net.minecraft.world.level.block.FenceBlock
+import net.minecraft.world.level.material.Material
 import thedarkcolour.hardcoredungeons.data.ModelGenerator
+import thedarkcolour.hardcoredungeons.util.registryName
 
 // todo simplify
 class FenceModelType : BlockModelType<FenceBlock>() {

@@ -2,6 +2,7 @@ package thedarkcolour.hardcoredungeons.data
 
 import net.minecraft.data.DataGenerator
 import net.minecraft.resources.ResourceLocation
+import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.StairBlock
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
