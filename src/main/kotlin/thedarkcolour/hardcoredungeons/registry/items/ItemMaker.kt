@@ -96,12 +96,19 @@ object ItemMaker {
 
     // Unmodifiable
     object EmptyProperties : Item.Properties() {
+        var set = false
+
         init {
             tab(Group)
+            set = true
         }
 
         private fun warn(): Item.Properties {
-            IllegalStateException("Tried to set property on empty item properties instance!").printStackTrace()
+            try {
+                throw IllegalStateException("Tried to set property on empty item properties instance!")
+            } catch (e: IllegalStateException) {
+                e.printStackTrace()
+            }
             return this
         }
 
@@ -110,7 +117,7 @@ object ItemMaker {
         override fun defaultDurability(defaultDurability: Int) = warn()
         override fun durability(durability: Int) = warn()
         override fun craftRemainder(craftRemainder: Item) = warn()
-        override fun tab(tab: CreativeModeTab) = warn()
+        override fun tab(tab: CreativeModeTab) = if (set) warn() else super.tab(tab)
         override fun rarity(rarity: Rarity) = warn()
         override fun fireResistant() = warn()
         override fun setNoRepair() = warn()

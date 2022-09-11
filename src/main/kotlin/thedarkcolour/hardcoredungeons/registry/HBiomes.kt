@@ -23,21 +23,21 @@ object HBiomes {
     val MUSHROOM_CLIFFS = REGISTRY.register("mushroom_cliffs", MushroomCliffsBiome)
 
     // Aubrum biomes
-    //val AUBRUM_WASTELAND = REGISTRY.register("aubrum_wasteland", AubrumWastelandBiome)
-    //val GOLDEN_FOREST = REGISTRY.register("golden_forest", GoldenForestBiome)
-    //val AUBRUM_MOUNTAINS = REGISTRY.register("aubrum_mountains", AubrumMountainsBiome)
-    //val AURI_PLAINS = REGISTRY.register("auri_plains", AuriPlainsBiome)
+    val AUBRUM_WASTELAND = REGISTRY.register("aubrum_wasteland", AubrumWastelandBiome)
+    val GOLDEN_FOREST = REGISTRY.register("golden_forest", GoldenForestBiome)
+    val AUBRUM_MOUNTAINS = REGISTRY.register("aubrum_mountains", AubrumMountainsBiome)
+    val AURI_PLAINS = REGISTRY.register("auri_plains", AuriPlainsBiome)
 
     // Castleton biomes
     val CASTLETON_HILLS = REGISTRY.register("castleton_hills", CastletonHillsBiome)
-    //val KNIGHTLY_SHRUBLAND = REGISTRY.register("knightly_shrubland", KnightlyShrublandBiome)
+    val KNIGHTLY_SHRUBLAND = REGISTRY.register("knightly_shrubland", KnightlyShrublandBiome)
 
     // Rainbowland biomes
     val RAINBOW_PLAINS = REGISTRY.register("rainbow_plains", RainbowPlainsBiome)
 
     // Candyland biomes
     val GUMDROP_FIELDS = REGISTRY.register("gumdrop_fields", GumdropFieldsBiome)
-    //val CANDY_PLAINS = REGISTRY.register("candy_plains", CandyPlainsBiome)
+    val CANDY_PLAINS = REGISTRY.register("candy_plains", CandyPlainsBiome)
 
     //val THICK_FOREST_KEY = RegistryKey.create(Registry.BIOME_REGISTRY, ResourceLocation(HardcoreDungeons.ID, "thick_forest"))
 

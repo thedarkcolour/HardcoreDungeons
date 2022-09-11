@@ -47,7 +47,7 @@ class WoodCombo(
     applyProperties: (HProperties) -> Unit
 ) : ICombo {
     // Wood Type
-    val type: WoodType = WoodType.create(HardcoreDungeons.ID + ":" + wood)
+    val type: WoodType = WoodType.create(HardcoreDungeons.ID + ":" + wood).also(WoodType::register)
 
     // Planks, Slab, Stairs
     val planks by BlockMaker.cubeAllWithItem(wood + "_planks", BlockMaker.props(Material.WOOD, topCol, applyProperties))

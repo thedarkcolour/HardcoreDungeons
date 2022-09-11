@@ -165,7 +165,7 @@ class RecipeGenerator(generatorIn: DataGenerator) : RecipeProvider(generatorIn) 
 
 
          // Don't have to call two different methods if the recipeName is null
-         private fun SimpleCookingRecipeBuilder.save(consumer: Consumer<FinishedRecipe>, recipeName: String?) {
+         private fun RecipeBuilder.saveN(consumer: Consumer<FinishedRecipe>, recipeName: String?) {
              if (recipeName != null) {
                  save(consumer, recipeName)
              } else {
@@ -193,7 +193,7 @@ class RecipeGenerator(generatorIn: DataGenerator) : RecipeProvider(generatorIn) 
              }
          }
 
-         fun Consumer<FinishedRecipe>.slabs2Full(slab: Block, full: Block, group: String? = null) {
+         private fun Consumer<FinishedRecipe>.slabs2Full(slab: Block, full: Block, group: String? = null) {
              shaped(full, 1, modLoc(path(full) + "_from_slabs")) { builder ->
                  builder.define('#', slab)
                  if (group != null) builder.group(group)
@@ -218,7 +218,7 @@ class RecipeGenerator(generatorIn: DataGenerator) : RecipeProvider(generatorIn) 
              campfireRecipe: Boolean = false,
              blastingRecipe: Boolean = false,
          ) {
-             SimpleCookingRecipeBuilder.smelting(Ingredient.of(input), output, experience, 200).unlockedBy("has_item", has(input)).save(this, recipeName)
+             SimpleCookingRecipeBuilder.smelting(Ingredient.of(input), output, experience, 200).unlockedBy("has_item", has(input)).saveN(this, recipeName)
 
              if (smokingRecipe)  smokingRecipe (input, output, experience)
              if (campfireRecipe) campfireRecipe(input, output, experience)
@@ -233,7 +233,7 @@ class RecipeGenerator(generatorIn: DataGenerator) : RecipeProvider(generatorIn) 
          ) {
              val item = input.asItem()
 
-             SimpleCookingRecipeBuilder.blasting(Ingredient.of(item), output, experience, 100).unlockedBy("has_item", has(input)).save(this, recipeName ?: path(item) + "_from_blasting")
+             SimpleCookingRecipeBuilder.blasting(Ingredient.of(item), output, experience, 100).unlockedBy("has_item", has(input)).save(this, recipeName ?: (path(item) + "_from_blasting"))
          }
 
          private fun Consumer<FinishedRecipe>.smokingRecipe(
@@ -244,7 +244,7 @@ class RecipeGenerator(generatorIn: DataGenerator) : RecipeProvider(generatorIn) 
          ) {
              val item = input.asItem()
 
-             SimpleCookingRecipeBuilder.cooking(Ingredient.of(item), output, experience, 100, RecipeSerializer.SMOKING_RECIPE).unlockedBy("has_item", has(item)).save(this, recipeName ?: path(item) + "_from_smoking")
+             SimpleCookingRecipeBuilder.cooking(Ingredient.of(item), output, experience, 100, RecipeSerializer.SMOKING_RECIPE).unlockedBy("has_item", has(item)).save(this, recipeName ?: (path(item) + "_from_smoking"))
          }
 
          fun Consumer<FinishedRecipe>.stonecutterRecipes(
