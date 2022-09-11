@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/outer_stairs",
+  "textures": {
+    "bottom": "hardcoredungeons:block/rainbow_bricks",
+    "side": "hardcoredungeons:block/rainbow_bricks",
+    "top": "hardcoredungeons:block/rainbow_bricks"
+  }
+}

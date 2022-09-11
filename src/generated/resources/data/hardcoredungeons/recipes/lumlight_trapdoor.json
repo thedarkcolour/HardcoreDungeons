@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "wooden_trapdoor",
+  "key": {
+    "x": {
+      "item": "hardcoredungeons:lumlight_planks"
+    }
+  },
+  "pattern": [
+    "xxx",
+    "xxx"
+  ],
+  "result": {
+    "count": 2,
+    "item": "hardcoredungeons:lumlight_trapdoor"
+  }
+}

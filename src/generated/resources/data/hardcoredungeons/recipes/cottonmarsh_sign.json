@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "sign",
+  "key": {
+    "i": {
+      "tag": "forge:rods/wooden"
+    },
+    "x": {
+      "item": "hardcoredungeons:cottonmarsh_planks"
+    }
+  },
+  "pattern": [
+    "xxx",
+    "xxx",
+    " i "
+  ],
+  "result": {
+    "count": 3,
+    "item": "hardcoredungeons:cottonmarsh_sign"
+  }
+}

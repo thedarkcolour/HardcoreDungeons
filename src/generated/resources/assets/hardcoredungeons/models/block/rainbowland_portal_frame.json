@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "hardcoredungeons:block/rainbowland_portal_frame"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "wooden_button",
+  "ingredients": [
+    {
+      "item": "hardcoredungeons:auri_planks"
+    }
+  ],
+  "result": {
+    "item": "hardcoredungeons:auri_button"
+  }
+}

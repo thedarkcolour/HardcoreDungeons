@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "hardcoredungeons:sextuple_compressed_cobblestone"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "hardcoredungeons:quintuple_compressed_cobblestone"
+  }
+}

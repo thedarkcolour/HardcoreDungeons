@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "bark",
+  "key": {
+    "x": {
+      "item": "hardcoredungeons:stripped_lumlight_log"
+    }
+  },
+  "pattern": [
+    "xx",
+    "xx"
+  ],
+  "result": {
+    "count": 3,
+    "item": "hardcoredungeons:stripped_lumlight_wood"
+  }
+}

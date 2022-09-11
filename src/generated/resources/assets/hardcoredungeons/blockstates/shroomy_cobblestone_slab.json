@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "hardcoredungeons:block/shroomy_cobblestone_slab"
+    },
+    "type=double": {
+      "model": "hardcoredungeons:block/shroomy_cobblestone"
+    },
+    "type=top": {
+      "model": "hardcoredungeons:block/shroomy_cobblestone_slab_top"
+    }
+  }
+}

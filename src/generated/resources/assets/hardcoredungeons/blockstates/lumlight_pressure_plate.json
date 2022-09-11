@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "powered=false": {
+      "model": "hardcoredungeons:block/lumlight_pressure_plate"
+    },
+    "powered=true": {
+      "model": "hardcoredungeons:block/lumlight_pressure_plate_pressed"
+    }
+  }
+}

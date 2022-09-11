@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "i": {
+      "item": "hardcoredungeons:rainbow_brick_slab"
+    },
+    "x": {
+      "item": "hardcoredungeons:rainbow_bricks"
+    }
+  },
+  "pattern": [
+    "xix",
+    "xix"
+  ],
+  "result": {
+    "count": 6,
+    "item": "hardcoredungeons:rainbow_brick_fence"
+  }
+}

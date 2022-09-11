@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "hardcoredungeons:block/lumlight_log",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y": {
+      "model": "hardcoredungeons:block/lumlight_log"
+    },
+    "axis=z": {
+      "model": "hardcoredungeons:block/lumlight_log",
+      "x": 90
+    }
+  }
+}

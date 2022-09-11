@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab_top",
+  "textures": {
+    "bottom": "hardcoredungeons:block/shroomy_cobblestone",
+    "side": "hardcoredungeons:block/shroomy_cobblestone",
+    "top": "hardcoredungeons:block/shroomy_cobblestone"
+  }
+}

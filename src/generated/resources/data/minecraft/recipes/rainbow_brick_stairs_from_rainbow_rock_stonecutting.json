@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "count": 1,
+  "ingredient": {
+    "item": "hardcoredungeons:rainbow_rock"
+  },
+  "result": "hardcoredungeons:rainbow_brick_stairs"
+}

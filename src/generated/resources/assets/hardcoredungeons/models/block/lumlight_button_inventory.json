@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/button_inventory",
+  "textures": {
+    "texture": "hardcoredungeons:block/lumlight_planks"
+  }
+}

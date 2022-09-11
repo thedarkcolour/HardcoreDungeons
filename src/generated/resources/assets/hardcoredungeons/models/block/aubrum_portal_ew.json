@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/nether_portal_ew",
+  "textures": {
+    "particle": "hardcoredungeons:block/aubrum_portal",
+    "portal": "hardcoredungeons:block/aubrum_portal"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "hardcoredungeons:block/stripped_cottonmarsh_wood",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y": {
+      "model": "hardcoredungeons:block/stripped_cottonmarsh_wood"
+    },
+    "axis=z": {
+      "model": "hardcoredungeons:block/stripped_cottonmarsh_wood",
+      "x": 90
+    }
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "hardcoredungeons:block/auri_log_end",
+    "side": "hardcoredungeons:block/auri_log"
+  }
+}

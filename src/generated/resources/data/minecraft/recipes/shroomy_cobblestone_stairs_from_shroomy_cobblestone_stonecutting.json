@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "count": 1,
+  "ingredient": {
+    "item": "hardcoredungeons:shroomy_cobblestone"
+  },
+  "result": "hardcoredungeons:shroomy_cobblestone_stairs"
+}

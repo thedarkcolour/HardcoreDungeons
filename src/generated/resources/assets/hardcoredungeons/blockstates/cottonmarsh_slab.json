@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "hardcoredungeons:block/cottonmarsh_slab"
+    },
+    "type=double": {
+      "model": "hardcoredungeons:block/cottonmarsh_planks"
+    },
+    "type=top": {
+      "model": "hardcoredungeons:block/cottonmarsh_slab_top"
+    }
+  }
+}

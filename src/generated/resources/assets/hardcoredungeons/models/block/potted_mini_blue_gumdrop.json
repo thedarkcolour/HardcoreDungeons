@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/flower_pot_cross",
+  "textures": {
+    "plant": "hardcoredungeons:block/mini_blue_gumdrop"
+  }
+}

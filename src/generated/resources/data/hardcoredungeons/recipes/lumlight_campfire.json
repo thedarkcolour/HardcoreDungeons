@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "l": {
+      "tag": "hardcoredungeons:lumlight_logs"
+    },
+    "m": {
+      "tag": "hardcoredungeons:lumshroom"
+    },
+    "s": {
+      "tag": "forge:rods/wooden"
+    }
+  },
+  "pattern": [
+    " s ",
+    "sms",
+    "lll"
+  ],
+  "result": {
+    "item": "hardcoredungeons:lumlight_campfire"
+  }
+}

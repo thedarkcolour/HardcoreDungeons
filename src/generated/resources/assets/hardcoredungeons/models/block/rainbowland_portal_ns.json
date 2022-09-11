@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/nether_portal_ns",
+  "textures": {
+    "particle": "hardcoredungeons:block/rainbowland_portal",
+    "portal": "hardcoredungeons:block/rainbowland_portal"
+  }
+}

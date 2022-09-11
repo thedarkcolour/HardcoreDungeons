@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "hardcoredungeons:block/cottonmarsh_log_end",
+    "side": "hardcoredungeons:block/cottonmarsh_log"
+  }
+}

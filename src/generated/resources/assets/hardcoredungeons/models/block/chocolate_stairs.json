@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/stairs",
+  "textures": {
+    "bottom": "hardcoredungeons:block/chocolate_block",
+    "side": "hardcoredungeons:block/chocolate_block",
+    "top": "hardcoredungeons:block/chocolate_block"
+  }
+}

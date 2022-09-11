@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "hardcoredungeons:block/polished_rainbow_rock_slab"
+    },
+    "type=double": {
+      "model": "hardcoredungeons:block/polished_rainbow_rock"
+    },
+    "type=top": {
+      "model": "hardcoredungeons:block/polished_rainbow_rock_slab_top"
+    }
+  }
+}

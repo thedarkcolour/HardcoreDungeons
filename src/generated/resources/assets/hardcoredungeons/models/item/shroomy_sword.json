@@ -1,0 +1,6 @@
+{
+  "parent": "hardcoredungeons:item/handheld_rotated",
+  "textures": {
+    "layer0": "hardcoredungeons:item/shroomy_sword"
+  }
+}

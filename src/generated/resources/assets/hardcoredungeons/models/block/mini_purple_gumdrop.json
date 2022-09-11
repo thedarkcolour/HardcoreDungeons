@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cross",
+  "textures": {
+    "cross": "hardcoredungeons:block/mini_purple_gumdrop"
+  }
+}

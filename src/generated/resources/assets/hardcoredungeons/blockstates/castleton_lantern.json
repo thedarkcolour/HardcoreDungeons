@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "hanging=false": {
+      "model": "hardcoredungeons:block/castleton_lantern"
+    },
+    "hanging=true": {
+      "model": "hardcoredungeons:block/castleton_lantern_hanging"
+    }
+  }
+}

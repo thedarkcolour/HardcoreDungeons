@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "hardcoredungeons:block/castleton_stone_slab"
+    },
+    "type=double": {
+      "model": "hardcoredungeons:block/castleton_stone"
+    },
+    "type=top": {
+      "model": "hardcoredungeons:block/castleton_stone_slab_top"
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "wooden_trapdoor",
+  "key": {
+    "x": {
+      "item": "hardcoredungeons:auri_planks"
+    }
+  },
+  "pattern": [
+    "xxx",
+    "xxx"
+  ],
+  "result": {
+    "count": 2,
+    "item": "hardcoredungeons:auri_trapdoor"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "planks",
+  "ingredients": [
+    {
+      "tag": "hardcoredungeons:auri_logs"
+    }
+  ],
+  "result": {
+    "count": 4,
+    "item": "hardcoredungeons:auri_planks"
+  }
+}

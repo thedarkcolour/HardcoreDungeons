@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/template_farmland",
+  "textures": {
+    "dirt": "minecraft:block/dirt",
+    "particle": "minecraft:block/dirt",
+    "top": "hardcoredungeons:block/ashy_farmland_moist"
+  }
+}

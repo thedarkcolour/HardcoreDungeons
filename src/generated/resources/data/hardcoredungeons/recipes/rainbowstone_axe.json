@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "#": {
+      "item": "hardcoredungeons:rainbowstone_gem"
+    },
+    "I": {
+      "item": "minecraft:stick"
+    }
+  },
+  "pattern": [
+    "##",
+    "#I",
+    " I"
+  ],
+  "result": {
+    "item": "hardcoredungeons:rainbowstone_axe"
+  }
+}

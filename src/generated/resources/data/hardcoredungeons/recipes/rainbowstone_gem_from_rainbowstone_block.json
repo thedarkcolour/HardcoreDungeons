@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "hardcoredungeons:rainbowstone_block"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "hardcoredungeons:rainbowstone_gem"
+  }
+}

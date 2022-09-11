@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "#": {
+      "item": "hardcoredungeons:malachite_crystal"
+    },
+    "I": {
+      "item": "minecraft:stick"
+    }
+  },
+  "pattern": [
+    "#",
+    "I",
+    "I"
+  ],
+  "result": {
+    "item": "hardcoredungeons:malachite_shovel"
+  }
+}

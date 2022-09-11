@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/outer_stairs",
+  "textures": {
+    "bottom": "hardcoredungeons:block/shroomy_stone_bricks",
+    "side": "hardcoredungeons:block/shroomy_stone_bricks",
+    "top": "hardcoredungeons:block/shroomy_stone_bricks"
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "hardcoredungeons:block/short_oak_planks"
+  }
+}

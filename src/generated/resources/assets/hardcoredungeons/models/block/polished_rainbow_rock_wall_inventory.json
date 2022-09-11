@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/wall_inventory",
+  "textures": {
+    "wall": "hardcoredungeons:block/polished_rainbow_rock"
+  }
+}

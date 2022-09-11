@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab",
+  "textures": {
+    "bottom": "hardcoredungeons:block/castleton_stone",
+    "side": "hardcoredungeons:block/castleton_stone",
+    "top": "hardcoredungeons:block/castleton_stone"
+  }
+}

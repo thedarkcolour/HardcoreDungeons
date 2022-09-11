@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "wooden_door",
+  "key": {
+    "x": {
+      "item": "hardcoredungeons:cottonmarsh_planks"
+    }
+  },
+  "pattern": [
+    "xx",
+    "xx",
+    "xx"
+  ],
+  "result": {
+    "count": 2,
+    "item": "hardcoredungeons:cottonmarsh_door"
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/stairs",
+  "textures": {
+    "bottom": "hardcoredungeons:block/rainbow_rock",
+    "side": "hardcoredungeons:block/rainbow_rock",
+    "top": "hardcoredungeons:block/rainbow_rock"
+  }
+}

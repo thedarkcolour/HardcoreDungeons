@@ -1,0 +1,43 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:binomial",
+                "n": 6.0,
+                "p": 0.6
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "hardcoredungeons:castle_gem",
+          "weight": 10
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:binomial",
+                "n": 3.0,
+                "p": 0.7
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "hardcoredungeons:chili_pepper",
+          "weight": 5
+        }
+      ],
+      "rolls": 1.0
+    }
+  ]
+}

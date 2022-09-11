@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:blasting",
+  "cookingtime": 100,
+  "experience": 0.85,
+  "ingredient": {
+    "item": "hardcoredungeons:rainbowstone_ore"
+  },
+  "result": "hardcoredungeons:rainbowstone_gem"
+}

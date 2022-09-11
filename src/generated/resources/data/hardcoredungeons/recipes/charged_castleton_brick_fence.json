@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "i": {
+      "item": "hardcoredungeons:charged_castleton_brick_slab"
+    },
+    "x": {
+      "item": "hardcoredungeons:charged_castleton_bricks"
+    }
+  },
+  "pattern": [
+    "xix",
+    "xix"
+  ],
+  "result": {
+    "count": 6,
+    "item": "hardcoredungeons:charged_castleton_brick_fence"
+  }
+}

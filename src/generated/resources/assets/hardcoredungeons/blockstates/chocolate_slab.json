@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "hardcoredungeons:block/chocolate_slab"
+    },
+    "type=double": {
+      "model": "hardcoredungeons:block/chocolate_block"
+    },
+    "type=top": {
+      "model": "hardcoredungeons:block/chocolate_slab_top"
+    }
+  }
+}

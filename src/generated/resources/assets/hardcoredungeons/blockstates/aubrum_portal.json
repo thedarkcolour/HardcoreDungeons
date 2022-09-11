@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "hardcoredungeons:block/aubrum_portal_ns"
+    },
+    "axis=z": {
+      "model": "hardcoredungeons:block/aubrum_portal_ew"
+    }
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "parent": "hardcoredungeons:item/gun_rotated",
+  "textures": {
+    "layer0": "hardcoredungeons:item/aubri_mini_pistol"
+  }
+}
