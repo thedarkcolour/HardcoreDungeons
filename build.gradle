@@ -13,6 +13,8 @@ archivesBaseName = 'hardcoredungeons'
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
+
+
 minecraft {
     // Change to your preferred mappings
     mappings channel: 'parchment', version: '1.18.2-2022.07.17-1.19'
@@ -106,7 +108,7 @@ repositories {
     //}
 }
 // Check duplicate files
-//processResources.setDuplicatesStrategy(DuplicatesStrategy.WARN)
+processResources.setDuplicatesStrategy(DuplicatesStrategy.WARN)
 
 dependencies {
     // Use the latest version of Minecraft Forge

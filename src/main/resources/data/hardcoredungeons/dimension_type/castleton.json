@@ -10,15 +10,11 @@
   "min_y": 0,
   "height": 256,
   "logical_height": 256,
-  "infiniburn": "minecraft:infiniburn_overworld",
+  "infiniburn": "#minecraft:infiniburn_overworld",
   "effects": "hardcoredungeons:castleton",
   "ambient_light": 0.04,
   "piglin_safe": false,
   "has_raids": false,
-  "monster_spawn_light_level": {
-    "type": "minecraft:uniform",
-    "min_inclusive": 0,
-    "max_inclusive": 7
-  },
+  "monster_spawn_light_level": 7,
   "monster_spawn_block_light_limit": 0
 }
