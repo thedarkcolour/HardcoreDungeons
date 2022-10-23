@@ -33,7 +33,8 @@ object RegistryEventHandler {
         HFeatures.init() // not HRegistry, but has same functions
         HParticles.init()
         HEnchantments.init()
-        //HNoiseGeneratorSettings.init()
+        HSounds.init()
+        HNoiseGeneratorSettings.init()
 
         MOD_BUS.addListener(HEntities::registerEntityAttributes)
         FORGE_BUS.addListener(::remap)

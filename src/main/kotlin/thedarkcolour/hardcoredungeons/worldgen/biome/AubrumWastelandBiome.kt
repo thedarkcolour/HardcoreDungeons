@@ -7,6 +7,13 @@ import team.rusty.util.biome.ModBiome
 
 object AubrumWastelandBiome : ModBiome() {
     override fun configure(biome: Holder<Biome>, info: ModifiableBiomeInfo.BiomeInfo.Builder) {
-
+        info.climateSettings.apply {
+            precipitation = Biome.Precipitation.NONE
+            temperature = 1.5f
+            downfall = 0.0f
+        }
+        info.specialEffects.apply {
+            defaultAubrumEffects(this)
+        }
     }
 }

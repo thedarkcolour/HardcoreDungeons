@@ -2,6 +2,7 @@ package thedarkcolour.hardcoredungeons.entity.projectile.bullet
 
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.network.FriendlyByteBuf
+import net.minecraft.sounds.SoundSource
 import net.minecraft.world.damagesource.IndirectEntityDamageSource
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.EntityType
@@ -86,6 +87,9 @@ class SmallBulletEntity(type: EntityType<out ProjectileEntity>, level: Level) : 
 
     override fun onHitBlock(p_230299_1_: BlockHitResult) {
         super.onHitBlock(p_230299_1_)
+        val pos = p_230299_1_.location
+
+        level.playSound(null, pos.x, pos.y, pos.z, level.getBlockState(p_230299_1_.blockPos).soundType.hitSound, SoundSource.BLOCKS, 1.0f, 0.8f)
         kill()
     }
 

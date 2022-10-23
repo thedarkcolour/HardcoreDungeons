@@ -24,11 +24,25 @@ import net.minecraftforge.common.world.BiomeSpecialEffectsBuilder
 //        .fogColor(skyFogColor)
 //}
 
-val DEFAULT_CASTLETON_EFFECTS: BiomeSpecialEffectsBuilder.() -> Unit = {
-    waterColor(0x6fa3bf)
-    waterFogColor(0x1f37f2)
-    skyColor(0x113d51)
-    fogColor(0x1d5a75)
+fun defaultAubrumEffects(builder: BiomeSpecialEffectsBuilder) {
+    builder.waterColor(0x999966)
+    builder.waterFogColor(0x1f37f2)
+    builder.skyColor(0xab9560)
+    builder.fogColor(0xc4af7c)
+}
+
+fun defaultCandylandEffects(builder: BiomeSpecialEffectsBuilder) {
+    builder.waterColor(0xd19bdc)
+    builder.waterFogColor(0x50533)
+    builder.skyColor(getSkyForTemp(0.9f))
+    builder.fogColor(12638463)
+}
+
+fun defaultCastletonEffects(builder: BiomeSpecialEffectsBuilder) {
+    builder.waterColor(0x6fa3bf)
+    builder.waterFogColor(0x1f37f2)
+    builder.skyColor(0x113d51)
+    builder.fogColor(0x1d5a75)
 }
 
 fun getSkyForTemp(temperature: Float): Int {

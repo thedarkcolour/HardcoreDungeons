@@ -1,6 +1,5 @@
 package team.rusty.util.biome;
 
-import com.mojang.serialization.Codec;
 import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -9,17 +8,12 @@ import net.minecraft.world.level.biome.AmbientMoodSettings;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.BiomeSpecialEffects;
 import net.minecraftforge.common.BiomeManager;
-import net.minecraftforge.common.world.BiomeModifier;
 import net.minecraftforge.common.world.ModifiableBiomeInfo;
-import net.minecraftforge.registries.RegistryObject;
-
-import java.util.Collections;
-import java.util.List;
 
 /**
  * Base biome class for creating a biome.
  *
- * @author TheDarkColour
+ * @author thedarkcolour
  */
 public abstract class ModBiome {
     /** Default biome effects for new biomes */

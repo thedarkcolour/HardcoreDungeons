@@ -92,7 +92,7 @@ object ClientHandler {
         ItemBlockRenderTypes.setRenderLayer(HBlocks.COTTONMARSH_WOOD.leaves, RenderType.cutout())
         ItemBlockRenderTypes.setRenderLayer(HBlocks.RUNED_CASTLETON_STONE, RenderType.cutout())
         ItemBlockRenderTypes.setRenderLayer(HBlocks.WILD_BERROOK.crop, RenderType.cutout())
-        ItemBlockRenderTypes.setRenderLayer(HBlocks.DIAMOND_CRYSTAL.crystal, RenderType.cutout())
+        //ItemBlockRenderTypes.setRenderLayer(HBlocks.DIAMOND_CRYSTAL.crystal, RenderType.cutout())
         ItemBlockRenderTypes.setRenderLayer(HBlocks.MALACHITE_CRYSTAL.crystal, RenderType.cutout())
 
         HBlocks.LUMLIGHT_WOOD.setRenderLayers()

@@ -48,15 +48,19 @@ class RecipeGenerator(generatorIn: DataGenerator) : RecipeProvider(generatorIn) 
         }
 
         // shroomy cobblestone + stone brick
-        consumer.shapeless(HBlocks.SHROOMY_COBBLESTONE.block, 1) { builder ->
-            builder.requires(Tags.Items.COBBLESTONE)
+        consumer.shapeless(HBlocks.SHROOMY_COBBLESTONE.block, 8) { builder ->
+            for (i in 0..7) {
+                builder.requires(Tags.Items.COBBLESTONE)
+            }
             builder.requires(Tags.Items.MUSHROOMS)
             builder.unlockedBy("has_mushroom", RecipeProvider.has(Tags.Items.MUSHROOMS))
         }
         consumer.slab(HBlocks.SHROOMY_COBBLESTONE.slab, HBlocks.SHROOMY_COBBLESTONE.block)
         consumer.stairs(HBlocks.SHROOMY_COBBLESTONE.stairs, HBlocks.SHROOMY_COBBLESTONE.block)
-        consumer.shapeless(HBlocks.SHROOMY_STONE_BRICKS.block, 1) { builder ->
-            builder.requires(ItemTags.STONE_BRICKS)
+        consumer.shapeless(HBlocks.SHROOMY_STONE_BRICKS.block, 8) { builder ->
+            for (i in 0..7) {
+                builder.requires(ItemTags.STONE_BRICKS)
+            }
             builder.requires(Tags.Items.MUSHROOMS)
             builder.unlockedBy("has_mushroom", has(Tags.Items.MUSHROOMS))
         }
@@ -119,7 +123,6 @@ class RecipeGenerator(generatorIn: DataGenerator) : RecipeProvider(generatorIn) 
         HBlocks.CHARGED_CASTLETON_BRICKS.addRecipes(consumer)
         HBlocks.RAINBOW_FACTORY_BRICKS.addRecipes(consumer)
 
-        consumer.stonecutterRecipes(Blocks.DIAMOND_BLOCK, HBlocks.CHISELED_DIAMOND_BLOCK)
         consumer.stonecutterRecipes(Blocks.SPRUCE_PLANKS, *HBlocks.SPRUCE_PLANKS.variants.map(Supplier<out Block>::get).toTypedArray())
 
 
@@ -129,7 +132,7 @@ class RecipeGenerator(generatorIn: DataGenerator) : RecipeProvider(generatorIn) 
         //consumer.campfireRecipe(VENISON, COOKED_VENISON, 0.35f)
 
         // compressed (storage) block recipes
-        HBlocks.COMPRESSED_COBBLESTONE.addRecipes(consumer)
+        //HBlocks.COMPRESSED_COBBLESTONE.addRecipes(consumer)
 
         consumer.storage(HBlocks.CHOCOLATE_BLOCK.block, Items.COCOA_BEANS)
         consumer.slab(HBlocks.CHOCOLATE_BLOCK.slab, HBlocks.CHOCOLATE_BLOCK.block)
@@ -271,7 +274,7 @@ class RecipeGenerator(generatorIn: DataGenerator) : RecipeProvider(generatorIn) 
              outputCount: Int = 1,
          ) = SingleItemRecipeBuilder.stonecutting(Ingredient.of(input), output, outputCount)
              .unlockedBy("has_item", has(input))
-             .save(this, path(output.asItem()) + "_from_" + path(input.asItem()) + "_stonecutting")
+             .save(this, modLoc(path(output.asItem()) + "_from_" + path(input.asItem()) + "_stonecutting"))
 
          private fun Consumer<FinishedRecipe>.pickaxe(
              result: ItemLike,

@@ -153,7 +153,7 @@ object BlockMaker {
 
     fun registerCrystal(name: String, color: MaterialColor): ObjectHolderDelegate<HBlock> {
         // todo some mechanism for mining tools
-        return registerCross(name) { HBlock(HProperties.of(Material.STONE, color).strength(2.3f, 40.0f).lightLevel(4).shape(Block.box(6.0, 0.0, 6.0, 10.0, 4.0, 10.0))) }
+        return registerCross(name) { HBlock(HProperties.of(Material.STONE, color).strength(2.3f, 40.0f).lightLevel(4).shape(Block.box(3.0, 0.0, 3.0, 13.0, 7.0, 13.0))) }
     }
 
     // todo add model type

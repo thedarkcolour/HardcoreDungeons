@@ -7,6 +7,8 @@ import team.rusty.util.biome.ModBiome
 
 object KnightlyShrublandBiome : ModBiome() {
     override fun configure(biome: Holder<Biome>, info: ModifiableBiomeInfo.BiomeInfo.Builder) {
-
+        info.specialEffects.apply {
+            defaultCastletonEffects(this)
+        }
     }
 }

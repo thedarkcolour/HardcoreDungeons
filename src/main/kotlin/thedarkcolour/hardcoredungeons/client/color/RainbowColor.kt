@@ -1,11 +1,11 @@
 package thedarkcolour.hardcoredungeons.client.color
 
-import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.client.Minecraft
-import net.minecraft.world.item.ItemStack
 import net.minecraft.core.BlockPos
+import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.BlockAndTintGetter
 import net.minecraft.world.level.FoliageColor
+import net.minecraft.world.level.block.state.BlockState
 import java.awt.Color
 
 object RainbowColor : HColor {

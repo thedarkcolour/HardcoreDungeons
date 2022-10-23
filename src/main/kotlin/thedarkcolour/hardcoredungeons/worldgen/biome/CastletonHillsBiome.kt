@@ -17,7 +17,9 @@ object CastletonHillsBiome : ModBiome() {
             temperature = 1.5f
             downfall = 0.0f
         }
-        info.specialEffects.apply(DEFAULT_CASTLETON_EFFECTS)
+        info.specialEffects.apply {
+            defaultCastletonEffects(this)
+        }
         info.generationSettings.apply {
             //HWorldGen.addCastletonCarvers(this)
             //HWorldGen.withPurpleLumshrooms(this)
@@ -25,8 +27,6 @@ object CastletonHillsBiome : ModBiome() {
         info.mobSpawnSettings.apply {
             addSpawn(MobCategory.CREATURE, HEntities.CASTLETON_DEER, 10, 3, 8)
         }
-        val generation = info.generationSettings
-        val spawns = info.mobSpawnSettings
 
         //FeatureUtils.simpleRandomPatchConfiguration()
         //val blueLumshrooms = Feature.RANDOM_PATCH.configured(BlockClusterFeatureConfig.Builder(SimpleBlockStateProvider(HBlocks.BLUE_LUMSHROOM.plant.defaultBlockState()), SimpleBlockPlacer()).tries(64).build()).decorated(Features.Placements.HEIGHTMAP_DOUBLE_SQUARE).chance(8)

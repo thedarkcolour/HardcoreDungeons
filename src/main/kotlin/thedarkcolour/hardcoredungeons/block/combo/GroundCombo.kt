@@ -14,7 +14,7 @@ import thedarkcolour.hardcoredungeons.data.LootGenerator
  * @param prefix Underscores must be included in the prefix
  * @param tag The plantable blocks tag
  */
-class SoilCombo(prefix: String, nocturnal: Boolean, tag: TagKey<Block>, soilProps: HProperties, grassProps: HProperties) : ICombo {
+class GroundCombo(prefix: String, nocturnal: Boolean, tag: TagKey<Block>, soilProps: HProperties, grassProps: HProperties) : ICombo {
     val soil by BlockMaker.cubeAllWithItem(prefix + "soil", soilProps)
     val loam by BlockMaker.cubeAllWithItem(prefix + "loam", soilProps)
     val grass by BlockMaker.blockWithItem(prefix + "grass_block") {

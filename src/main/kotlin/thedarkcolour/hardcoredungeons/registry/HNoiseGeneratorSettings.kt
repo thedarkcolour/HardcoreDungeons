@@ -3,7 +3,11 @@ package thedarkcolour.hardcoredungeons.registry
 import net.minecraft.core.Registry
 import net.minecraft.data.BuiltinRegistries
 import net.minecraft.world.level.block.Blocks
-import net.minecraft.world.level.levelgen.*
+import net.minecraft.world.level.levelgen.NoiseGeneratorSettings
+import net.minecraft.world.level.levelgen.NoiseRouterData
+import net.minecraft.world.level.levelgen.NoiseSettings
+import net.minecraft.world.level.levelgen.SurfaceRules
+import thedarkcolour.hardcoredungeons.block.combo.GroundCombo
 import thedarkcolour.hardcoredungeons.registry.block.HBlocks
 
 object HNoiseGeneratorSettings : HRegistry<NoiseGeneratorSettings>(Registry.NOISE_GENERATOR_SETTINGS_REGISTRY) {
@@ -15,12 +19,12 @@ object HNoiseGeneratorSettings : HRegistry<NoiseGeneratorSettings>(Registry.NOIS
             HBlocks.CASTLETON_STONE.stone.block.defaultBlockState(),
             Blocks.WATER.defaultBlockState(),
             NoiseRouterData.overworld(BuiltinRegistries.DENSITY_FUNCTION, false, false),
-            castletonSurface(),
+            genericSurface(HBlocks.CASTLETON_SOIL),
             emptyList(),
             63,
             false,
             false,
-            true,
+            false,
             false
         )
     }
@@ -31,12 +35,12 @@ object HNoiseGeneratorSettings : HRegistry<NoiseGeneratorSettings>(Registry.NOIS
             HBlocks.RAINBOW_ROCK.stone.block.defaultBlockState(),
             Blocks.WATER.defaultBlockState(),
             NoiseRouterData.overworld(BuiltinRegistries.DENSITY_FUNCTION, false, false),
-            castletonSurface(),
+            genericSurface(HBlocks.RAINBOW_SOIL),
             emptyList(),
             63,
             false,
             false,
-            true,
+            false,
             false
         )
     }
@@ -47,12 +51,12 @@ object HNoiseGeneratorSettings : HRegistry<NoiseGeneratorSettings>(Registry.NOIS
             HBlocks.AUBRUM_ROCK.defaultBlockState(),
             Blocks.AIR.defaultBlockState(),
             NoiseRouterData.overworld(BuiltinRegistries.DENSITY_FUNCTION, false, false),
-            castletonSurface(),
+            genericSurface(HBlocks.AURISOIL),
             emptyList(),
             63,
             false,
             false,
-            true,
+            false,
             false
         )
     }
@@ -63,31 +67,29 @@ object HNoiseGeneratorSettings : HRegistry<NoiseGeneratorSettings>(Registry.NOIS
             HBlocks.SUGARY_SOIL.soil.defaultBlockState(),
             Blocks.WATER.defaultBlockState(),
             NoiseRouterData.overworld(BuiltinRegistries.DENSITY_FUNCTION, false, false),
-            castletonSurface(),
+            genericSurface(HBlocks.SUGARY_SOIL),
             emptyList(),
             63,
             false,
             false,
-            true,
+            false,
             false
         )
     }
 
-    private fun castletonSurface(): SurfaceRules.RuleSource {
+    private fun genericSurface(groundCombo: GroundCombo): SurfaceRules.RuleSource {
+        // https://github.com/TheForsakenFurby/Surface-Rules-Guide-Minecraft-JE-1.18/blob/main/Guide.md#examples-7
         return SurfaceRules.sequence(
             SurfaceRules.ifTrue(
-                SurfaceRules.yBlockCheck(VerticalAnchor.belowTop(3), 0),
-                SurfaceRules.ifTrue(
-                    SurfaceRules.not(SurfaceRules.yBlockCheck(VerticalAnchor.belowTop(4), 0)),
-                    SurfaceRules.state(HBlocks.CASTLETON_SOIL.soil.defaultBlockState())
+                SurfaceRules.ON_FLOOR,
+                SurfaceRules.sequence(
+                    SurfaceRules.ifTrue(SurfaceRules.waterBlockCheck(0, 0), SurfaceRules.state(groundCombo.grass.defaultBlockState())),
+                    SurfaceRules.state(groundCombo.soil.defaultBlockState())
                 )
             ),
             SurfaceRules.ifTrue(
-                SurfaceRules.yBlockCheck(VerticalAnchor.belowTop(0), 0),
-                SurfaceRules.ifTrue(
-                    SurfaceRules.not(SurfaceRules.yBlockCheck(VerticalAnchor.belowTop(1), 0)),
-                    SurfaceRules.state(HBlocks.CASTLETON_SOIL.soil.defaultBlockState())
-                )
+                SurfaceRules.UNDER_FLOOR,
+                SurfaceRules.state(groundCombo.soil.defaultBlockState())
             )
         )
     }

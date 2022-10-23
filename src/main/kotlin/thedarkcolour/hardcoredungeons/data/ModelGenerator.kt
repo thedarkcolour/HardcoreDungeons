@@ -89,11 +89,11 @@ class ModelGenerator(gen: DataGenerator, private val helper: ExistingFileHelper)
         val path = lantern.registryName!!.path
 
         val normal = blockModel(path)
-            .parent(ModelFile.UncheckedModelFile(mcLoc("block/lantern")))
+            .parent(mcModel("block/lantern"))
             .texture("particle", path)
             .texture("all", path)
         val hanging = blockModel("hanging_$path")
-            .parent(ModelFile.UncheckedModelFile(mcLoc("block/hanging_lantern")))
+            .parent(mcModel("block/hanging_lantern"))
             .texture("particle", path)
             .texture("all", path)
 
@@ -112,7 +112,7 @@ class ModelGenerator(gen: DataGenerator, private val helper: ExistingFileHelper)
         val path = side.registryName!!.path
 
         val m = models().getBuilder(path)
-            .parent(ModelFile.UncheckedModelFile(mcLoc("block/cube_column")))
+            .parent(mcModel("block/cube_column"))
             .texture("end", textureLoc(end))
             .texture("side", textureLoc(path))
 
@@ -128,7 +128,7 @@ class ModelGenerator(gen: DataGenerator, private val helper: ExistingFileHelper)
 
     private fun simpleItem(path: String) =
         itemModels().getBuilder(path)
-            .parent(ModelFile.UncheckedModelFile(mcLoc("item/generated")))
+            .parent(mcModel("item/generated"))
             .texture("layer0", modLoc("item/$path"))
 
     // Fancy version of blockTexture

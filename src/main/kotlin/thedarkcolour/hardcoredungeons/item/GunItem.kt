@@ -1,5 +1,7 @@
 package thedarkcolour.hardcoredungeons.item
 
+import net.minecraft.sounds.SoundEvents
+import net.minecraft.sounds.SoundSource
 import net.minecraft.tags.TagKey
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResultHolder
@@ -52,6 +54,9 @@ open class GunItem(
 
         if (!level.isClientSide) {
             val vec = entity.lookAngle
+            val pos = entity.eyePosition.add(vec.normalize().scale(0.2))
+
+            level.playSound(null, pos.x, pos.y, pos.z, SoundEvents.IRON_GOLEM_REPAIR, if (entity is Player) SoundSource.PLAYERS else SoundSource.HOSTILE, 1.0f, 2.0f)
 
             // change to match fire type????
             val bullet = SmallBulletEntity(HEntities.SMALL_BULLET, level)

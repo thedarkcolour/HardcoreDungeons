@@ -1,13 +1,11 @@
 package thedarkcolour.hardcoredungeons.data
 
 import net.minecraft.data.DataGenerator
-import net.minecraft.network.chat.Component
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.level.ItemLike
 import net.minecraftforge.common.data.LanguageProvider
 import thedarkcolour.hardcoredungeons.HardcoreDungeons
-import thedarkcolour.hardcoredungeons.block.combo.CompressedCombo
 import thedarkcolour.hardcoredungeons.block.combo.StairsSlabWallCombo
 import thedarkcolour.hardcoredungeons.registry.HEnchantments
 import thedarkcolour.hardcoredungeons.registry.block.HBlocks
@@ -102,8 +100,7 @@ abstract class Lang(gen: DataGenerator, locale: String) : LanguageProvider(gen, 
             add(HBlocks.CANDLE, "Candle")
             add(HBlocks.RUNED_CASTLETON_STONE, "Runed Castleton Stone")
             add(HBlocks.BLUE_CASTLETON_DUNGEON_LOCK, "Blue Castleton Dungeon Lock")
-            add(HBlocks.DIAMOND_CRYSTAL.crystal, "Diamond Crystal")
-            add(HBlocks.CHISELED_DIAMOND_BLOCK, "Chiseled Diamond Block")
+            //add(HBlocks.DIAMOND_CRYSTAL.crystal, "Diamond Crystal")
             add(HBlocks.MALACHITE_BLOCK, "Malachite Block")
             add(HBlocks.SPRUCE_PLANKS.variants[0](), "Large Spruce Planks")
             add(HBlocks.MALACHITE_CRYSTAL.crystal, "Malachite Crystal")
@@ -162,8 +159,6 @@ abstract class Lang(gen: DataGenerator, locale: String) : LanguageProvider(gen, 
             add(HBlocks.CHOCOLATE_BLOCK.block, "Chocolate Block")
             add(HBlocks.CHOCOLATE_BLOCK.stairs, "Chocolate Stairs")
             add(HBlocks.CHOCOLATE_BLOCK.slab, "Chocolate Slab")
-
-            addCompressedBlock(HBlocks.COMPRESSED_COBBLESTONE)
 
             add(HBlocks.LUMLIGHT_WOOD.door, "Lumlight Door")
             add(HBlocks.PURPLE_LUMSHROOM.plant, "Purple Lumshroom")
@@ -275,17 +270,6 @@ abstract class Lang(gen: DataGenerator, locale: String) : LanguageProvider(gen, 
             addLore(SHROOMY_SWORD_ITEM, "Has a chance to inflict poison on the target.")
 
             addEnchantment(HEnchantments.WITHERING, "Withering", "Causes additional wither damage when used to attack a mob.")
-        }
-
-        // Only got this in English right now
-        protected fun addCompressedBlock(block: CompressedCombo) {
-            val compression = arrayOf("Compressed ", "Double Compressed ", "Triple Compressed ", "Quadruple Compressed ", "Quintuple Compressed ", "Sextuple Compressed ", "Septuple Compressed ", "Octuple Compressed ")
-            val variants = block.variants
-            val blockName = Component.translatable(block.block().descriptionId).string
-
-            for (i in 0..7) {
-                add(variants[i](), compression[i] + blockName)
-            }
         }
 
         fun addCombo(combo: StairsSlabWallCombo, block: String) {

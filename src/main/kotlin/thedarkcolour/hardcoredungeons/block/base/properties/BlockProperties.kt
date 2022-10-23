@@ -13,6 +13,7 @@ import net.minecraft.world.level.material.Material
 import net.minecraft.world.level.material.MaterialColor
 import net.minecraft.world.level.material.PushReaction
 import net.minecraft.world.phys.shapes.VoxelShape
+import net.minecraftforge.data.loading.DatagenModLoader
 import thedarkcolour.hardcoredungeons.block.base.HBlock
 import thedarkcolour.hardcoredungeons.block.base.properties.BlockProperties.Factory
 import java.util.function.ToIntFunction
@@ -157,7 +158,9 @@ abstract class BlockProperties<T : BlockProperties<T>> protected constructor() {
      * Set the harvest level for this block.
      */
     fun harvestLevel(harvestLevel: TagKey<Block>): T {
+        if (DatagenModLoader.isRunningDataGen()) {
 
+        }
         return this as T
     }
 

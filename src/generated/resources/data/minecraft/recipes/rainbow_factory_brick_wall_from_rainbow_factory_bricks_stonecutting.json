@@ -1,8 +1,0 @@
-{
-  "type": "minecraft:stonecutting",
-  "count": 1,
-  "ingredient": {
-    "item": "hardcoredungeons:rainbow_factory_bricks"
-  },
-  "result": "hardcoredungeons:rainbow_factory_brick_wall"
-}

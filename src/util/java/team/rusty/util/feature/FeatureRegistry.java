@@ -1,5 +1,6 @@
 package team.rusty.util.feature;
 
+import net.minecraft.core.Holder;
 import net.minecraft.data.BuiltinRegistries;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.Feature;
@@ -15,12 +16,13 @@ import java.util.function.Supplier;
 /**
  * Unified registry for Feature, ConfiguredFeature, and PlacedFeature
  *
- * @author TheDarkColour
+ * @author thedarkcolour
  */
 public final class FeatureRegistry {
     private final DeferredRegister<Feature<?>> features;
     private final DeferredRegister<ConfiguredFeature<?, ?>> configuredFeatures;
     private final DeferredRegister<PlacedFeature> placedFeatures;
+
     public FeatureRegistry(String modid) {
         this.features = DeferredRegister.create(ForgeRegistries.FEATURES, modid);
         this.configuredFeatures = DeferredRegister.create(BuiltinRegistries.CONFIGURED_FEATURE.key(), modid);
@@ -37,11 +39,11 @@ public final class FeatureRegistry {
         return features.register(name, supplier);
     }
 
-    public <FC extends FeatureConfiguration, F extends Feature<FC>> RegistryObject<ConfiguredFeature<FC, F>> configuredFeature(String name, Supplier<ConfiguredFeature<FC, F>> supplier) {
-        return configuredFeatures.register(name, supplier);
+    public Holder<ConfiguredFeature<?, ?>> configuredFeature(String name, Supplier<ConfiguredFeature<?, ?>> supplier) {
+        return configuredFeatures.register(name, supplier).getHolder().get();
     }
 
-    public RegistryObject<PlacedFeature> placedFeature(String name, Supplier<PlacedFeature> supplier) {
-        return placedFeatures.register(name, supplier);
+    public Holder<PlacedFeature> placedFeature(String name, Supplier<PlacedFeature> supplier) {
+        return placedFeatures.register(name, supplier).getHolder().get();
     }
 }

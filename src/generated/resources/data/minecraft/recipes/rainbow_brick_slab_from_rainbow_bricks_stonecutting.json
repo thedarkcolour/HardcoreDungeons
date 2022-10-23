@@ -1,8 +1,0 @@
-{
-  "type": "minecraft:stonecutting",
-  "count": 2,
-  "ingredient": {
-    "item": "hardcoredungeons:rainbow_bricks"
-  },
-  "result": "hardcoredungeons:rainbow_brick_slab"
-}

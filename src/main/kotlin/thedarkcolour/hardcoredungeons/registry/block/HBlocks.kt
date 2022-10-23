@@ -65,7 +65,7 @@ object HBlocks : HRegistry<Block>(ForgeRegistries.Keys.BLOCKS) {
     /** Gem blocks */
     val MALACHITE_BLOCK by BlockMaker.cubeAllWithItem("malachite_block", HProperties.of(Material.METAL, MaterialColor.COLOR_GREEN).requiresCorrectToolForDrops().strength(5.0f, 6.0f))
     val RAINBOWSTONE_BLOCK by BlockMaker.cubeAllWithItem("rainbowstone_block", HProperties.of(Material.METAL).requiresCorrectToolForDrops().strength(5.0f, 6.0f))
-    val DIAMOND_CRYSTAL = CrystalCombo("diamond_crystal", MaterialColor.COLOR_LIGHT_BLUE)
+    //val DIAMOND_CRYSTAL = CrystalCombo("diamond_crystal", MaterialColor.COLOR_LIGHT_BLUE)
     val MALACHITE_CRYSTAL = CrystalCombo("malachite_crystal", MaterialColor.COLOR_GREEN)
 
     /** Wood */
@@ -74,13 +74,11 @@ object HBlocks : HRegistry<Block>(ForgeRegistries.Keys.BLOCKS) {
     val COTTONMARSH_WOOD = WoodCombo("cottonmarsh", MaterialColor.TERRACOTTA_BROWN, MaterialColor.TERRACOTTA_BROWN, CottonmarshTree, HBlockTags.COTTONMARSH_LOGS, HItemTags.COTTONMARSH_LOGS) { props -> props.sound(SoundType.WOOD).strength(2.5f) }
 
     /** Chiseled block variants */
-    // todo remove
-    val CHISELED_DIAMOND_BLOCK by BlockMaker.cubeAllWithItem("chiseled_diamond_block", HProperties.copy(Blocks.DIAMOND_BLOCK))
     val OAK_PLANKS = VariantCombo(HProperties.copy(Blocks.OAK_PLANKS), "oak_planks", "crate", "braided", "short", "clean")
     val SPRUCE_PLANKS = VariantCombo(HProperties.copy(Blocks.SPRUCE_PLANKS), "spruce_planks", "large")
 
     /** Castleton materials */
-    val CASTLETON_SOIL = SoilCombo(
+    val CASTLETON_SOIL = GroundCombo(
         "castleton_", true, HBlockTags.CASTLETON_GRASS_PLANTABLE,
         soilProps = HProperties.of(Material.DIRT, MaterialColor.COLOR_GRAY).strength(0.8f).sound(SoundType.GRAVEL)/*.harvestTool(BlockTags.MINEABLE_WITH_SHOVEL)*/,
         grassProps = HProperties.of(Material.GRASS, MaterialColor.COLOR_LIGHT_BLUE).randomTicks().strength(0.8f).sound(SoundType.GRASS)/*.harvestTool(BlockTags.MINEABLE_WITH_SHOVEL)*/
@@ -110,7 +108,7 @@ object HBlocks : HRegistry<Block>(ForgeRegistries.Keys.BLOCKS) {
     val CANDLE by BlockMaker.blockWithItem("candle") { HBlock(HProperties.of(Material.DECORATION).strength(1.1f).lightLevel(15).shape(BlockMaker.CANDLE_SHAPE)) }
 
     /** Rainbowland materials */
-    val RAINBOW_SOIL = SoilCombo("rainbow_", false, HBlockTags.RAINBOW_GRASS_PLANTABLE, HProperties.of(Material.DIRT, MaterialColor.COLOR_PURPLE).strength(0.5f).sound(SoundType.GRAVEL), HProperties.of(Material.GRASS).randomTicks().strength(0.6f).sound(SoundType.GRASS))
+    val RAINBOW_SOIL = GroundCombo("rainbow_", false, HBlockTags.RAINBOW_GRASS_PLANTABLE, HProperties.of(Material.DIRT, MaterialColor.COLOR_PURPLE).strength(0.5f).sound(SoundType.GRAVEL), HProperties.of(Material.GRASS).randomTicks().strength(0.6f).sound(SoundType.GRASS))
     val RAINBOW_ROCK = PolishedStoneBrickCombo("rainbow_rock", HProperties.of(Material.STONE, MaterialColor.COLOR_PURPLE).strength(1.5f, 6.0f))
     val RAINBOW_FACTORY_BRICKS = StairsSlabWallFenceCombo("rainbow_factory_bricks", HProperties.of(Material.STONE, MaterialColor.COLOR_PURPLE).strength(1.5f, 6.0f))
     val RAINBOWLAND_PORTAL = PortalCombo(HDimensions.RAINBOWLAND_ID, HDimensions::RAINBOWLAND_KEY)
@@ -122,7 +120,7 @@ object HBlocks : HRegistry<Block>(ForgeRegistries.Keys.BLOCKS) {
         RAINBOW_FACTORY_BRICKS.block).lightLevel { if (it.getValue(RainbowFactoryFurnaceBlock.LIT)) 15 else 0 }) } // Standalone
 
     /** Aubrum materials */
-    val AURISOIL = SoilCombo("auri", true, HBlockTags.AURIGRASS_PLANTABLE, HProperties.of(Material.DIRT, MaterialColor.COLOR_GRAY).strength(0.4f).sound(SoundType.SAND), HProperties.of(Material.GRASS, MaterialColor.COLOR_YELLOW).randomTicks().strength(0.5f).sound(SoundType.SAND))
+    val AURISOIL = GroundCombo("auri", true, HBlockTags.AURIGRASS_PLANTABLE, HProperties.of(Material.DIRT, MaterialColor.COLOR_GRAY).strength(0.4f).sound(SoundType.SAND), HProperties.of(Material.GRASS, MaterialColor.COLOR_YELLOW).randomTicks().strength(0.5f).sound(SoundType.SAND))
     val AUBRUM_ROCK by BlockMaker.cubeAllWithItem("aubrum_rock", HProperties.of(Material.STONE, MaterialColor.COLOR_BLACK).strength(1.5f).sound(SoundType.STONE))
     val AUBRUM_PORTAL = PortalCombo(HDimensions.AUBRUM_ID, HDimensions::AUBRUM_KEY)
 
@@ -133,7 +131,7 @@ object HBlocks : HRegistry<Block>(ForgeRegistries.Keys.BLOCKS) {
     ))
 
     /** Candyland materials */
-    val SUGARY_SOIL = SoilCombo("sugary_", false, HBlockTags.SUGARY_GRASS_PLANTABLE, HProperties.of(Material.DIRT, MaterialColor.SAND).sound(SoundType.GRAVEL), HProperties.of(Material.GRASS, MaterialColor.COLOR_PINK).sound(SoundType.GRASS))
+    val SUGARY_SOIL = GroundCombo("sugary_", false, HBlockTags.SUGARY_GRASS_PLANTABLE, HProperties.of(Material.DIRT, MaterialColor.SAND).sound(SoundType.GRAVEL), HProperties.of(Material.GRASS, MaterialColor.COLOR_PINK).sound(SoundType.GRASS))
     val SUGAR_BLOCK by BlockMaker.cubeAllWithItem("sugar_block", HProperties.of(Material.SAND, MaterialColor.SNOW).sound(SoundType.SAND)) // Standalone
     val CANDY_CANE_BLOCK by BlockMaker.rotatedPillarWithItem("candy_cane_block", HProperties.of(Material.WOOD).sound(SoundType.BASALT))
     val BENT_CANDY_CANE_BLOCK by BlockMaker.rotatableBlockWithItem("bent_candy_cane_block", HProperties.of(Material.WOOD).sound(SoundType.BASALT))
@@ -169,7 +167,7 @@ object HBlocks : HRegistry<Block>(ForgeRegistries.Keys.BLOCKS) {
     //val MAZE_BOSS_SPAWNER by BlockMaker.blockWithItem("maze_boss_spawner") { MazeBossSpawnerBlock(HProperties.of(Material.METAL).indestructible()) }
 
     /** Misc */
-    val COMPRESSED_COBBLESTONE = CompressedCombo(Blocks::COBBLESTONE)
+    //val COMPRESSED_COBBLESTONE = CompressedCombo(Blocks::COBBLESTONE)
 
     /** Farmlands */
     val ASHY_FARMLAND by BlockMaker.farmlandWithItem("ashy_farmland", Blocks::PODZOL, { Blocks.DIRT.defaultBlockState() }, HProperties.of(Material.DIRT, MaterialColor.COLOR_BROWN).sound(SoundType.GRAVEL).harvestTool(BlockTags.MINEABLE_WITH_SHOVEL).strength(0.6f)) { map ->

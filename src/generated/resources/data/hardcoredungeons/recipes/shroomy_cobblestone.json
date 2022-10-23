@@ -5,10 +5,32 @@
       "tag": "forge:cobblestone"
     },
     {
+      "tag": "forge:cobblestone"
+    },
+    {
+      "tag": "forge:cobblestone"
+    },
+    {
+      "tag": "forge:cobblestone"
+    },
+    {
+      "tag": "forge:cobblestone"
+    },
+    {
+      "tag": "forge:cobblestone"
+    },
+    {
+      "tag": "forge:cobblestone"
+    },
+    {
+      "tag": "forge:cobblestone"
+    },
+    {
       "tag": "forge:mushrooms"
     }
   ],
   "result": {
+    "count": 8,
     "item": "hardcoredungeons:shroomy_cobblestone"
   }
 }

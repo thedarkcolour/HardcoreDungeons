@@ -41,12 +41,7 @@ sealed interface DataTags {
             this.blocks.tag(tag).add(*block)
         }
 
-        override fun tag(
-            tagBlock: TagKey<Block>,
-            tagItem: TagKey<Item>,
-            blocks: TagKey<Block>,
-            items: TagKey<Item>
-        ) {
+        override fun tag(tagBlock: TagKey<Block>, tagItem: TagKey<Item>, blocks: TagKey<Block>, items: TagKey<Item>) {
             this.blocks.tag(tagBlock).addTag(blocks)
         }
     }

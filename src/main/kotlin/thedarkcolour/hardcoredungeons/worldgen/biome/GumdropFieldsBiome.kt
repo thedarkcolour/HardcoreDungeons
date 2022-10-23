@@ -2,8 +2,10 @@ package thedarkcolour.hardcoredungeons.worldgen.biome
 
 import net.minecraft.core.Holder
 import net.minecraft.world.level.biome.Biome
+import net.minecraft.world.level.levelgen.GenerationStep
 import net.minecraftforge.common.world.ModifiableBiomeInfo
 import team.rusty.util.biome.ModBiome
+import thedarkcolour.hardcoredungeons.worldgen.HFeatures
 
 object GumdropFieldsBiome : ModBiome() {
     override fun configure(biome: Holder<Biome>, info: ModifiableBiomeInfo.BiomeInfo.Builder) {
@@ -19,8 +21,8 @@ object GumdropFieldsBiome : ModBiome() {
             fogColor(12638463)
         }
         info.generationSettings.apply {
-            //HWorldGen.withSparseCandyCanes(this)
-            //HWorldGen.withSparseChocolateBars(this)
+            addFeature(GenerationStep.Decoration.SURFACE_STRUCTURES, HFeatures.SPARSE_CANDY_CANES)
+            addFeature(GenerationStep.Decoration.SURFACE_STRUCTURES, HFeatures.SPARSE_CHOCOLATE_BARS)
         }
     }
 }

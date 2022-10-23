@@ -7,6 +7,8 @@ import team.rusty.util.biome.ModBiome
 
 object CandyPlainsBiome : ModBiome() {
     override fun configure(biome: Holder<Biome>, info: ModifiableBiomeInfo.BiomeInfo.Builder) {
-
+        info.specialEffects.apply {
+            defaultCandylandEffects(this)
+        }
     }
 }

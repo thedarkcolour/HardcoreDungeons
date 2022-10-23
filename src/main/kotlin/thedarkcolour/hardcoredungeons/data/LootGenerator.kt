@@ -1,6 +1,5 @@
 package thedarkcolour.hardcoredungeons.data
 
-import com.google.gson.GsonBuilder
 import net.minecraft.advancements.critereon.*
 import net.minecraft.data.CachedOutput
 import net.minecraft.data.DataGenerator
@@ -48,7 +47,10 @@ import org.apache.logging.log4j.LogManager
 import thedarkcolour.hardcoredungeons.HardcoreDungeons
 import thedarkcolour.hardcoredungeons.registry.HEntities
 import thedarkcolour.hardcoredungeons.registry.block.HBlocks
-import thedarkcolour.hardcoredungeons.registry.items.*
+import thedarkcolour.hardcoredungeons.registry.items.BULLET_ITEM
+import thedarkcolour.hardcoredungeons.registry.items.CASTLE_GEM_ITEM
+import thedarkcolour.hardcoredungeons.registry.items.DEER_ANTLER_ITEM
+import thedarkcolour.hardcoredungeons.registry.items.VENISON_ITEM
 import thedarkcolour.hardcoredungeons.util.registryName
 
 class LootGenerator(private val generator: DataGenerator) : LootTableProvider(generator) {
@@ -103,7 +105,7 @@ class LootGenerator(private val generator: DataGenerator) : LootTableProvider(ge
             .add(item(HBlocks.CHILI_PEPPER.item).apply(setCount(binomial(3, 0.7f))).setWeight(5))
         ))
         HBlocks.MALACHITE_CRYSTAL.addLoot(this)
-        HBlocks.DIAMOND_CRYSTAL.addLoot(this)
+        //HBlocks.DIAMOND_CRYSTAL.addLoot(this)
         //addLoot(HBlocksNew.MALACHITE_CRYSTAL.crystal, LootTable.lootTable().withPool(LootPool.lootPool()
         //    .add(item(HItems.MALACHITE_CRYSTAL).setCountRandom(1.0f, 4.0f))
         //))

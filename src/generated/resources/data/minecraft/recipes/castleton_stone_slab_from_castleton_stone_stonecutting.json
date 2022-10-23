@@ -1,8 +1,0 @@
-{
-  "type": "minecraft:stonecutting",
-  "count": 2,
-  "ingredient": {
-    "item": "hardcoredungeons:castleton_stone"
-  },
-  "result": "hardcoredungeons:castleton_stone_slab"
-}

@@ -48,7 +48,7 @@ object ItemMaker {
         entityType.isAccessible = true
         val entityType = entityType.getDelegate() as ObjectHolderDelegate<EntityType<out Mob>>
 
-        return simple(entityType.registryObject.id.path + "_spawn_egg") {
+        return registerModelled(entityType.registryObject.id.path + "_spawn_egg", ItemModelType.SPAWN_EGG_ITEM) {
             ForgeSpawnEggItem(entityType, baseColor, spotColor, EmptyProperties)
         }
     }

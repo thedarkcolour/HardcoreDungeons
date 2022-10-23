@@ -18,7 +18,7 @@ import java.util.Optional;
 /**
  * Thanks to TelepathicGrunt for their continued structure tutorials
  *
- * @author TheDarkColour
+ * @author thedarkcolour
  */
 public abstract class SimpleStructure extends Structure {
     protected static <T extends SimpleStructure> Codec<T> makeCodec(Function7<StructureSettings, Holder<StructureTemplatePool>, Optional<ResourceLocation>, Integer, HeightProvider, Optional<Heightmap.Types>, Integer, T> factory) {

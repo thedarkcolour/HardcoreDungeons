@@ -21,7 +21,7 @@ import java.util.function.Supplier;
 /**
  * Class to handle {@link ModBiome} for a specific mod.
  *
- * @author TheDarkColour
+ * @author thedarkcolour
  */
 public final class ModBiomeRegistry {
     /** Dummy builder that gets changed later */

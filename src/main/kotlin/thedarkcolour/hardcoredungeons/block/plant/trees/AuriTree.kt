@@ -9,7 +9,7 @@ object AuriTree : AbstractTreeGrower() {
     override fun getConfiguredFeature(
         rand: RandomSource,
         hasBeehives: Boolean
-    ): Holder<out ConfiguredFeature<*, *>>? {
+    ): Holder<ConfiguredFeature<*, *>> {
         TODO("not implemented")
     }
 }

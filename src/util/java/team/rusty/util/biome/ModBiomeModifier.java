@@ -8,7 +8,7 @@ import net.minecraftforge.common.world.ModifiableBiomeInfo;
 import net.minecraftforge.registries.RegistryObject;
 
 /**
- * @author TheDarkColour
+ * @author thedarkcolour
  */
 public class ModBiomeModifier implements BiomeModifier {
     private final ModBiome biome;
@@ -23,7 +23,9 @@ public class ModBiomeModifier implements BiomeModifier {
     public void modify(Holder<Biome> biome, Phase phase, ModifiableBiomeInfo.BiomeInfo.Builder builder) {
         // Do this at the start as if it was in the JSON file already
         if (phase == Phase.BEFORE_EVERYTHING) {
-            this.biome.configure(biome, builder);
+            if (biome.is(this.biome.getId())) {
+                this.biome.configure(biome, builder);
+            }
         }
     }
 

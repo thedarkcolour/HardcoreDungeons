@@ -1,8 +1,0 @@
-{
-  "type": "minecraft:stonecutting",
-  "count": 1,
-  "ingredient": {
-    "item": "hardcoredungeons:charged_castleton_bricks"
-  },
-  "result": "hardcoredungeons:charged_castleton_brick_wall"
-}

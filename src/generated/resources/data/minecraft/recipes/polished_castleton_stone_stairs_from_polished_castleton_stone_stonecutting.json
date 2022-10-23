@@ -1,8 +1,0 @@
-{
-  "type": "minecraft:stonecutting",
-  "count": 1,
-  "ingredient": {
-    "item": "hardcoredungeons:polished_castleton_stone"
-  },
-  "result": "hardcoredungeons:polished_castleton_stone_stairs"
-}
