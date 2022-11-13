@@ -23,6 +23,7 @@ object ItemMaker {
     }
 
     // Handheld, but the inventory item model is rotated
+    @Deprecated(replaceWith = ReplaceWith("ItemMaker.handheld(name, supplier)"), message = "?")
     fun <T : Item> rotatedHandheld(name: String, supplier: () -> T): ObjectHolderDelegate<T> {
         return registerModelled(name, ItemModelType.ROTATED_HANDHELD_ITEM, supplier)
     }
@@ -53,19 +54,25 @@ object ItemMaker {
         }
     }
 
-    // Basic 3d block item model, does not cover fences/walls
+    /**
+     * 2d block item, hopper, campfire
+     */
     fun simpleBlockItem(name: String, block: () -> Block): ObjectHolderDelegate<BlockItem> {
         return blockItem(name, ItemModelType.SIMPLE_ITEM, block)
     }
 
-    // 2d placeable food item, carrots, chili peppers, and sweet berries
+    /**
+     * 2d placeable food item, carrots, chili peppers, and sweet berries
+     */
     fun foodBlockItem(name: String, block: () -> Block, food: FoodProperties): ObjectHolderDelegate<Item> {
         return registerModelled(name, ItemModelType.SIMPLE_ITEM) {
             BlockItem(block(), Item.Properties().tab(Group).food(food))
         }
     }
 
-    // Creates food properties with optional arguments instead of a huge builder chain
+    /**
+     * Creates food properties with optional arguments instead of a huge builder chain
+     */
     fun food(nutrition: Int, saturation: Float, alwaysEdible: Boolean = false, fastEat: Boolean = false, meat: Boolean = false): FoodProperties {
         val foodBuilder = FoodProperties.Builder().nutrition(nutrition).saturationMod(saturation)
         if (alwaysEdible) foodBuilder.alwaysEat()
@@ -74,7 +81,6 @@ object ItemMaker {
         return foodBuilder.build()
     }
 
-    // 2d block item, hopper, campfire
     fun blockItem(name: String, type: ItemModelType = ItemModelType.BLOCK_ITEM, block: () -> Block): ObjectHolderDelegate<BlockItem> {
         return registerModelled(name, type) { BlockItem(block(), EmptyProperties) }
     }
@@ -89,7 +95,7 @@ object ItemMaker {
         return obj
     }
 
-    // Sets the group
+    // Sets the creative tab
     fun props(): Item.Properties {
         return Item.Properties().tab(Group)
     }
@@ -103,6 +109,9 @@ object ItemMaker {
             set = true
         }
 
+        /**
+         * Print long annoying errors whenever something goes wrong
+         */
         private fun warn(): Item.Properties {
             try {
                 throw IllegalStateException("Tried to set property on empty item properties instance!")

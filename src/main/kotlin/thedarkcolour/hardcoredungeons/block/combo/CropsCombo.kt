@@ -7,7 +7,7 @@ import net.minecraft.world.level.block.Block
 import thedarkcolour.hardcoredungeons.registry.block.HBlocks
 import thedarkcolour.hardcoredungeons.registry.items.ItemMaker
 
-class CropsCombo(name: String, food: FoodProperties, cropSupplier: () -> Block) : ICombo, ItemLike {
+class CropsCombo(name: String, food: FoodProperties, cropSupplier: () -> Block) : BlockCombo(), ItemLike {
     val crop by HBlocks.register(name, cropSupplier)
     val item by ItemMaker.foodBlockItem(name, ::crop, food)
 

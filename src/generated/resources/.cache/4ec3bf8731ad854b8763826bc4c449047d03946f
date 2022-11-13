@@ -1,14 +1,14 @@
-// 1.19.2	2022-09-10T17:03:54.1015287	Hardcore Dungeons Item Tags
+// 1.19.2	2022-11-11T16:40:45.5032537	Hardcore Dungeons Item Tags
 b7b01e319e928cc3092efeac2b35cc1d9b922926 data/forge/tags/items/fences.json
 69df74f917962994a5a587946a0f068a38ff0adb data/forge/tags/items/fence_gates.json
-6d79e90fdd560e6d6ac1dbc81e9b030fae27903a data/forge/tags/items/gems.json
+bdc6837f0d6872f8c1d4053cc5431cd0eb6eeb72 data/forge/tags/items/gems.json
 936a588883485847e653f7849b36399324eb3c6a data/forge/tags/items/stone.json
 0eb0d7d66a38ead778747479e81d6bc649893d81 data/hardcoredungeons/tags/items/ammunition/generic.json
 acdc78e413b496aa89db45a321054985c13c2ac3 data/hardcoredungeons/tags/items/ammunition/incendiary.json
 b5a82d9568ddc5801686852ade409e8372a00526 data/hardcoredungeons/tags/items/ammunition/small.json
 5bd09a9e832d6faa512a8ac79e50bf8fec3888b4 data/hardcoredungeons/tags/items/auri_logs.json
 3f38fd9a4cdae6a964c73ebc727d12b5d7db6fda data/hardcoredungeons/tags/items/cottonmarsh_logs.json
-6d79e90fdd560e6d6ac1dbc81e9b030fae27903a data/hardcoredungeons/tags/items/gems/malachite.json
+bdc6837f0d6872f8c1d4053cc5431cd0eb6eeb72 data/hardcoredungeons/tags/items/gems/malachite.json
 f5332d279fcedc3b294b40b2f669f8dd33741291 data/hardcoredungeons/tags/items/gems/rainbowstone.json
 bcea14c5579b3a2f77f80b966d49ca219c343dbd data/hardcoredungeons/tags/items/lumlight_logs.json
 1ca5da425d42c4894bd2533077edb4f4194c557e data/hardcoredungeons/tags/items/lumshroom.json
@@ -16,7 +16,7 @@ bcea14c5579b3a2f77f80b966d49ca219c343dbd data/hardcoredungeons/tags/items/lumlig
 4666259bf601952c633dda1c7e0256da1e9f6450 data/minecraft/tags/items/logs_that_burn.json
 a3646ffbb224ed47c9516e4c63f2c46f4a8042af data/minecraft/tags/items/planks.json
 0d9b8b1f31a7e8df3be46bf15e0688d1f213f746 data/minecraft/tags/items/saplings.json
-24ac800894059dcaefce62653507d7c4342b4fdf data/minecraft/tags/items/signs.json
+084ea076d0a6c077eb2a1d68494fdfb6c9ad81a3 data/minecraft/tags/items/signs.json
 1fd883d8ae48eff6b5d094b37165aadf49736cf0 data/minecraft/tags/items/slabs.json
 5c1f2727103dd5eaefea3e7d299266f7779dc4dc data/minecraft/tags/items/stairs.json
 b7f1ee846388982aff2846685f06f9990f883a3f data/minecraft/tags/items/walls.json

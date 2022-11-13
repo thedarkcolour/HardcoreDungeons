@@ -7,18 +7,18 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.SoundType
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.minecraft.world.level.material.Material
-import thedarkcolour.hardcoredungeons.registry.items.ItemMaker
 import thedarkcolour.hardcoredungeons.block.base.properties.HProperties
 import thedarkcolour.hardcoredungeons.block.decoration.castleton.CastletonTorchBlock
 import thedarkcolour.hardcoredungeons.data.modelgen.item.ItemModelType
 import thedarkcolour.hardcoredungeons.item.CastletonTorchItem
 import thedarkcolour.hardcoredungeons.item.Group
 import thedarkcolour.hardcoredungeons.registry.block.HBlocks
+import thedarkcolour.hardcoredungeons.registry.items.ItemMaker
 
 /**
  * @param name The prefix ex. "soul_fire". "_torch" and "_wall_torch" are applied as name suffixes.
  */
-class CastletonTorchCombo private constructor(properties: HProperties) : ICombo {
+class CastletonTorchCombo private constructor(properties: HProperties) : BlockCombo() {
     // Use an alternative constructor instead of storing the properties in a field
     constructor() : this(HProperties.of(Material.DECORATION).lightLevel { state ->
         if (state.getValue(BlockStateProperties.LIT)) 7 else 0

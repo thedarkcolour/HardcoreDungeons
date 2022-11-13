@@ -6,7 +6,7 @@ import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.level.ItemLike
 import net.minecraftforge.common.data.LanguageProvider
 import thedarkcolour.hardcoredungeons.HardcoreDungeons
-import thedarkcolour.hardcoredungeons.block.combo.StairsSlabWallCombo
+import thedarkcolour.hardcoredungeons.block.combo.StoneWallCombo
 import thedarkcolour.hardcoredungeons.registry.HEnchantments
 import thedarkcolour.hardcoredungeons.registry.block.HBlocks
 import thedarkcolour.hardcoredungeons.registry.items.*
@@ -272,7 +272,7 @@ abstract class Lang(gen: DataGenerator, locale: String) : LanguageProvider(gen, 
             addEnchantment(HEnchantments.WITHERING, "Withering", "Causes additional wither damage when used to attack a mob.")
         }
 
-        fun addCombo(combo: StairsSlabWallCombo, block: String) {
+        fun addCombo(combo: StoneWallCombo, block: String) {
             add(combo.block, block)
             add(combo.slab, "Losa de " + block.lowercase())
             add(combo.stairs, "Escaleras de " + block.lowercase())
@@ -312,7 +312,7 @@ abstract class Lang(gen: DataGenerator, locale: String) : LanguageProvider(gen, 
             add("lang.hardcoredungeons.to", "a")
         }
 
-        fun addCombo(combo: StairsSlabWallCombo, block: String) {
+        fun addCombo(combo: StoneWallCombo, block: String) {
             add(combo.block, block)
             add(combo.slab, "Losa de " + block.lowercase())
             add(combo.stairs, "Escaleras de " + block.lowercase())

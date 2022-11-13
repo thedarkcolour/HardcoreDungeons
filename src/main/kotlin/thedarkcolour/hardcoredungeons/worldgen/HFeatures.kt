@@ -31,7 +31,11 @@ object HFeatures {
     fun init() {
         registry.register(MOD_BUS)
 
-        // global biome modifier stuff
+        registerGlobalModifier()
+    }
+
+    // global biome modifier stuff for malachite crystals etc.
+    private fun registerGlobalModifier() {
         val serializer = DeferredRegister.create(ForgeRegistries.Keys.BIOME_MODIFIER_SERIALIZERS, HardcoreDungeons.ID)
         val modifier = DeferredRegister.create(ForgeRegistries.Keys.BIOME_MODIFIERS, HardcoreDungeons.ID)
         serializer.register(MOD_BUS)

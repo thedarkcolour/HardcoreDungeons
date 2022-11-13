@@ -9,13 +9,18 @@ import thedarkcolour.hardcoredungeons.data.RecipeGenerator.Companion.stonecuttin
 import thedarkcolour.hardcoredungeons.data.RecipeGenerator.Companion.wall
 import java.util.function.Consumer
 
-open class StairsSlabWallCombo(name: String, properties: HProperties) : StairsSlabCombo(name, properties) {
+// Assumes this is a stone block
+open class StoneWallCombo(name: String, properties: HProperties) : StairsSlabCombo(name, properties) {
     val wall by BlockMaker.wallWithItem(BlockMaker.getComboName(name) + "_wall", ::block)
 
     override fun addTags(tags: DataTags) {
         super.addTags(tags)
 
         tags.block(BlockTags.WALLS, ItemTags.WALLS, wall)
+        tags.pickaxe(block)
+        tags.pickaxe(stairs)
+        tags.pickaxe(slab)
+        tags.pickaxe(wall)
     }
 
     override fun addRecipes(consumer: Consumer<FinishedRecipe>) {

@@ -8,17 +8,17 @@ import thedarkcolour.hardcoredungeons.data.RecipeGenerator.Companion.stonecuttin
 import thedarkcolour.hardcoredungeons.data.RecipeGenerator.Companion.twoByTwo
 import java.util.function.Consumer
 
-class PolishedStoneBrickCombo(name: String, props: HProperties) : ICombo {
+class StonePolishedBrickCombo(name: String, props: HProperties) : BlockCombo() {
     val stone = StairsSlabCombo(name, props)
-    val brick = StairsSlabWallFenceCombo(name.removeSuffix("stone").removeSuffix("rock") + "bricks", props)
-    val polished = StairsSlabWallCombo("polished_$name", props)
+    val brick = StoneWallFenceCombo(name.removeSuffix("stone").removeSuffix("rock") + "bricks", props)
+    val polished = StoneWallCombo("polished_$name", props)
 
     override fun addTags(tags: DataTags) {
-        stone.addTags(tags)
-        brick.addTags(tags)
-        polished.addTags(tags)
-
         tags.block(Tags.Blocks.STONE, Tags.Items.STONE, stone.block)
+
+        tags.pickaxe(stone.block)
+        tags.pickaxe(stone.stairs)
+        tags.pickaxe(stone.slab)
     }
 
     override fun addRecipes(consumer: Consumer<FinishedRecipe>) {
@@ -37,9 +37,5 @@ class PolishedStoneBrickCombo(name: String, props: HProperties) : ICombo {
 
         consumer.twoByTwo(brick.block, 4, stone.block, trigger = "has_item")
         consumer.twoByTwo(polished.block, 4, brick.block, trigger = "has_item")
-
-        stone.addRecipes(consumer)
-        brick.addRecipes(consumer)
-        polished.addRecipes(consumer)
     }
 }

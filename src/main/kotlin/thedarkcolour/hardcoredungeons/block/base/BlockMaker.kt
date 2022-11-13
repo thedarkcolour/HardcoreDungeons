@@ -36,8 +36,13 @@ import thedarkcolour.hardcoredungeons.registry.items.ItemMaker
 /**
  * Used in combos and anything else that's repeated
  *
+ * Functions prefixed with `register` return a block registry object and add that block to a model type for data generation.
+ * Functions not prefixed with `register` do everything a register function does as well as registering appropriate item forms.
+ * Shapes are stored as constants to avoid unnecessary duplicate VoxelShape objects
+ *
  * @author thedarkcolour
  */
+@Suppress("MemberVisibilityCanBePrivate")
 object BlockMaker {
 
     // Preset shapes
@@ -50,6 +55,7 @@ object BlockMaker {
     val CROWN_SHAPE: VoxelShape = cube(4.0, 0.0, 4.0, 12.0, 4.0, 12.0)
     val CHALICE_SHAPE: VoxelShape = Shapes.or(cube(6.0, 0.0, 6.0, 10.0, 1.0, 10.0), cube(7.0, 1.0, 7.0, 9.0, 3.0, 9.0), cube(6.0, 3.0, 6.0, 10.0, 4.0, 10.0), cube(5.0, 4.0, 5.0, 11.0, 8.0, 11.0))
     val FARMLAND_SHAPE: VoxelShape = cube(0.0, 0.0, 0.0, 16.0, 15.0, 16.0)
+    val CRYSTAL_SHAPE: VoxelShape = cube(3.0, 0.0, 3.0, 13.0, 7.0, 13.0)
 
     inline fun props(material: Material, color: MaterialColor, apply: (HProperties) -> Unit): HProperties {
         return HProperties.of(material, color).also(apply)
@@ -136,6 +142,12 @@ object BlockMaker {
         return PottedPlantCombo(name) { HSaplingBlock(tree, HProperties.of(Material.PLANT).sound(SoundType.GRASS).noCollision()) }
     }
 
+    fun gumdropCombo(name: String): PottedPlantCombo {
+        return PottedPlantCombo(name) {
+            FlowerBlock(PlantProperties.of(Material.PLANT).stewEffect(MobEffects.REGENERATION, 7).sound(SoundType.SLIME_BLOCK).noCollision().instabreak().lightLevel(3))
+        }
+    }
+
     fun registerWall(name: String, block: () -> Block): ObjectHolderDelegate<WallBlock> {
         return registerModelled(name, BlockModelType.WALL, block) { WallBlock(HProperties.copy(block()).build()) }
     }
@@ -145,15 +157,9 @@ object BlockMaker {
         return registerCubeAll(name, HProperties.of(Material.STONE, color).strength(hardness, resistance).requiresCorrectToolForDrops())
     }
 
-    fun gumdrop(name: String): PottedPlantCombo {
-        return PottedPlantCombo(name) {
-            FlowerBlock(PlantProperties.of(Material.PLANT).stewEffect(MobEffects.REGENERATION, 7).sound(SoundType.SLIME_BLOCK).noCollision().instabreak().lightLevel(3))
-        }
-    }
-
     fun registerCrystal(name: String, color: MaterialColor): ObjectHolderDelegate<HBlock> {
         // todo some mechanism for mining tools
-        return registerCross(name) { HBlock(HProperties.of(Material.STONE, color).strength(2.3f, 40.0f).lightLevel(4).shape(Block.box(3.0, 0.0, 3.0, 13.0, 7.0, 13.0))) }
+        return registerCross(name) { HBlock(HProperties.of(Material.STONE, color).strength(2.3f, 40.0f).lightLevel(4).sound(SoundType.AMETHYST).requiresCorrectToolForDrops().shape(CRYSTAL_SHAPE)) }
     }
 
     // todo add model type

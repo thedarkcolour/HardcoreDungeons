@@ -1,7 +1,7 @@
 package thedarkcolour.hardcoredungeons.block.plant.misc
 
-import net.minecraft.core.Direction
 import net.minecraft.core.BlockPos
+import net.minecraft.core.Direction
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.util.Mth
 import net.minecraft.util.RandomSource

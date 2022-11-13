@@ -17,6 +17,7 @@ import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.*
 import net.minecraftforge.common.Tags
 import net.minecraftforge.registries.ForgeRegistries
+import thedarkcolour.hardcoredungeons.block.combo.BlockCombo
 import thedarkcolour.hardcoredungeons.registry.block.HBlocks
 import thedarkcolour.hardcoredungeons.registry.items.*
 import thedarkcolour.hardcoredungeons.tags.HItemTags
@@ -32,10 +33,9 @@ class RecipeGenerator(generatorIn: DataGenerator) : RecipeProvider(generatorIn) 
      * Uses several extension functions declared later on in the file.
      */
     override fun buildCraftingRecipes(consumer: Consumer<FinishedRecipe>) {
-        // lumlight blocks
-        HBlocks.LUMLIGHT_WOOD.addRecipes(consumer)
-        HBlocks.AURI_WOOD.addRecipes(consumer)
-        HBlocks.COTTONMARSH_WOOD.addRecipes(consumer)
+        for (combo in BlockCombo.ALL_COMBOS) {
+            combo.addRecipes(consumer)
+        }
 
         consumer.shaped(HBlocks.LUMLIGHT_CAMPFIRE, 1) { builder ->
             builder.pattern(" s ")
@@ -55,8 +55,6 @@ class RecipeGenerator(generatorIn: DataGenerator) : RecipeProvider(generatorIn) 
             builder.requires(Tags.Items.MUSHROOMS)
             builder.unlockedBy("has_mushroom", RecipeProvider.has(Tags.Items.MUSHROOMS))
         }
-        consumer.slab(HBlocks.SHROOMY_COBBLESTONE.slab, HBlocks.SHROOMY_COBBLESTONE.block)
-        consumer.stairs(HBlocks.SHROOMY_COBBLESTONE.stairs, HBlocks.SHROOMY_COBBLESTONE.block)
         consumer.shapeless(HBlocks.SHROOMY_STONE_BRICKS.block, 8) { builder ->
             for (i in 0..7) {
                 builder.requires(ItemTags.STONE_BRICKS)
@@ -64,8 +62,6 @@ class RecipeGenerator(generatorIn: DataGenerator) : RecipeProvider(generatorIn) 
             builder.requires(Tags.Items.MUSHROOMS)
             builder.unlockedBy("has_mushroom", has(Tags.Items.MUSHROOMS))
         }
-        consumer.slab(HBlocks.SHROOMY_STONE_BRICKS.slab, HBlocks.SHROOMY_STONE_BRICKS.block)
-        consumer.stairs(HBlocks.SHROOMY_STONE_BRICKS.stairs, HBlocks.SHROOMY_STONE_BRICKS.block)
         consumer.shaped(SYRINGE_ITEM, 2) { builder ->
             builder.define('B', Items.GLASS_BOTTLE)
             builder.define('I', Items.IRON_INGOT)
@@ -97,11 +93,11 @@ class RecipeGenerator(generatorIn: DataGenerator) : RecipeProvider(generatorIn) 
 
 
         // tools
-        consumer.sword(MALACHITE_SWORD_ITEM, HBlocks.MALACHITE_CRYSTAL.item)
-        consumer.shovel(MALACHITE_SHOVEL_ITEM, HBlocks.MALACHITE_CRYSTAL.item)
-        consumer.pickaxe(MALACHITE_PICKAXE_ITEM, HBlocks.MALACHITE_CRYSTAL.item)
-        consumer.axe(MALACHITE_AXE_ITEM, HBlocks.MALACHITE_CRYSTAL.item)
-        consumer.hoe(MALACHITE_HOE_ITEM, HBlocks.MALACHITE_CRYSTAL.item)
+        consumer.sword(MALACHITE_SWORD_ITEM, HBlocks.MALACHITE_CRYSTAL.shard)
+        consumer.shovel(MALACHITE_SHOVEL_ITEM, HBlocks.MALACHITE_CRYSTAL.shard)
+        consumer.pickaxe(MALACHITE_PICKAXE_ITEM, HBlocks.MALACHITE_CRYSTAL.shard)
+        consumer.axe(MALACHITE_AXE_ITEM, HBlocks.MALACHITE_CRYSTAL.shard)
+        consumer.hoe(MALACHITE_HOE_ITEM, HBlocks.MALACHITE_CRYSTAL.shard)
 
         consumer.sword(RAINBOWSTONE_SWORD_ITEM, RAINBOWSTONE_GEM_ITEM)
         consumer.shovel(RAINBOWSTONE_SHOVEL_ITEM, RAINBOWSTONE_GEM_ITEM)
@@ -111,17 +107,14 @@ class RecipeGenerator(generatorIn: DataGenerator) : RecipeProvider(generatorIn) 
 
 
         // stonecutter recipes for HCD blocks
-        consumer.stonecutterRecipes(HBlocks.SHROOMY_COBBLESTONE.block, HBlocks.SHROOMY_COBBLESTONE.stairs, HBlocks.SHROOMY_COBBLESTONE.wall, slab = HBlocks.SHROOMY_COBBLESTONE.slab)
-        consumer.stonecutterRecipes(HBlocks.SHROOMY_STONE_BRICKS.block, HBlocks.SHROOMY_STONE_BRICKS.stairs, HBlocks.SHROOMY_STONE_BRICKS.wall, slab = HBlocks.SHROOMY_STONE_BRICKS.slab)
+        //consumer.stonecutterRecipes(HBlocks.SHROOMY_COBBLESTONE.block, HBlocks.SHROOMY_COBBLESTONE.stairs, HBlocks.SHROOMY_COBBLESTONE.wall, slab = HBlocks.SHROOMY_COBBLESTONE.slab)
+        //consumer.stonecutterRecipes(HBlocks.SHROOMY_STONE_BRICKS.block, HBlocks.SHROOMY_STONE_BRICKS.stairs, HBlocks.SHROOMY_STONE_BRICKS.wall, slab = HBlocks.SHROOMY_STONE_BRICKS.slab)
         consumer.stonecutterRecipes(HBlocks.CHOCOLATE_BLOCK.block, HBlocks.CHOCOLATE_BLOCK.stairs, slab = HBlocks.CHOCOLATE_BLOCK.slab)
         //consumer.stonecutterRecipes(HBlocks.CHARGED_CASTLETON_BRICKS.block, HBlocks.CHARGED_CASTLETON_BRICKS.stairs, HBlocks.CHARGED_CASTLETON_BRICKS.fence, HBlocks.CHARGED_CASTLETON_BRICKS.wall, slab = HBlocks.CHARGED_CASTLETON_BRICKS.slab)
         //consumer.stonecutterRecipes(HBlocksNew.RAINBOW_BRICKS, HBlocksNew.RAINBOW_BRICK_STAIRS, HBlocksNew.RAINBOW_BRICK_WALL, HBlocksNew.RAINBOW_BRICK_FENCE, slab = HBlocksNew.RAINBOW_BRICK_SLAB)
         //consumer.stonecutterRecipes(HBlocksNew.RAINBOW_ROCK, HBlocksNew.RAINBOW_BRICKS, HBlocksNew.RAINBOW_BRICK_STAIRS, HBlocksNew.RAINBOW_BRICK_WALL, HBlocksNew.RAINBOW_BRICK_FENCE, slab = HBlocksNew.RAINBOW_BRICK_SLAB)
 
-        HBlocks.CASTLETON_STONE.addRecipes(consumer)
-        HBlocks.RAINBOW_ROCK.addRecipes(consumer)
-        HBlocks.CHARGED_CASTLETON_BRICKS.addRecipes(consumer)
-        HBlocks.RAINBOW_FACTORY_BRICKS.addRecipes(consumer)
+        consumer.smeltingRecipe(HBlocks.CASTLETON_STONE.stone.block, HBlocks.CRACKED_CASTLETON_BRICKS, 0.1f)
 
         consumer.stonecutterRecipes(Blocks.SPRUCE_PLANKS, *HBlocks.SPRUCE_PLANKS.variants.map(Supplier<out Block>::get).toTypedArray())
 
@@ -132,13 +125,10 @@ class RecipeGenerator(generatorIn: DataGenerator) : RecipeProvider(generatorIn) 
         //consumer.campfireRecipe(VENISON, COOKED_VENISON, 0.35f)
 
         // compressed (storage) block recipes
-        //HBlocks.COMPRESSED_COBBLESTONE.addRecipes(consumer)
 
         consumer.storage(HBlocks.CHOCOLATE_BLOCK.block, Items.COCOA_BEANS)
-        consumer.slab(HBlocks.CHOCOLATE_BLOCK.slab, HBlocks.CHOCOLATE_BLOCK.block)
-        consumer.stairs(HBlocks.CHOCOLATE_BLOCK.stairs, HBlocks.CHOCOLATE_BLOCK.block)
 
-        consumer.storage(HBlocks.MALACHITE_BLOCK, HBlocks.MALACHITE_CRYSTAL.item, HItemTags.GEMS_MALACHITE)
+        consumer.storage(HBlocks.MALACHITE_BLOCK, HBlocks.MALACHITE_CRYSTAL.shard, HItemTags.GEMS_MALACHITE)
         consumer.storage(HBlocks.RAINBOWSTONE_BLOCK, RAINBOWSTONE_GEM_ITEM)
     }
 

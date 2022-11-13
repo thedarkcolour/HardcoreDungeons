@@ -14,8 +14,9 @@ import thedarkcolour.hardcoredungeons.data.LootGenerator
  * @param prefix Underscores must be included in the prefix
  * @param tag The plantable blocks tag
  */
-class GroundCombo(prefix: String, nocturnal: Boolean, tag: TagKey<Block>, soilProps: HProperties, grassProps: HProperties) : ICombo {
+class GroundCombo(prefix: String, nocturnal: Boolean, tag: TagKey<Block>, soilProps: HProperties, grassProps: HProperties) : BlockCombo() {
     val soil by BlockMaker.cubeAllWithItem(prefix + "soil", soilProps)
+    // todo consider removing because of recent world gen changes
     val loam by BlockMaker.cubeAllWithItem(prefix + "loam", soilProps)
     val grass by BlockMaker.blockWithItem(prefix + "grass_block") {
         HGrassBlock({ soil.defaultBlockState() }, nocturnal, tag, grassProps.build())
@@ -23,6 +24,10 @@ class GroundCombo(prefix: String, nocturnal: Boolean, tag: TagKey<Block>, soilPr
 
     override fun addTags(tags: DataTags) {
         tags.block(BlockTags.DIRT, soil, grass)
+        tags.shovel(soil)
+        tags.shovel(loam)
+        tags.shovel(grass)
+        tags.block(BlockTags.ANIMALS_SPAWNABLE_ON, grass)
     }
 
     override fun addLoot(gen: LootGenerator) {

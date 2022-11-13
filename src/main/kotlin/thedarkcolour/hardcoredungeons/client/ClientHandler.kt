@@ -3,6 +3,7 @@ package thedarkcolour.hardcoredungeons.client
 import net.minecraft.client.renderer.ItemBlockRenderTypes
 import net.minecraft.client.renderer.RenderType
 import net.minecraft.client.renderer.Sheets
+import net.minecraftforge.client.event.ComputeFovModifierEvent
 import net.minecraftforge.client.event.ModelEvent
 import net.minecraftforge.client.event.RegisterColorHandlersEvent
 import net.minecraftforge.client.event.RegisterDimensionSpecialEffectsEvent
@@ -12,6 +13,7 @@ import thedarkcolour.hardcoredungeons.client.dimension.CastletonEffects
 import thedarkcolour.hardcoredungeons.client.model.HModelLayers
 import thedarkcolour.hardcoredungeons.client.model.block.FullbrightBakedModel
 import thedarkcolour.hardcoredungeons.client.renderer.curio.PendantCurioRenderer
+import thedarkcolour.hardcoredungeons.item.GunItem
 import thedarkcolour.hardcoredungeons.registry.HDimensions
 import thedarkcolour.hardcoredungeons.registry.HEntities
 import thedarkcolour.hardcoredungeons.registry.HEntities.registerEntityRenderers
@@ -20,6 +22,7 @@ import thedarkcolour.hardcoredungeons.registry.block.HBlocks
 import thedarkcolour.hardcoredungeons.registry.items.AURIGOLD_PENDANT_ITEM
 import thedarkcolour.hardcoredungeons.registry.items.HItems
 import thedarkcolour.hardcoredungeons.util.modLoc
+import thedarkcolour.kotlinforforge.forge.FORGE_BUS
 import thedarkcolour.kotlinforforge.forge.MOD_BUS
 import top.theillusivec4.curios.api.client.CuriosRendererRegistry
 
@@ -43,8 +46,18 @@ object ClientHandler {
         MOD_BUS.addListener(HEntities::registerEntityShaders)
         MOD_BUS.addListener(::registerDimensionFx)
         MOD_BUS.addListener(::registerEntityRenderers)
+        FORGE_BUS.addListener(::computeFOV)
 
         //FORGE_BUS.addListener(::postRender)
+    }
+
+    private fun computeFOV(event: ComputeFovModifierEvent) {
+        val item = event.player.mainHandItem.item
+
+        if (item is GunItem) {
+            // Maybe a zoom function?
+            event.newFovModifier = event.newFovModifier * item.zoomModifier(event.player)
+        }
     }
 
     // ItemBlockRenderTypes is not (?) thread safe so enqueue on main thread

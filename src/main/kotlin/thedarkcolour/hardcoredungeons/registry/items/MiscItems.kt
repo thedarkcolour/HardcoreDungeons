@@ -35,7 +35,7 @@ val MALACHITE_PICKAXE_ITEM by HItems.register("malachite_pickaxe") { MalachitePi
 val MALACHITE_AXE_ITEM by ItemMaker.simple("malachite_axe") { AxeItem(HItemTier.MALACHITE, 5.0f, -3.0f, Item.Properties().tab(Group).stacksTo(1)) }
 val MALACHITE_HOE_ITEM by ItemMaker.simple("malachite_hoe") { HoeItem(HItemTier.MALACHITE, -3, 0.0f, Item.Properties().tab(Group).stacksTo(1)) }
 val MALACHITE_SCYTHE_ITEM by ItemMaker.simple("malachite_scythe") { ScytheItem(HItemTier.MALACHITE, 3, 0.0f, Item.Properties().tab(Group).stacksTo(1)) }
-val MALACHITE_SWORD_ITEM by ItemMaker.rotatedHandheld("malachite_sword") { SwordItem(HItemTier.MALACHITE, 3, -2.4f, ItemMaker.props().stacksTo(1)) }
+val MALACHITE_SWORD_ITEM by ItemMaker.handheld("malachite_sword") { SwordItem(HItemTier.MALACHITE, 3, -2.4f, ItemMaker.props().stacksTo(1)) }
 
 // Deer
 val VENISON_ITEM by ItemMaker.simple("venison") { Item(Item.Properties().tab(Group).food(FoodProperties.Builder().nutrition(3).saturationMod(0.2f).meat().build())) }
@@ -46,7 +46,7 @@ val DEER_SPAWN_EGG_ITEM by ItemMaker.simple("deer_spawn_egg") { ForgeSpawnEggIte
 // Mushroom set
 val MUSHROOM_CAP_ITEM by ItemMaker.simple("mushroom_cap") { MushroomArmorItem(EquipmentSlot.HEAD, Item.Properties().tab(Group).stacksTo(1).durability(567)) }
 val MUSHROOM_CHESTPLATE_ITEM by ItemMaker.simple("mushroom_chestplate") { MushroomArmorItem(EquipmentSlot.CHEST, Item.Properties().tab(Group).stacksTo(1).durability(642)) }
-val SHROOMY_SWORD_ITEM by ItemMaker.rotatedHandheld("shroomy_sword") { ShroomySwordItem(Item.Properties().tab(Group).stacksTo(1).durability(726)) }
+val SHROOMY_SWORD_ITEM by ItemMaker.handheld("shroomy_sword") { ShroomySwordItem(Item.Properties().tab(Group).stacksTo(1).durability(726)) }
 val MUSHROOM_ARCHER_SPAWN_EGG_ITEM by ItemMaker.spawnEgg(HEntities::MUSHROOM_ARCHER, 0x434142, 0x2984a3)
 
 

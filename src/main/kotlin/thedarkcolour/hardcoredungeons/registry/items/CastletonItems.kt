@@ -25,7 +25,7 @@ val TOWER_BOOTS_ITEM by ItemMaker.simple("tower_boots") {ArmorItem(HArmorMateria
 val BLUE_CASTLETON_DUNGEON_KEY_ITEM by ItemMaker.simple("blue_castleton_dungeon_key") { Item(Item.Properties().tab(Group).stacksTo(1).rarity(Rarity.RARE)) }
 
 // Weapons
-val CASTLETON_SWORD_ITEM by ItemMaker.rotatedHandheld("castleton_sword") { SwordItem(Tiers.GOLD, 9, -2.4f, ItemMaker.props().stacksTo(1).rarity(Rarity.RARE)) }
-val CASTLETON_STAFF_ITEM by ItemMaker.rotatedHandheld("castleton_staff") { StaffItem(ItemMaker.props().stacksTo(1).rarity(Rarity.UNCOMMON)) }
+val CASTLETON_SWORD_ITEM by ItemMaker.handheld("castleton_sword" ) { SwordItem(Tiers.GOLD, 9, -2.4f, ItemMaker.props().stacksTo(1).rarity(Rarity.RARE)) }
+val CASTLETON_STAFF_ITEM by ItemMaker.handheld("castleton_staff" ) { StaffItem(ItemMaker.props().stacksTo(1).rarity(Rarity.UNCOMMON)) }
 
 // @formatter:on

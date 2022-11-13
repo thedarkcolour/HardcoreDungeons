@@ -1,5 +1,5 @@
 {
-  "parent": "hardcoredungeons:item/handheld_rotated",
+  "parent": "minecraft:item/handheld",
   "textures": {
     "layer0": "hardcoredungeons:item/candy_cane_sword"
   }

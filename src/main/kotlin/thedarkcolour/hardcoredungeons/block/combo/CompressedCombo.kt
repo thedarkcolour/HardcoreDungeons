@@ -23,7 +23,7 @@ import java.text.DecimalFormat
 import java.util.function.Consumer
 import kotlin.math.pow
 
-class CompressedCombo(val block: () -> Block, private val properties: HProperties? = null) : ICombo {
+class CompressedCombo(val block: () -> Block, private val properties: HProperties? = null) : BlockCombo() {
     val variants = ArrayList<ObjectHolderDelegate<HBlock>>(8)
 
     init {

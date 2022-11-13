@@ -45,7 +45,7 @@ class WoodCombo(
     private val blockTag: TagKey<Block>,
     private val itemTag: TagKey<Item>,
     applyProperties: (HProperties) -> Unit
-) : ICombo {
+) : BlockCombo() {
     // Wood Type
     val type: WoodType = WoodType.create(HardcoreDungeons.ID + ":" + wood).also(WoodType::register)
 
@@ -109,6 +109,19 @@ class WoodCombo(
         tags.block(BlockTags.FENCE_GATES, Tags.Items.FENCE_GATES, fenceGate)
         tags.block(BlockTags.SAPLINGS, ItemTags.SAPLINGS, sapling.plant)
 
+        tags.axe(planks)
+        tags.axe(button)
+        tags.axe(door)
+        tags.axe(stairs)
+        tags.axe(slab)
+        tags.axe(fence)
+        tags.axe(pressurePlate)
+        tags.axe(trapdoor)
+        tags.axe(leaves)
+        tags.axe(fence)
+        tags.axe(fenceGate)
+        tags.axe(sapling.plant)
+
         sign.addTags(tags)
     }
 
@@ -159,7 +172,7 @@ class WoodCombo(
             builder.group("wooden_trapdoor")
             builder.unlockedBy("has_planks", RecipeGenerator.has(planks))
         }
-        consumer.shaped(door, 2) { builder ->
+        consumer.shaped(door, 3) { builder ->
             builder.define('x', planks)
             builder.pattern("xx")
             builder.pattern("xx")

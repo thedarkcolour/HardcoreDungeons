@@ -30,7 +30,7 @@ class FenceModelType : BlockModelType<FenceBlock>() {
         val textureLoc = gen.textureLoc(texture)
 
         gen.blockModel(path.toString() + "_inventory")
-            .parent(gen.mcModel("fence_inventory"))
+            .parent(gen.mcModel("block/fence_inventory"))
             .texture("texture", textureLoc)
         gen.fenceBlock(block, textureLoc)
     }

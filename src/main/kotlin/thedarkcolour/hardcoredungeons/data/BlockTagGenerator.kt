@@ -10,6 +10,7 @@ import net.minecraftforge.common.Tags.Blocks
 import net.minecraftforge.common.data.ExistingFileHelper
 import thedarkcolour.hardcoredungeons.HardcoreDungeons
 import thedarkcolour.hardcoredungeons.block.combo.DataTags
+import thedarkcolour.hardcoredungeons.block.combo.BlockCombo
 import thedarkcolour.hardcoredungeons.registry.block.HBlocks
 import thedarkcolour.hardcoredungeons.tags.HBlockTags
 
@@ -23,7 +24,7 @@ class BlockTagGenerator(gen: DataGenerator, helper: ExistingFileHelper) : BlockT
      * Register tags for each block.
      */
     override fun addTags() {
-        tags(DataTags.Blocks(this))
+        comboTags(DataTags.Blocks(this))
 
         tag(HBlockTags.GLASS_RAINBOW).add(HBlocks.RAINBOW_GLASS)
         tag(HBlockTags.GLASS_PANES_RAINBOW).add(HBlocks.RAINBOW_GLASS_PANE)
@@ -121,47 +122,60 @@ class BlockTagGenerator(gen: DataGenerator, helper: ExistingFileHelper) : BlockT
     }
 
     companion object {
-        fun tags(tags: DataTags) {
-            /** Overworld materials */
-            HBlocks.SHROOMY_COBBLESTONE.addTags(tags)
-            HBlocks.SHROOMY_STONE_BRICKS.addTags(tags)
+        fun comboTags(tags: DataTags) {
+            for (combo in BlockCombo.ALL_COMBOS) {
+                combo.addTags(tags)
+            }
 
-            /** Wood */
-            HBlocks.LUMLIGHT_WOOD.addTags(tags)
-            HBlocks.AURI_WOOD.addTags(tags)
-            HBlocks.COTTONMARSH_WOOD.addTags(tags)
-
-            /** Chiseled block variants */
             HBlocks.OAK_PLANKS.addTag(tags, BlockTags.PLANKS, ItemTags.PLANKS)
             HBlocks.SPRUCE_PLANKS.addTag(tags, BlockTags.PLANKS, ItemTags.PLANKS)
+//            /** Overworld materials */
+//            HBlocks.SHROOMY_COBBLESTONE.addTags(tags)
+//            HBlocks.SHROOMY_STONE_BRICKS.addTags(tags)
+//
+//            /** Wood */
+//            HBlocks.LUMLIGHT_WOOD.addTags(tags)
+//            HBlocks.AURI_WOOD.addTags(tags)
+//            HBlocks.COTTONMARSH_WOOD.addTags(tags)
+//
+//            /** Chiseled block variants */
+//
+//
+//
+//            /** Castleton materials */
+//            HBlocks.CASTLETON_SOIL.addTags(tags)
+//            HBlocks.CASTLETON_STONE.addTags(tags)
+//            HBlocks.CHARGED_CASTLETON_BRICKS.addTags(tags)
+//            HBlocks.CASTLETON_PORTAL.addTags(tags)
+//
+//            /** Castleton Props */
+//            HBlocks.CASTLETON_TORCH.addTags(tags)
+//
+//            /** Rainbowland materials */
+//            HBlocks.RAINBOW_SOIL.addTags(tags)
+//            HBlocks.RAINBOW_ROCK.addTags(tags)
+//            HBlocks.RAINBOW_FACTORY_BRICKS.addTags(tags)
+//            HBlocks.RAINBOWLAND_PORTAL.addTags(tags)
+//
+//            /** Aubrum materials */
+//            HBlocks.AURISOIL.addTags(tags)
+//            HBlocks.AUBRUM_PORTAL.addTags(tags)
+//
+//            /** Candyland materials */
+//            HBlocks.SUGARY_SOIL.addTags(tags)
+//            HBlocks.CHOCOLATE_BLOCK.addTags(tags)
+//            HBlocks.CANDYLAND_PORTAL.addTags(tags)
+//
+//            /** Crops */
+//            HBlocks.CHILI_PEPPER.addTags(tags)
+//            HBlocks.WILD_BERROOK.addTags(tags)
+        }
 
-            /** Castleton materials */
-            HBlocks.CASTLETON_SOIL.addTags(tags)
-            HBlocks.CASTLETON_STONE.addTags(tags)
-            HBlocks.CHARGED_CASTLETON_BRICKS.addTags(tags)
-            HBlocks.CASTLETON_PORTAL.addTags(tags)
-
-            /** Castleton Props */
-            HBlocks.CASTLETON_TORCH.addTags(tags)
-
-            /** Rainbowland materials */
-            HBlocks.RAINBOW_SOIL.addTags(tags)
-            HBlocks.RAINBOW_ROCK.addTags(tags)
-            HBlocks.RAINBOW_FACTORY_BRICKS.addTags(tags)
-            HBlocks.RAINBOWLAND_PORTAL.addTags(tags)
-
-            /** Aubrum materials */
-            HBlocks.AURISOIL.addTags(tags)
-            HBlocks.AUBRUM_PORTAL.addTags(tags)
-
-            /** Candyland materials */
-            HBlocks.SUGARY_SOIL.addTags(tags)
-            HBlocks.CHOCOLATE_BLOCK.addTags(tags)
-            HBlocks.CANDYLAND_PORTAL.addTags(tags)
-
-            /** Crops */
-            HBlocks.CHILI_PEPPER.addTags(tags)
-            HBlocks.WILD_BERROOK.addTags(tags)
+        fun miningLevels(tags: DataTags) {
+            tags.pickaxe(HBlocks.CROWN)
+            tags.pickaxe(HBlocks.CHALICE)
+            tags.pickaxe(HBlocks.PLATE)
+            tags.pickaxe(HBlocks.MALACHITE_BLOCK, DataTags.MiningLevel.STONE)
         }
     }
 }

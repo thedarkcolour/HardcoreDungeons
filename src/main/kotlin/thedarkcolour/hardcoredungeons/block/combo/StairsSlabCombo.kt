@@ -9,7 +9,7 @@ import thedarkcolour.hardcoredungeons.data.RecipeGenerator.Companion.slab
 import thedarkcolour.hardcoredungeons.data.RecipeGenerator.Companion.stairs
 import java.util.function.Consumer
 
-open class StairsSlabCombo(name: String, properties: HProperties) : ICombo {
+open class StairsSlabCombo(name: String, properties: HProperties) : BlockCombo() {
     val block by BlockMaker.cubeAllWithItem(name, properties)
     val slab by BlockMaker.slabWithItem(BlockMaker.getComboName(name) + "_slab", { block }, properties)
     val stairs by BlockMaker.stairsWithItem(BlockMaker.getComboName(name) + "_stairs", { block }, properties)

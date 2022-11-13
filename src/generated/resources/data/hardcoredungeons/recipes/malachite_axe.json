@@ -2,7 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "key": {
     "#": {
-      "item": "hardcoredungeons:malachite_crystal"
+      "item": "hardcoredungeons:malachite_crystal_shard"
     },
     "I": {
       "item": "minecraft:stick"

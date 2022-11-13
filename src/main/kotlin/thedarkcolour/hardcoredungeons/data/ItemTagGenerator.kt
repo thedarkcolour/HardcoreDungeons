@@ -19,14 +19,14 @@ import thedarkcolour.hardcoredungeons.tags.HItemTags
 
 class ItemTagGenerator(gen: DataGenerator, blockTags: BlockTagsProvider, helper: ExistingFileHelper) : ItemTagsProvider(gen, blockTags, HardcoreDungeons.ID, helper) {
     override fun addTags() {
-        BlockTagGenerator.tags(DataTags.Items(this))
+        BlockTagGenerator.comboTags(DataTags.Items(this))
 
         tag(HItemTags.LUMSHROOM).add(HBlocks.PURPLE_LUMSHROOM.plant.asItem(), HBlocks.BLUE_LUMSHROOM.plant.asItem())
 
         tag(HItemTags.AMMUNITION_GENERIC).add(BULLET_ITEM, SHELL_ITEM, INCENDIARY_BULLET_ITEM)
         tag(HItemTags.AMMUNITION_SMALL).add(BULLET_ITEM, INCENDIARY_BULLET_ITEM)
         tag(HItemTags.AMMUNITION_INCENDIARY).add(INCENDIARY_BULLET_ITEM)
-        tag(HItemTags.GEMS_MALACHITE).add(HBlocks.MALACHITE_CRYSTAL.item)
+        tag(HItemTags.GEMS_MALACHITE).add(HBlocks.MALACHITE_CRYSTAL.shard)
         tag(HItemTags.GEMS_RAINBOWSTONE).add(RAINBOWSTONE_GEM_ITEM)
         //getBuilder(HBlockTags.GLASS_RAINBOW).add(HBlocks.RAINBOW_GLASS)
         //getBuilder(HBlockTags.GLASS_PANES_RAINBOW).add(HBlocks.RAINBOW_GLASS_PANE)
@@ -39,7 +39,7 @@ class ItemTagGenerator(gen: DataGenerator, blockTags: BlockTagsProvider, helper:
         //tag(Tags.Items.GLASS_PANES).add(HItemTags.GLASS_PANES_RAINBOW)
         //tag(Tags.Items.MUSHROOMS).add(BLUE_LUMSHROOM, PURPLE_LUMSHROOM)
         //tag(Tags.Items.GEMS_DIAMOND).add(PRISTINE_DIAMOND_ITEM)
-        tag(Tags.Items.GEMS).add(HBlocks.MALACHITE_CRYSTAL.item)
+        tag(Tags.Items.GEMS).add(HBlocks.MALACHITE_CRYSTAL.shard)
     }
 
     // Override to make public
