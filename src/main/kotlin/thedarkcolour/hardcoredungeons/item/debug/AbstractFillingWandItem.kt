@@ -1,8 +1,6 @@
 package thedarkcolour.hardcoredungeons.item.debug
 
 import com.google.common.collect.ImmutableMap
-import net.minecraft.world.level.block.state.BlockState
-import net.minecraft.world.item.ItemStack
 import net.minecraft.core.BlockPos
 import net.minecraft.nbt.NbtUtils
 import net.minecraft.network.chat.Component
@@ -12,9 +10,11 @@ import net.minecraft.world.InteractionResultHolder
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.Item
+import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.UseAnim
 import net.minecraft.world.item.context.UseOnContext
 import net.minecraft.world.level.Level
+import net.minecraft.world.level.block.state.BlockState
 
 /**
  * Base class for wands that have a fill-style function.
@@ -41,7 +41,7 @@ abstract class AbstractFillingWandItem(properties: Properties) : Item(properties
      * @param worldIn the world
      * @param playerIn the player that may or may not exist
      */
-    protected fun place(stack: ItemStack, state: BlockState, pos: BlockPos, worldIn: Level, playerIn: Player?) {
+    protected fun fill(stack: ItemStack, state: BlockState, pos: BlockPos, worldIn: Level, playerIn: Player?) {
         val startPos = NbtUtils.readBlockPos(stack.getTagElement("StartPos")!!)
         val builder = ImmutableMap.builder<BlockPos, BlockState>()
 

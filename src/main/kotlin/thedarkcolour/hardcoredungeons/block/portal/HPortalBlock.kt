@@ -1,10 +1,9 @@
 package thedarkcolour.hardcoredungeons.block.portal
 
-import net.minecraft.world.level.block.state.BlockState
-import net.minecraft.core.Direction
-import net.minecraft.core.Direction.Axis
 import net.minecraft.core.BlockPos
 import net.minecraft.core.BlockPos.MutableBlockPos
+import net.minecraft.core.Direction
+import net.minecraft.core.Direction.Axis
 import net.minecraft.resources.ResourceKey
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.entity.Entity
@@ -13,6 +12,7 @@ import net.minecraft.world.level.BlockGetter
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.LevelAccessor
 import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.StateDefinition
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.minecraft.world.phys.shapes.BooleanOp
@@ -56,9 +56,9 @@ class HPortalBlock(
             val destination = worldIn.server!!.getLevel(type) ?: return
 
             // height to spawn the portal
-            var portalOffset = 0.0
-            val x = entityIn.x
-            val z = entityIn.z
+            var portalOffset = 0
+            val x = entityIn.x.toInt()
+            val z = entityIn.z.toInt()
             val mutable = MutableBlockPos(x, portalOffset, z)
 
             // first check for existing portal
@@ -66,8 +66,8 @@ class HPortalBlock(
 
             // then check for vacant portal position if no portal exists
             if (destination.getBlockState(mutable).block != this) {
-                portalOffset = 0.0
-                mutable.set(x, 0.0, z)
+                portalOffset = 0
+                mutable.set(x, 0, z)
                 while (++portalOffset < 255 && !destination.isEmptyBlock(mutable.set(x, portalOffset, z)));
             }
 
@@ -78,14 +78,14 @@ class HPortalBlock(
             PlayerHelper.setPortalCooldown(entityIn, 30)
             // cache effects because teleport clears them for some reason
             val effects = ArrayList(entityIn.activeEffects)
-            entityIn.teleportTo(destination, entityIn.position().x, portalOffset, entityIn.position().z, entityIn.yRot, entityIn.xRot)
+            entityIn.teleportTo(destination, entityIn.position().x, portalOffset.toDouble(), entityIn.position().z, entityIn.yRot, entityIn.xRot)
             // add all the effects back
             for (effect in effects) {
                 entityIn.addEffect(effect)
             }
 
             // each state has one reference
-            if (destination.getBlockState(BlockPos(entityIn.blockPosition().x.toDouble(), portalOffset, entityIn.blockPosition().z.toDouble())) != state) {
+            if (destination.getBlockState(BlockPos(entityIn.blockPosition().x, portalOffset, entityIn.blockPosition().z)) != state) {
                 // create portal that matches the one in this dimension
                 constructMatchingPortal(destination, worldIn, pos, entityIn.blockPosition(), state)
             }

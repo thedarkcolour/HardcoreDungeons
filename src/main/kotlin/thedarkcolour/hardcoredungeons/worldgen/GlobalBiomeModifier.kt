@@ -8,7 +8,8 @@ import net.minecraft.world.level.levelgen.GenerationStep
 import net.minecraftforge.common.world.BiomeModifier
 import net.minecraftforge.common.world.ModifiableBiomeInfo
 
-// the biome modifier system is so annoying for people who don't need anything to be extensible
+// Biome modifier that applies to all biomes in the overworld
+// Only malachite so far but we'll see how things change
 object GlobalBiomeModifier : BiomeModifier {
     val codec: Codec<GlobalBiomeModifier> = Codec.unit(this)
 

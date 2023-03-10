@@ -1,11 +1,8 @@
 plugins {
-    id 'org.jetbrains.kotlin.jvm' version '1.7.10'
+    id 'org.jetbrains.kotlin.jvm' version '1.8.0'
     id 'net.minecraftforge.gradle' version '5.1.+'
     id 'org.parchmentmc.librarian.forgegradle' version '1.+'
-    //id 'wtf.gofancy.koremods.gradle' version '0.1.19'
 }
-
-apply from: 'https://raw.githubusercontent.com/thedarkcolour/KotlinForForge/site/thedarkcolour/kotlinforforge/gradle/kff-3.7.1.gradle'
 
 version = '1.0.0'
 group = 'thedarkcolour'
@@ -13,11 +10,9 @@ archivesBaseName = 'hardcoredungeons'
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
-
-
 minecraft {
     // Change to your preferred mappings
-    mappings channel: 'parchment', version: '1.18.2-2022.07.17-1.19'
+    mappings channel: 'parchment', version: '2022.11.27-1.19.2'
     // Add your AccessTransformer
     accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
 
@@ -78,6 +73,7 @@ repositories {
     maven {
         name = 'Kotlin for Forge'
         url = 'https://thedarkcolour.github.io/KotlinForForge/'
+        content { includeGroup "thedarkcolour" }
     }
 	maven {
         name = 'curios'
@@ -102,20 +98,13 @@ repositories {
         url = 'https://www.cursemaven.com'
         content { includeGroup "curse.maven" }
     }
-    //maven {
-    //    name = 'Garden of Fancy'
-    //    url = 'https://maven.gofancy.wtf/releases'
-    //}
 }
 // Check duplicate files
 processResources.setDuplicatesStrategy(DuplicatesStrategy.WARN)
 
 dependencies {
     // Use the latest version of Minecraft Forge
-    minecraft('net.minecraftforge:forge:1.19.2-43.1.15')
-
-    // Koremods
-    //koremods group: 'wtf.gofancy.koremods', name: 'koremods-modlauncher', version: '0.4.10'
+    minecraft('net.minecraftforge:forge:1.19.2-43.2.3')
 
     // curios
     implementation fg.deobf('top.theillusivec4.curios:curios-forge:1.19.2-5.1.1.0')
@@ -126,12 +115,10 @@ dependencies {
     // jei
     implementation fg.deobf('mezz.jei:jei-1.19.2-forge:11.2.0.246')
 
-    // biomes o plenty
-    //implementation fg.deobf('curse.maven:biomesoplenty-220318:3360574')
-    //implementation fg.deobf('curse.maven:biomesoplenty-sources-220318:3360575')
-
     // the one probe
     implementation fg.deobf('curse.maven:top-245211:3965693')
+
+    implementation fg.deobf('thedarkcolour:kotlinforforge:3.9.1')
 }
 
 //koremods {

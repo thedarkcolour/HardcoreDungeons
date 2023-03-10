@@ -14,7 +14,6 @@ import thedarkcolour.hardcoredungeons.data.modelgen.item.ItemModelType
 import thedarkcolour.hardcoredungeons.item.Group
 import thedarkcolour.hardcoredungeons.legacy.ObjectHolderDelegate
 import kotlin.reflect.KProperty0
-import kotlin.reflect.jvm.isAccessible
 
 object ItemMaker {
     // Pickaxe, sword, and generally any tools should be handheld
@@ -40,17 +39,17 @@ object ItemMaker {
 
     // Crafting ingredient type of item
     fun resourceItem(name: String): ObjectHolderDelegate<Item> {
-        return simple(name) { Item(EmptyProperties) }
+        return simple(name) { Item(DefaultProperties) }
     }
 
     // Spawn egg for any mob
     @Suppress("NAME_SHADOWING", "UNCHECKED_CAST")
     fun spawnEgg(entityType: KProperty0<EntityType<*>>, baseColor: Int, spotColor: Int) : ObjectHolderDelegate<ForgeSpawnEggItem> {
-        entityType.isAccessible = true
+        //entityType.visibility = KVisibility.PUBLIC
         val entityType = entityType.getDelegate() as ObjectHolderDelegate<EntityType<out Mob>>
 
         return registerModelled(entityType.registryObject.id.path + "_spawn_egg", ItemModelType.SPAWN_EGG_ITEM) {
-            ForgeSpawnEggItem(entityType, baseColor, spotColor, EmptyProperties)
+            ForgeSpawnEggItem(entityType, baseColor, spotColor, DefaultProperties)
         }
     }
 
@@ -82,7 +81,7 @@ object ItemMaker {
     }
 
     fun blockItem(name: String, type: ItemModelType = ItemModelType.BLOCK_ITEM, block: () -> Block): ObjectHolderDelegate<BlockItem> {
-        return registerModelled(name, type) { BlockItem(block(), EmptyProperties) }
+        return registerModelled(name, type) { BlockItem(block(), DefaultProperties) }
     }
 
     /**
@@ -100,9 +99,13 @@ object ItemMaker {
         return Item.Properties().tab(Group)
     }
 
-    // Unmodifiable
-    object EmptyProperties : Item.Properties() {
-        var set = false
+    fun singleStack(): Item.Properties {
+        return props().stacksTo(1)
+    }
+
+    // Unmodifiable, sets creative tab and nothing else
+    object DefaultProperties : Item.Properties() {
+        private var set = false
 
         init {
             tab(Group)

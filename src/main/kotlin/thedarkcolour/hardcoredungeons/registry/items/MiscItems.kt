@@ -18,8 +18,8 @@ import thedarkcolour.hardcoredungeons.registry.HEntities
 val LEGENDARY_RARITY: Rarity = Rarity.create("HARDCOREDUNGEONS_LEGENDARY", ChatFormatting.RED)
 
 // Syringes
-val POTION_SYRINGE_ITEM by HItems.register("potion_syringe") { SyringeItem(Item.Properties().tab(Group).stacksTo(8)) }
-val SYRINGE_ITEM by ItemMaker.simple("syringe") { EmptySyringeItem(Item.Properties().tab(Group).stacksTo(16)) }
+val POTION_SYRINGE_ITEM by HItems.register("potion_syringe") { SyringeItem(ItemMaker.props().stacksTo(8)) }
+val SYRINGE_ITEM by ItemMaker.simple("syringe") { EmptySyringeItem(ItemMaker.props().stacksTo(16)) }
 
 // Ammo
 val BULLET_ITEM by ItemMaker.resourceItem("bullet")
@@ -27,15 +27,15 @@ val INCENDIARY_BULLET_ITEM by ItemMaker.resourceItem("incendiary_bullet")
 val SHELL_ITEM by ItemMaker.resourceItem("shell")
 
 // Guns
-val MINI_PISTOL_ITEM by ItemMaker.rotatedGun("mini_pistol") { GunItem(Item.Properties().tab(Group), chargeTime = 22, bulletDamage = 3.0f, drop = 0.0004f) }
+val MINI_PISTOL_ITEM by ItemMaker.rotatedGun("mini_pistol") { GunItem(ItemMaker.singleStack(), chargeTime = 22, bulletDamage = 3.0f, drop = 0.0004f) }
 
 // Malachite set
-val MALACHITE_SHOVEL_ITEM by ItemMaker.simple("malachite_shovel") { ShovelItem(HItemTier.MALACHITE, 1.5f, -3.0f, Item.Properties().tab(Group).stacksTo(1)) }
-val MALACHITE_PICKAXE_ITEM by HItems.register("malachite_pickaxe") { MalachitePickaxeItem(HItemTier.MALACHITE, 1, -2.8f, Item.Properties().tab(Group).stacksTo(1)) }
-val MALACHITE_AXE_ITEM by ItemMaker.simple("malachite_axe") { AxeItem(HItemTier.MALACHITE, 5.0f, -3.0f, Item.Properties().tab(Group).stacksTo(1)) }
-val MALACHITE_HOE_ITEM by ItemMaker.simple("malachite_hoe") { HoeItem(HItemTier.MALACHITE, -3, 0.0f, Item.Properties().tab(Group).stacksTo(1)) }
-val MALACHITE_SCYTHE_ITEM by ItemMaker.simple("malachite_scythe") { ScytheItem(HItemTier.MALACHITE, 3, 0.0f, Item.Properties().tab(Group).stacksTo(1)) }
-val MALACHITE_SWORD_ITEM by ItemMaker.handheld("malachite_sword") { SwordItem(HItemTier.MALACHITE, 3, -2.4f, ItemMaker.props().stacksTo(1)) }
+val MALACHITE_SHOVEL_ITEM by ItemMaker.simple("malachite_shovel") { ShovelItem(HItemTier.MALACHITE, 1.5f, -3.0f, ItemMaker.singleStack()) }
+val MALACHITE_PICKAXE_ITEM by HItems.register("malachite_pickaxe") { MalachitePickaxeItem(HItemTier.MALACHITE, 1, -2.8f, ItemMaker.singleStack()) }
+val MALACHITE_AXE_ITEM by ItemMaker.simple("malachite_axe") { AxeItem(HItemTier.MALACHITE, 5.0f, -3.0f, ItemMaker.singleStack()) }
+val MALACHITE_HOE_ITEM by ItemMaker.simple("malachite_hoe") { HoeItem(HItemTier.MALACHITE, -3, 0.0f, ItemMaker.singleStack()) }
+val MALACHITE_SCYTHE_ITEM by ItemMaker.simple("malachite_scythe") { ScytheItem(HItemTier.MALACHITE, 3, 0.0f, ItemMaker.singleStack()) }
+val MALACHITE_SWORD_ITEM by ItemMaker.handheld("malachite_sword") { SwordItem(HItemTier.MALACHITE, 3, -2.4f, ItemMaker.singleStack()) }
 
 // Deer
 val VENISON_ITEM by ItemMaker.simple("venison") { Item(Item.Properties().tab(Group).food(FoodProperties.Builder().nutrition(3).saturationMod(0.2f).meat().build())) }

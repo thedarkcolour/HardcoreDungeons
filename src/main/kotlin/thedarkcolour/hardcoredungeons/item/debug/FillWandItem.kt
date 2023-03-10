@@ -33,7 +33,7 @@ class FillWandItem(properties: Properties) : AbstractFillingWandItem(properties)
                         playerIn?.displayClientMessage(Component.literal("No filler block"), true)
                         return InteractionResult.SUCCESS
                     }
-                    place(stack, state, pos, worldIn, playerIn)
+                    fill(stack, state, pos, worldIn, playerIn)
                 }
             }
         }

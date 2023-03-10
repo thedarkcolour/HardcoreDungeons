@@ -27,7 +27,7 @@ import java.util.function.Predicate
  * @property chargeTime The amount of time it takes to charge up a shot
  */
 open class GunItem(
-    properties: Item.Properties,
+    properties: Properties,
     val bulletDamage: Float = 3.0f,
     val velocity: Float = 1.2f,
     val drop: Float = 0.0f,

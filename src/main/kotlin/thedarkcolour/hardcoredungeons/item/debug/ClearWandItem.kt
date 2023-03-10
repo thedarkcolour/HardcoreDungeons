@@ -21,7 +21,7 @@ class ClearWandItem(properties: Properties) : AbstractFillingWandItem(properties
             if (!hasStartPos(stack)) {
                 saveStartPosition(stack, pos, playerIn)
             } else {
-                place(stack, Blocks.AIR.defaultBlockState(), pos, worldIn, playerIn)
+                fill(stack, Blocks.AIR.defaultBlockState(), pos, worldIn, playerIn)
             }
         }
 
