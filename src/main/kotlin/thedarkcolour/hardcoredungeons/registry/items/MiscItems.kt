@@ -21,6 +21,8 @@ val LEGENDARY_RARITY: Rarity = Rarity.create("HARDCOREDUNGEONS_LEGENDARY", ChatF
 val POTION_SYRINGE_ITEM by HItems.register("potion_syringe") { SyringeItem(ItemMaker.props().stacksTo(8)) }
 val SYRINGE_ITEM by ItemMaker.simple("syringe") { EmptySyringeItem(ItemMaker.props().stacksTo(16)) }
 
+val INFERNAL_SWORD by ItemMaker.handheld("infernal_sword") { HSwordItem(8.0f, 2.4f, 18, 1394, ItemMaker.props().stacksTo(1)) }
+
 // Ammo
 val BULLET_ITEM by ItemMaker.resourceItem("bullet")
 val INCENDIARY_BULLET_ITEM by ItemMaker.resourceItem("incendiary_bullet")

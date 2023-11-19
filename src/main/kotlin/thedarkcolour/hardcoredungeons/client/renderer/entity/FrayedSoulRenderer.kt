@@ -24,8 +24,8 @@ class FrayedSoulRenderer(context: EntityRendererProvider.Context) : ReloadableRe
         entity: FrayedSoulEntity, stack: PoseStack, ageInTicks: Float,
         rotationYaw: Float, partialTicks: Float
     ) {
-        super.setupRotations(entity, stack, ageInTicks, rotationYaw, partialTicks)
         stack.translate(0.0, sin((entity.tickCount.toDouble() + partialTicks) / 12) / 6, 0.0)
+        super.setupRotations(entity, stack, ageInTicks, rotationYaw, partialTicks)
     }
 
     companion object {

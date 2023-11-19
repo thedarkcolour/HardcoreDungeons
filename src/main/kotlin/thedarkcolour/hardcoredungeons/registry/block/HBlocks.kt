@@ -43,7 +43,6 @@ import thedarkcolour.hardcoredungeons.registry.items.BLUE_CASTLETON_DUNGEON_KEY_
 import thedarkcolour.hardcoredungeons.registry.items.ItemMaker
 import thedarkcolour.hardcoredungeons.tags.HBlockTags
 import thedarkcolour.hardcoredungeons.tags.HItemTags
-import kotlin.properties.ReadOnlyProperty
 
 /**
  * Simplified new version that uses deferred registers.
@@ -127,17 +126,14 @@ object HBlocks : HRegistry<Block>(ForgeRegistries.Keys.BLOCKS) {
 
     /** Aubrum props */
     val DRUM by BlockMaker.blockWithItem("drum") { HBlock(HProperties.of(Material.METAL).strength(2.5f).sound(SoundType.METAL).shape(BlockMaker.DRUM_SHAPE)) }
-    val SCRAP_METAL by BlockMaker.cubeAllWithItem("scrap_metal", HProperties.of(Material.METAL, MaterialColor.COLOR_BROWN).strength(2.5f)/*.harvestLevel(1).harvestTool(ToolType.PICKAXE)*/.sound(
-        HSounds.SCRAP_METAL
-    ))
+    val SCRAP_METAL = StairsSlabCombo("scrap_metal", HProperties.of(Material.METAL, MaterialColor.COLOR_BROWN).strength(2.5f)/*.harvestLevel(1).harvestTool(ToolType.PICKAXE)*/.sound(HSounds.SCRAP_METAL))
 
     /** Candyland materials */
-    val SUGARY_SOIL = GroundCombo("sugary_", false, HBlockTags.SUGARY_GRASS_PLANTABLE, HProperties.of(Material.DIRT, MaterialColor.SAND).sound(SoundType.GRAVEL), HProperties.of(Material.GRASS, MaterialColor.COLOR_PINK).sound(SoundType.GRASS))
+    val SUGARY_SOIL = GroundCombo("sugary_", false, HBlockTags.SUGARY_GRASS_PLANTABLE, HProperties.of(Material.DIRT, MaterialColor.SAND).sound(SoundType.GRAVEL), HProperties.of(Material.GRASS, MaterialColor.COLOR_PINK).sound(SoundType.GRASS), soilDelegate = { name, props -> BlockMaker.blockWithItem(name) {HBlock((props))} })
     val SUGAR_BLOCK by BlockMaker.cubeAllWithItem("sugar_block", HProperties.of(Material.SAND, MaterialColor.SNOW).sound(SoundType.SAND)) // Standalone
     val CANDY_CANE_BLOCK by BlockMaker.rotatedPillarWithItem("candy_cane_block", HProperties.of(Material.WOOD).sound(SoundType.BASALT))
     val BENT_CANDY_CANE_BLOCK by BlockMaker.rotatableBlockWithItem("bent_candy_cane_block", HProperties.of(Material.WOOD).sound(SoundType.BASALT))
     val CHOCOLATE_BLOCK = StoneWallCombo("chocolate_block", HProperties.of(Material.STONE, MaterialColor.COLOR_BROWN).strength(2.2f).sound(SoundType.BASALT))
-    val CANDYLAND_PORTAL = PortalCombo(HDimensions.CANDYLAND_ID, HDimensions::CANDYLAND_KEY, HProperties.of(Material.STONE, MaterialColor.COLOR_BROWN).strength(6.2f, 1200.0f).sound(SoundType.BASALT))
     // todo custom material
     val GUMDROP_BLOCK = VariantCombo(HProperties.of(Material.CLAY).sound(SoundType.SLIME_BLOCK).strength(0.6f)/*.harvestTool(ToolType.HOE)*/, "gumdrop_block", "green", "pink", "blue", "purple", "red", "yellow")
 
@@ -151,7 +147,7 @@ object HBlocks : HRegistry<Block>(ForgeRegistries.Keys.BLOCKS) {
             .speedFactor(0.4f)
             .strength(40.0f, 3000.0f)
             .harvestTool(BlockTags.MINEABLE_WITH_SHOVEL))
-    }) as ReadOnlyProperty<Any?, SafeSootBlock> // why is this necessary?
+    })
     val SOOT_TRAP = BlockMaker.withItem("soot_trap", ItemModelType.BLOCK_ITEM, BlockMaker.registerModelled("soot_trap", BlockModelType.SOOT, appearance = { SOOT }) { SootTrapBlock(HProperties.copy(
         SOOT
     ).lootFrom { SOOT }) })

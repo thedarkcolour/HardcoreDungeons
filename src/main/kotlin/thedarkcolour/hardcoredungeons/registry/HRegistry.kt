@@ -6,8 +6,8 @@ import net.minecraftforge.eventbus.api.EventPriority
 import net.minecraftforge.registries.DeferredRegister
 import net.minecraftforge.registries.RegisterEvent
 import thedarkcolour.hardcoredungeons.HardcoreDungeons
-import thedarkcolour.hardcoredungeons.legacy.ObjectHolderDelegate
-import thedarkcolour.hardcoredungeons.legacy.registerObject
+import thedarkcolour.kotlinforforge.forge.ObjectHolderDelegate
+import thedarkcolour.kotlinforforge.forge.registerObject
 import thedarkcolour.kotlinforforge.forge.MOD_BUS
 
 open class HRegistry<T>(registryKey: ResourceKey<Registry<T>>) {

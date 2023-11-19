@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "count": 1,
+  "ingredient": {
+    "item": "hardcoredungeons:castleton_bricks"
+  },
+  "result": "hardcoredungeons:castleton_brick_wall"
+}

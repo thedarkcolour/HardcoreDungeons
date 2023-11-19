@@ -1,7 +1,0 @@
-{
-  "parent": "minecraft:block/nether_portal_ew",
-  "textures": {
-    "particle": "hardcoredungeons:block/candyland_portal",
-    "portal": "hardcoredungeons:block/candyland_portal"
-  }
-}

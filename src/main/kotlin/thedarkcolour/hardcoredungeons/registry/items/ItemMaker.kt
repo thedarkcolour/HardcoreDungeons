@@ -12,8 +12,9 @@ import net.minecraftforge.common.ForgeSpawnEggItem
 import net.minecraftforge.data.loading.DatagenModLoader
 import thedarkcolour.hardcoredungeons.data.modelgen.item.ItemModelType
 import thedarkcolour.hardcoredungeons.item.Group
-import thedarkcolour.hardcoredungeons.legacy.ObjectHolderDelegate
+import thedarkcolour.kotlinforforge.forge.ObjectHolderDelegate
 import kotlin.reflect.KProperty0
+import kotlin.reflect.jvm.isAccessible
 
 object ItemMaker {
     // Pickaxe, sword, and generally any tools should be handheld
@@ -45,7 +46,7 @@ object ItemMaker {
     // Spawn egg for any mob
     @Suppress("NAME_SHADOWING", "UNCHECKED_CAST")
     fun spawnEgg(entityType: KProperty0<EntityType<*>>, baseColor: Int, spotColor: Int) : ObjectHolderDelegate<ForgeSpawnEggItem> {
-        //entityType.visibility = KVisibility.PUBLIC
+        entityType.isAccessible = true
         val entityType = entityType.getDelegate() as ObjectHolderDelegate<EntityType<out Mob>>
 
         return registerModelled(entityType.registryObject.id.path + "_spawn_egg", ItemModelType.SPAWN_EGG_ITEM) {

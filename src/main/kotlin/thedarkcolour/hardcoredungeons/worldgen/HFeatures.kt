@@ -16,11 +16,11 @@ import net.minecraftforge.registries.DeferredRegister
 import net.minecraftforge.registries.ForgeRegistries
 import team.rusty.util.feature.FeatureRegistry
 import thedarkcolour.hardcoredungeons.HardcoreDungeons
-import thedarkcolour.hardcoredungeons.legacy.ObjectHolderDelegate
 import thedarkcolour.hardcoredungeons.registry.block.HBlocks
 import thedarkcolour.hardcoredungeons.worldgen.feature.CandyCaneFeature
 import thedarkcolour.hardcoredungeons.worldgen.feature.ChocolateBarFeature
 import thedarkcolour.kotlinforforge.forge.MOD_BUS
+import thedarkcolour.kotlinforforge.forge.ObjectHolderDelegate
 
 // @formatter:off
 @Suppress("MemberVisibilityCanBePrivate")

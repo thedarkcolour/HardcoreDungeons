@@ -21,8 +21,8 @@ import thedarkcolour.hardcoredungeons.entity.overworld.mushroomarcher.MushroomAr
 import thedarkcolour.hardcoredungeons.entity.overworld.mushroomarcher.MushroomArcherRenderer
 import thedarkcolour.hardcoredungeons.entity.projectile.bullet.SmallBulletEntity
 import thedarkcolour.hardcoredungeons.entity.projectile.magic.MagicBoltEntity
-import thedarkcolour.hardcoredungeons.legacy.ObjectHolderDelegate
 import thedarkcolour.hardcoredungeons.util.modLoc
+import thedarkcolour.kotlinforforge.forge.ObjectHolderDelegate
 import java.util.function.BiFunction
 
 @Suppress("MemberVisibilityCanBePrivate")

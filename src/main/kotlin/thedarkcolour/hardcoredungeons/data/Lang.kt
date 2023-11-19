@@ -148,7 +148,7 @@ abstract class Lang(gen: DataGenerator, locale: String) : LanguageProvider(gen, 
             add(HBlocks.AURI_WOOD.planks, "Auri Planks")
             add(HBlocks.AURI_WOOD.stairs, "Auri Stairs")
             add(HBlocks.AURI_WOOD.slab, "Auri Slab")
-            add(HBlocks.SCRAP_METAL, "Scrap Metal")
+            add(HBlocks.SCRAP_METAL.block, "Scrap Metal")
             add(HBlocks.AURIGOLD_ORE, "Aurigold Ore")
 
             add(HBlocks.CANDY_CANE_BLOCK, "Candy Cane Block")

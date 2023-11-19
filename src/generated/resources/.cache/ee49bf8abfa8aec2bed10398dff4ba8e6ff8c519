@@ -1,4 +1,4 @@
-// 1.19.2	2022-11-11T16:40:45.5042545	Hardcore Dungeons Block Tags
+// 1.19.2	2023-11-19T11:43:44.4492956	Hardcore Dungeons Block Tags
 b9c1fe61f639e298067d31eaf8418b87d0087984 data/forge/tags/blocks/glass.json
 b9c1fe61f639e298067d31eaf8418b87d0087984 data/forge/tags/blocks/glass/black.json
 b9c1fe61f639e298067d31eaf8418b87d0087984 data/forge/tags/blocks/glass/blue.json
@@ -60,10 +60,10 @@ b7b01e319e928cc3092efeac2b35cc1d9b922926 data/minecraft/tags/blocks/fences.json
 7c37ce30aaa81268a0c3f99a49266bc26b51fb8a data/minecraft/tags/blocks/mineable/pickaxe.json
 73f86e3b983fab41c631b5b6e1fb6ed394cb89b8 data/minecraft/tags/blocks/mineable/shovel.json
 a3646ffbb224ed47c9516e4c63f2c46f4a8042af data/minecraft/tags/blocks/planks.json
-add9018d627fffdcdbbea17dfe7a225093593fb7 data/minecraft/tags/blocks/portals.json
+7dc054aab44cca9e0ae6f15b4a1247b207eea3c0 data/minecraft/tags/blocks/portals.json
 0d9b8b1f31a7e8df3be46bf15e0688d1f213f746 data/minecraft/tags/blocks/saplings.json
-1fd883d8ae48eff6b5d094b37165aadf49736cf0 data/minecraft/tags/blocks/slabs.json
-5c1f2727103dd5eaefea3e7d299266f7779dc4dc data/minecraft/tags/blocks/stairs.json
+0162719796e00d2ade96c876a980679c93f82d92 data/minecraft/tags/blocks/slabs.json
+fe45a1e02f520d79243ab7a158c00e84b5869065 data/minecraft/tags/blocks/stairs.json
 084ea076d0a6c077eb2a1d68494fdfb6c9ad81a3 data/minecraft/tags/blocks/standing_signs.json
 b7f1ee846388982aff2846685f06f9990f883a3f data/minecraft/tags/blocks/walls.json
 18e9fdaafdaabc613939de0ac68f8c4ea7a16279 data/minecraft/tags/blocks/wall_post_override.json

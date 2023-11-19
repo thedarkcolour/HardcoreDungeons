@@ -4,7 +4,7 @@ plugins {
     id 'org.parchmentmc.librarian.forgegradle' version '1.+'
 }
 
-version = '1.0.0'
+version = '15'
 group = 'thedarkcolour'
 archivesBaseName = 'hardcoredungeons'
 
@@ -99,8 +99,19 @@ repositories {
         content { includeGroup "curse.maven" }
     }
 }
-// Check duplicate files
-processResources.setDuplicatesStrategy(DuplicatesStrategy.WARN)
+
+
+processResources {
+    // Check duplicate files
+    setDuplicatesStrategy(DuplicatesStrategy.WARN)
+
+    // minify json resources https://stackoverflow.com/a/41029113/10860617
+    doLast {
+        fileTree(dir: outputs.files.asPath, include: "**/*.json").each {
+            File file -> file.text = groovy.json.JsonOutput.toJson(new groovy.json.JsonSlurper().parse(file))
+        }
+    }
+}
 
 dependencies {
     // Use the latest version of Minecraft Forge
@@ -118,14 +129,8 @@ dependencies {
     // the one probe
     implementation fg.deobf('curse.maven:top-245211:3965693')
 
-    implementation fg.deobf('thedarkcolour:kotlinforforge:3.9.1')
+    implementation ('thedarkcolour:kotlinforforge:3.12.0')
 }
-
-//koremods {
-//    workerDaemonOptions {
-//        it.maxHeapSize = '1G' // Increase worker daemon heap size as needed
-//    }
-//}
 
 jar {
     manifest {

@@ -1,4 +1,4 @@
-// 1.19.2	2022-11-11T16:40:45.5032537	Hardcore Dungeons Item Tags
+// 1.19.2	2023-11-19T11:43:44.4432945	Hardcore Dungeons Item Tags
 b7b01e319e928cc3092efeac2b35cc1d9b922926 data/forge/tags/items/fences.json
 69df74f917962994a5a587946a0f068a38ff0adb data/forge/tags/items/fence_gates.json
 bdc6837f0d6872f8c1d4053cc5431cd0eb6eeb72 data/forge/tags/items/gems.json
@@ -17,8 +17,8 @@ bcea14c5579b3a2f77f80b966d49ca219c343dbd data/hardcoredungeons/tags/items/lumlig
 a3646ffbb224ed47c9516e4c63f2c46f4a8042af data/minecraft/tags/items/planks.json
 0d9b8b1f31a7e8df3be46bf15e0688d1f213f746 data/minecraft/tags/items/saplings.json
 084ea076d0a6c077eb2a1d68494fdfb6c9ad81a3 data/minecraft/tags/items/signs.json
-1fd883d8ae48eff6b5d094b37165aadf49736cf0 data/minecraft/tags/items/slabs.json
-5c1f2727103dd5eaefea3e7d299266f7779dc4dc data/minecraft/tags/items/stairs.json
+0162719796e00d2ade96c876a980679c93f82d92 data/minecraft/tags/items/slabs.json
+fe45a1e02f520d79243ab7a158c00e84b5869065 data/minecraft/tags/items/stairs.json
 b7f1ee846388982aff2846685f06f9990f883a3f data/minecraft/tags/items/walls.json
 5982d31f7c6f8067ca5074823f164be6af73102f data/minecraft/tags/items/wooden_buttons.json
 338680c27e2e079924cc33bb852c4b14001b5e9e data/minecraft/tags/items/wooden_doors.json

@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "hardcoredungeons:malachite_block"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "hardcoredungeons:malachite_crystal_shard"
+  }
+}

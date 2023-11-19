@@ -129,8 +129,8 @@ class LootGenerator(private val generator: DataGenerator) : LootTableProvider(ge
         //dropSilk(block = HBlocksNew.RAINBOW_SOIL.grass, normal = item(HBlocksNew.RAINBOW_SOIL.soil), silk = item(HBlocksNew.RAINBOW_SOIL.grass))
         dropSilk(block = HBlocks.RAINBOW_GLASS, normal = null, silk = item(HBlocks.RAINBOW_GLASS))
         dropSilk(block = HBlocks.RAINBOW_GLASS_PANE, normal = null, silk = item(HBlocks.RAINBOW_GLASS_PANE))
-        dropSilk(block = HBlocks.SCRAP_METAL, normal = item(Items.IRON_NUGGET).apply(setCount(binomial(5, 0.45f))), silk = item(
-            HBlocks.SCRAP_METAL))
+        // todo do we need this?
+        //dropSilk(block = HBlocks.SCRAP_METAL.block, normal = item(Items.IRON_NUGGET).apply(setCount(binomial(5, 0.45f))), silk = item(HBlocks.SCRAP_METAL))
     }
 
     private fun singlePool(block: Block, poolFunction: LootPool.Builder.() -> Unit) {

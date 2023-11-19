@@ -2,7 +2,7 @@ package thedarkcolour.hardcoredungeons.registry
 
 import net.minecraft.core.Registry
 import net.minecraft.world.entity.decoration.PaintingVariant
-import thedarkcolour.hardcoredungeons.legacy.ObjectHolderDelegate
+import thedarkcolour.kotlinforforge.forge.ObjectHolderDelegate
 
 object HPaintings : HRegistry<PaintingVariant>(Registry.PAINTING_VARIANT_REGISTRY) {
     val POST_NUCLEAR_AUBRUM_TREE by painting("post_nuclear_aubrum_tree", 32, 32)

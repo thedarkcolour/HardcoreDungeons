@@ -28,14 +28,13 @@ class KnightlyJuggernautEntity(type: EntityType<KnightlyJuggernautEntity>, level
         goalSelector.addGoal(2, LookAtPlayerGoal(this, Player::class.java, 8.0F))
         goalSelector.addGoal(3, RandomLookAroundGoal(this))
 
+        targetSelector.addGoal(0, HurtByTargetGoal(this))
         targetSelector.addGoal(1, object : MeleeAttackGoal(this, 0.4, true) {
             override fun getAttackReachSqr(living: LivingEntity): Double {
                 return 2.0f + super.getAttackReachSqr(living)
             }
         })
-        targetSelector.addGoal(0, NearestAttackableTargetGoal(this, Player::class.java, true))
-
-        targetSelector.addGoal(1, HurtByTargetGoal(this))
+        targetSelector.addGoal(1, NearestAttackableTargetGoal(this, Player::class.java, true))
     }
 
     companion object {

@@ -5,7 +5,7 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.sounds.SoundEvent
 import net.minecraftforge.common.util.ForgeSoundType
 import thedarkcolour.hardcoredungeons.HardcoreDungeons
-import thedarkcolour.hardcoredungeons.legacy.ObjectHolderDelegate
+import thedarkcolour.kotlinforforge.forge.ObjectHolderDelegate
 
 @Suppress("MemberVisibilityCanBePrivate")
 object HSounds : HRegistry<SoundEvent>(Registry.SOUND_EVENT_REGISTRY) {

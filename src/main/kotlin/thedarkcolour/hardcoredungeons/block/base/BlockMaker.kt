@@ -28,10 +28,10 @@ import thedarkcolour.hardcoredungeons.block.portal.HPortalBlock
 import thedarkcolour.hardcoredungeons.block.portal.HPortalFrameBlock
 import thedarkcolour.hardcoredungeons.data.modelgen.block.BlockModelType
 import thedarkcolour.hardcoredungeons.data.modelgen.item.ItemModelType
-import thedarkcolour.hardcoredungeons.legacy.ObjectHolderDelegate
 import thedarkcolour.hardcoredungeons.registry.block.HBlockUtil
 import thedarkcolour.hardcoredungeons.registry.block.HBlocks
 import thedarkcolour.hardcoredungeons.registry.items.ItemMaker
+import thedarkcolour.kotlinforforge.forge.ObjectHolderDelegate
 
 /**
  * Used in combos and anything else that's repeated

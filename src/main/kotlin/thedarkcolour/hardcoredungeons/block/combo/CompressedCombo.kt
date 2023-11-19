@@ -16,9 +16,9 @@ import thedarkcolour.hardcoredungeons.data.RecipeGenerator
 import thedarkcolour.hardcoredungeons.data.RecipeGenerator.Companion.lines
 import thedarkcolour.hardcoredungeons.data.RecipeGenerator.Companion.shaped
 import thedarkcolour.hardcoredungeons.data.RecipeGenerator.Companion.shapeless
-import thedarkcolour.hardcoredungeons.legacy.ObjectHolderDelegate
 import thedarkcolour.hardcoredungeons.util.modLoc
 import thedarkcolour.hardcoredungeons.util.registryName
+import thedarkcolour.kotlinforforge.forge.ObjectHolderDelegate
 import java.text.DecimalFormat
 import java.util.function.Consumer
 import kotlin.math.pow

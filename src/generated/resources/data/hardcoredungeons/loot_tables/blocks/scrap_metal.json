@@ -5,48 +5,13 @@
       "bonus_rolls": 0.0,
       "entries": [
         {
-          "type": "minecraft:alternatives",
-          "children": [
+          "type": "minecraft:item",
+          "conditions": [
             {
-              "type": "minecraft:item",
-              "conditions": [
-                {
-                  "condition": "minecraft:match_tool",
-                  "predicate": {
-                    "enchantments": [
-                      {
-                        "enchantment": "minecraft:silk_touch",
-                        "levels": {
-                          "min": 1
-                        }
-                      }
-                    ]
-                  }
-                }
-              ],
-              "name": "hardcoredungeons:scrap_metal"
-            },
-            {
-              "type": "minecraft:item",
-              "conditions": [
-                {
-                  "condition": "minecraft:survives_explosion"
-                }
-              ],
-              "functions": [
-                {
-                  "add": false,
-                  "count": {
-                    "type": "minecraft:binomial",
-                    "n": 5.0,
-                    "p": 0.45
-                  },
-                  "function": "minecraft:set_count"
-                }
-              ],
-              "name": "minecraft:iron_nugget"
+              "condition": "minecraft:survives_explosion"
             }
-          ]
+          ],
+          "name": "hardcoredungeons:scrap_metal"
         }
       ],
       "rolls": 1.0

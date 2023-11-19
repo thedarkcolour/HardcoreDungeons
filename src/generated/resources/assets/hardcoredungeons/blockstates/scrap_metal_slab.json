@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "hardcoredungeons:block/scrap_metal_slab"
+    },
+    "type=double": {
+      "model": "hardcoredungeons:block/scrap_metal"
+    },
+    "type=top": {
+      "model": "hardcoredungeons:block/scrap_metal_slab_top"
+    }
+  }
+}
