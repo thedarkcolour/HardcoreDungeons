@@ -4,12 +4,13 @@ import net.minecraft.core.Holder
 import net.minecraft.util.RandomSource
 import net.minecraft.world.level.block.grower.AbstractTreeGrower
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature
+import thedarkcolour.hardcoredungeons.worldgen.HFeatures
 
 object LumlightTree : AbstractTreeGrower() {
     override fun getConfiguredFeature(
         rand: RandomSource,
         hasBeehives: Boolean
-    ): Holder<out ConfiguredFeature<*, *>>? {
-        TODO("not implemented")
+    ): Holder<out ConfiguredFeature<*, *>> {
+        return HFeatures.FANCY_LUMLIGHT_TREE
     }
 }

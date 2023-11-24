@@ -2,6 +2,7 @@ package thedarkcolour.hardcoredungeons.worldgen
 
 import net.minecraft.core.Holder
 import net.minecraft.data.worldgen.placement.PlacementUtils
+import net.minecraft.util.valueproviders.ConstantInt
 import net.minecraft.world.level.levelgen.Heightmap
 import net.minecraft.world.level.levelgen.VerticalAnchor
 import net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate
@@ -10,7 +11,11 @@ import net.minecraft.world.level.levelgen.feature.Feature
 import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration
 import net.minecraft.world.level.levelgen.feature.configurations.SimpleBlockConfiguration
+import net.minecraft.world.level.levelgen.feature.configurations.TreeConfiguration.TreeConfigurationBuilder
+import net.minecraft.world.level.levelgen.feature.featuresize.TwoLayersFeatureSize
+import net.minecraft.world.level.levelgen.feature.foliageplacers.FancyFoliagePlacer
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider
+import net.minecraft.world.level.levelgen.feature.trunkplacers.FancyTrunkPlacer
 import net.minecraft.world.level.levelgen.placement.*
 import net.minecraftforge.registries.DeferredRegister
 import net.minecraftforge.registries.ForgeRegistries
@@ -21,6 +26,7 @@ import thedarkcolour.hardcoredungeons.worldgen.feature.CandyCaneFeature
 import thedarkcolour.hardcoredungeons.worldgen.feature.ChocolateBarFeature
 import thedarkcolour.kotlinforforge.forge.MOD_BUS
 import thedarkcolour.kotlinforforge.forge.ObjectHolderDelegate
+import java.util.*
 
 // @formatter:off
 @Suppress("MemberVisibilityCanBePrivate")
@@ -83,6 +89,15 @@ object HFeatures {
 
     val MALACHITE_CRYSTAL = configured("malachite_crystal", {Feature.SIMPLE_BLOCK}) {
         SimpleBlockConfiguration(BlockStateProvider.simple(HBlocks.MALACHITE_CRYSTAL.crystal.defaultBlockState()))
+    }
+    val FANCY_LUMLIGHT_TREE = configured("fancy_lumlight_tree", {Feature.TREE}) {
+        TreeConfigurationBuilder(
+            BlockStateProvider.simple(HBlocks.LUMLIGHT_WOOD.log),
+            FancyTrunkPlacer(4, 11, 0),
+            BlockStateProvider.simple(HBlocks.LUMLIGHT_WOOD.leaves),
+            FancyFoliagePlacer(ConstantInt.of(2), ConstantInt.of(4), 4),
+            TwoLayersFeatureSize(0, 0, 0, OptionalInt.of(5))
+        ).build()
     }
     val CANDY_CANE = configured("candy_cane", {CANDY_CANE_FEATURE}, NoneFeatureConfiguration::NONE)
     val CHOCOLATE_BAR = configured("chocolate_bar", {CHOCOLATE_BAR_FEATURE}, NoneFeatureConfiguration::NONE)
