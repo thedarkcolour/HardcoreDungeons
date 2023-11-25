@@ -5,7 +5,6 @@ import com.google.common.collect.Multimap
 import net.minecraft.core.BlockPos
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.util.Mth
-import net.minecraft.world.damagesource.DamageSource
 import net.minecraft.world.entity.EquipmentSlot
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.ai.attributes.Attribute
@@ -50,14 +49,16 @@ open class ScytheItem(
             // if the sweep should play
             // mostly from PlayerEntity for SwordItem with a few tweaks
             if (f2 > 0.05f && !playerIn.isSprinting && (playerIn.walkDist - playerIn.walkDistO < playerIn.speed)) {
-                for (living in playerIn.level.getEntitiesOfClass(LivingEntity::class.java, target.boundingBox.inflate(1.5, 0.25, 1.5))) {
+                val level = playerIn.level()
+
+                for (living in level.getEntitiesOfClass(LivingEntity::class.java, target.boundingBox.inflate(1.5, 0.25, 1.5))) {
                     if (living != playerIn && living != target && !playerIn.isAlliedTo(living) && (living !is ArmorStand || !living.isMarker) && playerIn.distanceToSqr(living) < 9.0) {
                         living.knockback(0.4, Mth.sin(toDegrees(playerIn.yRot)).toDouble(), (-Mth.cos(toDegrees(playerIn.yRot))).toDouble())
-                        living.hurt(DamageSource.playerAttack(playerIn), (1.0f + EnchantmentHelper.getSweepingDamageRatio(playerIn) * playerIn.getAttributeValue(Attributes.ATTACK_DAMAGE).toFloat()))
+                        living.hurt(level.damageSources().playerAttack(playerIn), (1.0f + EnchantmentHelper.getSweepingDamageRatio(playerIn) * playerIn.getAttributeValue(Attributes.ATTACK_DAMAGE).toFloat()))
                     }
                 }
 
-                playerIn.level.playSound(null, playerIn.x, playerIn.y, playerIn.z, SoundEvents.PLAYER_ATTACK_SWEEP, playerIn.soundSource, 1.0f, 1.0f)
+                level.playSound(null, playerIn.x, playerIn.y, playerIn.z, SoundEvents.PLAYER_ATTACK_SWEEP, playerIn.soundSource, 1.0f, 1.0f)
                 playerIn.sweepAttack()
             }
         }

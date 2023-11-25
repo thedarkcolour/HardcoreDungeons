@@ -1,6 +1,7 @@
 package thedarkcolour.hardcoredungeons.entity.projectile
 
 import net.minecraft.network.protocol.Packet
+import net.minecraft.network.protocol.game.ClientGamePacketListener
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.entity.LivingEntity
@@ -29,7 +30,7 @@ abstract class ProjectileEntity(
 
         owner = shooter
 
-        level.addFreshEntity(this)
+        level().addFreshEntity(this)
     }
 
     final override fun onHit(result: HitResult) {
@@ -48,7 +49,7 @@ abstract class ProjectileEntity(
 
     }
 
-    override fun getAddEntityPacket(): Packet<*> = NetworkHooks.getEntitySpawningPacket(this)
+    override fun getAddEntityPacket(): Packet<ClientGamePacketListener> = NetworkHooks.getEntitySpawningPacket(this)
 
     override fun shouldBurn() = false
 }

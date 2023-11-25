@@ -9,7 +9,7 @@ import team.rusty.util.biome.ModBiome
 object MushroomCliffsBiome : ModBiome() {
     override fun configure(biome: Holder<Biome>, info: ModifiableBiomeInfo.BiomeInfo.Builder) {
         info.climateSettings.apply {
-            precipitation = Biome.Precipitation.NONE
+            setHasPrecipitation(false)
             temperature = 0.9f
             downfall = 1.0f
         }
@@ -19,7 +19,7 @@ object MushroomCliffsBiome : ModBiome() {
             skyColor(getSkyForTemp(0.9f))
             fogColor(0xc0d8ff)
         }
-        info.generationSettings.apply {
+        info.generationSettings.wrapped().apply {
             BiomeDefaultFeatures.addDefaultCarversAndLakes(this)
             BiomeDefaultFeatures.addDefaultMonsterRoom(this)
             BiomeDefaultFeatures.addDefaultUndergroundVariety(this)

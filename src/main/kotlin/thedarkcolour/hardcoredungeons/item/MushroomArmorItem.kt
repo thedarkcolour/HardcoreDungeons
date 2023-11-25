@@ -13,7 +13,7 @@ import thedarkcolour.hardcoredungeons.client.model.HModelLayers
 import thedarkcolour.hardcoredungeons.client.model.armor.MushroomArmorModel
 import java.util.function.Consumer
 
-class MushroomArmorItem(slot: EquipmentSlot, properties: Properties) : ArmorItem(HArmorMaterial.SHROOMY, slot, properties) {
+class MushroomArmorItem(slot: Type, properties: Properties) : ArmorItem(HArmorMaterial.SHROOMY, slot, properties) {
     // Leaks 'this' so fields on the item are all null
     override fun initializeClient(consumer: Consumer<IClientItemExtensions>) {
         consumer.accept(ClientExtensions)

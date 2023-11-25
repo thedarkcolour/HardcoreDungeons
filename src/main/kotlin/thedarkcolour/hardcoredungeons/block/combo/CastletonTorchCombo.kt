@@ -6,12 +6,10 @@ import net.minecraft.tags.BlockTags
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.SoundType
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
-import net.minecraft.world.level.material.Material
 import thedarkcolour.hardcoredungeons.block.base.properties.HProperties
 import thedarkcolour.hardcoredungeons.block.decoration.castleton.CastletonTorchBlock
 import thedarkcolour.hardcoredungeons.data.modelgen.item.ItemModelType
 import thedarkcolour.hardcoredungeons.item.CastletonTorchItem
-import thedarkcolour.hardcoredungeons.item.Group
 import thedarkcolour.hardcoredungeons.registry.block.HBlocks
 import thedarkcolour.hardcoredungeons.registry.items.ItemMaker
 
@@ -20,7 +18,7 @@ import thedarkcolour.hardcoredungeons.registry.items.ItemMaker
  */
 class CastletonTorchCombo private constructor(properties: HProperties) : BlockCombo() {
     // Use an alternative constructor instead of storing the properties in a field
-    constructor() : this(HProperties.of(Material.DECORATION).lightLevel { state ->
+    constructor() : this(HProperties.of().lightLevel { state ->
         if (state.getValue(BlockStateProperties.LIT)) 7 else 0
     }.sound(SoundType.WOOD).noCollision())
 
@@ -28,10 +26,10 @@ class CastletonTorchCombo private constructor(properties: HProperties) : BlockCo
     val wall by HBlocks.register("castleton_wall_torch") { CastletonTorchBlock.Wall(properties) }
 
     val litItem by ItemMaker.registerModelled("castleton_torch", ItemModelType.SIMPLE_ITEM) {
-        CastletonTorchItem(standing, wall, true, Item.Properties().tab(Group))
+        CastletonTorchItem(standing, wall, true, Item.Properties())
     }
     val burntItem by ItemMaker.registerModelled("burnt_castleton_torch", ItemModelType.SIMPLE_ITEM) {
-        CastletonTorchItem(standing, wall, false, Item.Properties().tab(Group))
+        CastletonTorchItem(standing, wall, false, Item.Properties())
     }
 
     override fun setRenderLayers() {

@@ -1,14 +1,11 @@
 package thedarkcolour.hardcoredungeons.item
 
 import net.minecraft.core.Direction
-import net.minecraft.core.NonNullList
-import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.item.BlockItem
-import net.minecraft.world.item.CreativeModeTab
 import net.minecraft.world.item.Item
-import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.context.BlockPlaceContext
 import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.shapes.CollisionContext
 
 class CastletonTorchItem(blockIn: Block, private val wallBlock: Block, private val isLit: Boolean, builder: Properties) : BlockItem(blockIn, builder) {
@@ -50,16 +47,6 @@ class CastletonTorchItem(blockIn: Block, private val wallBlock: Block, private v
         if (isLit) {
             super.removeFromBlockToItemMap(map, itemIn)
             map.remove(wallBlock)
-        }
-    }
-
-    override fun fillItemCategory(group: CreativeModeTab, items: NonNullList<ItemStack>) {
-        if (isLit) {
-            super.fillItemCategory(group, items)
-        } else {
-            if (allowedIn(group)) {
-                items.add(ItemStack(this))
-            }
         }
     }
 }

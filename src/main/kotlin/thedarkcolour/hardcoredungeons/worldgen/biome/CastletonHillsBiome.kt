@@ -3,9 +3,11 @@ package thedarkcolour.hardcoredungeons.worldgen.biome
 import net.minecraft.core.Holder
 import net.minecraft.world.entity.MobCategory
 import net.minecraft.world.level.biome.Biome
+import net.minecraft.world.level.levelgen.GenerationStep.Carving
 import net.minecraftforge.common.world.ModifiableBiomeInfo
 import team.rusty.util.biome.ModBiome
 import thedarkcolour.hardcoredungeons.registry.HEntities
+import thedarkcolour.hardcoredungeons.worldgen.HFeatures
 
 object CastletonHillsBiome : ModBiome() {
     override fun configure(
@@ -13,7 +15,7 @@ object CastletonHillsBiome : ModBiome() {
         info: ModifiableBiomeInfo.BiomeInfo.Builder
     ) {
         info.climateSettings.apply {
-            precipitation = Biome.Precipitation.NONE
+            setHasPrecipitation(false)
             temperature = 1.5f
             downfall = 0.0f
         }
@@ -21,6 +23,7 @@ object CastletonHillsBiome : ModBiome() {
             defaultCastletonEffects(this)
         }
         info.generationSettings.apply {
+            addCarver(Carving.AIR, HFeatures.CASTLETON_CAVES)
             //HWorldGen.addCastletonCarvers(this)
             //HWorldGen.withPurpleLumshrooms(this)
         }

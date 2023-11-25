@@ -52,7 +52,7 @@ class FrayedSoulEntity(type: EntityType<FrayedSoulEntity>, level: Level) : Pathf
 
     class FindBlueLumshroomGoal(private val entity: FrayedSoulEntity) : Goal() {
         override fun canUse(): Boolean {
-            return entity.level.getBlockState(entity.blockPosition()).block != HBlocks.BLUE_LUMSHROOM.plant
+            return entity.level().getBlockState(entity.blockPosition()).block != HBlocks.BLUE_LUMSHROOM.plant
         }
 
         override fun start() {
@@ -72,7 +72,7 @@ class FrayedSoulEntity(type: EntityType<FrayedSoulEntity>, level: Level) : Pathf
             for (x in 0 until (range shl 1) + 1) {
                 for (y in 0 until (range shl 1) + 1) {
                     for (z in 0 until (range shl 1) + 1) {
-                        if (predicate(pos.offset(x, y, z), level)) {
+                        if (predicate(pos.offset(x, y, z), level())) {
                             return pos.offset(x, y, z)
                         }
                     }
@@ -134,7 +134,7 @@ class FrayedSoulEntity(type: EntityType<FrayedSoulEntity>, level: Level) : Pathf
 
                 if (entity.tickCount % 20 == 0) {
                     val vec = entity.getViewVector(1.0f)
-                    val magic = MagicBoltEntity(HEntities.MAGIC_BOLT, entity.level)
+                    val magic = MagicBoltEntity(HEntities.MAGIC_BOLT, entity.level())
                     magic.shoot(entity, entity.x, entity.eyeY - 0.1, entity.z, vec.x, vec.y, vec.z)
                 }
             }
@@ -143,11 +143,11 @@ class FrayedSoulEntity(type: EntityType<FrayedSoulEntity>, level: Level) : Pathf
 
     class WanderGoal(entity: FrayedSoulEntity) : WaterAvoidingRandomStrollGoal(entity, 0.5) {
         override fun canUse(): Boolean {
-            return super.canUse() && mob.level.getBlockState(mob.blockPosition()).block != HBlocks.BLUE_LUMSHROOM.plant
+            return super.canUse() && mob.level().getBlockState(mob.blockPosition()).block != HBlocks.BLUE_LUMSHROOM.plant
         }
 
         override fun canContinueToUse(): Boolean {
-            return super.canContinueToUse() && mob.level.getBlockState(mob.blockPosition()).block != HBlocks.BLUE_LUMSHROOM.plant
+            return super.canContinueToUse() && mob.level().getBlockState(mob.blockPosition()).block != HBlocks.BLUE_LUMSHROOM.plant
         }
     }
 }

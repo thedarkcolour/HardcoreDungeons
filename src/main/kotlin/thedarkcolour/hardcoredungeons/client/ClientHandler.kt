@@ -66,9 +66,9 @@ object ClientHandler {
         //HContainers.registerScreens()
         HItems.registerItemProperties()
 
-        Sheets.addWoodType(HBlocks.LUMLIGHT_WOOD.type)
-        Sheets.addWoodType(HBlocks.AURI_WOOD.type)
-        Sheets.addWoodType(HBlocks.COTTONMARSH_WOOD.type)
+        Sheets.addWoodType(HBlocks.LUMLIGHT_WOOD.woodType)
+        Sheets.addWoodType(HBlocks.AURI_WOOD.woodType)
+        Sheets.addWoodType(HBlocks.COTTONMARSH_WOOD.woodType)
 
         CuriosRendererRegistry.register(AURIGOLD_PENDANT_ITEM, ::PendantCurioRenderer)
     }

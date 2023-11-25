@@ -13,9 +13,8 @@ import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.SnowLayerBlock
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.levelgen.feature.configurations.TreeConfiguration
-import net.minecraft.world.level.lighting.LayerLightEngine
+import net.minecraft.world.level.lighting.LightEngine
 import net.minecraftforge.common.IPlantable
-import java.util.*
 import java.util.function.BiConsumer
 
 class HGrassBlock(
@@ -55,7 +54,7 @@ class HGrassBlock(
         } else if (aboveState.fluidState.amount == 8) {
             false
         } else {
-            val i = LayerLightEngine.getLightBlockInto(world, state, pos, aboveState, abovePos, Direction.UP, aboveState.getLightBlock(world, abovePos))
+            val i = LightEngine.getLightBlockInto(world, state, pos, aboveState, abovePos, Direction.UP, aboveState.getLightBlock(world, abovePos))
             i < world.maxLightLevel
         }
     }

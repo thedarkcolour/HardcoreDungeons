@@ -5,14 +5,16 @@ import it.unimi.dsi.fastutil.objects.Object2FloatOpenHashMap
 import net.minecraft.Util
 import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
+import net.minecraft.sounds.SoundEvent
+import net.minecraft.sounds.SoundEvents
+import net.minecraft.tags.TagKey
 import net.minecraft.world.effect.MobEffects
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.*
 import net.minecraft.world.level.block.grower.AbstractTreeGrower
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.properties.WoodType
-import net.minecraft.world.level.material.Material
-import net.minecraft.world.level.material.MaterialColor
+import net.minecraft.world.level.material.MapColor
 import net.minecraft.world.phys.shapes.Shapes
 import net.minecraft.world.phys.shapes.VoxelShape
 import net.minecraftforge.data.loading.DatagenModLoader
@@ -57,8 +59,8 @@ object BlockMaker {
     val FARMLAND_SHAPE: VoxelShape = cube(0.0, 0.0, 0.0, 16.0, 15.0, 16.0)
     val CRYSTAL_SHAPE: VoxelShape = cube(3.0, 0.0, 3.0, 13.0, 7.0, 13.0)
 
-    inline fun props(material: Material, color: MaterialColor, apply: (HProperties) -> Unit): HProperties {
-        return HProperties.of(material, color).also(apply)
+    inline fun props(color: MapColor, apply: (HProperties) -> Unit): HProperties {
+        return HProperties.of(color).also(apply)
     }
 
     private fun cube(x1: Double, y1: Double, z1: Double, x2: Double, y2: Double, z2: Double): VoxelShape {
@@ -93,24 +95,31 @@ object BlockMaker {
         return registerModelled(name, BlockModelType.FENCE, appearance) { FenceBlock(props.build()) }
     }
 
-    fun registerFenceGate(name: String, props: HProperties, appearance: (() -> Block)? = null): ObjectHolderDelegate<FenceGateBlock> {
-        return registerModelled(name, BlockModelType.FENCE_GATE, appearance) { FenceGateBlock(props.build()) }
+    /**
+     * @param name        Registry name
+     * @param props       Block properties
+     * @param appearance  Block whose texture should be used for this fence gate's model
+     * @param openSound   Opening sound event
+     * @param closeSound  Closing sound event
+     */
+    fun registerFenceGate(name: String, props: HProperties, appearance: (() -> Block)? = null, openSound: () -> SoundEvent = { SoundEvents.FENCE_GATE_OPEN }, closeSound: () -> SoundEvent = { SoundEvents.FENCE_GATE_CLOSE }): ObjectHolderDelegate<FenceGateBlock> {
+        return registerModelled(name, BlockModelType.FENCE_GATE, appearance) { FenceGateBlock(props.build(), openSound(), closeSound()) }
     }
 
     fun registerPressurePlate(name: String, sensitivity: PressurePlateBlock.Sensitivity, props: HProperties, appearance: (() -> Block)? = null): ObjectHolderDelegate<PressurePlateBlock> {
-        return registerModelled(name, BlockModelType.PRESSURE_PLATE, appearance) { PressurePlateBlock(sensitivity, props.build().noCollission()) }
+        return registerModelled(name, BlockModelType.PRESSURE_PLATE, appearance) { PressurePlateBlock(sensitivity, props.noCollision().build(), props.getBlockSetType()!!) }
     }
 
-    fun registerWoodButton(name: String, props: HProperties, appearance: (() -> Block)? = null): ObjectHolderDelegate<WoodButtonBlock> {
-        return registerModelled(name, BlockModelType.BUTTON, appearance) { WoodButtonBlock(props.build().noCollission()) }
+    fun registerWoodButton(name: String, props: HProperties, appearance: (() -> Block)? = null): ObjectHolderDelegate<ButtonBlock> {
+        return registerModelled(name, BlockModelType.BUTTON, appearance) { ButtonBlock(props.noCollision().build(), props.getBlockSetType()!!, 30, true) }
     }
 
     fun registerTrapdoor(name: String, props: HProperties): ObjectHolderDelegate<TrapDoorBlock> {
-        return registerModelled(name, BlockModelType.TRAPDOOR) { TrapDoorBlock(props.build().noOcclusion()) }
+        return registerModelled(name, BlockModelType.TRAPDOOR) { TrapDoorBlock(props.noOcclusion().build(), props.getBlockSetType()!!) }
     }
 
     fun registerDoor(name: String, props: HProperties): ObjectHolderDelegate<DoorBlock> {
-        return registerModelled(name, BlockModelType.DOOR) { DoorBlock(props.build().noOcclusion()) }
+        return registerModelled(name, BlockModelType.DOOR) { DoorBlock(props.noOcclusion().build(), props.getBlockSetType()!!) }
     }
 
     fun registerStandingSign(name: String, type: WoodType, props: HProperties): ObjectHolderDelegate<StandingSignBlock> {
@@ -122,7 +131,7 @@ object BlockMaker {
     }
 
     fun registerWineBottle(name: String): ObjectHolderDelegate<HBlock> {
-        return HBlocks.register(name) { HBlock(HProperties.of(Material.GLASS).noOcclusion().shape(WINE_BOTTLE_SHAPE)) }
+        return HBlocks.register(name) { HBlock(HProperties.of().noOcclusion().shape(WINE_BOTTLE_SHAPE)) }
     }
 
     fun registerRotatedPillar(name: String, properties: HProperties): ObjectHolderDelegate<RotatedPillarBlock> {
@@ -135,16 +144,16 @@ object BlockMaker {
     }
 
     fun leavesBlock(name: String): ObjectHolderDelegate<LeavesBlock> {
-        return registerModelled(name, BlockModelType.CUBE_ALL) { LeavesBlock(HProperties.of(Material.LEAVES, MaterialColor.COLOR_LIGHT_BLUE).strength(0.2F).randomTicks().sound(SoundType.GRASS).noOcclusion().build()) }
+        return registerModelled(name, BlockModelType.CUBE_ALL) { LeavesBlock(HProperties.of(MapColor.COLOR_LIGHT_BLUE).strength(0.2F).randomTicks().sound(SoundType.GRASS).noOcclusion().build()) }
     }
 
     fun saplingCombo(name: String, tree: AbstractTreeGrower): PottedPlantCombo {
-        return PottedPlantCombo(name) { HSaplingBlock(tree, HProperties.of(Material.PLANT).sound(SoundType.GRASS).noCollision()) }
+        return PottedPlantCombo(name) { HSaplingBlock(tree, HProperties.of().sound(SoundType.GRASS).noCollision()) }
     }
 
     fun gumdropCombo(name: String): PottedPlantCombo {
         return PottedPlantCombo(name) {
-            FlowerBlock(PlantProperties.of(Material.PLANT).stewEffect(MobEffects.REGENERATION, 7).sound(SoundType.SLIME_BLOCK).noCollision().instabreak().lightLevel(3))
+            FlowerBlock(PlantProperties.of().stewEffect(MobEffects.REGENERATION, 7).sound(SoundType.SLIME_BLOCK).noCollision().instabreak().lightLevel(3))
         }
     }
 
@@ -152,20 +161,21 @@ object BlockMaker {
         return registerModelled(name, BlockModelType.WALL, block) { WallBlock(HProperties.copy(block()).build()) }
     }
 
-    fun registerOre(name: String, level: Int, hardness: Float, resistance: Float, color: MaterialColor): ObjectHolderDelegate<HBlock> {
+    fun registerOre(name: String, miningLevel: TagKey<Block>, hardness: Float, resistance: Float, color: MapColor): ObjectHolderDelegate<HBlock> {
         // todo some mechanism for mining tools
-        return registerCubeAll(name, HProperties.of(Material.STONE, color).strength(hardness, resistance).requiresCorrectToolForDrops())
+
+        return registerCubeAll(name, HProperties.of(color).strength(hardness, resistance).requiresCorrectToolForDrops())
     }
 
-    fun registerCrystal(name: String, color: MaterialColor): ObjectHolderDelegate<HBlock> {
+    fun registerCrystal(name: String, color: MapColor): ObjectHolderDelegate<HBlock> {
         // todo some mechanism for mining tools
-        return registerCross(name) { HBlock(HProperties.of(Material.STONE, color).strength(2.3f, 40.0f).lightLevel(4).sound(SoundType.AMETHYST).requiresCorrectToolForDrops().shape(CRYSTAL_SHAPE)) }
+        return registerCross(name) { HBlock(HProperties.of(color).strength(2.3f, 40.0f).lightLevel(4).sound(SoundType.AMETHYST).requiresCorrectToolForDrops().shape(CRYSTAL_SHAPE)) }
     }
 
     // todo add model type
     fun registerPortal(id: ResourceLocation, key: () -> ResourceKey<Level>, combo: PortalCombo): ObjectHolderDelegate<HPortalBlock> {
         return registerModelled(id.path + "_portal", BlockModelType.PORTAL) {
-            HPortalBlock(key, combo, HProperties.of(Material.PORTAL).noCollision().strength(-1.0f).sound(SoundType.GLASS).noDrops())
+            HPortalBlock(key, combo, HProperties.of().noCollision().strength(-1.0f).sound(SoundType.GLASS).noDrops())
         }
     }
 
@@ -229,8 +239,8 @@ object BlockMaker {
         return withItem(name, ItemModelType.SIMPLE_ITEM, registerCross(name, plantSupplier))
     }
 
-    fun oreWithItem(name: String, level: Int, hardness: Float, resistance: Float, color: MaterialColor): ObjectHolderDelegate<HBlock> {
-        return withItem(name, ItemModelType.BLOCK_ITEM, registerOre(name, level, hardness, resistance, color))
+    fun oreWithItem(name: String, miningLevel: TagKey<Block>, hardness: Float, resistance: Float, color: MapColor): ObjectHolderDelegate<HBlock> {
+        return withItem(name, ItemModelType.BLOCK_ITEM, registerOre(name, miningLevel, hardness, resistance, color))
     }
 
     // Handles hoe interaction
@@ -252,8 +262,10 @@ object BlockMaker {
         return withItem(name, ItemModelType.SIMPLE_ITEM, registerModelled(name, BlockModelType.LANTERN) { LanternBlock(props.build()) })
     }
 
-    fun vaseWithItem(name: String, color: MaterialColor): ObjectHolderDelegate<HBlock> {
-        return withItem(name, ItemModelType.BLOCK_ITEM, registerModelled(name, BlockModelType.VASE_BLOCK) { HBlock(HProperties.of(Material.DECORATION, color).strength(1.3f).shape(VASE_SHAPE)) })
+    fun vaseWithItem(name: String, color: MapColor): ObjectHolderDelegate<HBlock> {
+        return withItem(name, ItemModelType.BLOCK_ITEM, registerModelled(name, BlockModelType.VASE_BLOCK) { HBlock(HProperties.of(
+            color
+        ).strength(1.3f).shape(VASE_SHAPE)) })
     }
 
     // Only registers the additional item

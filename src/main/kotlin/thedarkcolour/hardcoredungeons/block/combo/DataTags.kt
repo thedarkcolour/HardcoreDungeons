@@ -6,8 +6,7 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.Block
 import net.minecraftforge.common.Tags
-import thedarkcolour.hardcoredungeons.data.BlockTagGenerator
-import thedarkcolour.hardcoredungeons.data.ItemTagGenerator
+import thedarkcolour.modkit.data.MKTagsProvider
 
 /**
  * Used in combos as an abstraction layer for Item and Block tag data generation
@@ -32,7 +31,7 @@ sealed interface DataTags {
     fun hoe(block: Block) = block(BlockTags.MINEABLE_WITH_HOE, block)
     fun axe(block: Block) = block(BlockTags.MINEABLE_WITH_AXE, block)
 
-    class Items(val items: ItemTagGenerator) : DataTags {
+    class Items(val items: MKTagsProvider<Item>) : DataTags {
         override fun item(tag: TagKey<Item>, vararg item: ItemLike) {
             val builder = this.items.tag(tag)
 
@@ -46,7 +45,7 @@ sealed interface DataTags {
         }
     }
 
-    class Blocks(val blocks: BlockTagGenerator) : DataTags {
+    class Blocks(val blocks: MKTagsProvider<Block>) : DataTags {
         override fun block(tag: TagKey<Block>, vararg block: Block) {
             this.blocks.tag(tag).add(*block)
         }

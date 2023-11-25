@@ -6,7 +6,7 @@ import net.minecraft.world.level.block.Block
 import thedarkcolour.hardcoredungeons.block.HGrassBlock
 import thedarkcolour.hardcoredungeons.block.base.BlockMaker
 import thedarkcolour.hardcoredungeons.block.base.properties.HProperties
-import thedarkcolour.hardcoredungeons.data.LootGenerator
+import thedarkcolour.hardcoredungeons.data.BlockLoot
 import thedarkcolour.kotlinforforge.forge.ObjectHolderDelegate
 
 /**
@@ -38,7 +38,7 @@ class GroundCombo(
         tags.block(BlockTags.ANIMALS_SPAWNABLE_ON, grass)
     }
 
-    override fun addLoot(gen: LootGenerator) {
+    override fun addLoot(gen: BlockLoot) {
         gen.dropSilk(block = grass, normal = gen.item(soil), silk = gen.item(grass))
     }
 }

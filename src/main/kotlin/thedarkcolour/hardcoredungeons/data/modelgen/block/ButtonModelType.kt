@@ -4,7 +4,6 @@ import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap
 import net.minecraft.core.Direction
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.ButtonBlock
-import net.minecraft.world.level.block.WoodButtonBlock
 import net.minecraft.world.level.block.state.properties.AttachFace
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.minecraftforge.client.model.generators.BlockModelBuilder
@@ -24,7 +23,7 @@ class ButtonModelType : BlockModelType<ButtonBlock>() {
         val builder = gen.getVariantBuilder(block)
 
         // planks, stone, etc.
-        val originalTexture = if (block is WoodButtonBlock)  {
+        val originalTexture = if (appearance.registryName!!.path.endsWith("planks"))  {
             path.removeSuffix("_button") + "_planks"
         } else {
             path.removeSuffix("_button")

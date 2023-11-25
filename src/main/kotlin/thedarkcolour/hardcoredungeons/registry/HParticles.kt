@@ -18,8 +18,8 @@ object HParticles : HRegistry<ParticleType<*>>(ForgeRegistries.Keys.PARTICLE_TYP
     val CASTLETON_CAMPFIRE_POP by register("castleton_campfire_pop") { SimpleParticleType(false) }
 
     fun registerParticleFactories(event: RegisterParticleProvidersEvent) {
-        event.register(SOUL_FRAY, SoulFrayParticle::Factory)
-        event.register(CASTLETON_TORCH_FLAME, FlameParticle::Provider)
-        event.register(CASTLETON_CAMPFIRE_POP, LavaParticle::Provider)
+        event.registerSpriteSet(SOUL_FRAY, SoulFrayParticle::Factory)
+        event.registerSpriteSet(CASTLETON_TORCH_FLAME, FlameParticle::Provider)
+        event.registerSpriteSet(CASTLETON_CAMPFIRE_POP, LavaParticle::Provider)
     }
 }

@@ -9,8 +9,8 @@ import net.minecraft.world.level.block.SoundType
 import net.minecraft.world.level.block.state.BlockBehaviour
 import net.minecraft.world.level.block.state.BlockBehaviour.OffsetType
 import net.minecraft.world.level.block.state.BlockState
-import net.minecraft.world.level.material.Material
-import net.minecraft.world.level.material.MaterialColor
+import net.minecraft.world.level.block.state.properties.BlockSetType
+import net.minecraft.world.level.material.MapColor
 import net.minecraft.world.level.material.PushReaction
 import net.minecraft.world.phys.shapes.VoxelShape
 import net.minecraftforge.data.loading.DatagenModLoader
@@ -39,9 +39,9 @@ abstract class BlockProperties<T : BlockProperties<T>> protected constructor() {
     private var shape: VoxelShape? = null
     /** The enchantment power bonus that this block should give. */
     private var enchantmentPower = 0.0f
-    /** The push reaction when a piston attempts to push this block. */
-    private var pushReaction: PushReaction = PushReaction.NORMAL
     private var flammable = false
+    /** The BlockSetType instance which makes passing it to different methods easier */
+    private var blockSetType: BlockSetType? = null
 
     /**
      * Set this block's collision shape to empty.
@@ -237,12 +237,8 @@ abstract class BlockProperties<T : BlockProperties<T>> protected constructor() {
     }
 
     fun pushReaction(pushReaction: PushReaction): T {
-        this.pushReaction = pushReaction
+        this.internal.pushReaction(pushReaction)
         return this as T
-    }
-
-    fun getPushReaction(): PushReaction {
-        return pushReaction
     }
 
     fun flammable(): T {
@@ -252,6 +248,15 @@ abstract class BlockProperties<T : BlockProperties<T>> protected constructor() {
 
     fun getFlammable(): Boolean {
         return flammable
+    }
+
+    fun blockSetType(blockSetType: BlockSetType): T {
+        this.blockSetType = blockSetType
+        return this as T
+    }
+
+    fun getBlockSetType(): BlockSetType? {
+        return this.blockSetType
     }
 
     fun offsetType(offsetType: OffsetType) {
@@ -290,9 +295,9 @@ abstract class BlockProperties<T : BlockProperties<T>> protected constructor() {
          * of the Block.Properties class and all use the result
          * from the [createProperties] function.
          */
-        fun of(material: Material): T {
+        fun of(): T {
             val properties = createProperties()
-            properties.internal = BlockBehaviour.Properties.of(material)
+            properties.internal = BlockBehaviour.Properties.of()
             return properties
         }
 
@@ -303,9 +308,9 @@ abstract class BlockProperties<T : BlockProperties<T>> protected constructor() {
          * of the Block.Properties class and all use the result
          * from the [createProperties] function.
          */
-        fun of(material: Material, color: DyeColor): T {
+        fun of(color: DyeColor): T {
             val properties = createProperties()
-            properties.internal = BlockBehaviour.Properties.of(material, color)
+            properties.internal = BlockBehaviour.Properties.of().mapColor(color)
             return properties
         }
 
@@ -316,15 +321,15 @@ abstract class BlockProperties<T : BlockProperties<T>> protected constructor() {
          * of the Block.Properties class and all use the result
          * from the [createProperties] function.
          */
-        fun of(material: Material, color: MaterialColor): T {
+        fun of(color: MapColor): T {
             val properties = createProperties()
-            properties.internal = BlockBehaviour.Properties.of(material, color)
+            properties.internal = BlockBehaviour.Properties.of().mapColor(color)
             return properties
         }
 
-        fun of(material: Material, color: (BlockState) -> MaterialColor): T {
+        fun of(color: (BlockState) -> MapColor): T {
             val properties = createProperties()
-            properties.internal = BlockBehaviour.Properties.of(material, color)
+            properties.internal = BlockBehaviour.Properties.of().mapColor(color)
             return properties
         }
 

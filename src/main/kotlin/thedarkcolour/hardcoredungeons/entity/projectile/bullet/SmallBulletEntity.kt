@@ -3,7 +3,6 @@ package thedarkcolour.hardcoredungeons.entity.projectile.bullet
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.network.FriendlyByteBuf
 import net.minecraft.sounds.SoundSource
-import net.minecraft.world.damagesource.IndirectEntityDamageSource
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.entity.LivingEntity
@@ -71,9 +70,9 @@ class SmallBulletEntity(type: EntityType<out ProjectileEntity>, level: Level) : 
     override fun onHitTarget(result: EntityHitResult, shooter: LivingEntity?, target: Entity) {
         super.onHitTarget(result, shooter, target)
 
-        if (!level.isClientSide) {
+        if (!level().isClientSide) {
             // todo custom damage source + lang
-            if (target.hurt(IndirectEntityDamageSource("arrow", shooter, this), damage) && shooter != null) {
+            if (target.hurt(level().damageSources().indirectMagic(shooter, this), damage) && shooter != null) {
                 doEnchantDamageEffects(shooter, target)
             }
 
@@ -89,7 +88,7 @@ class SmallBulletEntity(type: EntityType<out ProjectileEntity>, level: Level) : 
         super.onHitBlock(p_230299_1_)
         val pos = p_230299_1_.location
 
-        level.playSound(null, pos.x, pos.y, pos.z, level.getBlockState(p_230299_1_.blockPos).soundType.hitSound, SoundSource.BLOCKS, 1.0f, 0.8f)
+        level().playSound(null, pos.x, pos.y, pos.z, level().getBlockState(p_230299_1_.blockPos).soundType.hitSound, SoundSource.BLOCKS, 1.0f, 0.8f)
         kill()
     }
 

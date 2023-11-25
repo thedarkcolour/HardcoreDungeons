@@ -125,7 +125,7 @@ class CastletonDeerEntity(type: EntityType<CastletonDeerEntity>, worldIn: Level)
 
             deer.addEffect(MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 100, 2, false, false))
 
-            for (ally in deer.level.getEntitiesOfClass(CastletonDeerEntity::class.java, deer.boundingBox.inflate(6.0))) {
+            for (ally in deer.level().getEntitiesOfClass(CastletonDeerEntity::class.java, deer.boundingBox.inflate(6.0))) {
                 if (ally.isSameColor(deer)) {
                     ally.addEffect(MobEffectInstance(MobEffects.DAMAGE_BOOST, 100, 2))
                 }

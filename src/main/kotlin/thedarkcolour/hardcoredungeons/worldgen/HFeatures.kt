@@ -1,11 +1,15 @@
 package thedarkcolour.hardcoredungeons.worldgen
 
 import net.minecraft.core.Holder
+import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.data.worldgen.placement.PlacementUtils
 import net.minecraft.util.valueproviders.ConstantInt
+import net.minecraft.util.valueproviders.UniformFloat
+import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.levelgen.Heightmap
 import net.minecraft.world.level.levelgen.VerticalAnchor
 import net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate
+import net.minecraft.world.level.levelgen.carver.*
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature
 import net.minecraft.world.level.levelgen.feature.Feature
 import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration
@@ -16,12 +20,15 @@ import net.minecraft.world.level.levelgen.feature.featuresize.TwoLayersFeatureSi
 import net.minecraft.world.level.levelgen.feature.foliageplacers.FancyFoliagePlacer
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider
 import net.minecraft.world.level.levelgen.feature.trunkplacers.FancyTrunkPlacer
+import net.minecraft.world.level.levelgen.heightproviders.UniformHeight
 import net.minecraft.world.level.levelgen.placement.*
 import net.minecraftforge.registries.DeferredRegister
 import net.minecraftforge.registries.ForgeRegistries
 import team.rusty.util.feature.FeatureRegistry
 import thedarkcolour.hardcoredungeons.HardcoreDungeons
 import thedarkcolour.hardcoredungeons.registry.block.HBlocks
+import thedarkcolour.hardcoredungeons.tags.HBlockTags
+import thedarkcolour.hardcoredungeons.worldgen.carver.CastletonCaveCarver
 import thedarkcolour.hardcoredungeons.worldgen.feature.CandyCaneFeature
 import thedarkcolour.hardcoredungeons.worldgen.feature.ChocolateBarFeature
 import thedarkcolour.kotlinforforge.forge.MOD_BUS
@@ -62,6 +69,20 @@ object HFeatures {
     private inline fun <F : Feature<FC>, FC : FeatureConfiguration> configured(name: String, crossinline feature: () -> F, crossinline config: () -> FC): Holder<ConfiguredFeature<*, *>> {
         return configured(name) {
             ConfiguredFeature(feature(), config())
+        }
+    }
+
+    private fun <C : CarverConfiguration, WC : WorldCarver<C>> carver(name: String, supplier: () -> WC): ObjectHolderDelegate<WC> {
+        return ObjectHolderDelegate(registry.carver(name, supplier))
+    }
+
+    private fun configuredCarver(name: String, supplier: () -> ConfiguredWorldCarver<*>): Holder<ConfiguredWorldCarver<*>> {
+        return registry.configuredCarver(name, supplier)
+    }
+
+    private inline fun <C : CarverConfiguration, WC : WorldCarver<C>> configuredCarver(name: String, crossinline carver: () -> WorldCarver<C>, crossinline config: () -> C): Holder<ConfiguredWorldCarver<*>> {
+        return configuredCarver(name) {
+            ConfiguredWorldCarver(carver(), config())
         }
     }
 
@@ -115,4 +136,12 @@ object HFeatures {
     ))
     val SPARSE_CANDY_CANES = placed("sparse_candy_canes", CANDY_CANE, listOf(InSquarePlacement.spread(), HeightmapPlacement.onHeightmap(Heightmap.Types.WORLD_SURFACE_WG), PlacementUtils.countExtra(0, 0.125f, 1)))
     val SPARSE_CHOCOLATE_BARS = placed("sparse_chocolate_bars", CHOCOLATE_BAR, listOf(InSquarePlacement.spread(), HeightmapPlacement.onHeightmap(Heightmap.Types.WORLD_SURFACE_WG), PlacementUtils.countExtra(0, 0.05f, 1)))
+
+    //
+    // I DONT EVEN KNOW
+    //
+    val CASTLETON_CAVE = carver("castleton_cave", ::CastletonCaveCarver)
+    val CASTLETON_CAVES = configuredCarver("castleton_caves", CASTLETON_CAVE) {
+        CaveCarverConfiguration(0.15f, UniformHeight.of(VerticalAnchor.aboveBottom(8), VerticalAnchor.absolute(180)), UniformFloat.of(0.1f, 0.9f), VerticalAnchor.aboveBottom(8), CarverDebugSettings.of(false, Blocks.CRIMSON_BUTTON.defaultBlockState()), BuiltInRegistries.BLOCK.getTag(HBlockTags.CASTLETON_CARVER_REPLACEABLES).get(), UniformFloat.of(0.7f, 1.4f), UniformFloat.of(0.8f, 1.3f), UniformFloat.of(-1.0f, -0.4f))
+    }
 }

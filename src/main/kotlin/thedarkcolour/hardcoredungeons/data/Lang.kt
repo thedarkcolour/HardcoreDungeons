@@ -1,6 +1,6 @@
 package thedarkcolour.hardcoredungeons.data
 
-import net.minecraft.data.DataGenerator
+import net.minecraft.data.PackOutput
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.level.ItemLike
@@ -18,13 +18,13 @@ import thedarkcolour.hardcoredungeons.registry.items.*
  *
  * @author thedarkcolour
  */
-abstract class Lang(gen: DataGenerator, locale: String) : LanguageProvider(gen, HardcoreDungeons.ID, locale) {
+abstract class Lang(output: PackOutput, locale: String) : LanguageProvider(output, HardcoreDungeons.ID, locale) {
     /**
      * American English.
      *
      * @author thedarkcolour
      */
-    class English(gen: DataGenerator) : Lang(gen, "en_us") {
+    class English(output: PackOutput) : Lang(output, "en_us") {
         override fun addTranslations() {
             add("itemGroup.hardcoredungeons", "§fHardcore Dungeons")
 /*
@@ -259,11 +259,6 @@ abstract class Lang(gen: DataGenerator, locale: String) : LanguageProvider(gen, 
             add(INCENDIARY_BULLET_ITEM, "Incendiary Bullet")
             add(SHELL_ITEM, "Shell")
 
-            add(FILL_WAND_ITEM, "Fill Wand")
-            add(CLEAR_WAND_ITEM, "Clear Wand")
-            add(CLONE_WAND_ITEM, "Clone Wand")
-            add(DISTANCE_WAND_ITEM, "Distance Wand")
-
             add("item.hardcoredungeons.wand.clear", "Cleared blocks from")
             add("item.hardcoredungeons.wand.fill", "Filled blocks from")
             add("lang.hardcoredungeons.to", "to")
@@ -285,7 +280,7 @@ abstract class Lang(gen: DataGenerator, locale: String) : LanguageProvider(gen, 
      * @author thedarkcolour
      */
     @Suppress("ClassName", "NonAsciiCharacters", "SpellCheckingInspection")
-    class Español(gen: DataGenerator) : Lang(gen, "es_mx") {
+    class Español(output: PackOutput) : Lang(output, "es_mx") {
         override fun addTranslations() {
             add("itemGroup.hardcoredungeons", "§fHardcore Dungeons")
             add(HBlocks.FLAME_ROSE.plant, "Rosa del fuego")

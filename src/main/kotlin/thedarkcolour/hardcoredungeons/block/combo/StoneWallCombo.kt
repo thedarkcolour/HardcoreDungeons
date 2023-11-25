@@ -5,8 +5,9 @@ import net.minecraft.tags.BlockTags
 import net.minecraft.tags.ItemTags
 import thedarkcolour.hardcoredungeons.block.base.BlockMaker
 import thedarkcolour.hardcoredungeons.block.base.properties.HProperties
-import thedarkcolour.hardcoredungeons.data.RecipeGenerator.Companion.stonecutting
-import thedarkcolour.hardcoredungeons.data.RecipeGenerator.Companion.wall
+import thedarkcolour.hardcoredungeons.data.stonecutting
+import thedarkcolour.hardcoredungeons.data.wall
+import thedarkcolour.modkit.data.MKRecipeProvider
 import java.util.function.Consumer
 
 // Assumes this is a stone block
@@ -23,10 +24,10 @@ open class StoneWallCombo(name: String, properties: HProperties) : StairsSlabCom
         tags.pickaxe(wall)
     }
 
-    override fun addRecipes(consumer: Consumer<FinishedRecipe>) {
-        super.addRecipes(consumer)
+    override fun addRecipes(writer: Consumer<FinishedRecipe>, recipes: MKRecipeProvider) {
+        super.addRecipes(writer, recipes)
 
-        consumer.wall(wall, block)
-        consumer.stonecutting(block, wall)
+        recipes.wall(wall, block)
+        writer.stonecutting(block, wall)
     }
 }

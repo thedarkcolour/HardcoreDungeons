@@ -3,7 +3,6 @@ package thedarkcolour.hardcoredungeons.data.modelgen.block
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.PressurePlateBlock
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
-import net.minecraft.world.level.material.Material
 import net.minecraftforge.client.model.generators.ConfiguredModel
 import thedarkcolour.hardcoredungeons.data.ModelGenerator
 import thedarkcolour.hardcoredungeons.util.registryName
@@ -17,7 +16,7 @@ class PressurePlateModelType : BlockModelType<PressurePlateBlock>() {
         val builder = gen.getVariantBuilder(block)
 
         // planks, stone, etc.
-        val originalTexture = if (block.material == Material.WOOD)  {
+        val originalTexture = if (false/*block.material == Material.WOOD*/)  {
             path.removeSuffix("_pressure_plate") + "_planks"
         } else {
             path.removeSuffix("_pressure_plate")

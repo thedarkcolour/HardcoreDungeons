@@ -2,7 +2,6 @@ package thedarkcolour.hardcoredungeons.data.modelgen.block
 
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.FenceBlock
-import net.minecraft.world.level.material.Material
 import thedarkcolour.hardcoredungeons.data.ModelGenerator
 import thedarkcolour.hardcoredungeons.util.registryName
 
@@ -12,7 +11,6 @@ class FenceModelType : BlockModelType<FenceBlock>() {
      * Generate a model for block [block].
      */
     override fun process(block: FenceBlock, appearance: Block, gen: ModelGenerator) {
-
         // Path of the wall ("oak_fence")
         val path = block.registryName!!.path
 
@@ -22,10 +20,10 @@ class FenceModelType : BlockModelType<FenceBlock>() {
         if (texture.endsWith("brick")) {
             // Corrects "castleton_brick" to "castleton_bricks"
             texture += "s"
-        } else if (block.material == Material.WOOD || block.material == Material.NETHER_WOOD) {
+        }/* else if (block.material == Material.WOOD || block.material == Material.NETHER_WOOD) {
             // Corrects "lumlight" to "lumlight_planks"
             texture += "_planks"
-        }
+        }*/
 
         val textureLoc = gen.textureLoc(texture)
 

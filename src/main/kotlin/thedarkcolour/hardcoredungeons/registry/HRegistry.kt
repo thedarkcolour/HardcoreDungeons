@@ -5,10 +5,11 @@ import net.minecraft.resources.ResourceKey
 import net.minecraftforge.eventbus.api.EventPriority
 import net.minecraftforge.registries.DeferredRegister
 import net.minecraftforge.registries.RegisterEvent
+import net.minecraftforge.registries.RegistryObject
 import thedarkcolour.hardcoredungeons.HardcoreDungeons
+import thedarkcolour.kotlinforforge.forge.MOD_BUS
 import thedarkcolour.kotlinforforge.forge.ObjectHolderDelegate
 import thedarkcolour.kotlinforforge.forge.registerObject
-import thedarkcolour.kotlinforforge.forge.MOD_BUS
 
 open class HRegistry<T>(registryKey: ResourceKey<Registry<T>>) {
     private val queue = ArrayDeque<() -> Unit>()
@@ -19,6 +20,8 @@ open class HRegistry<T>(registryKey: ResourceKey<Registry<T>>) {
         registry.register(MOD_BUS)
         MOD_BUS.addListener(EventPriority.LOWEST, ::postRegistry)
     }
+
+    fun values(): Collection<RegistryObject<out T>> = registry.entries
 
     fun onceRegistered(function: () -> Unit) {
         queue.add(function)

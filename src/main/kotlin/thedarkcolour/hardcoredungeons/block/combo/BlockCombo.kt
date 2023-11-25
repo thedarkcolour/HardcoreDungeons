@@ -1,12 +1,15 @@
 package thedarkcolour.hardcoredungeons.block.combo
 
 import net.minecraft.data.recipes.FinishedRecipe
+import net.minecraft.world.item.Item
+import net.minecraft.world.level.block.Block
 import net.minecraftforge.data.loading.DatagenModLoader
-import thedarkcolour.hardcoredungeons.data.BlockTagGenerator
-import thedarkcolour.hardcoredungeons.data.ItemTagGenerator
-import thedarkcolour.hardcoredungeons.data.LootGenerator
+import thedarkcolour.hardcoredungeons.data.BlockLoot
+import thedarkcolour.modkit.data.MKRecipeProvider
+import thedarkcolour.modkit.data.MKTagsProvider
 import java.util.function.Consumer
 
+// todo address hard dependencies on ModKit
 @Suppress("LeakingThis")
 open class BlockCombo {
     init {
@@ -16,16 +19,16 @@ open class BlockCombo {
         }
     }
 
-    open fun addLoot(gen: LootGenerator) {}
-    open fun addRecipes(consumer: Consumer<FinishedRecipe>) {}
+    open fun addLoot(gen: BlockLoot) {}
+    open fun addRecipes(writer: Consumer<FinishedRecipe>, recipes: MKRecipeProvider) {}
     open fun setRenderLayers() {}
     open fun addTags(tags: DataTags) {}
 
-    fun addTags(gen: BlockTagGenerator) {
+    fun addTags(gen: MKTagsProvider<Block>) {
         addTags(DataTags.Blocks(gen))
     }
 
-    fun addTags(gen: ItemTagGenerator) {
+    fun addTags(gen: MKTagsProvider<Item>) {
         addTags(DataTags.Items(gen))
     }
 

@@ -1,8 +1,8 @@
 package thedarkcolour.hardcoredungeons.tags
 
-import net.minecraft.core.Registry
-import net.minecraft.world.level.block.Block
+import net.minecraft.core.registries.Registries
 import net.minecraft.tags.TagKey
+import net.minecraft.world.level.block.Block
 import thedarkcolour.hardcoredungeons.util.modLoc
 
 /**
@@ -27,6 +27,6 @@ object HBlockTags {
     val CASTLETON_CARVER_REPLACEABLES = tag("castleton_carver_replaceables")
 
     private fun tag(name: String): TagKey<Block> {
-        return TagKey.create(Registry.BLOCK_REGISTRY, modLoc(name))
+        return TagKey.create(Registries.BLOCK, modLoc(name))
     }
 }

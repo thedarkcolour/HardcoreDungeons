@@ -2,7 +2,6 @@ package thedarkcolour.hardcoredungeons.entity.projectile.magic
 
 import net.minecraft.core.particles.ParticleOptions
 import net.minecraft.core.particles.ParticleTypes
-import net.minecraft.world.damagesource.DamageSource
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.entity.LivingEntity
@@ -21,8 +20,8 @@ class MagicBoltEntity(type: EntityType<out ProjectileEntity>, worldIn: Level) : 
     }
 
     override fun onHitTarget(result: EntityHitResult, shooter: LivingEntity?, target: Entity) {
-        if (!level.isClientSide) {
-            if (target.hurt(DamageSource.MAGIC, 7.0f) && shooter != null) {
+        if (!level().isClientSide) {
+            if (target.hurt(level().damageSources().magic(), 7.0f) && shooter != null) {
                 doEnchantDamageEffects(shooter, target)
             }
             discard()
@@ -39,7 +38,7 @@ class MagicBoltEntity(type: EntityType<out ProjectileEntity>, worldIn: Level) : 
         val pos = position()
 
         for (i in 0..4) {
-            level.addParticle(ParticleTypes.SMOKE, pos.x + 0.5, pos.y + 0.5, pos.z + 0.5, dx, dy, dz)
+            level().addParticle(ParticleTypes.SMOKE, pos.x + 0.5, pos.y + 0.5, pos.z + 0.5, dx, dy, dz)
         }
     }
 

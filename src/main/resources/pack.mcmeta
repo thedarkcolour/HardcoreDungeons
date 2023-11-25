@@ -1,6 +1,8 @@
 {
     "pack": {
-        "description": "Data and assets for Hardcore Dungeons",
-        "pack_format": 10
-    }
+        "description": {
+            "text": "${mod_id} resources"
+        },
+        "pack_format": ${pack_format_number}
+}
 }

@@ -10,7 +10,7 @@ import thedarkcolour.hardcoredungeons.worldgen.HFeatures
 object GumdropFieldsBiome : ModBiome() {
     override fun configure(biome: Holder<Biome>, info: ModifiableBiomeInfo.BiomeInfo.Builder) {
         info.climateSettings.apply {
-            precipitation = Biome.Precipitation.NONE
+            setHasPrecipitation(false)
             temperature = 1.5f
             downfall = 0.4f
         }

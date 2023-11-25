@@ -12,7 +12,7 @@ import thedarkcolour.hardcoredungeons.block.base.properties.BlockProperties
 import thedarkcolour.hardcoredungeons.block.base.properties.HProperties
 
 /**
- * Base block with an expanded version of [AbstractBlock.Properties].
+ * Base block with an expanded version of BlockProperties.
  *
  * @property enchantmentPower the enchantment power of this block
  * @property shape the (collision and selection) shape of this block
@@ -39,6 +39,12 @@ open class HBlock(properties: HProperties) : Block(properties.build()) {
     open fun writeProperties(properties: BlockProperties<*>): BlockProperties<*> {
         properties.shape(shape)
         properties.enchantmentPower(enchantmentPower)
+        if (properties.getFlammable()) {
+            properties.flammable()
+        }
+        if (properties.getBlockSetType() != null) {
+            properties.blockSetType(properties.getBlockSetType()!!)
+        }
 
         return properties
     }

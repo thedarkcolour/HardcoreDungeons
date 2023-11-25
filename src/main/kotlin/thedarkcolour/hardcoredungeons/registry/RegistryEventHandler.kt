@@ -24,9 +24,9 @@ object RegistryEventHandler {
     fun registerEvents() {
         HBlocks.init()
         HItems.init()
+        HTabs.init()
 
         HBiomes.init()
-        HCarvers.init()
         HDataSerializers.init()
         HPaintings.init()
         HEntities.init()
@@ -34,7 +34,6 @@ object RegistryEventHandler {
         HParticles.init()
         HEnchantments.init()
         HSounds.init()
-        HNoiseGeneratorSettings.init()
 
         MOD_BUS.addListener(HEntities::registerEntityAttributes)
         FORGE_BUS.addListener(::remap)

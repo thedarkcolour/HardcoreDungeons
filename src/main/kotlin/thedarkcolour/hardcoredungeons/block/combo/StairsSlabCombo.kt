@@ -5,8 +5,9 @@ import net.minecraft.tags.BlockTags
 import net.minecraft.tags.ItemTags
 import thedarkcolour.hardcoredungeons.block.base.BlockMaker
 import thedarkcolour.hardcoredungeons.block.base.properties.HProperties
-import thedarkcolour.hardcoredungeons.data.RecipeGenerator.Companion.slab
-import thedarkcolour.hardcoredungeons.data.RecipeGenerator.Companion.stairs
+import thedarkcolour.hardcoredungeons.data.slab
+import thedarkcolour.hardcoredungeons.data.stairs
+import thedarkcolour.modkit.data.MKRecipeProvider
 import java.util.function.Consumer
 
 open class StairsSlabCombo(name: String, properties: HProperties) : BlockCombo() {
@@ -19,8 +20,8 @@ open class StairsSlabCombo(name: String, properties: HProperties) : BlockCombo()
         tags.block(BlockTags.STAIRS, ItemTags.STAIRS, stairs)
     }
 
-    override fun addRecipes(consumer: Consumer<FinishedRecipe>) {
-        consumer.stairs(stairs, block)
-        consumer.slab(slab, block)
+    override fun addRecipes(writer: Consumer<FinishedRecipe>, recipes: MKRecipeProvider) {
+        recipes.stairs(stairs, block)
+        recipes.slab(slab, block)
     }
 }

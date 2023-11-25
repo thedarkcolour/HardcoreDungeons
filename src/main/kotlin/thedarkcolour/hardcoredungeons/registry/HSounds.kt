@@ -1,6 +1,6 @@
 package thedarkcolour.hardcoredungeons.registry
 
-import net.minecraft.core.Registry
+import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.sounds.SoundEvent
 import net.minecraftforge.common.util.ForgeSoundType
@@ -8,7 +8,7 @@ import thedarkcolour.hardcoredungeons.HardcoreDungeons
 import thedarkcolour.kotlinforforge.forge.ObjectHolderDelegate
 
 @Suppress("MemberVisibilityCanBePrivate")
-object HSounds : HRegistry<SoundEvent>(Registry.SOUND_EVENT_REGISTRY) {
+object HSounds : HRegistry<SoundEvent>(Registries.SOUND_EVENT) {
     val ENTITY_FRAYED_SOUL_IDLE by soundEvent("frayed_soul_idle")
 
     val BLOCK_SCRAP_METAL_BREAK by soundEvent("scrap_metal_break")
@@ -22,6 +22,6 @@ object HSounds : HRegistry<SoundEvent>(Registry.SOUND_EVENT_REGISTRY) {
 
     private fun soundEvent(name: String): ObjectHolderDelegate<SoundEvent> {
         val registryName = ResourceLocation(HardcoreDungeons.ID, name)
-        return register(name) { SoundEvent(registryName) }
+        return register(name) { SoundEvent.createVariableRangeEvent(registryName) }
     }
 }

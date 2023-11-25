@@ -4,14 +4,12 @@ import net.minecraft.world.entity.EntityType
 import net.minecraft.world.entity.Mob
 import net.minecraft.world.food.FoodProperties
 import net.minecraft.world.item.BlockItem
-import net.minecraft.world.item.CreativeModeTab
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Rarity
 import net.minecraft.world.level.block.Block
 import net.minecraftforge.common.ForgeSpawnEggItem
 import net.minecraftforge.data.loading.DatagenModLoader
 import thedarkcolour.hardcoredungeons.data.modelgen.item.ItemModelType
-import thedarkcolour.hardcoredungeons.item.Group
 import thedarkcolour.kotlinforforge.forge.ObjectHolderDelegate
 import kotlin.reflect.KProperty0
 import kotlin.reflect.jvm.isAccessible
@@ -66,7 +64,7 @@ object ItemMaker {
      */
     fun foodBlockItem(name: String, block: () -> Block, food: FoodProperties): ObjectHolderDelegate<Item> {
         return registerModelled(name, ItemModelType.SIMPLE_ITEM) {
-            BlockItem(block(), Item.Properties().tab(Group).food(food))
+            BlockItem(block(), Item.Properties().food(food))
         }
     }
 
@@ -97,7 +95,7 @@ object ItemMaker {
 
     // Sets the creative tab
     fun props(): Item.Properties {
-        return Item.Properties().tab(Group)
+        return Item.Properties()
     }
 
     fun singleStack(): Item.Properties {
@@ -109,7 +107,6 @@ object ItemMaker {
         private var set = false
 
         init {
-            tab(Group)
             set = true
         }
 
@@ -130,7 +127,6 @@ object ItemMaker {
         override fun defaultDurability(defaultDurability: Int) = warn()
         override fun durability(durability: Int) = warn()
         override fun craftRemainder(craftRemainder: Item) = warn()
-        override fun tab(tab: CreativeModeTab) = if (set) warn() else super.tab(tab)
         override fun rarity(rarity: Rarity) = warn()
         override fun fireResistant() = warn()
         override fun setNoRepair() = warn()

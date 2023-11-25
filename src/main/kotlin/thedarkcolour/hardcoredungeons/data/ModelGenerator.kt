@@ -1,6 +1,6 @@
 package thedarkcolour.hardcoredungeons.data
 
-import net.minecraft.data.DataGenerator
+import net.minecraft.data.PackOutput
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.Block
@@ -15,7 +15,7 @@ import thedarkcolour.hardcoredungeons.HardcoreDungeons
 import thedarkcolour.hardcoredungeons.data.modelgen.ModelType
 import thedarkcolour.hardcoredungeons.util.registryName
 
-class ModelGenerator(gen: DataGenerator, private val helper: ExistingFileHelper) : BlockStateProvider(gen, HardcoreDungeons.ID, helper) {
+class ModelGenerator(output: PackOutput, private val helper: ExistingFileHelper) : BlockStateProvider(output, HardcoreDungeons.ID, helper) {
     override fun registerStatesAndModels() {
         for (modelType in MODEL_TYPES) {
             modelType.generateModels(this)

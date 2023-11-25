@@ -105,17 +105,20 @@ object EventHandler {
             return
 
         val bounds = player.boundingBox
-        val start = BlockPos(bounds.minX + 0.001, bounds.minY + 0.001, bounds.minZ + 0.001)
-        val end = BlockPos(bounds.maxX - 0.001, bounds.maxY - 0.001, bounds.maxZ - 0.001)
+        val start = BlockPos.containing(bounds.minX + 0.001, bounds.minY + 0.001, bounds.minZ + 0.001)
+        val end = BlockPos.containing(bounds.maxX - 0.001, bounds.maxY - 0.001, bounds.maxZ - 0.001)
         val cursor = BlockPos.MutableBlockPos()
+        val level = player.level()
 
-        if (player.level.hasChunksAt(start, end)) {
+        if (level.hasChunksAt(start, end)) {
             loop@for (i in start.x..end.x) {
                 for (j in start.y..end.y) {
                     for (k in start.z..end.z) {
                         cursor.set(i, j, k)
 
-                        if (player.level.getBlockState(cursor).block is HPortalBlock) {
+                        if (level.getBlockState(cursor).block is HPortalBlock) {
+                            // set cooldown back to 30
+                            PlayerHelper.setPortalCooldown(player, 30)
                             return
                         }
                     }

@@ -1,11 +1,18 @@
 package thedarkcolour.hardcoredungeons.data
 
+import net.minecraft.core.registries.Registries
+import net.minecraft.data.loot.LootTableProvider
+import net.minecraft.world.item.Item
+import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets
 import net.minecraftforge.data.event.GatherDataEvent
 import net.minecraftforge.eventbus.api.SubscribeEvent
 import net.minecraftforge.fml.common.Mod
+import thedarkcolour.hardcoredungeons.HardcoreDungeons
+import thedarkcolour.modkit.data.MKEnglishProvider
+import thedarkcolour.modkit.data.MKTagsProvider
 
 /**
- * *Isolated from main mod code.*
+ * Isolated from main mod code.
  *
  * Data providers for Hardcore Dungeons.
  *
@@ -15,25 +22,18 @@ import net.minecraftforge.fml.common.Mod
 object Data {
     @SubscribeEvent
     fun gatherData(event: GatherDataEvent) {
-        val gen = event.generator
-        val helper = event.existingFileHelper
+        val helper = thedarkcolour.modkit.data.DataHelper(HardcoreDungeons.ID, event)
 
-        // includeClient is always true because the runData has --all,
-        // but keeping just in case I decide to change it at some point.
-        if (event.includeClient()) {
-            gen.addProvider(true, Lang.English(gen))
-            gen.addProvider(true, Lang.Español(gen))
-            //gen.addProvider(BlockModelGenerator(gen, helper))
-            //gen.addProvider(ItemModelGenerator(gen, helper))
-            gen.addProvider(true, ModelGenerator(gen, helper))
-        }
-        if (event.includeServer()) {
-            val blockTags = BlockTagGenerator(gen, helper)
+        // the function references are EXTENSION FUNCTIONS found in the BlockTags.kt, English.kt, ItemModels.kt, etc. files
+        helper.createEnglish(true, MKEnglishProvider::addTranslations)
+        helper.createItemModels(true, true, true, ::addItemModels)
+        helper.createTags(Registries.ITEM, MKTagsProvider<Item>::addItemTags)
+        // I'm an idiot who didn't set the correct order of arguments!
+        helper.createRecipes { writer, recipes -> recipes.addRecipes(writer) }
 
-            gen.addProvider(true, RecipeGenerator(gen))
-            gen.addProvider(true, LootGenerator(gen))
-            gen.addProvider(true, blockTags)
-            gen.addProvider(true, ItemTagGenerator(gen, blockTags, helper))
-        }
+        event.generator.addProvider(true, LootTableProvider(event.generator.packOutput, emptySet(), listOf(
+            LootTableProvider.SubProviderEntry(::BlockLoot, LootContextParamSets.BLOCK),
+            LootTableProvider.SubProviderEntry(::EntityLoot, LootContextParamSets.ENTITY),
+        )))
     }
 }
