@@ -3,7 +3,7 @@ package team.rusty.util.biome;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import com.mojang.serialization.Codec;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.biome.Biome;
@@ -15,6 +15,7 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
+import org.apache.commons.lang3.mutable.MutableObject;
 
 import java.util.function.Supplier;
 
@@ -25,7 +26,7 @@ import java.util.function.Supplier;
  */
 public final class ModBiomeRegistry {
     /** Dummy builder that gets changed later */
-    private static final Biome.BiomeBuilder DUMMY = new Biome.BiomeBuilder().precipitation(Biome.Precipitation.NONE).temperature(0.1f).downfall(0.1f).specialEffects(new BiomeSpecialEffects.Builder().fogColor(0).waterColor(0).waterFogColor(0).skyColor(0).build()).mobSpawnSettings(new MobSpawnSettings.Builder().build()).generationSettings(new BiomeGenerationSettings.Builder().build());
+    private static final Biome.BiomeBuilder DUMMY = new Biome.BiomeBuilder().hasPrecipitation(false).temperature(0.1f).downfall(0.1f).specialEffects(new BiomeSpecialEffects.Builder().fogColor(0).waterColor(0).waterFogColor(0).skyColor(0).build()).mobSpawnSettings(new MobSpawnSettings.Builder().build()).generationSettings(new BiomeGenerationSettings.Builder(null, null).build());
 
     /** Biome deferred register */
     private final DeferredRegister<Biome> biomesRegistry;
@@ -65,14 +66,13 @@ public final class ModBiomeRegistry {
         biomesRegistry.register(name, DUMMY::build);
 
         // Modifier needs a reference to its serializer, serializer needs the instance of the modifier
-        final MovedValue<ModBiomeModifier> modifier = new MovedValue<>(null);
-        RegistryObject<Codec<ModBiomeModifier>> serializer = modifierSerializerRegistry.register(name, () -> Codec.unit(modifier));
-        modifier.value = new ModBiomeModifier(biome, serializer);
-        modifierRegistry.register(name, modifier);
+        final MutableObject<ModBiomeModifier> modifier = new MutableObject<>(null);
+        RegistryObject<Codec<ModBiomeModifier>> serializer = modifierSerializerRegistry.register(name, () -> Codec.unit(modifier.getValue()));
+        modifier.setValue(new ModBiomeModifier(biome, serializer));
 
         // Assign the biome an ID
         var biomeId = new ResourceLocation(modId, name);
-        biome.id = ResourceKey.create(Registry.BIOME_REGISTRY, biomeId);
+        biome.id = ResourceKey.create(Registries.BIOME, biomeId);
         // Track biome in the registry
         biomes.put(biomeId, biome);
 

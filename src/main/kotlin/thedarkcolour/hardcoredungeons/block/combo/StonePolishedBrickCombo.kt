@@ -7,7 +7,6 @@ import net.minecraftforge.common.Tags
 import thedarkcolour.hardcoredungeons.block.base.properties.HProperties
 import thedarkcolour.hardcoredungeons.data.stonecutterRecipes
 import thedarkcolour.hardcoredungeons.data.stonecutting
-import thedarkcolour.modkit.data.MKRecipeProvider
 import java.util.function.Consumer
 
 class StonePolishedBrickCombo(name: String, props: HProperties) : BlockCombo() {
@@ -23,7 +22,7 @@ class StonePolishedBrickCombo(name: String, props: HProperties) : BlockCombo() {
         tags.pickaxe(stone.slab)
     }
 
-    override fun addRecipes(writer: Consumer<FinishedRecipe>, recipes: MKRecipeProvider) {
+    override fun addRecipes(writer: Consumer<FinishedRecipe>, recipes: RecipesHolder) {
         writer.stonecutterRecipes(base = stone.block, stone.stairs, brick.block, brick.stairs, brick.fence, brick.wall, polished.block, polished.stairs, polished.wall)
         writer.stonecutterRecipes(base = brick.block, brick.stairs, brick.fence, polished.block, polished.stairs, polished.wall)
         writer.stonecutterRecipes(base = polished.block, polished.stairs)
@@ -37,7 +36,9 @@ class StonePolishedBrickCombo(name: String, props: HProperties) : BlockCombo() {
 
         writer.stonecutting(polished.block, polished.slab, 2)
 
-        recipes.grid2x2(RecipeCategory.BUILDING_BLOCKS, brick.block, Ingredient.of(stone.block))
-        recipes.grid2x2(RecipeCategory.BUILDING_BLOCKS, polished.block, Ingredient.of(brick.block))
+        recipes.apply {
+            grid2x2(RecipeCategory.BUILDING_BLOCKS, brick.block, Ingredient.of(stone.block))
+            grid2x2(RecipeCategory.BUILDING_BLOCKS, polished.block, Ingredient.of(brick.block))
+        }
     }
 }

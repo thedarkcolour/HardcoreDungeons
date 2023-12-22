@@ -23,7 +23,7 @@ object CastletonHillsBiome : ModBiome() {
             defaultCastletonEffects(this)
         }
         info.generationSettings.apply {
-            addCarver(Carving.AIR, HFeatures.CASTLETON_CAVES)
+            addCarver(Carving.AIR, HFeatures.CASTLETON_CAVES!!.holder.get())
             //HWorldGen.addCastletonCarvers(this)
             //HWorldGen.withPurpleLumshrooms(this)
         }

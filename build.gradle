@@ -28,6 +28,10 @@ minecraft {
             property '-XX:+AllowEnhancedClassRedefinition', ''
             //arg '-mixin.config=hardcoredungeons.mixins.json'
 
+            // these are required for Curios API
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${buildDir}/createSrgToMcp/output.srg"
+
             mods {
                 "${mod_id}" {
                     source sourceSets.main

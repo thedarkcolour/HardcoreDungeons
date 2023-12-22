@@ -20,20 +20,10 @@ import thedarkcolour.hardcoredungeons.HardcoreDungeons
 import thedarkcolour.hardcoredungeons.block.base.BlockMaker
 import thedarkcolour.hardcoredungeons.block.base.properties.HProperties
 import thedarkcolour.hardcoredungeons.data.BlockLoot
-import thedarkcolour.hardcoredungeons.data.RecipeGenerator
-import thedarkcolour.hardcoredungeons.data.RecipeGenerator.Companion.shaped
-import thedarkcolour.hardcoredungeons.data.RecipeGenerator.Companion.shapeless
-import thedarkcolour.hardcoredungeons.data.RecipeGenerator.Companion.slab
-import thedarkcolour.hardcoredungeons.data.RecipeGenerator.Companion.stairs
-import thedarkcolour.hardcoredungeons.data.RecipeGenerator.Companion.twoByTwo
 import thedarkcolour.hardcoredungeons.data.modelgen.item.ItemModelType
-import thedarkcolour.hardcoredungeons.data.slab
-import thedarkcolour.hardcoredungeons.data.stairs
 import thedarkcolour.hardcoredungeons.registry.block.HBlockUtil
 import thedarkcolour.hardcoredungeons.registry.block.HBlocks
 import thedarkcolour.hardcoredungeons.registry.items.ItemMaker
-import thedarkcolour.hardcoredungeons.tags.HItemTags
-import thedarkcolour.modkit.data.MKRecipeProvider
 import java.util.function.Consumer
 
 /**
@@ -54,12 +44,14 @@ class WoodCombo(
     // Wood Type
     val blockSetType: BlockSetType
     val woodType: WoodType
+    private val defaultProps: HProperties
 
     init {
         val name = HardcoreDungeons.ID + ":" + wood
 
         this.blockSetType = BlockSetType(name)
         this.woodType = WoodType(HardcoreDungeons.ID + ":" + wood, blockSetType).also(WoodType::register)
+        this.defaultProps = BlockMaker.props(topCol, applyProperties).blockSetType(blockSetType)
 
         HBlocks.onceRegistered {
             HBlockUtil.registerAxeStripInteraction(this.log, this.strippedLog)
@@ -78,33 +70,24 @@ class WoodCombo(
     }
 
     // Planks, Slab, Stairs
-    val planks by BlockMaker.cubeAllWithItem(wood + "_planks", BlockMaker.props(topCol, applyProperties))
-    val slab by BlockMaker.slabWithItem(wood + "_slab", ::planks, BlockMaker.props(topCol, applyProperties))
-    val stairs by BlockMaker.stairsWithItem(wood + "_stairs", ::planks, BlockMaker.props(topCol, applyProperties))
+    val planks by BlockMaker.cubeAllWithItem(wood + "_planks", defaultProps)
+    val slab by BlockMaker.slabWithItem(wood + "_slab", ::planks, defaultProps)
+    val stairs by BlockMaker.stairsWithItem(wood + "_stairs", ::planks, defaultProps)
 
     // Log, Stripped Log, Wood, Stripped Wood, Leaves
     val log by BlockMaker.rotatedPillarWithItem(wood + "_log", HProperties.of { state -> if (state.getValue(BlockStateProperties.AXIS) == Direction.Axis.Y) topCol else barkCol }.also(applyProperties))
-    val wood by BlockMaker.rotatedPillarWithItem(wood + "_wood", BlockMaker.props(barkCol, applyProperties))
-    val strippedLog by BlockMaker.rotatedPillarWithItem("stripped_" + wood + "_log", BlockMaker.props(
-        topCol,
-        applyProperties
-    ))
-    val strippedWood by BlockMaker.rotatedPillarWithItem("stripped_" + wood + "_wood", BlockMaker.props(
-        topCol,
-        applyProperties
-    ))
+    val wood by BlockMaker.rotatedPillarWithItem(wood + "_wood", defaultProps)
+    val strippedLog by BlockMaker.rotatedPillarWithItem("stripped_" + wood + "_log", defaultProps)
+    val strippedWood by BlockMaker.rotatedPillarWithItem("stripped_" + wood + "_wood", defaultProps)
     val leaves by BlockMaker.leavesBlock(wood + "_leaves")
 
     // Fence, Fence Gate, Pressure Plate, Button, Trapdoor, Door
-    val fence by BlockMaker.registerFence(wood + "_fence", BlockMaker.props(topCol, applyProperties), ::planks)
-    val fenceGate by BlockMaker.registerFenceGate(wood + "_fence_gate", BlockMaker.props(topCol, applyProperties), ::planks)
-    val pressurePlate by BlockMaker.registerPressurePlate(wood + "_pressure_plate", PressurePlateBlock.Sensitivity.EVERYTHING, BlockMaker.props(
-        topCol,
-        applyProperties
-    ), ::planks)
-    val button by BlockMaker.registerWoodButton(wood + "_button", BlockMaker.props(topCol, applyProperties))
-    val trapdoor by BlockMaker.registerTrapdoor(wood + "_trapdoor", BlockMaker.props(topCol, applyProperties))
-    val door by BlockMaker.registerDoor(wood + "_door", BlockMaker.props(topCol, applyProperties))
+    val fence by BlockMaker.registerFence(wood + "_fence", defaultProps, ::planks)
+    val fenceGate by BlockMaker.registerFenceGate(wood + "_fence_gate", defaultProps, ::planks)
+    val pressurePlate by BlockMaker.registerPressurePlate(wood + "_pressure_plate", PressurePlateBlock.Sensitivity.EVERYTHING, defaultProps, ::planks)
+    val button by BlockMaker.registerWoodButton(wood + "_button", defaultProps)
+    val trapdoor by BlockMaker.registerTrapdoor(wood + "_trapdoor", defaultProps)
+    val door by BlockMaker.registerDoor(wood + "_door", defaultProps)
 
     val sapling = BlockMaker.saplingCombo(wood + "_sapling", tree)
 
@@ -149,56 +132,56 @@ class WoodCombo(
         gen.addLeaves(leaves, sapling.plant)
     }
 
-    override fun addRecipes(writer: Consumer<FinishedRecipe>, recipes: MKRecipeProvider) {
-        // todo more recipes
-        recipes.shapelessCrafting(RecipeCategory.BUILDING_BLOCKS, planks, 4, logItemTag)
-        recipes.slab(slab, planks, "wooden_slab")
-        recipes.stairs(stairs, planks, "wooden_stairs")
-        recipes.shapedCrafting(RecipeCategory.MISC, fence, 3) { builder ->
-            builder.pattern("xix")
-            builder.pattern("xix")
-            builder.group("wooden_fence")
-            builder.define('x', planks)
-            builder.define('i', Tags.Items.RODS_WOODEN)
-        }
-        recipes.shapedCrafting(RecipeCategory.REDSTONE, fenceGate, 3) { builder ->
-            builder.pattern("ixi")
-            builder.pattern("ixi")
-            builder.group("wooden_fence_gate")
-            builder.define('x', planks)
-            builder.define('i', Tags.Items.RODS_WOODEN)
-        }
-        recipes.shapedCrafting(RecipeCategory.MISC, sign.item, 3) { builder ->
-            builder.pattern("xxx")
-            builder.pattern("xxx")
-            builder.pattern(" i ")
-            builder.group("sign")
-            builder.define('x', planks)
-            builder.define('i', Tags.Items.RODS_WOODEN)
-        }
-        recipes.grid2x2(RecipeCategory.BUILDING_BLOCKS, wood, 3, Ingredient.of(log))
-        recipes.grid2x2(RecipeCategory.BUILDING_BLOCKS, strippedWood, 3, Ingredient.of(strippedLog))
-        recipes.shapedCrafting(trapdoor, 2) { builder ->
-            builder.define('x', planks)
-            builder.pattern("xxx")
-            builder.pattern("xxx")
-            builder.group("wooden_trapdoor")
-        }
-        recipes.shapedCrafting(door, 3) { builder ->
-            builder.define('x', planks)
-            builder.pattern("xx")
-            builder.pattern("xx")
-            builder.pattern("xx")
-            builder.group("wooden_door")
-        }
-        recipes.shapedCrafting(RecipeCategory.REDSTONE, pressurePlate, 2) { builder ->
-            builder.define('x', planks)
-            builder.pattern("xx")
-            builder.group("wooden_pressure_plate")
-        }
-        recipes.shapelessCrafting(button, 1) { builder ->
-            builder.group("wooden_button")
-            builder.requires(planks)
+    override fun addRecipes(writer: Consumer<FinishedRecipe>, recipes: RecipesHolder) {
+        recipes.apply {
+            // todo more recipes
+            shapelessCrafting(RecipeCategory.BUILDING_BLOCKS, planks, 4, logItemTag)
+            slab(slab, planks, "wooden_slab")
+            stairs(stairs, planks, "wooden_stairs")
+            shapedCrafting(RecipeCategory.MISC, fence, 3) { builder ->
+                builder.pattern("xix")
+                builder.pattern("xix")
+                builder.group("wooden_fence")
+                builder.define('x', planks)
+                builder.define('i', Tags.Items.RODS_WOODEN)
+            }
+            shapedCrafting(RecipeCategory.REDSTONE, fenceGate, 3) { builder ->
+                builder.pattern("ixi")
+                builder.pattern("ixi")
+                builder.group("wooden_fence_gate")
+                builder.define('x', planks)
+                builder.define('i', Tags.Items.RODS_WOODEN)
+            }
+            shapedCrafting(RecipeCategory.MISC, sign.item, 3) { builder ->
+                builder.pattern("xxx")
+                builder.pattern("xxx")
+                builder.pattern(" i ")
+                builder.group("sign")
+                builder.define('x', planks)
+                builder.define('i', Tags.Items.RODS_WOODEN)
+            }
+            grid2x2(RecipeCategory.BUILDING_BLOCKS, wood, 3, Ingredient.of(log))
+            grid2x2(RecipeCategory.BUILDING_BLOCKS, strippedWood, 3, Ingredient.of(strippedLog))
+            shapedCrafting(RecipeCategory.REDSTONE, trapdoor, 2) { builder ->
+                builder.define('x', planks)
+                builder.pattern("xxx")
+                builder.pattern("xxx")
+                builder.group("wooden_trapdoor")
+            }
+            shapedCrafting(RecipeCategory.REDSTONE, door, 3) { builder ->
+                builder.define('x', planks)
+                builder.pattern("xx")
+                builder.pattern("xx")
+                builder.pattern("xx")
+                builder.group("wooden_door")
+            }
+            shapedCrafting(RecipeCategory.REDSTONE, pressurePlate, 2) { builder ->
+                builder.define('x', planks)
+                builder.pattern("xx")
+                builder.group("wooden_pressure_plate")
+            }
+            // todo add group parameter to MKRecipeProvider
+            shapelessCrafting(RecipeCategory.REDSTONE, button, 1, planks)
         }
     }
 

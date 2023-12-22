@@ -12,10 +12,7 @@ class ChocolateBarFeature : Feature<NoneFeatureConfiguration>(NoneFeatureConfigu
         return place(pContext.level(), pContext.origin())
     }
 
-    fun place(
-        worldIn: WorldGenLevel,
-        pos: BlockPos,
-    ): Boolean {
+    fun place(worldIn: WorldGenLevel, pos: BlockPos): Boolean {
         if (!worldIn.getBlockState(pos.below()).canOcclude()) return false
 
         for (a in BlockPos.betweenClosed(pos, pos.offset(2, 6, 0))) {

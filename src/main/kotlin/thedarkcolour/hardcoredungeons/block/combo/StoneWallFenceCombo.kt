@@ -8,7 +8,6 @@ import thedarkcolour.hardcoredungeons.block.base.BlockMaker
 import thedarkcolour.hardcoredungeons.block.base.properties.HProperties
 import thedarkcolour.hardcoredungeons.data.modelgen.item.ItemModelType
 import thedarkcolour.hardcoredungeons.registry.items.ItemMaker
-import thedarkcolour.modkit.data.MKRecipeProvider
 import java.util.function.Consumer
 
 // Assumes this is a stone block
@@ -30,14 +29,16 @@ class StoneWallFenceCombo(name: String, properties: HProperties) : StoneWallComb
         tags.pickaxe(fence)
     }
 
-    override fun addRecipes(writer: Consumer<FinishedRecipe>, recipes: MKRecipeProvider) {
+    override fun addRecipes(writer: Consumer<FinishedRecipe>, recipes: RecipesHolder) {
         super.addRecipes(writer, recipes)
 
-        recipes.shapedCrafting(RecipeCategory.BUILDING_BLOCKS, fence, 6) { builder ->
-            builder.pattern("xix")
-            builder.pattern("xix")
-            builder.define('x', block)
-            builder.define('i', slab)
+        recipes.apply {
+            shapedCrafting(RecipeCategory.BUILDING_BLOCKS, fence, 6) { builder ->
+                builder.pattern("xix")
+                builder.pattern("xix")
+                builder.define('x', block)
+                builder.define('i', slab)
+            }
         }
     }
 }

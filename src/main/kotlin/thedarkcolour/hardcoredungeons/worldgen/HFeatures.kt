@@ -1,6 +1,5 @@
 package thedarkcolour.hardcoredungeons.worldgen
 
-import net.minecraft.core.Holder
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.data.worldgen.placement.PlacementUtils
 import net.minecraft.util.valueproviders.ConstantInt
@@ -24,6 +23,7 @@ import net.minecraft.world.level.levelgen.heightproviders.UniformHeight
 import net.minecraft.world.level.levelgen.placement.*
 import net.minecraftforge.registries.DeferredRegister
 import net.minecraftforge.registries.ForgeRegistries
+import net.minecraftforge.registries.RegistryObject
 import team.rusty.util.feature.FeatureRegistry
 import thedarkcolour.hardcoredungeons.HardcoreDungeons
 import thedarkcolour.hardcoredungeons.registry.block.HBlocks
@@ -50,11 +50,8 @@ object HFeatures {
     // global biome modifier stuff for malachite crystals etc.
     private fun registerGlobalModifier() {
         val serializer = DeferredRegister.create(ForgeRegistries.Keys.BIOME_MODIFIER_SERIALIZERS, HardcoreDungeons.ID)
-        val modifier = DeferredRegister.create(ForgeRegistries.Keys.BIOME_MODIFIERS, HardcoreDungeons.ID)
         serializer.register(MOD_BUS)
-        modifier.register(MOD_BUS)
         serializer.register("global") { GlobalBiomeModifier.codec }
-        modifier.register("global") { GlobalBiomeModifier }
     }
 
     private fun <F : Feature<FC>, FC : FeatureConfiguration> feature(name: String, supplier: () -> F): ObjectHolderDelegate<F> {
@@ -62,11 +59,11 @@ object HFeatures {
         return ObjectHolderDelegate<F>(obj)
     }
 
-    private fun <F : Feature<FC>, FC : FeatureConfiguration> configured(name: String, supplier: () -> ConfiguredFeature<FC, F>): Holder<ConfiguredFeature<*, *>> {
+    private fun <F : Feature<FC>, FC : FeatureConfiguration> configured(name: String, supplier: () -> ConfiguredFeature<FC, F>): RegistryObject<ConfiguredFeature<*, *>> {
         return registry.configuredFeature(name, supplier)
     }
 
-    private inline fun <F : Feature<FC>, FC : FeatureConfiguration> configured(name: String, crossinline feature: () -> F, crossinline config: () -> FC): Holder<ConfiguredFeature<*, *>> {
+    private inline fun <F : Feature<FC>, FC : FeatureConfiguration> configured(name: String, crossinline feature: () -> F, crossinline config: () -> FC): RegistryObject<ConfiguredFeature<*, *>> {
         return configured(name) {
             ConfiguredFeature(feature(), config())
         }
@@ -76,23 +73,23 @@ object HFeatures {
         return ObjectHolderDelegate(registry.carver(name, supplier))
     }
 
-    private fun configuredCarver(name: String, supplier: () -> ConfiguredWorldCarver<*>): Holder<ConfiguredWorldCarver<*>> {
+    private fun configuredCarver(name: String, supplier: () -> ConfiguredWorldCarver<*>): RegistryObject<ConfiguredWorldCarver<*>>? {
         return registry.configuredCarver(name, supplier)
     }
 
-    private inline fun <C : CarverConfiguration, WC : WorldCarver<C>> configuredCarver(name: String, crossinline carver: () -> WorldCarver<C>, crossinline config: () -> C): Holder<ConfiguredWorldCarver<*>> {
+    private inline fun <C : CarverConfiguration, WC : WorldCarver<C>> configuredCarver(name: String, crossinline carver: () -> WC, crossinline config: () -> C): RegistryObject<ConfiguredWorldCarver<*>>? {
         return configuredCarver(name) {
             ConfiguredWorldCarver(carver(), config())
         }
     }
 
-    private fun placed(name: String, supplier: () -> PlacedFeature): Holder<PlacedFeature> {
+    private fun placed(name: String, supplier: () -> PlacedFeature): RegistryObject<PlacedFeature> {
         return registry.placedFeature(name, supplier)
     }
 
-    private fun placed(name: String, configuredFeature: Holder<ConfiguredFeature<*, *>>, placements: List<PlacementModifier>): Holder<PlacedFeature> {
+    private fun placed(name: String, configuredFeature: RegistryObject<ConfiguredFeature<*, *>>, placements: List<PlacementModifier>): RegistryObject<PlacedFeature> {
         return placed(name) {
-            PlacedFeature(configuredFeature, placements)
+            PlacedFeature(configuredFeature.holder.get(), placements)
         }
     }
 

@@ -16,7 +16,7 @@ object GlobalBiomeModifier : BiomeModifier {
     override fun modify(biome: Holder<Biome>, phase: BiomeModifier.Phase, builder: ModifiableBiomeInfo.BiomeInfo.Builder) {
         if (phase == BiomeModifier.Phase.ADD) {
             if (biome.`is`(BiomeTags.IS_OVERWORLD)) {
-                builder.generationSettings.addFeature(GenerationStep.Decoration.UNDERGROUND_DECORATION, HFeatures.UNDERGROUND_MALACHITE_CRYSTALS)
+                builder.generationSettings.addFeature(GenerationStep.Decoration.UNDERGROUND_DECORATION, HFeatures.UNDERGROUND_MALACHITE_CRYSTALS.holder.get())
             }
         }
     }

@@ -1,6 +1,5 @@
 package team.rusty.util.feature;
 
-import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.levelgen.carver.CarverConfiguration;
 import net.minecraft.world.level.levelgen.carver.ConfiguredWorldCarver;
@@ -48,19 +47,19 @@ public final class FeatureRegistry {
         return features.register(name, supplier);
     }
 
-    public Holder<ConfiguredFeature<?, ?>> configuredFeature(String name, Supplier<ConfiguredFeature<?, ?>> supplier) {
-        return configuredFeatures.register(name, supplier).getHolder().get();
+    public RegistryObject<ConfiguredFeature<?, ?>> configuredFeature(String name, Supplier<ConfiguredFeature<?, ?>> supplier) {
+        return configuredFeatures.register(name, supplier);
     }
 
-    public Holder<PlacedFeature> placedFeature(String name, Supplier<PlacedFeature> supplier) {
-        return placedFeatures.register(name, supplier).getHolder().get();
+    public RegistryObject<PlacedFeature> placedFeature(String name, Supplier<PlacedFeature> supplier) {
+        return placedFeatures.register(name, supplier);
     }
 
     public <C extends CarverConfiguration, WC extends WorldCarver<C>> RegistryObject<WC> carver(String name, Supplier<WC> supplier) {
         return carvers.register(name, supplier);
     }
 
-    public Holder<ConfiguredWorldCarver<?>> configuredCarver(String name, Supplier<ConfiguredWorldCarver<?>> supplier) {
-        return configuredCarvers.register(name, supplier).getHolder().get();
+    public RegistryObject<ConfiguredWorldCarver<?>> configuredCarver(String name, Supplier<ConfiguredWorldCarver<?>> supplier) {
+        return configuredCarvers.register(name, supplier);
     }
 }

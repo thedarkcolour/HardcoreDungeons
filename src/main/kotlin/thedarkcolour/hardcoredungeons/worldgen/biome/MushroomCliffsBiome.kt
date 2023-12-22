@@ -19,7 +19,7 @@ object MushroomCliffsBiome : ModBiome() {
             skyColor(getSkyForTemp(0.9f))
             fogColor(0xc0d8ff)
         }
-        info.generationSettings.wrapped().apply {
+        wrapped(info.generationSettings).apply {
             BiomeDefaultFeatures.addDefaultCarversAndLakes(this)
             BiomeDefaultFeatures.addDefaultMonsterRoom(this)
             BiomeDefaultFeatures.addDefaultUndergroundVariety(this)

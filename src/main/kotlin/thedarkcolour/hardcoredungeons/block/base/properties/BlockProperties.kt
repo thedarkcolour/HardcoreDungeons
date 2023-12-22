@@ -32,7 +32,7 @@ import java.util.function.ToIntFunction
  * @author thedarkcolour
  */
 @Suppress("UNCHECKED_CAST")
-abstract class BlockProperties<T : BlockProperties<T>> protected constructor() {
+open class BlockProperties<T : BlockProperties<T>> protected constructor() : PropertiesView {
     /** The vanilla representation of this [BlockProperties] instance. */
     private lateinit var internal: BlockBehaviour.Properties
     /** The VoxelShape shape that this block uses for collision and selection boxes. */
@@ -217,7 +217,7 @@ abstract class BlockProperties<T : BlockProperties<T>> protected constructor() {
     /**
      * Returns the shape of this block.
      */
-    fun getShape(): VoxelShape? {
+    override fun getShape(): VoxelShape? {
         return shape
     }
 
@@ -232,7 +232,7 @@ abstract class BlockProperties<T : BlockProperties<T>> protected constructor() {
     /**
      * Returns the enchantment power bonus of this block.
      */
-    fun getEnchantmentPower(): Float {
+    override fun getEnchantmentPower(): Float {
         return enchantmentPower
     }
 
@@ -246,7 +246,7 @@ abstract class BlockProperties<T : BlockProperties<T>> protected constructor() {
         return this as T
     }
 
-    fun getFlammable(): Boolean {
+    override fun getFlammable(): Boolean {
         return flammable
     }
 
@@ -255,7 +255,7 @@ abstract class BlockProperties<T : BlockProperties<T>> protected constructor() {
         return this as T
     }
 
-    fun getBlockSetType(): BlockSetType? {
+    override fun getBlockSetType(): BlockSetType? {
         return this.blockSetType
     }
 
@@ -266,15 +266,9 @@ abstract class BlockProperties<T : BlockProperties<T>> protected constructor() {
     /**
      * Returns a Block.Properties for use in vanilla blocks.
      */
-    fun build(): BlockBehaviour.Properties {
+    override fun build(): BlockBehaviour.Properties {
         return internal
     }
-
-    /**
-     * The factory that should be a companion object of
-     * the implementing [BlockProperties] class
-     */
-    abstract fun getFactory(): Factory<T>
 
     /**
      * The base factory class for constructing new instances of properties.

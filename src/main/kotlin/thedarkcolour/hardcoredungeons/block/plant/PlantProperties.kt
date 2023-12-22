@@ -45,14 +45,6 @@ class PlantProperties private constructor() : BlockProperties<PlantProperties>()
         return this
     }
 
-    /**
-     * The factory that should be a companion object of
-     * the implementing [BlockProperties] class
-     */
-    override fun getFactory(): Factory<PlantProperties> {
-        return Companion
-    }
-
     companion object : Factory<PlantProperties>() {
         private val DEFAULT_PREDICATE: (BlockState) -> Boolean = { state -> state.`is`(Blocks.GRASS_BLOCK) || state.`is`(Blocks.DIRT) || state.`is`(Blocks.COARSE_DIRT) || state.`is`(Blocks.PODZOL) || state.`is`(Blocks.FARMLAND) }
         override fun createProperties(): PlantProperties {

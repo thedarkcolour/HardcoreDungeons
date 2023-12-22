@@ -4,7 +4,7 @@ license="All rights reserved"
 
 [[mods]]
 modId="hardcoredungeons"
-version="${file.jarVersion}"
+version="${mod_version}"
 displayName="Hardcore Dungeons"
 logoFile="logo.png"
 credits="Herobrine knows all. Thanks to genericrandom64, DJRoundTable, and AlexCipher"

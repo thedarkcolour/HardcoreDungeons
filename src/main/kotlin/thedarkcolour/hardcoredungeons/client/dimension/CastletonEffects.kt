@@ -1,10 +1,10 @@
 package thedarkcolour.hardcoredungeons.client.dimension
 
-import com.mojang.math.Vector3f
 import net.minecraft.client.multiplayer.ClientLevel
 import net.minecraft.client.renderer.DimensionSpecialEffects
 import net.minecraft.client.renderer.LightTexture
 import net.minecraft.world.phys.Vec3
+import org.joml.Vector3f
 
 object CastletonEffects : DimensionSpecialEffects(Float.NaN, true, SkyType.NONE, false, true) {
     override fun getBrightnessDependentFogColor(fogColor: Vec3, brightness: Float): Vec3 {

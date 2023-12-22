@@ -4,10 +4,10 @@ import it.unimi.dsi.fastutil.floats.FloatLists
 import it.unimi.dsi.fastutil.objects.Object2FloatMap
 import it.unimi.dsi.fastutil.objects.ObjectSet
 import it.unimi.dsi.fastutil.objects.ObjectSets
-import net.minecraft.tags.FluidTags
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.server.level.ServerLevel
+import net.minecraft.tags.FluidTags
 import net.minecraft.util.RandomSource
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.item.context.BlockPlaceContext
@@ -27,7 +27,6 @@ import net.minecraftforge.common.*
 import thedarkcolour.hardcoredungeons.block.base.BlockMaker
 import thedarkcolour.hardcoredungeons.block.base.HBlock
 import thedarkcolour.hardcoredungeons.block.base.properties.HProperties
-import java.util.*
 
 /**
  * @property boostMap crops and their chance to grow 2 stages instead of 1
@@ -58,7 +57,7 @@ class BonusFarmlandBlock(
 
     override fun canSurvive(state: BlockState, worldIn: LevelReader, pos: BlockPos): Boolean {
         val aboveState = worldIn.getBlockState(pos.above())
-        return !aboveState.material.isSolid || aboveState.`is`(Tags.Blocks.FENCE_GATES) || aboveState.block is MovingPistonBlock
+        return !aboveState.isSolid || aboveState.`is`(Tags.Blocks.FENCE_GATES) || aboveState.block is MovingPistonBlock
     }
 
     override fun getStateForPlacement(context: BlockPlaceContext): BlockState? {

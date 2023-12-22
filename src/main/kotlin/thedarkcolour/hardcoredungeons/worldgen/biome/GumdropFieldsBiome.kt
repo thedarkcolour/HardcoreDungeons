@@ -21,8 +21,8 @@ object GumdropFieldsBiome : ModBiome() {
             fogColor(12638463)
         }
         info.generationSettings.apply {
-            addFeature(GenerationStep.Decoration.SURFACE_STRUCTURES, HFeatures.SPARSE_CANDY_CANES)
-            addFeature(GenerationStep.Decoration.SURFACE_STRUCTURES, HFeatures.SPARSE_CHOCOLATE_BARS)
+            addFeature(GenerationStep.Decoration.SURFACE_STRUCTURES, HFeatures.SPARSE_CANDY_CANES.holder.get())
+            addFeature(GenerationStep.Decoration.SURFACE_STRUCTURES, HFeatures.SPARSE_CHOCOLATE_BARS.holder.get())
         }
     }
 }

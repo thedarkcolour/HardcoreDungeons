@@ -14,6 +14,7 @@ import net.minecraft.world.level.block.WallBlock
 import net.minecraftforge.common.Tags
 import net.minecraftforge.registries.ForgeRegistries
 import thedarkcolour.hardcoredungeons.block.combo.BlockCombo
+import thedarkcolour.hardcoredungeons.block.combo.RecipesHolder
 import thedarkcolour.hardcoredungeons.registry.block.HBlocks
 import thedarkcolour.hardcoredungeons.registry.items.*
 import thedarkcolour.hardcoredungeons.tags.HItemTags
@@ -22,8 +23,9 @@ import thedarkcolour.modkit.data.MKRecipeProvider
 import java.util.function.Consumer
 
 fun MKRecipeProvider.addRecipes(writer: Consumer<FinishedRecipe>) {
+    val holder = RecipesHolder(this)
     for (combo in BlockCombo.ALL_COMBOS) {
-        combo.addRecipes(writer, this)
+        combo.addRecipes(writer, holder)
     }
 
     shapedCrafting(RecipeCategory.MISC, HBlocks.LUMLIGHT_CAMPFIRE, 1) { builder ->

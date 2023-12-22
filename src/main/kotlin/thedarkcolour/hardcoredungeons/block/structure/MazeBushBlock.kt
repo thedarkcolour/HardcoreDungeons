@@ -1,7 +1,6 @@
 package thedarkcolour.hardcoredungeons.block.structure
 
 import net.minecraft.core.BlockPos
-import net.minecraft.world.damagesource.DamageSource
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.level.Level
@@ -10,10 +9,10 @@ import thedarkcolour.hardcoredungeons.block.base.HBlock
 import thedarkcolour.hardcoredungeons.block.base.properties.HProperties
 
 class MazeBushBlock(properties: HProperties) : HBlock(properties) {
-    override fun stepOn(worldIn: Level, pos: BlockPos, state: BlockState, entityIn: Entity) {
+    override fun stepOn(level: Level, pos: BlockPos, state: BlockState, entityIn: Entity) {
         if (entityIn is LivingEntity) {
-            entityIn.hurt(DamageSource.CACTUS, 1.0f)
+            entityIn.hurt(level.damageSources().cactus(), 1.0f)
         }
-        super.stepOn(worldIn, pos, state, entityIn)
+        super.stepOn(level, pos, state, entityIn)
     }
 }

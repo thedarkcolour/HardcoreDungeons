@@ -6,16 +6,15 @@ import net.minecraft.world.level.block.Mirror
 import net.minecraft.world.level.block.Rotation
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.StateDefinition
-import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.minecraft.world.level.block.state.properties.BlockStateProperties.FACING
 import thedarkcolour.hardcoredungeons.block.base.HBlock
-import thedarkcolour.hardcoredungeons.block.base.properties.HProperties
+import thedarkcolour.hardcoredungeons.block.base.properties.PropertiesView
 
 /**
  * Rotatable block in all six directions.
  * Look at [HorizontalBlock] if you only want horizontal rotations.
  */
-open class RotatableBlock(properties: HProperties) : HBlock(properties) {
+open class RotatableBlock(properties: PropertiesView) : HBlock(properties) {
     override fun createBlockStateDefinition(builder: StateDefinition.Builder<Block, BlockState>) {
         builder.add(FACING)
     }

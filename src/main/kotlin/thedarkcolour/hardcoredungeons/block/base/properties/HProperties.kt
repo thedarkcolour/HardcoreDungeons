@@ -6,8 +6,4 @@ class HProperties private constructor() : BlockProperties<HProperties>() {
             return HProperties()
         }
     }
-
-    override fun getFactory(): Factory<HProperties> {
-        return Companion
-    }
 }

@@ -9,7 +9,7 @@ import net.minecraft.world.phys.shapes.CollisionContext
 import net.minecraft.world.phys.shapes.Shapes
 import net.minecraft.world.phys.shapes.VoxelShape
 import thedarkcolour.hardcoredungeons.block.base.properties.BlockProperties
-import thedarkcolour.hardcoredungeons.block.base.properties.HProperties
+import thedarkcolour.hardcoredungeons.block.base.properties.PropertiesView
 
 /**
  * Base block with an expanded version of BlockProperties.
@@ -19,7 +19,7 @@ import thedarkcolour.hardcoredungeons.block.base.properties.HProperties
  *
  * @author thedarkcolour
  */
-open class HBlock(properties: HProperties) : Block(properties.build()) {
+open class HBlock(properties: PropertiesView) : Block(properties.build()) {
     /** The [VoxelShape] used for collision and selection boxes. */
     val shape: VoxelShape = properties.getShape() ?: Shapes.block()
     /** The enchantment power of this block. */

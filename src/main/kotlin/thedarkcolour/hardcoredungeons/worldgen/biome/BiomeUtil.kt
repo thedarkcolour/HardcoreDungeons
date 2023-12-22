@@ -7,12 +7,12 @@ import net.minecraft.util.Mth
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.entity.MobCategory
 import net.minecraft.world.level.biome.BiomeGenerationSettings
+import net.minecraft.world.level.biome.BiomeGenerationSettings.PlainBuilder
 import net.minecraft.world.level.biome.MobSpawnSettings
 import net.minecraft.world.level.levelgen.GenerationStep
 import net.minecraft.world.level.levelgen.GenerationStep.Carving
 import net.minecraft.world.level.levelgen.carver.ConfiguredWorldCarver
 import net.minecraft.world.level.levelgen.placement.PlacedFeature
-import net.minecraftforge.common.world.BiomeGenerationSettingsBuilder
 import net.minecraftforge.common.world.BiomeSpecialEffectsBuilder
 import net.minecraftforge.server.ServerLifecycleHooks
 
@@ -72,11 +72,11 @@ fun MobSpawnSettings.Builder.addSpawn(
     return addSpawn(classification, MobSpawnSettings.SpawnerData(entityType, weight, min, max))
 }
 
-fun BiomeGenerationSettingsBuilder.wrapped(): BiomeGenerationSettings.Builder {
-    return BiomeGenSettingsWrapper(this)
+fun wrapped(builder: PlainBuilder): BiomeGenerationSettings.Builder {
+    return BiomeGenSettingsWrapper(builder)
 }
 
-private class BiomeGenSettingsWrapper(private val original: BiomeGenerationSettingsBuilder) : BiomeGenerationSettings.Builder(null, null) {
+private class BiomeGenSettingsWrapper(private val original: PlainBuilder) : BiomeGenerationSettings.Builder(null, null) {
     private val placedFeatures: HolderLookup<PlacedFeature>
     private val worldCarvers: HolderLookup<ConfiguredWorldCarver<*>>
 

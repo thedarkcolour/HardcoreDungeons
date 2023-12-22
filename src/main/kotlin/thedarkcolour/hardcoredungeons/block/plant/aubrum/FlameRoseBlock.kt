@@ -8,7 +8,6 @@ import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.FlowerPotBlock
 import net.minecraft.world.level.block.state.BlockState
-import net.minecraft.world.level.material.Material
 import thedarkcolour.hardcoredungeons.block.combo.CustomFlowerPot
 import thedarkcolour.hardcoredungeons.block.plant.FlowerBlock
 import thedarkcolour.hardcoredungeons.block.plant.PlantProperties
@@ -30,7 +29,7 @@ class FlameRoseBlock(properties: PlantProperties) : FlowerBlock(properties) {
         }
     }
 
-    private class Potted(plant: Supplier<Block>) : FlowerPotBlock({ Blocks.FLOWER_POT as FlowerPotBlock}, plant, Properties.of(Material.DECORATION).instabreak().noOcclusion().lightLevel { 13 }) {
+    private class Potted(plant: Supplier<Block>) : FlowerPotBlock({ Blocks.FLOWER_POT as FlowerPotBlock}, plant, Properties.of().instabreak().noOcclusion().lightLevel { 13 }) {
         override fun animateTick(state: BlockState, level: Level, pos: BlockPos, rand: RandomSource) = playParticles(state, level, pos)
     }
 }

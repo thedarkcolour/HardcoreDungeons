@@ -2,8 +2,6 @@ package thedarkcolour.hardcoredungeons.client.model.block
 
 import com.google.common.cache.CacheBuilder
 import com.google.common.cache.CacheLoader
-import net.minecraft.world.level.block.Block
-import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.client.renderer.LightTexture
 import net.minecraft.client.renderer.block.BlockModelShaper
 import net.minecraft.client.renderer.block.model.BakedQuad
@@ -13,8 +11,8 @@ import net.minecraft.client.resources.model.BakedModel
 import net.minecraft.core.Direction
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.util.RandomSource
-import net.minecraftforge.client.model.data.ModelData
-import java.util.*
+import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.state.BlockState
 
 // thanks to commoble and raoulvdberge
 class FullbrightBakedModel(private val base: BakedModel, private val fullbrightSprites: Set<ResourceLocation>) : BakedModel {
@@ -63,7 +61,7 @@ class FullbrightBakedModel(private val base: BakedModel, private val fullbrightS
             for (i in newQuads.indices) {
                 val quad = newQuads[i]
 
-                if (textures.contains(quad.sprite.name)) {
+                if (textures.contains(quad.sprite.atlasLocation())) {
                     newQuads[i] = transformQuad(quad)
                 }
             }

@@ -19,6 +19,7 @@ import net.minecraft.world.phys.shapes.Shapes
 import net.minecraft.world.phys.shapes.VoxelShape
 import net.minecraftforge.data.loading.DatagenModLoader
 import thedarkcolour.hardcoredungeons.block.base.properties.HProperties
+import thedarkcolour.hardcoredungeons.block.base.properties.PropertiesView
 import thedarkcolour.hardcoredungeons.block.combo.PortalCombo
 import thedarkcolour.hardcoredungeons.block.combo.PottedPlantCombo
 import thedarkcolour.hardcoredungeons.block.decoration.RotatableBlock
@@ -75,11 +76,11 @@ object BlockMaker {
         return obj
     }
 
-    fun registerCubeAll(name: String, props: HProperties, appearance: (() -> Block)? = null): ObjectHolderDelegate<HBlock> {
+    fun registerCubeAll(name: String, props: PropertiesView, appearance: (() -> Block)? = null): ObjectHolderDelegate<HBlock> {
         return registerModelled(name, BlockModelType.CUBE_ALL, appearance) { HBlock(props) }
     }
 
-    fun registerSlab(name: String, full: () -> Block, props: HProperties): ObjectHolderDelegate<SlabBlock> {
+    fun registerSlab(name: String, full: () -> Block, props: PropertiesView): ObjectHolderDelegate<SlabBlock> {
         return registerModelled(name, BlockModelType.SLAB, full) { SlabBlock(props.build()) }
     }
 
@@ -87,11 +88,11 @@ object BlockMaker {
         return registerModelled(name, BlockModelType.CROSS, null, supplier)
     }
 
-    fun registerStairs(name: String, full: () -> Block, props: HProperties): ObjectHolderDelegate<StairBlock> {
+    fun registerStairs(name: String, full: () -> Block, props: PropertiesView): ObjectHolderDelegate<StairBlock> {
         return registerModelled(name, BlockModelType.STAIRS, full) { StairBlock(full()::defaultBlockState, props.build()) }
     }
 
-    fun registerFence(name: String, props: HProperties, appearance: (() -> Block)? = null): ObjectHolderDelegate<FenceBlock> {
+    fun registerFence(name: String, props: PropertiesView, appearance: (() -> Block)? = null): ObjectHolderDelegate<FenceBlock> {
         return registerModelled(name, BlockModelType.FENCE, appearance) { FenceBlock(props.build()) }
     }
 
@@ -102,31 +103,31 @@ object BlockMaker {
      * @param openSound   Opening sound event
      * @param closeSound  Closing sound event
      */
-    fun registerFenceGate(name: String, props: HProperties, appearance: (() -> Block)? = null, openSound: () -> SoundEvent = { SoundEvents.FENCE_GATE_OPEN }, closeSound: () -> SoundEvent = { SoundEvents.FENCE_GATE_CLOSE }): ObjectHolderDelegate<FenceGateBlock> {
+    fun registerFenceGate(name: String, props: PropertiesView, appearance: (() -> Block)? = null, openSound: () -> SoundEvent = { SoundEvents.FENCE_GATE_OPEN }, closeSound: () -> SoundEvent = { SoundEvents.FENCE_GATE_CLOSE }): ObjectHolderDelegate<FenceGateBlock> {
         return registerModelled(name, BlockModelType.FENCE_GATE, appearance) { FenceGateBlock(props.build(), openSound(), closeSound()) }
     }
 
-    fun registerPressurePlate(name: String, sensitivity: PressurePlateBlock.Sensitivity, props: HProperties, appearance: (() -> Block)? = null): ObjectHolderDelegate<PressurePlateBlock> {
-        return registerModelled(name, BlockModelType.PRESSURE_PLATE, appearance) { PressurePlateBlock(sensitivity, props.noCollision().build(), props.getBlockSetType()!!) }
+    fun registerPressurePlate(name: String, sensitivity: PressurePlateBlock.Sensitivity, props: PropertiesView, appearance: (() -> Block)? = null): ObjectHolderDelegate<PressurePlateBlock> {
+        return registerModelled(name, BlockModelType.PRESSURE_PLATE, appearance) { PressurePlateBlock(sensitivity, props.build().noCollission(), props.getBlockSetType()!!) }
     }
 
-    fun registerWoodButton(name: String, props: HProperties, appearance: (() -> Block)? = null): ObjectHolderDelegate<ButtonBlock> {
-        return registerModelled(name, BlockModelType.BUTTON, appearance) { ButtonBlock(props.noCollision().build(), props.getBlockSetType()!!, 30, true) }
+    fun registerWoodButton(name: String, props: PropertiesView, appearance: (() -> Block)? = null): ObjectHolderDelegate<ButtonBlock> {
+        return registerModelled(name, BlockModelType.BUTTON, appearance) { ButtonBlock(props.build().noCollission(), props.getBlockSetType()!!, 30, true) }
     }
 
-    fun registerTrapdoor(name: String, props: HProperties): ObjectHolderDelegate<TrapDoorBlock> {
-        return registerModelled(name, BlockModelType.TRAPDOOR) { TrapDoorBlock(props.noOcclusion().build(), props.getBlockSetType()!!) }
+    fun registerTrapdoor(name: String, props: PropertiesView): ObjectHolderDelegate<TrapDoorBlock> {
+        return registerModelled(name, BlockModelType.TRAPDOOR) { TrapDoorBlock(props.build().noOcclusion(), props.getBlockSetType()!!) }
     }
 
-    fun registerDoor(name: String, props: HProperties): ObjectHolderDelegate<DoorBlock> {
-        return registerModelled(name, BlockModelType.DOOR) { DoorBlock(props.noOcclusion().build(), props.getBlockSetType()!!) }
+    fun registerDoor(name: String, props: PropertiesView): ObjectHolderDelegate<DoorBlock> {
+        return registerModelled(name, BlockModelType.DOOR) { DoorBlock(props.build().noOcclusion(), props.getBlockSetType()!!) }
     }
 
-    fun registerStandingSign(name: String, type: WoodType, props: HProperties): ObjectHolderDelegate<StandingSignBlock> {
+    fun registerStandingSign(name: String, type: WoodType, props: PropertiesView): ObjectHolderDelegate<StandingSignBlock> {
         return HBlocks.register(name) { StandingSignBlock(props.build().noCollission(), type) }
     }
 
-    fun registerWallSign(name: String, type: WoodType, props: HProperties): ObjectHolderDelegate<WallSignBlock> {
+    fun registerWallSign(name: String, type: WoodType, props: PropertiesView): ObjectHolderDelegate<WallSignBlock> {
         return HBlocks.register(name) { WallSignBlock(props.build().noCollission(), type) }
     }
 
@@ -134,12 +135,12 @@ object BlockMaker {
         return HBlocks.register(name) { HBlock(HProperties.of().noOcclusion().shape(WINE_BOTTLE_SHAPE)) }
     }
 
-    fun registerRotatedPillar(name: String, properties: HProperties): ObjectHolderDelegate<RotatedPillarBlock> {
+    fun registerRotatedPillar(name: String, properties: PropertiesView): ObjectHolderDelegate<RotatedPillarBlock> {
         return registerModelled(name, BlockModelType.ROTATED_PILLAR) { RotatedPillarBlock(properties.build()) }
     }
 
     // todo
-    fun registerRotatableBlock(name: String, props: HProperties): ObjectHolderDelegate<RotatableBlock> {
+    fun registerRotatableBlock(name: String, props: PropertiesView): ObjectHolderDelegate<RotatableBlock> {
         return HBlocks.register(name) { RotatableBlock(props) }
     }
 
@@ -179,7 +180,7 @@ object BlockMaker {
         }
     }
 
-    fun portalFrameWithItem(id: ResourceLocation, props: HProperties, combo: PortalCombo): ObjectHolderDelegate<HPortalFrameBlock> {
+    fun portalFrameWithItem(id: ResourceLocation, props: PropertiesView, combo: PortalCombo): ObjectHolderDelegate<HPortalFrameBlock> {
         val name = id.path + "_portal_frame"
         return withItem(name, ItemModelType.BLOCK_ITEM, registerModelled(name, BlockModelType.CUBE_ALL, null) { HPortalFrameBlock(combo, props) })
     }
@@ -198,7 +199,7 @@ object BlockMaker {
     /////////////////////////////////////////////
 
     // Cube all block + 3d item
-    fun cubeAllWithItem(name: String, props: HProperties, type: ItemModelType = ItemModelType.BLOCK_ITEM, appearance: (() -> Block)? = null): ObjectHolderDelegate<HBlock> {
+    fun cubeAllWithItem(name: String, props: PropertiesView, type: ItemModelType = ItemModelType.BLOCK_ITEM, appearance: (() -> Block)? = null): ObjectHolderDelegate<HBlock> {
         return withItem(name, type, registerCubeAll(name, props, appearance))
     }
 
@@ -206,11 +207,11 @@ object BlockMaker {
         return withItem(name, type, registerModelled(name, BlockModelType.CUBE_ALL, null, supplier))
     }
 
-    fun slabWithItem(name: String, full: () -> Block, props: HProperties, type: ItemModelType = ItemModelType.BLOCK_ITEM): ObjectHolderDelegate<SlabBlock> {
+    fun slabWithItem(name: String, full: () -> Block, props: PropertiesView, type: ItemModelType = ItemModelType.BLOCK_ITEM): ObjectHolderDelegate<SlabBlock> {
         return withItem(name, type, registerSlab(name, full, props))
     }
 
-    fun stairsWithItem(name: String, full: () -> Block, props: HProperties, type: ItemModelType = ItemModelType.BLOCK_ITEM): ObjectHolderDelegate<StairBlock> {
+    fun stairsWithItem(name: String, full: () -> Block, props: PropertiesView, type: ItemModelType = ItemModelType.BLOCK_ITEM): ObjectHolderDelegate<StairBlock> {
         return withItem(name, type, registerStairs(name, full, props))
     }
 
@@ -218,11 +219,11 @@ object BlockMaker {
         return withItem(name, type, registerWall(name, block))
     }
 
-    fun rotatedPillarWithItem(name: String, props: HProperties): ObjectHolderDelegate<RotatedPillarBlock> {
+    fun rotatedPillarWithItem(name: String, props: PropertiesView): ObjectHolderDelegate<RotatedPillarBlock> {
         return withItem(name, ItemModelType.BLOCK_ITEM, registerRotatedPillar(name, props))
     }
 
-    fun rotatableBlockWithItem(name: String, props: HProperties): ObjectHolderDelegate<RotatableBlock> {
+    fun rotatableBlockWithItem(name: String, props: PropertiesView): ObjectHolderDelegate<RotatableBlock> {
         return withItem(name, ItemModelType.BLOCK_ITEM, registerRotatableBlock(name, props))
     }
 
@@ -244,6 +245,7 @@ object BlockMaker {
     }
 
     // Handles hoe interaction
+    // Warning: Mutates the properties parameter
     fun farmlandWithItem(
         name: String,
         from: () -> Block,
@@ -258,7 +260,7 @@ object BlockMaker {
         return farmland
     }
 
-    fun lanternWithItem(name: String, props: HProperties): ObjectHolderDelegate<LanternBlock> {
+    fun lanternWithItem(name: String, props: PropertiesView): ObjectHolderDelegate<LanternBlock> {
         return withItem(name, ItemModelType.SIMPLE_ITEM, registerModelled(name, BlockModelType.LANTERN) { LanternBlock(props.build()) })
     }
 
