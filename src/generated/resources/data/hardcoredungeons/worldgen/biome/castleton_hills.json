@@ -1,0 +1,33 @@
+{
+  "carvers": {
+    "air": "hardcoredungeons:castleton_cave"
+  },
+  "downfall": 0.0,
+  "effects": {
+    "fog_color": 1923701,
+    "sky_color": 1129809,
+    "water_color": 7316415,
+    "water_fog_color": 2045938
+  },
+  "features": [],
+  "has_precipitation": false,
+  "spawn_costs": {},
+  "spawners": {
+    "ambient": [],
+    "axolotls": [],
+    "creature": [
+      {
+        "type": "hardcoredungeons:castleton_deer",
+        "maxCount": 8,
+        "minCount": 3,
+        "weight": 10
+      }
+    ],
+    "misc": [],
+    "monster": [],
+    "underground_water_creature": [],
+    "water_ambient": [],
+    "water_creature": []
+  },
+  "temperature": 1.5
+}

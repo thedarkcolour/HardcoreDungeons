@@ -31,5 +31,6 @@
       ],
       "rolls": 1.0
     }
-  ]
+  ],
+  "random_sequence": "hardcoredungeons:blocks/potted_mini_pink_gumdrop"
 }

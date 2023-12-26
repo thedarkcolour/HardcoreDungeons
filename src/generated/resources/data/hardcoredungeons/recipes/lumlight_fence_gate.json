@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "redstone",
   "group": "wooden_fence_gate",
   "key": {
     "i": {
@@ -16,5 +17,6 @@
   "result": {
     "count": 3,
     "item": "hardcoredungeons:lumlight_fence_gate"
-  }
+  },
+  "show_notification": true
 }

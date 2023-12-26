@@ -1,12 +1,12 @@
 package thedarkcolour.hardcoredungeons.util
 
-import net.minecraft.world.item.ItemStack
-import net.minecraft.resources.ResourceLocation
 import net.minecraft.core.BlockPos
 import net.minecraft.nbt.NbtUtils
 import net.minecraft.network.syncher.EntityDataAccessor
+import net.minecraft.resources.ResourceLocation
 import net.minecraft.util.Mth
 import net.minecraft.world.entity.Entity
+import net.minecraft.world.item.ItemStack
 import thedarkcolour.hardcoredungeons.HardcoreDungeons
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
@@ -16,7 +16,7 @@ internal fun modLoc(path: String): ResourceLocation {
     return ResourceLocation(HardcoreDungeons.ID, path)
 }
 
-/**
+/** todo is this really necessary?
  * Property delegate to a property in the `dataManager` of an `Entity`.
  */
 fun <T> dataParameterDelegate(parameter: EntityDataAccessor<T>): ReadWriteProperty<Entity, T> {

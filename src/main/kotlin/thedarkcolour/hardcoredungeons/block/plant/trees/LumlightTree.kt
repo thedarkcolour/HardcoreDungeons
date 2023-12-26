@@ -11,6 +11,6 @@ object LumlightTree : AbstractTreeGrower() {
         rand: RandomSource,
         hasBeehives: Boolean
     ): ResourceKey<ConfiguredFeature<*, *>> {
-        return HFeatures.FANCY_LUMLIGHT_TREE.key!!
+        return HFeatures.FANCY_LUMLIGHT_TREE
     }
 }

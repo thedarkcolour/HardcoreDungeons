@@ -1,4 +1,4 @@
-// 1.19.2	2023-11-19T11:43:44.4452947	Block States: hardcoredungeons
+// 1.20.1	2023-12-25T22:45:22.7150128	Block States: hardcoredungeons
 cbb740e737de58e1c59e8a709113836a3387d8e6 assets/hardcoredungeons/blockstates/ashy_farmland.json
 718440dc3f5a5a63aa52964a0007e3dff29b7fd9 assets/hardcoredungeons/blockstates/aubrum_portal.json
 aab4b45eaa836ba55c0d3d99fe246c36e9e551fd assets/hardcoredungeons/blockstates/aubrum_portal_frame.json
@@ -535,8 +535,6 @@ a9f9b48d43ae9a7221fdff540f77bb1f333ba0bd assets/hardcoredungeons/models/item/cha
 1fae9cd1e14098f8bb353d24a0702ea8c1e02272 assets/hardcoredungeons/models/item/chocolate_stairs.json
 1b50bb9bfd2e47ef5cf70eb1905496a47696a1fa assets/hardcoredungeons/models/item/chocolate_wall.json
 84dcd3aaee6afe3a251c6fbb0f9ee4ad7ebd7313 assets/hardcoredungeons/models/item/clean_oak_planks.json
-27a0743f002508fccc97da80807d372ebb1e1d4b assets/hardcoredungeons/models/item/clear_wand.json
-72c7e553d2bc58f4ad2242f8fc16bb37ed934dec assets/hardcoredungeons/models/item/clone_wand.json
 c810d1a6eed16af74a78adb073e28488f4fe3006 assets/hardcoredungeons/models/item/cooked_venison.json
 d238a0fea536ceead8507545926224fb984c043a assets/hardcoredungeons/models/item/cottonmarsh_button.json
 5e7f3fad2c287c585948ee0bfea159ee7727fad7 assets/hardcoredungeons/models/item/cottonmarsh_door.json
@@ -557,10 +555,8 @@ c8e4751f491c9eace2ffea859220d62c702e9ee2 assets/hardcoredungeons/models/item/cra
 f7126a67f23e04f539f4fe825e83ad447aed08de assets/hardcoredungeons/models/item/crown.json
 909a9c919397e7c34dfcad290ee063435f5fcae6 assets/hardcoredungeons/models/item/deer_antler.json
 a163c9ce1e63e428f3fa804b66e491b455f18540 assets/hardcoredungeons/models/item/deer_spawn_egg.json
-467713f94aae3fdeaba5e4d5798e8e3049c7998c assets/hardcoredungeons/models/item/distance_wand.json
 b36e78063421ac4fd2e308540615827ad2a9f67a assets/hardcoredungeons/models/item/drum.json
 0e3767a17f895a79acb5e10faec64ebe21629539 assets/hardcoredungeons/models/item/dungeon_castleton_bricks.json
-e105959c364d1642ef5aa6ff9294e0fec459d3e5 assets/hardcoredungeons/models/item/fill_wand.json
 a4fc46a1f2081ac6ee2022439b9f3bc3b7d42e28 assets/hardcoredungeons/models/item/flame_rose.json
 72b8cf4bdeb3e91506080ca020e4397cdad0b256 assets/hardcoredungeons/models/item/frayed_skull.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/hardcoredungeons/models/item/frayed_soul_spawn_egg.json

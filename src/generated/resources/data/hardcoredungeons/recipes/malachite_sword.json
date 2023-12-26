@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "equipment",
   "key": {
     "#": {
       "item": "hardcoredungeons:malachite_crystal_shard"
@@ -15,5 +16,6 @@
   ],
   "result": {
     "item": "hardcoredungeons:malachite_sword"
-  }
+  },
+  "show_notification": true
 }

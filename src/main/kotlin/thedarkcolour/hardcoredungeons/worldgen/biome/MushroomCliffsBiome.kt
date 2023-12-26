@@ -1,13 +1,10 @@
 package thedarkcolour.hardcoredungeons.worldgen.biome
 
-import net.minecraft.core.Holder
 import net.minecraft.data.worldgen.BiomeDefaultFeatures
-import net.minecraft.world.level.biome.Biome
-import net.minecraftforge.common.world.ModifiableBiomeInfo
-import team.rusty.util.biome.ModBiome
+import thedarkcolour.hardcoredungeons.data.WorldGenProvider
 
 object MushroomCliffsBiome : ModBiome() {
-    override fun configure(biome: Holder<Biome>, info: ModifiableBiomeInfo.BiomeInfo.Builder) {
+    override fun configure(info: WorldGenProvider.BiomeConfiguration) {
         info.climateSettings.apply {
             setHasPrecipitation(false)
             temperature = 0.9f
@@ -19,7 +16,7 @@ object MushroomCliffsBiome : ModBiome() {
             skyColor(getSkyForTemp(0.9f))
             fogColor(0xc0d8ff)
         }
-        wrapped(info.generationSettings).apply {
+        info.generationSettings.apply {
             BiomeDefaultFeatures.addDefaultCarversAndLakes(this)
             BiomeDefaultFeatures.addDefaultMonsterRoom(this)
             BiomeDefaultFeatures.addDefaultUndergroundVariety(this)

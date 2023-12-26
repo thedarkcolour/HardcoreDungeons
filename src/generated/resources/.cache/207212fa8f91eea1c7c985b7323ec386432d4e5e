@@ -1,0 +1,9 @@
+// 1.20.1	2023-12-25T22:20:26.2237951	Hardcore Dungeons Dimensions and Biomes provider
+5e2dcc85a2d1093d97a9a06e097a0fc2278ecec5 data/hardcoredungeons/dimension/aubrum.json
+b447c234b7d9f744319821a78353faa5d173613d data/hardcoredungeons/dimension/candyland.json
+8bd7ab39d7396b1b21172b155b61e7b169cec57c data/hardcoredungeons/dimension/castleton.json
+0aef75fac1a6bb967a7fde1b93e3b090c098d982 data/hardcoredungeons/dimension/rainbowland.json
+b5f5571163defa5ac6b027cbc24614a316845273 data/hardcoredungeons/dimension_type/aubrum.json
+e6183be8a3cdae986967f27ea6bb537f1ddb8c64 data/hardcoredungeons/dimension_type/candyland.json
+8e8b330146495ba00a275524850a7f94a4401730 data/hardcoredungeons/dimension_type/castleton.json
+e6183be8a3cdae986967f27ea6bb537f1ddb8c64 data/hardcoredungeons/dimension_type/rainbowland.json

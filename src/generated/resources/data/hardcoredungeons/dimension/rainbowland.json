@@ -1,0 +1,11 @@
+{
+  "type": "hardcoredungeons:rainbowland",
+  "generator": {
+    "type": "minecraft:noise",
+    "biome_source": {
+      "type": "minecraft:fixed",
+      "biome": "hardcoredungeons:rainbowland"
+    },
+    "settings": "hardcoredungeons:rainbowland"
+  }
+}

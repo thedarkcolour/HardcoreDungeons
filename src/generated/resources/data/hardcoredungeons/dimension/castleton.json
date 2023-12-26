@@ -1,0 +1,36 @@
+{
+  "type": "hardcoredungeons:castleton",
+  "generator": {
+    "type": "minecraft:noise",
+    "biome_source": {
+      "type": "minecraft:multi_noise",
+      "biomes": [
+        {
+          "biome": "hardcoredungeons:knightly_shrubland",
+          "parameters": {
+            "continentalness": 0.1,
+            "depth": 0.3,
+            "erosion": 0.2,
+            "humidity": 0.6,
+            "offset": 0.0,
+            "temperature": 0.0,
+            "weirdness": 0.5
+          }
+        },
+        {
+          "biome": "hardcoredungeons:castleton_hills",
+          "parameters": {
+            "continentalness": 0.1,
+            "depth": 0.6,
+            "erosion": 0.3,
+            "humidity": 0.6,
+            "offset": 0.0,
+            "temperature": 0.0,
+            "weirdness": 0.2
+          }
+        }
+      ]
+    },
+    "settings": "hardcoredungeons:castleton"
+  }
+}

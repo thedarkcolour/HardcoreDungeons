@@ -20,10 +20,10 @@ class FenceModelType : BlockModelType<FenceBlock>() {
         if (texture.endsWith("brick")) {
             // Corrects "castleton_brick" to "castleton_bricks"
             texture += "s"
-        }/* else if (block.material == Material.WOOD || block.material == Material.NETHER_WOOD) {
+        } else if (appearance.registryName!!.path.endsWith("planks")) {
             // Corrects "lumlight" to "lumlight_planks"
             texture += "_planks"
-        }*/
+        }
 
         val textureLoc = gen.textureLoc(texture)
 

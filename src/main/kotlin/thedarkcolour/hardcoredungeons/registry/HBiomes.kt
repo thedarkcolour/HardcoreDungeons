@@ -1,9 +1,8 @@
 package thedarkcolour.hardcoredungeons.registry
 
-import team.rusty.util.biome.ModBiomeRegistry
-import thedarkcolour.hardcoredungeons.HardcoreDungeons
-import thedarkcolour.hardcoredungeons.worldgen.biome.*
-import thedarkcolour.kotlinforforge.forge.MOD_BUS
+import net.minecraft.core.registries.Registries
+import net.minecraft.resources.ResourceKey
+import thedarkcolour.hardcoredungeons.util.modLoc
 
 /**
  * Biomes for Hardcore Dungeons.
@@ -12,42 +11,26 @@ import thedarkcolour.kotlinforforge.forge.MOD_BUS
  */
 @Suppress("HasPlatformType", "MemberVisibilityCanBePrivate", "unused")
 object HBiomes {
-    private val REGISTRY = ModBiomeRegistry(HardcoreDungeons.ID)
-
-    fun init() {
-        REGISTRY.register(MOD_BUS)
-    }
-
     // Overworld biomes
     //val THICK_FOREST = REGISTRY.register("thick_forest", ThickForestBiome)
-    val MUSHROOM_CLIFFS = REGISTRY.register("mushroom_cliffs", MushroomCliffsBiome)
+    val MUSHROOM_CLIFFS = biome("mushroom_cliffs")
 
     // Aubrum biomes
-    val AUBRUM_WASTELAND = REGISTRY.register("aubrum_wasteland", AubrumWastelandBiome)
-    val GOLDEN_FOREST = REGISTRY.register("golden_forest", GoldenForestBiome)
-    val AUBRUM_MOUNTAINS = REGISTRY.register("aubrum_mountains", AubrumMountainsBiome)
-    val AURI_PLAINS = REGISTRY.register("auri_plains", AuriPlainsBiome)
+    val AUBRUM_WASTELAND = biome("aubrum_wasteland")
+    val GOLDEN_FOREST = biome("golden_forest")
+    val AUBRUM_MOUNTAINS = biome("aubrum_mountains")
+    val AURI_PLAINS = biome("auri_plains")
 
     // Castleton biomes
-    val CASTLETON_HILLS = REGISTRY.register("castleton_hills", CastletonHillsBiome)
-    val KNIGHTLY_SHRUBLAND = REGISTRY.register("knightly_shrubland", KnightlyShrublandBiome)
+    val CASTLETON_HILLS = biome("castleton_hills")
+    val KNIGHTLY_SHRUBLAND = biome("knightly_shrubland")
 
     // Rainbowland biomes
-    val RAINBOW_PLAINS = REGISTRY.register("rainbow_plains", RainbowPlainsBiome)
+    val RAINBOWLAND = biome("rainbowland")
 
     // Candyland biomes
-    val GUMDROP_FIELDS = REGISTRY.register("gumdrop_fields", GumdropFieldsBiome)
-    val CANDY_PLAINS = REGISTRY.register("candy_plains", CandyPlainsBiome)
+    val GUMDROP_FIELDS = biome("gumdrop_fields")
+    val CANDY_PLAINS = biome("candy_plains")
 
-    //val THICK_FOREST_KEY = RegistryKey.create(Registry.BIOME_REGISTRY, ResourceLocation(HardcoreDungeons.ID, "thick_forest"))
-
-    /*fun biomeLoading(event: BiomeLoadingEvent) {
-        if (event.name == ResourceLocation("minecraft:mushroom_islands")) {
-            HWorldGen.withMushroomHut(event.generation)
-        }
-
-        if (HConfig.malachiteCrystalGeneration.value) {
-            HWorldGen.withMalachiteCrystals(event.generation)
-        }
-    }*/
+    private fun biome(path: String) = ResourceKey.create(Registries.BIOME, modLoc(path))
 }

@@ -9,7 +9,6 @@ import org.apache.logging.log4j.LogManager
 import org.apache.logging.log4j.Logger
 import thedarkcolour.hardcoredungeons.client.ClientHandler
 import thedarkcolour.hardcoredungeons.command.ReloadModelsCommand
-import thedarkcolour.hardcoredungeons.config.ConfigHolder
 import thedarkcolour.hardcoredungeons.event.EventHandler
 import thedarkcolour.hardcoredungeons.registry.RegistryEventHandler
 import thedarkcolour.kotlinforforge.forge.FORGE_BUS
@@ -38,8 +37,6 @@ object HardcoreDungeons {
 
         MOD_BUS.addListener(::interModComms)
 
-        ConfigHolder.register(MOD_BUS, ID)
-
         runWhenOn(Dist.CLIENT, ClientHandler::registerEvents)
     }
 
@@ -48,6 +45,7 @@ object HardcoreDungeons {
      *
      * Registers 3 Curio types.
      */
+    @Suppress("UnstableApiUsage", "removal", "DEPRECATION")
     private fun interModComms(event: InterModEnqueueEvent) {
         event.enqueueWork {
             InterModComms.sendTo(CuriosApi.MODID, SlotTypeMessage.REGISTER_TYPE) {

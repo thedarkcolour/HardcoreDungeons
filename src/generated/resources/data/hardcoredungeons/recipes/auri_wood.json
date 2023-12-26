@@ -1,17 +1,17 @@
 {
   "type": "minecraft:crafting_shaped",
-  "group": "bark",
+  "category": "building",
   "key": {
-    "x": {
+    "#": {
       "item": "hardcoredungeons:auri_log"
     }
   },
   "pattern": [
-    "xx",
-    "xx"
+    "##",
+    "##"
   ],
   "result": {
-    "count": 3,
     "item": "hardcoredungeons:auri_wood"
-  }
+  },
+  "show_notification": true
 }

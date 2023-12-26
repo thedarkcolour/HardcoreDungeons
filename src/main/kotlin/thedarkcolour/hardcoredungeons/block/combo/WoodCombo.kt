@@ -21,8 +21,6 @@ import thedarkcolour.hardcoredungeons.block.base.BlockMaker
 import thedarkcolour.hardcoredungeons.block.base.properties.HProperties
 import thedarkcolour.hardcoredungeons.data.BlockLoot
 import thedarkcolour.hardcoredungeons.data.modelgen.item.ItemModelType
-import thedarkcolour.hardcoredungeons.registry.block.HBlockUtil
-import thedarkcolour.hardcoredungeons.registry.block.HBlocks
 import thedarkcolour.hardcoredungeons.registry.items.ItemMaker
 import java.util.function.Consumer
 
@@ -53,11 +51,6 @@ class WoodCombo(
         this.woodType = WoodType(HardcoreDungeons.ID + ":" + wood, blockSetType).also(WoodType::register)
         this.defaultProps = BlockMaker.props(topCol, applyProperties).blockSetType(blockSetType)
 
-        HBlocks.onceRegistered {
-            HBlockUtil.registerAxeStripInteraction(this.log, this.strippedLog)
-            HBlockUtil.registerAxeStripInteraction(this.wood, this.strippedWood)
-        }
-
         // todo get rid of the rest of these
         ItemMaker.blockItem(wood + "_leaves", block = ::leaves)
 
@@ -75,17 +68,17 @@ class WoodCombo(
     val stairs by BlockMaker.stairsWithItem(wood + "_stairs", ::planks, defaultProps)
 
     // Log, Stripped Log, Wood, Stripped Wood, Leaves
-    val log by BlockMaker.rotatedPillarWithItem(wood + "_log", HProperties.of { state -> if (state.getValue(BlockStateProperties.AXIS) == Direction.Axis.Y) topCol else barkCol }.also(applyProperties))
-    val wood by BlockMaker.rotatedPillarWithItem(wood + "_wood", defaultProps)
     val strippedLog by BlockMaker.rotatedPillarWithItem("stripped_" + wood + "_log", defaultProps)
     val strippedWood by BlockMaker.rotatedPillarWithItem("stripped_" + wood + "_wood", defaultProps)
+    val log by BlockMaker.logWithItem(wood + "_log", { strippedLog }, HProperties.of { state -> if (state.getValue(BlockStateProperties.AXIS) == Direction.Axis.Y) topCol else barkCol }.also(applyProperties))
+    val wood by BlockMaker.logWithItem(wood + "_wood", { strippedWood }, defaultProps)
     val leaves by BlockMaker.leavesBlock(wood + "_leaves")
 
     // Fence, Fence Gate, Pressure Plate, Button, Trapdoor, Door
     val fence by BlockMaker.registerFence(wood + "_fence", defaultProps, ::planks)
     val fenceGate by BlockMaker.registerFenceGate(wood + "_fence_gate", defaultProps, ::planks)
     val pressurePlate by BlockMaker.registerPressurePlate(wood + "_pressure_plate", PressurePlateBlock.Sensitivity.EVERYTHING, defaultProps, ::planks)
-    val button by BlockMaker.registerWoodButton(wood + "_button", defaultProps)
+    val button by BlockMaker.registerWoodButton(wood + "_button", defaultProps, ::planks)
     val trapdoor by BlockMaker.registerTrapdoor(wood + "_trapdoor", defaultProps)
     val door by BlockMaker.registerDoor(wood + "_door", defaultProps)
 

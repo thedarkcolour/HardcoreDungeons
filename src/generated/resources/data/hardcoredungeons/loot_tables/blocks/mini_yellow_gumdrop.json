@@ -3,18 +3,19 @@
   "pools": [
     {
       "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
       "entries": [
         {
           "type": "minecraft:item",
-          "conditions": [
-            {
-              "condition": "minecraft:survives_explosion"
-            }
-          ],
           "name": "hardcoredungeons:mini_yellow_gumdrop"
         }
       ],
       "rolls": 1.0
     }
-  ]
+  ],
+  "random_sequence": "hardcoredungeons:blocks/mini_yellow_gumdrop"
 }

@@ -10,30 +10,33 @@ import thedarkcolour.hardcoredungeons.registry.block.HBlocks
 import thedarkcolour.hardcoredungeons.tags.HBlockTags
 import thedarkcolour.modkit.data.MKTagsProvider
 
-fun MKTagsProvider<Block>.addBlockTags() {
-    comboTags(DataTags.Blocks(this))
+fun addBlockTags(provider: MKTagsProvider<Block>) {
+    provider.apply {
+        comboTags(DataTags.Blocks(this))
 
-    tag(HBlockTags.GLASS_RAINBOW).add(HBlocks.RAINBOW_GLASS)
-    tag(HBlockTags.GLASS_PANES_RAINBOW).add(HBlocks.RAINBOW_GLASS_PANE)
+        tag(HBlockTags.GLASS_RAINBOW).add(HBlocks.RAINBOW_GLASS)
+        tag(HBlockTags.GLASS_PANES_RAINBOW).add(HBlocks.RAINBOW_GLASS_PANE)
 
-    tag(HBlockTags.CASTLETON_GRASS_PLANTABLE).add(HBlocks.LUMLIGHT_WOOD.sapling.plant, HBlocks.BLUE_LUMSHROOM.plant, HBlocks.PURPLE_LUMSHROOM.plant)
-    tag(HBlockTags.RAINBOW_GRASS_PLANTABLE).add(HBlocks.LUMLIGHT_WOOD.sapling.plant)
-    tag(HBlockTags.AURIGRASS_PLANTABLE).add(HBlocks.FLAME_ROSE.plant, HBlocks.GOLDEN_TULIP.plant)
-    tag(HBlockTags.SUGARY_GRASS_PLANTABLE).add(HBlocks.GREEN_GUMDROP.plant, HBlocks.MINI_GREEN_GUMDROP.plant, HBlocks.PINK_GUMDROP.plant, HBlocks.MINI_PINK_GUMDROP.plant, HBlocks.BLUE_GUMDROP.plant, HBlocks.MINI_BLUE_GUMDROP.plant, HBlocks.PURPLE_GUMDROP.plant, HBlocks.MINI_PURPLE_GUMDROP.plant, HBlocks.RED_GUMDROP.plant, HBlocks.MINI_RED_GUMDROP.plant, HBlocks.YELLOW_GUMDROP.plant, HBlocks.MINI_YELLOW_GUMDROP.plant)
+        tag(HBlockTags.CASTLETON_GRASS_PLANTABLE).add(HBlocks.LUMLIGHT_WOOD.sapling.plant, HBlocks.BLUE_LUMSHROOM.plant, HBlocks.PURPLE_LUMSHROOM.plant)
+        tag(HBlockTags.RAINBOW_GRASS_PLANTABLE).add(HBlocks.LUMLIGHT_WOOD.sapling.plant)
+        tag(HBlockTags.AURIGRASS_PLANTABLE).add(HBlocks.FLAME_ROSE.plant, HBlocks.GOLDEN_TULIP.plant)
+        tag(HBlockTags.SUGARY_GRASS_PLANTABLE).add(HBlocks.GREEN_GUMDROP.plant, HBlocks.MINI_GREEN_GUMDROP.plant, HBlocks.PINK_GUMDROP.plant, HBlocks.MINI_PINK_GUMDROP.plant, HBlocks.BLUE_GUMDROP.plant, HBlocks.MINI_BLUE_GUMDROP.plant, HBlocks.PURPLE_GUMDROP.plant, HBlocks.MINI_PURPLE_GUMDROP.plant, HBlocks.RED_GUMDROP.plant, HBlocks.MINI_RED_GUMDROP.plant, HBlocks.YELLOW_GUMDROP.plant, HBlocks.MINI_YELLOW_GUMDROP.plant)
 
-    /** Ore blocks */
-    tag(Tags.Blocks.ORES).add(HBlocks.RAINBOWSTONE_ORE, HBlocks.AURIGOLD_ORE)
+        tag(HBlockTags.CASTLETON_CARVER_REPLACEABLES).add(HBlocks.CASTLETON_STONE.stone.block)
 
-    /** Blocks */
-    tag(Tags.Blocks.STORAGE_BLOCKS).add(HBlocks.MALACHITE_BLOCK, HBlocks.RAINBOWSTONE_BLOCK, HBlocks.SUGAR_BLOCK, HBlocks.CHOCOLATE_BLOCK.block)
-    tag(BlockTags.BEACON_BASE_BLOCKS).add(HBlocks.MALACHITE_BLOCK, HBlocks.RAINBOWSTONE_BLOCK)
+        /** Ore blocks */
+        tag(Tags.Blocks.ORES).add(HBlocks.RAINBOWSTONE_ORE, HBlocks.AURIGOLD_ORE)
 
-    tag(BlockTags.CAMPFIRES).add(HBlocks.LUMLIGHT_CAMPFIRE)
+        /** Blocks */
+        tag(Tags.Blocks.STORAGE_BLOCKS).add(HBlocks.MALACHITE_BLOCK, HBlocks.RAINBOWSTONE_BLOCK, HBlocks.SUGAR_BLOCK, HBlocks.CHOCOLATE_BLOCK.block)
+        tag(BlockTags.BEACON_BASE_BLOCKS).add(HBlocks.MALACHITE_BLOCK, HBlocks.RAINBOWSTONE_BLOCK)
 
-    tag(HBlockTags.LUMSHROOM).add(HBlocks.PURPLE_LUMSHROOM.plant, HBlocks.BLUE_LUMSHROOM.plant)
+        tag(BlockTags.CAMPFIRES).add(HBlocks.LUMLIGHT_CAMPFIRE)
 
-    // vanilla tags
-    /*tag(BlockTags.WALLS).add(HBlocksNew.SHROOMY_COBBLESTONE_WALL, HBlocksNew.SHROOMY_STONE_BRICK_WALL, HBlocksNew.CASTLETON_BRICK_WALL, HBlocksNew.CHARGED_CASTLETON_BRICK_WALL, HBlocksNew.RAINBOW_BRICK_WALL, HBlocksNew.RAINBOW_FACTORY_BRICK_WALL)
+        tag(HBlockTags.LUMSHROOM).add(HBlocks.PURPLE_LUMSHROOM.plant, HBlocks.BLUE_LUMSHROOM.plant)
+
+        // vanilla tags
+        /*tag(BlockTags.WALLS).add(HBlocksNew.SHROOMY_COBBLESTONE_WALL, HBlocksNew.SHROOMY_STONE_BRICK_WALL, HBlocksNew.CASTLETON_BRICK_WALL, HBlocksNew.CHARGED_CASTLETON_BRICK_WALL, HBlocksNew.RAINBOW_BRICK_WALL, HBlocksNew.RAINBOW_FACTORY_BRICK_WALL)
     tag(BlockTags.FENCES).add(HBlocksNew.CASTLETON_BRICK_FENCE, HBlocksNew.CHARGED_CASTLETON_BRICK_FENCE, HBlocksNew.LUMLIGHT_FENCE, HBlocksNew.RAINBOW_BRICK_FENCE, HBlocksNew.RAINBOW_FACTORY_BRICK_FENCE)
     tag(BlockTags.LEAVES).add(HBlocksNew.COTTONMARSH_LEAVES, HBlocksNew.LUMLIGHT_LEAVES)
     tag(BlockTags.IMPERMEABLE).add(HBlocksNew.RAINBOW_GLASS)
@@ -65,39 +68,40 @@ fun MKTagsProvider<Block>.addBlockTags() {
     tag(Blocks.FENCE_GATES).add(HBlocksNew.LUMLIGHT_FENCE_GATE)
     tag(Blocks.FENCE_GATES_WOODEN).add(HBlocksNew.LUMLIGHT_FENCE_GATE)*/
 
-    tag(Tags.Blocks.GLASS).addTag(HBlockTags.GLASS_RAINBOW)
-    tag(Tags.Blocks.GLASS_PANES).addTag(HBlockTags.GLASS_PANES_RAINBOW) // the chaotic glass
-    tag(Tags.Blocks.GLASS_BLACK).addTag(HBlockTags.GLASS_RAINBOW)
-    tag(Tags.Blocks.GLASS_BLUE).addTag(HBlockTags.GLASS_RAINBOW)
-    tag(Tags.Blocks.GLASS_BROWN).addTag(HBlockTags.GLASS_RAINBOW)
-    tag(Tags.Blocks.GLASS_CYAN).addTag(HBlockTags.GLASS_RAINBOW)
-    tag(Tags.Blocks.GLASS_GRAY).addTag(HBlockTags.GLASS_RAINBOW)
-    tag(Tags.Blocks.GLASS_GREEN).addTag(HBlockTags.GLASS_RAINBOW)
-    tag(Tags.Blocks.GLASS_LIGHT_BLUE).addTag(HBlockTags.GLASS_RAINBOW)
-    tag(Tags.Blocks.GLASS_LIGHT_GRAY).addTag(HBlockTags.GLASS_RAINBOW)
-    tag(Tags.Blocks.GLASS_LIME).addTag(HBlockTags.GLASS_RAINBOW)
-    tag(Tags.Blocks.GLASS_MAGENTA).addTag(HBlockTags.GLASS_RAINBOW)
-    tag(Tags.Blocks.GLASS_ORANGE).addTag(HBlockTags.GLASS_RAINBOW)
-    tag(Tags.Blocks.GLASS_PINK).addTag(HBlockTags.GLASS_RAINBOW)
-    tag(Tags.Blocks.GLASS_PURPLE).addTag(HBlockTags.GLASS_RAINBOW)
-    tag(Tags.Blocks.GLASS_RED).addTag(HBlockTags.GLASS_RAINBOW)
-    tag(Tags.Blocks.GLASS_WHITE).addTag(HBlockTags.GLASS_RAINBOW)
-    tag(Tags.Blocks.GLASS_YELLOW).addTag(HBlockTags.GLASS_RAINBOW)
-    tag(Tags.Blocks.GLASS_PANES_BLACK).addTag(HBlockTags.GLASS_PANES_RAINBOW)
-    tag(Tags.Blocks.GLASS_PANES_BLUE).addTag(HBlockTags.GLASS_PANES_RAINBOW)
-    tag(Tags.Blocks.GLASS_PANES_BROWN).addTag(HBlockTags.GLASS_PANES_RAINBOW)
-    tag(Tags.Blocks.GLASS_PANES_COLORLESS).addTag(HBlockTags.GLASS_PANES_RAINBOW)
-    tag(Tags.Blocks.GLASS_PANES_CYAN).addTag(HBlockTags.GLASS_PANES_RAINBOW)
-    tag(Tags.Blocks.GLASS_PANES_GRAY).addTag(HBlockTags.GLASS_PANES_RAINBOW)
-    tag(Tags.Blocks.GLASS_PANES_GREEN).addTag(HBlockTags.GLASS_PANES_RAINBOW)
-    tag(Tags.Blocks.GLASS_PANES_LIGHT_BLUE).addTag(HBlockTags.GLASS_PANES_RAINBOW)
-    tag(Tags.Blocks.GLASS_PANES_LIGHT_GRAY).addTag(HBlockTags.GLASS_PANES_RAINBOW)
-    tag(Tags.Blocks.GLASS_PANES_LIME).addTag(HBlockTags.GLASS_PANES_RAINBOW)
-    tag(Tags.Blocks.GLASS_PANES_MAGENTA).addTag(HBlockTags.GLASS_PANES_RAINBOW)
-    tag(Tags.Blocks.GLASS_PANES_ORANGE).addTag(HBlockTags.GLASS_PANES_RAINBOW)
-    tag(Tags.Blocks.GLASS_PANES_PINK).addTag(HBlockTags.GLASS_PANES_RAINBOW)
-    tag(Tags.Blocks.GLASS_PANES_PURPLE).addTag(HBlockTags.GLASS_PANES_RAINBOW)
-    tag(Tags.Blocks.GLASS_PANES_RED).addTag(HBlockTags.GLASS_PANES_RAINBOW)
+        tag(Tags.Blocks.GLASS).addTag(HBlockTags.GLASS_RAINBOW)
+        tag(Tags.Blocks.GLASS_PANES).addTag(HBlockTags.GLASS_PANES_RAINBOW) // the chaotic glass
+        tag(Tags.Blocks.GLASS_BLACK).addTag(HBlockTags.GLASS_RAINBOW)
+        tag(Tags.Blocks.GLASS_BLUE).addTag(HBlockTags.GLASS_RAINBOW)
+        tag(Tags.Blocks.GLASS_BROWN).addTag(HBlockTags.GLASS_RAINBOW)
+        tag(Tags.Blocks.GLASS_CYAN).addTag(HBlockTags.GLASS_RAINBOW)
+        tag(Tags.Blocks.GLASS_GRAY).addTag(HBlockTags.GLASS_RAINBOW)
+        tag(Tags.Blocks.GLASS_GREEN).addTag(HBlockTags.GLASS_RAINBOW)
+        tag(Tags.Blocks.GLASS_LIGHT_BLUE).addTag(HBlockTags.GLASS_RAINBOW)
+        tag(Tags.Blocks.GLASS_LIGHT_GRAY).addTag(HBlockTags.GLASS_RAINBOW)
+        tag(Tags.Blocks.GLASS_LIME).addTag(HBlockTags.GLASS_RAINBOW)
+        tag(Tags.Blocks.GLASS_MAGENTA).addTag(HBlockTags.GLASS_RAINBOW)
+        tag(Tags.Blocks.GLASS_ORANGE).addTag(HBlockTags.GLASS_RAINBOW)
+        tag(Tags.Blocks.GLASS_PINK).addTag(HBlockTags.GLASS_RAINBOW)
+        tag(Tags.Blocks.GLASS_PURPLE).addTag(HBlockTags.GLASS_RAINBOW)
+        tag(Tags.Blocks.GLASS_RED).addTag(HBlockTags.GLASS_RAINBOW)
+        tag(Tags.Blocks.GLASS_WHITE).addTag(HBlockTags.GLASS_RAINBOW)
+        tag(Tags.Blocks.GLASS_YELLOW).addTag(HBlockTags.GLASS_RAINBOW)
+        tag(Tags.Blocks.GLASS_PANES_BLACK).addTag(HBlockTags.GLASS_PANES_RAINBOW)
+        tag(Tags.Blocks.GLASS_PANES_BLUE).addTag(HBlockTags.GLASS_PANES_RAINBOW)
+        tag(Tags.Blocks.GLASS_PANES_BROWN).addTag(HBlockTags.GLASS_PANES_RAINBOW)
+        tag(Tags.Blocks.GLASS_PANES_COLORLESS).addTag(HBlockTags.GLASS_PANES_RAINBOW)
+        tag(Tags.Blocks.GLASS_PANES_CYAN).addTag(HBlockTags.GLASS_PANES_RAINBOW)
+        tag(Tags.Blocks.GLASS_PANES_GRAY).addTag(HBlockTags.GLASS_PANES_RAINBOW)
+        tag(Tags.Blocks.GLASS_PANES_GREEN).addTag(HBlockTags.GLASS_PANES_RAINBOW)
+        tag(Tags.Blocks.GLASS_PANES_LIGHT_BLUE).addTag(HBlockTags.GLASS_PANES_RAINBOW)
+        tag(Tags.Blocks.GLASS_PANES_LIGHT_GRAY).addTag(HBlockTags.GLASS_PANES_RAINBOW)
+        tag(Tags.Blocks.GLASS_PANES_LIME).addTag(HBlockTags.GLASS_PANES_RAINBOW)
+        tag(Tags.Blocks.GLASS_PANES_MAGENTA).addTag(HBlockTags.GLASS_PANES_RAINBOW)
+        tag(Tags.Blocks.GLASS_PANES_ORANGE).addTag(HBlockTags.GLASS_PANES_RAINBOW)
+        tag(Tags.Blocks.GLASS_PANES_PINK).addTag(HBlockTags.GLASS_PANES_RAINBOW)
+        tag(Tags.Blocks.GLASS_PANES_PURPLE).addTag(HBlockTags.GLASS_PANES_RAINBOW)
+        tag(Tags.Blocks.GLASS_PANES_RED).addTag(HBlockTags.GLASS_PANES_RAINBOW)
+    }
 }
 
 fun comboTags(tags: DataTags) {

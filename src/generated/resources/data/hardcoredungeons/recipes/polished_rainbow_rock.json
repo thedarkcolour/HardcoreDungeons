@@ -1,16 +1,17 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "building",
   "key": {
-    "x": {
+    "#": {
       "item": "hardcoredungeons:rainbow_bricks"
     }
   },
   "pattern": [
-    "xx",
-    "xx"
+    "##",
+    "##"
   ],
   "result": {
-    "count": 4,
     "item": "hardcoredungeons:polished_rainbow_rock"
-  }
+  },
+  "show_notification": true
 }

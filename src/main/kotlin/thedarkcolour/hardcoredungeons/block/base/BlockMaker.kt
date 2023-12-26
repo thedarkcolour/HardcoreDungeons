@@ -25,6 +25,7 @@ import thedarkcolour.hardcoredungeons.block.combo.PottedPlantCombo
 import thedarkcolour.hardcoredungeons.block.decoration.RotatableBlock
 import thedarkcolour.hardcoredungeons.block.misc.BonusFarmlandBlock
 import thedarkcolour.hardcoredungeons.block.plant.FlowerBlock
+import thedarkcolour.hardcoredungeons.block.plant.HLogBlock
 import thedarkcolour.hardcoredungeons.block.plant.HSaplingBlock
 import thedarkcolour.hardcoredungeons.block.plant.PlantProperties
 import thedarkcolour.hardcoredungeons.block.portal.HPortalBlock
@@ -139,11 +140,6 @@ object BlockMaker {
         return registerModelled(name, BlockModelType.ROTATED_PILLAR) { RotatedPillarBlock(properties.build()) }
     }
 
-    // todo
-    fun registerRotatableBlock(name: String, props: PropertiesView): ObjectHolderDelegate<RotatableBlock> {
-        return HBlocks.register(name) { RotatableBlock(props) }
-    }
-
     fun leavesBlock(name: String): ObjectHolderDelegate<LeavesBlock> {
         return registerModelled(name, BlockModelType.CUBE_ALL) { LeavesBlock(HProperties.of(MapColor.COLOR_LIGHT_BLUE).strength(0.2F).randomTicks().sound(SoundType.GRASS).noOcclusion().build()) }
     }
@@ -176,7 +172,7 @@ object BlockMaker {
     // todo add model type
     fun registerPortal(id: ResourceLocation, key: () -> ResourceKey<Level>, combo: PortalCombo): ObjectHolderDelegate<HPortalBlock> {
         return registerModelled(id.path + "_portal", BlockModelType.PORTAL) {
-            HPortalBlock(key, combo, HProperties.of().noCollision().strength(-1.0f).sound(SoundType.GLASS).noDrops())
+            HPortalBlock(key, combo, HProperties.of().noCollision().strength(-1.0f).sound(SoundType.GLASS).lightLevel(13).noDrops())
         }
     }
 
@@ -223,8 +219,13 @@ object BlockMaker {
         return withItem(name, ItemModelType.BLOCK_ITEM, registerRotatedPillar(name, props))
     }
 
+    fun logWithItem(name: String, stripped: () -> Block, props: PropertiesView): ObjectHolderDelegate<HLogBlock> {
+        return withItem(name, ItemModelType.BLOCK_ITEM, registerModelled(name, BlockModelType.ROTATED_PILLAR) { HLogBlock(stripped, props.build()) })
+    }
+
     fun rotatableBlockWithItem(name: String, props: PropertiesView): ObjectHolderDelegate<RotatableBlock> {
-        return withItem(name, ItemModelType.BLOCK_ITEM, registerRotatableBlock(name, props))
+        // todo add block model type for this
+        return withItem(name, ItemModelType.BLOCK_ITEM, HBlocks.register(name) { RotatableBlock(props) })
     }
 
     // Purely decorative

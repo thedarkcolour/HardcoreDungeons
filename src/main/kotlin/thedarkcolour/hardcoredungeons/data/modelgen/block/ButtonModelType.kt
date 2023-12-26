@@ -39,7 +39,7 @@ class ButtonModelType : BlockModelType<ButtonBlock>() {
             .parent(gen.mcModel("block/button_inventory"))
             .texture("texture", "block/$originalTexture")
 
-        for (face in AttachFace.values()) {
+        for (face in AttachFace.entries) {
             for (direction in HORIZONTALS) {
                 builder.partialState()
                     .with(BlockStateProperties.ATTACH_FACE, face)

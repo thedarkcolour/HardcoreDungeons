@@ -1,0 +1,36 @@
+{
+  "type": "hardcoredungeons:candyland",
+  "generator": {
+    "type": "minecraft:noise",
+    "biome_source": {
+      "type": "minecraft:multi_noise",
+      "biomes": [
+        {
+          "biome": "hardcoredungeons:gumdrop_fields",
+          "parameters": {
+            "continentalness": 0.3,
+            "depth": 0.1,
+            "erosion": 0.2,
+            "humidity": 0.3,
+            "offset": 0.0,
+            "temperature": 0.7,
+            "weirdness": 0.2
+          }
+        },
+        {
+          "biome": "hardcoredungeons:candy_plains",
+          "parameters": {
+            "continentalness": 0.1,
+            "depth": 0.3,
+            "erosion": 0.2,
+            "humidity": 0.6,
+            "offset": 0.0,
+            "temperature": 0.4,
+            "weirdness": 0.2
+          }
+        }
+      ]
+    },
+    "settings": "hardcoredungeons:candyland"
+  }
+}

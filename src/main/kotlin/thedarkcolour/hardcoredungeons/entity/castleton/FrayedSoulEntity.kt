@@ -13,13 +13,17 @@ import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.level.Level
+import net.minecraft.world.phys.AABB
 import net.minecraftforge.common.ForgeMod
 import thedarkcolour.hardcoredungeons.entity.projectile.magic.MagicBoltEntity
 import thedarkcolour.hardcoredungeons.registry.HEntities
+import thedarkcolour.hardcoredungeons.registry.HParticles
 import thedarkcolour.hardcoredungeons.registry.HSounds
 import thedarkcolour.hardcoredungeons.registry.block.HBlocks
 
 class FrayedSoulEntity(type: EntityType<FrayedSoulEntity>, level: Level) : PathfinderMob(type, level) {
+    var wasHovering = false
+
     override fun registerGoals() {
         goalSelector.addGoal(0, FindBlueLumshroomGoal(this))
         goalSelector.addGoal(1, LookAtPlayerGoal(this, Player::class.java, 40f, 1f))
@@ -34,6 +38,30 @@ class FrayedSoulEntity(type: EntityType<FrayedSoulEntity>, level: Level) : Pathf
 
     override fun canBeLeashed(player: Player): Boolean {
         return false
+    }
+
+    override fun calculateFallDamage(pFallDistance: Float, pDamageMultiplier: Float): Int {
+        return 0
+    }
+
+    override fun tick() {
+        val level = level()
+        deltaMovement = deltaMovement.multiply(1.0, 0.25, 1.0)
+        val bounds = boundingBox
+
+        // check less often when hovering
+        isNoGravity = (isNoGravity && tickCount % 10 != 0) || level.getBlockCollisions(null, AABB(bounds.minX, bounds.minY - 1.4, bounds.minZ, bounds.maxX, bounds.maxY, bounds.maxZ)).iterator().hasNext()
+
+        if (level.getBlockCollisions(null, AABB(bounds.minX, bounds.minY - 1.0, bounds.minZ, bounds.maxX, bounds.maxY, bounds.maxZ)).iterator().hasNext()) {
+            deltaMovement = deltaMovement.add(0.0, 0.1, 0.0)
+        }
+        super.tick()
+
+        if (level.isClientSide && tickCount % 20 == 0 && level.getBlockState(blockPosition().below()).block == HBlocks.BLUE_LUMSHROOM.plant) {
+            val gX = random.nextGaussian() * 0.1
+            val gZ = random.nextGaussian() * 0.1
+            level.addParticle(HParticles.SOUL_FRAY, x + gX * 0.1, y, z + gZ * 0.1, 0.1 * gX, -0.04, 0.1 * gZ)
+        }
     }
 
     companion object {
@@ -52,7 +80,7 @@ class FrayedSoulEntity(type: EntityType<FrayedSoulEntity>, level: Level) : Pathf
 
     class FindBlueLumshroomGoal(private val entity: FrayedSoulEntity) : Goal() {
         override fun canUse(): Boolean {
-            return entity.level().getBlockState(entity.blockPosition()).block != HBlocks.BLUE_LUMSHROOM.plant
+            return !entity.navigation.isInProgress && entity.level().getBlockState(entity.blockPosition().below()).block != HBlocks.BLUE_LUMSHROOM.plant
         }
 
         override fun start() {
@@ -72,8 +100,9 @@ class FrayedSoulEntity(type: EntityType<FrayedSoulEntity>, level: Level) : Pathf
             for (x in 0 until (range shl 1) + 1) {
                 for (y in 0 until (range shl 1) + 1) {
                     for (z in 0 until (range shl 1) + 1) {
-                        if (predicate(pos.offset(x, y, z), level())) {
-                            return pos.offset(x, y, z)
+                        val newPos = pos.offset(x, y, z)
+                        if (predicate(newPos, level())) {
+                            return newPos
                         }
                     }
                 }

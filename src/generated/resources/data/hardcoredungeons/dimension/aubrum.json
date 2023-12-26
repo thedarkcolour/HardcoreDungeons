@@ -1,0 +1,60 @@
+{
+  "type": "hardcoredungeons:aubrum",
+  "generator": {
+    "type": "minecraft:noise",
+    "biome_source": {
+      "type": "minecraft:multi_noise",
+      "biomes": [
+        {
+          "biome": "hardcoredungeons:aubrum_mountains",
+          "parameters": {
+            "continentalness": 0.3,
+            "depth": 0.3,
+            "erosion": 0.2,
+            "humidity": 0.2,
+            "offset": 0.0,
+            "temperature": 0.0,
+            "weirdness": 0.5
+          }
+        },
+        {
+          "biome": "hardcoredungeons:aubrum_wasteland",
+          "parameters": {
+            "continentalness": 0.1,
+            "depth": 0.7,
+            "erosion": 0.2,
+            "humidity": 1.0,
+            "offset": 0.0,
+            "temperature": 0.0,
+            "weirdness": 0.5
+          }
+        },
+        {
+          "biome": "hardcoredungeons:auri_plains",
+          "parameters": {
+            "continentalness": 0.2,
+            "depth": 0.3,
+            "erosion": 0.1,
+            "humidity": 0.6,
+            "offset": 0.0,
+            "temperature": 0.1,
+            "weirdness": 0.2
+          }
+        },
+        {
+          "biome": "hardcoredungeons:golden_forest",
+          "parameters": {
+            "continentalness": 0.5,
+            "depth": 0.3,
+            "erosion": 0.4,
+            "humidity": 1.5,
+            "offset": 0.2,
+            "temperature": 0.4,
+            "weirdness": 0.8
+          }
+        }
+      ]
+    },
+    "settings": "hardcoredungeons:aubrum"
+  }
+}

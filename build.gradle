@@ -24,8 +24,6 @@ minecraft {
         configureEach {
             property 'forge.logging.console.level', 'debug'
             property 'forge.enabledGameTestNamespaces', mod_id
-            // If you can't run the project, comment this line out and rerun genIntellijRuns
-            property '-XX:+AllowEnhancedClassRedefinition', ''
             //arg '-mixin.config=hardcoredungeons.mixins.json'
 
             // these are required for Curios API
@@ -61,7 +59,6 @@ minecraft {
 
 // Include assets and data from data generators
 sourceSets.main.resources { srcDirs 'src/generated/resources/' }
-sourceSets.main.java { srcDirs 'src/util/java' }
 
 repositories {
     mavenCentral()
@@ -138,11 +135,11 @@ processResources {
     }
 
     // minify json resources https://stackoverflow.com/a/41029113/10860617
-    doLast {
-        fileTree(dir: outputs.files.asPath, include: "**/*.json").each {
-            File file -> file.text = groovy.json.JsonOutput.toJson(new groovy.json.JsonSlurper().parse(file))
-        }
-    }
+    //doLast {
+    //    fileTree(dir: outputs.files.asPath, include: "**/*.json").each {
+    //        File file -> file.text = groovy.json.JsonOutput.toJson(new groovy.json.JsonSlurper().parse(file))
+    //    }
+    //}
 }
 
 jar {

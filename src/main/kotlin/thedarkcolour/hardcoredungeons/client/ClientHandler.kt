@@ -9,6 +9,7 @@ import net.minecraftforge.client.event.RegisterColorHandlersEvent
 import net.minecraftforge.client.event.RegisterDimensionSpecialEffectsEvent
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent
 import thedarkcolour.hardcoredungeons.client.color.RainbowColor
+import thedarkcolour.hardcoredungeons.client.dimension.AubrumEffects
 import thedarkcolour.hardcoredungeons.client.dimension.CastletonEffects
 import thedarkcolour.hardcoredungeons.client.model.HModelLayers
 import thedarkcolour.hardcoredungeons.client.model.block.FullbrightBakedModel
@@ -75,9 +76,10 @@ object ClientHandler {
 
     private fun registerDimensionFx(event: RegisterDimensionSpecialEffectsEvent) {
         event.register(HDimensions.CASTLETON_ID, CastletonEffects)
+        event.register(HDimensions.AUBRUM_ID, AubrumEffects)
     }
 
-    private fun registerBakedModels(event: ModelEvent.BakingCompleted) {
+    private fun registerBakedModels(event: ModelEvent.ModifyBakingResult) {
         val registry = event.models as MutableMap
 
         FullbrightBakedModel.addFullBrightEffects(registry, HBlocks.CROWN, setOf(modLoc("block/crown_fullbright")))

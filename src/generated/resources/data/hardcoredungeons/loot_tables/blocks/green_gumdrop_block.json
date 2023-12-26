@@ -3,18 +3,19 @@
   "pools": [
     {
       "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
       "entries": [
         {
           "type": "minecraft:item",
-          "conditions": [
-            {
-              "condition": "minecraft:survives_explosion"
-            }
-          ],
           "name": "hardcoredungeons:green_gumdrop_block"
         }
       ],
       "rolls": 1.0
     }
-  ]
+  ],
+  "random_sequence": "hardcoredungeons:blocks/green_gumdrop_block"
 }

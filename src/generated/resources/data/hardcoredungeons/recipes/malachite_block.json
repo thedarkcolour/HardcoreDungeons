@@ -1,16 +1,18 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "building",
   "key": {
-    "F": {
-      "tag": "hardcoredungeons:gems/malachite"
+    "#": {
+      "item": "hardcoredungeons:malachite_crystal_shard"
     }
   },
   "pattern": [
-    "FFF",
-    "FFF",
-    "FFF"
+    "###",
+    "###",
+    "###"
   ],
   "result": {
     "item": "hardcoredungeons:malachite_block"
-  }
+  },
+  "show_notification": true
 }

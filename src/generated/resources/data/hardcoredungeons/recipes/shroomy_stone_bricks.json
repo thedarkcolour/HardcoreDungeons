@@ -1,32 +1,33 @@
 {
   "type": "minecraft:crafting_shapeless",
+  "category": "building",
   "ingredients": [
     {
-      "tag": "minecraft:stone_bricks"
-    },
-    {
-      "tag": "minecraft:stone_bricks"
-    },
-    {
-      "tag": "minecraft:stone_bricks"
-    },
-    {
-      "tag": "minecraft:stone_bricks"
-    },
-    {
-      "tag": "minecraft:stone_bricks"
-    },
-    {
-      "tag": "minecraft:stone_bricks"
-    },
-    {
-      "tag": "minecraft:stone_bricks"
-    },
-    {
-      "tag": "minecraft:stone_bricks"
-    },
-    {
       "tag": "forge:mushrooms"
+    },
+    {
+      "tag": "minecraft:stone_bricks"
+    },
+    {
+      "tag": "minecraft:stone_bricks"
+    },
+    {
+      "tag": "minecraft:stone_bricks"
+    },
+    {
+      "tag": "minecraft:stone_bricks"
+    },
+    {
+      "tag": "minecraft:stone_bricks"
+    },
+    {
+      "tag": "minecraft:stone_bricks"
+    },
+    {
+      "tag": "minecraft:stone_bricks"
+    },
+    {
+      "tag": "minecraft:stone_bricks"
     }
   ],
   "result": {

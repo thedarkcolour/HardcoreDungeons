@@ -16,7 +16,7 @@ class PressurePlateModelType : BlockModelType<PressurePlateBlock>() {
         val builder = gen.getVariantBuilder(block)
 
         // planks, stone, etc.
-        val originalTexture = if (false/*block.material == Material.WOOD*/)  {
+        val originalTexture = if (appearance.registryName!!.path.endsWith("planks"))  {
             path.removeSuffix("_pressure_plate") + "_planks"
         } else {
             path.removeSuffix("_pressure_plate")

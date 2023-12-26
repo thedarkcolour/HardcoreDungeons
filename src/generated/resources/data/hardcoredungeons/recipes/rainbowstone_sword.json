@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "equipment",
   "key": {
     "#": {
       "item": "hardcoredungeons:rainbowstone_gem"
@@ -15,5 +16,6 @@
   ],
   "result": {
     "item": "hardcoredungeons:rainbowstone_sword"
-  }
+  },
+  "show_notification": true
 }

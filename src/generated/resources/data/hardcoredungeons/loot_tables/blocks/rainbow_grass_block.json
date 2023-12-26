@@ -40,5 +40,6 @@
       ],
       "rolls": 1.0
     }
-  ]
+  ],
+  "random_sequence": "hardcoredungeons:blocks/rainbow_grass_block"
 }

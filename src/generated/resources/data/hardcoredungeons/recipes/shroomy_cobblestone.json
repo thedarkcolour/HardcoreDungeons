@@ -1,32 +1,33 @@
 {
   "type": "minecraft:crafting_shapeless",
+  "category": "building",
   "ingredients": [
     {
-      "tag": "forge:cobblestone"
-    },
-    {
-      "tag": "forge:cobblestone"
-    },
-    {
-      "tag": "forge:cobblestone"
-    },
-    {
-      "tag": "forge:cobblestone"
-    },
-    {
-      "tag": "forge:cobblestone"
-    },
-    {
-      "tag": "forge:cobblestone"
-    },
-    {
-      "tag": "forge:cobblestone"
-    },
-    {
-      "tag": "forge:cobblestone"
-    },
-    {
       "tag": "forge:mushrooms"
+    },
+    {
+      "tag": "forge:cobblestone"
+    },
+    {
+      "tag": "forge:cobblestone"
+    },
+    {
+      "tag": "forge:cobblestone"
+    },
+    {
+      "tag": "forge:cobblestone"
+    },
+    {
+      "tag": "forge:cobblestone"
+    },
+    {
+      "tag": "forge:cobblestone"
+    },
+    {
+      "tag": "forge:cobblestone"
+    },
+    {
+      "tag": "forge:cobblestone"
     }
   ],
   "result": {

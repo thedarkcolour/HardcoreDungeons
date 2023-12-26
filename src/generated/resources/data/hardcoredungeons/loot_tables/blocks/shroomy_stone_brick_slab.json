@@ -30,5 +30,6 @@
       ],
       "rolls": 1.0
     }
-  ]
+  ],
+  "random_sequence": "hardcoredungeons:blocks/shroomy_stone_brick_slab"
 }

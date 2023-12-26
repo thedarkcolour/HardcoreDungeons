@@ -28,6 +28,11 @@ class EntityLoot : EntityLootSubProvider(FeatureFlags.DEFAULT_FLAGS) {
         return added.stream()
     }
 
+    override fun add(entityType: EntityType<*>, builder: LootTable.Builder) {
+        super.add(entityType, builder)
+        this.added.add(entityType)
+    }
+
     override fun generate() {
         add(HEntities.DEER, LootTable.lootTable()
             .withPool(

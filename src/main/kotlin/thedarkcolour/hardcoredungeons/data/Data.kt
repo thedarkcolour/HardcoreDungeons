@@ -2,14 +2,12 @@ package thedarkcolour.hardcoredungeons.data
 
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.loot.LootTableProvider
-import net.minecraft.world.item.Item
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets
 import net.minecraftforge.data.event.GatherDataEvent
 import net.minecraftforge.eventbus.api.SubscribeEvent
 import net.minecraftforge.fml.common.Mod
 import thedarkcolour.hardcoredungeons.HardcoreDungeons
 import thedarkcolour.modkit.data.MKEnglishProvider
-import thedarkcolour.modkit.data.MKTagsProvider
 
 /**
  * Isolated from main mod code.
@@ -26,8 +24,9 @@ object Data {
 
         // the function references are EXTENSION FUNCTIONS found in the BlockTags.kt, English.kt, ItemModels.kt, etc. files
         helper.createEnglish(true, MKEnglishProvider::addTranslations)
-        helper.createItemModels(true, true, true, ::addItemModels)
-        helper.createTags(Registries.ITEM, MKTagsProvider<Item>::addItemTags)
+        //helper.createItemModels(true, true, true, ::addItemModels)
+        helper.createTags(Registries.BLOCK, ::addBlockTags)
+        helper.createTags(Registries.ITEM, ::addItemTags)
         // I'm an idiot who didn't set the correct order of arguments!
         helper.createRecipes { writer, recipes -> recipes.addRecipes(writer) }
 
@@ -35,5 +34,8 @@ object Data {
             LootTableProvider.SubProviderEntry(::BlockLoot, LootContextParamSets.BLOCK),
             LootTableProvider.SubProviderEntry(::EntityLoot, LootContextParamSets.ENTITY),
         )))
+        event.generator.addProvider(true, WorldGenProvider(event.generator.packOutput, event.lookupProvider))
+        event.generator.addProvider(true, DimensionProvider(event.generator.packOutput, event.lookupProvider))
+        event.generator.addProvider(true, ModelGenerator(event.generator.packOutput, event.existingFileHelper))
     }
 }

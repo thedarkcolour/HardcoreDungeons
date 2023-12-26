@@ -72,7 +72,7 @@ class WallModelType : BlockModelType<Block>() {
     companion object {
         val DIR_TO_DEGREE = Object2IntOpenHashMap<Direction>()
         val DIR_TO_PROP = HashMap<Direction, EnumProperty<WallSide>>()
-        val HORIZONTALS = arrayListOf(Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST)
+        val HORIZONTALS = listOf(Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST)
 
         init {
             DIR_TO_DEGREE.put(Direction.NORTH,   0)

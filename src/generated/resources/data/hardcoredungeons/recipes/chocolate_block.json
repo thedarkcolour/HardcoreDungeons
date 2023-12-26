@@ -1,16 +1,18 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "building",
   "key": {
-    "F": {
+    "#": {
       "item": "minecraft:cocoa_beans"
     }
   },
   "pattern": [
-    "FFF",
-    "FFF",
-    "FFF"
+    "###",
+    "###",
+    "###"
   ],
   "result": {
     "item": "hardcoredungeons:chocolate_block"
-  }
+  },
+  "show_notification": true
 }

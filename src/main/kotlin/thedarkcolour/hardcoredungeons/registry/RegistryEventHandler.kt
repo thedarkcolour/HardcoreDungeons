@@ -26,7 +26,6 @@ object RegistryEventHandler {
         HItems.init()
         HTabs.init()
 
-        HBiomes.init()
         HDataSerializers.init()
         HPaintings.init()
         HEntities.init()

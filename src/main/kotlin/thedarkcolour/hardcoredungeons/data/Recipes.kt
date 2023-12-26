@@ -39,7 +39,7 @@ fun MKRecipeProvider.addRecipes(writer: Consumer<FinishedRecipe>) {
 
     // note the * on the array, to pass the array's elements into varargs instead of the single array object
     shapelessCrafting(RecipeCategory.BUILDING_BLOCKS, HBlocks.SHROOMY_COBBLESTONE.block, 8, *Array(9) { i -> if (i == 0) Tags.Items.MUSHROOMS else Tags.Items.COBBLESTONE})
-    shapelessCrafting(RecipeCategory.BUILDING_BLOCKS, HBlocks.SHROOMY_COBBLESTONE.block, 8, *Array(9) { i -> if (i == 0) Tags.Items.MUSHROOMS else ItemTags.STONE_BRICKS})
+    shapelessCrafting(RecipeCategory.BUILDING_BLOCKS, HBlocks.SHROOMY_STONE_BRICKS.block, 8, *Array(9) { i -> if (i == 0) Tags.Items.MUSHROOMS else ItemTags.STONE_BRICKS})
 
     shapedCrafting(RecipeCategory.COMBAT, BULLET_ITEM, 8) { builder ->
         builder.define('I', Items.IRON_NUGGET)

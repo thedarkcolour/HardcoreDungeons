@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
   "key": {
     "l": {
       "tag": "hardcoredungeons:lumlight_logs"
@@ -18,5 +19,6 @@
   ],
   "result": {
     "item": "hardcoredungeons:lumlight_campfire"
-  }
+  },
+  "show_notification": true
 }

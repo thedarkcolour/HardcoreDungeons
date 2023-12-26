@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "equipment",
   "key": {
     "G": {
       "item": "minecraft:blaze_powder"
@@ -16,5 +17,6 @@
   "result": {
     "count": 8,
     "item": "hardcoredungeons:incendiary_bullet"
-  }
+  },
+  "show_notification": true
 }

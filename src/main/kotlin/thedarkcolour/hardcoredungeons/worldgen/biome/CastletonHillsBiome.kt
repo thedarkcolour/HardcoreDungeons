@@ -1,19 +1,13 @@
 package thedarkcolour.hardcoredungeons.worldgen.biome
 
-import net.minecraft.core.Holder
 import net.minecraft.world.entity.MobCategory
-import net.minecraft.world.level.biome.Biome
 import net.minecraft.world.level.levelgen.GenerationStep.Carving
-import net.minecraftforge.common.world.ModifiableBiomeInfo
-import team.rusty.util.biome.ModBiome
+import thedarkcolour.hardcoredungeons.data.WorldGenProvider
 import thedarkcolour.hardcoredungeons.registry.HEntities
 import thedarkcolour.hardcoredungeons.worldgen.HFeatures
 
 object CastletonHillsBiome : ModBiome() {
-    override fun configure(
-        biome: Holder<Biome>,
-        info: ModifiableBiomeInfo.BiomeInfo.Builder
-    ) {
+    override fun configure(info: WorldGenProvider.BiomeConfiguration) {
         info.climateSettings.apply {
             setHasPrecipitation(false)
             temperature = 1.5f
@@ -23,8 +17,7 @@ object CastletonHillsBiome : ModBiome() {
             defaultCastletonEffects(this)
         }
         info.generationSettings.apply {
-            addCarver(Carving.AIR, HFeatures.CASTLETON_CAVES!!.holder.get())
-            //HWorldGen.addCastletonCarvers(this)
+            addCarver(Carving.AIR, HFeatures.CASTLETON_CAVES)
             //HWorldGen.withPurpleLumshrooms(this)
         }
         info.mobSpawnSettings.apply {
